@@ -1,5 +1,10 @@
-import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting, parseFrontMatterAliases } from 'obsidian';
 import {CodeBlockProcessor} from 'src/CodeBlockProcessor';
+import { Parser } from 'src/Parser';
+import { YAMLParser } from 'src/YAMLParser'
+import { Configuration } from 'src/Configuration';
+import { TodoList } from 'src/TodoList';
+
 // Remember to rename these classes and interfaces!
 
 interface YaTodoPluginSettings {
@@ -23,42 +28,13 @@ export default class YaTodoPlugin extends Plugin {
 	async onload() {
 		await this.loadSettings();
 
-
-		this.registerMarkdownPostProcessor((element, context) => {
-			const codeblocks = element.findAll("yatodo");
-	  
-			for (let codeblock of codeblocks) {
-			  const text = codeblock.innerText.trim();
-			  if (text[0] === ":" && text[text.length - 1] === ":") {
-				const emojiEl = codeblock.createSpan({
-				  text: ALL_EMOJIS[text] ?? text,
-				});
-				codeblock.replaceWith(emojiEl);
-			  }
-			}
-		  });
-
-		  this.registerMarkdownCodeBlockProcessor("yatodo", (source, el, ctx) => {
-			CodeBlockProcessor.process(source,el);
-		
+			
+		this.registerMarkdownCodeBlockProcessor("yatodo", (source, el, ctx) => {
+			let p:Parser = new YAMLParser();
+			let c:Configuration = p.parse(source);
+			let t:TodoList = new TodoList(c);
+			el.createEl("div").append(t.toHTML());		
 		});
-
-		  this.registerMarkdownCodeBlockProcessor("csv", (source, el, ctx) => {
-			const rows = source.split("\n").filter((row) => row.length > 0);
-	  
-			const table = el.createEl("table");
-			const body = table.createEl("tbody");
-	  
-			for (let i = 0; i < rows.length; i++) {
-			  const cols = rows[i].split(",");
-	  
-			  const row = body.createEl("tr");
-	  
-			  for (let j = 0; j < cols.length; j++) {
-				row.createEl("td", { text: cols[j] });
-			  }
-			}
-		  });
 
 		// This creates an icon in the left ribbon.
 		const ribbonIconEl = this.addRibbonIcon('dice', 'Sample Plugin', (evt: MouseEvent) => {
@@ -85,7 +61,7 @@ export default class YaTodoPlugin extends Plugin {
 			id: 'sample-editor-command',
 			name: 'Sample editor command',
 			editorCallback: (editor: Editor, view: MarkdownView) => {
-				console.log(editor.getSelection());
+				//console.log(editor.getSelection());
 				editor.replaceSelection('Sample Editor Command');
 			}
 		});
@@ -115,7 +91,7 @@ export default class YaTodoPlugin extends Plugin {
 		// If the plugin hooks up any global DOM events (on parts of the app that doesn't belong to this plugin)
 		// Using this function will automatically remove the event listener when this plugin is disabled.
 		this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
-			console.log('click', evt);
+			//console.log('click', evt);
 		});
 
 		this.addRibbonIcon('dice', 'Greet', () => {
