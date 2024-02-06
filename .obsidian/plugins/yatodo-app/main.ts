@@ -1,9 +1,12 @@
-import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting, parseFrontMatterAliases } from 'obsidian';
-import {CodeBlockProcessor} from 'src/CodeBlockProcessor';
+import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting, View, parseFrontMatterAliases } from 'obsidian';
 import { Parser } from 'src/Parser';
 import { YAMLParser } from 'src/YAMLParser'
-import { Configuration } from 'src/Configuration';
-import { TodoList } from 'src/TodoList';
+import { Query } from 'src/Query';
+import { TodoListBuilder } from 'src/TodoListBuilder';
+import * as Yatodo from 'src/View'
+import { FileCollection } from 'src/FileCollection';
+import { ObsidianFileCollection } from 'src/ObsidianFileCollection';
+import { Todo} from 'src/Todo';
 
 // Remember to rename these classes and interfaces!
 
@@ -15,12 +18,6 @@ const DEFAULT_SETTINGS: YaTodoPluginSettings = {
 	mySetting: 'default'
 }
 
-const ALL_EMOJIS: Record<string, string> = {
-	":+1:": "👍",
-	":sunglasses:": "😎",
-	":smile:": "😄",
-  };
-
 
 export default class YaTodoPlugin extends Plugin {
 	settings: YaTodoPluginSettings;
@@ -30,10 +27,15 @@ export default class YaTodoPlugin extends Plugin {
 
 			
 		this.registerMarkdownCodeBlockProcessor("yatodo", (source, el, ctx) => {
-			let p:Parser = new YAMLParser();
-			let c:Configuration = p.parse(source);
-			let t:TodoList = new TodoList(c);
-			el.createEl("div").append(t.toHTML());		
+			const parser:Parser = new YAMLParser();
+			const query:Query = parser.parse(source);
+			const fileCollection: FileCollection = new ObsidianFileCollection(query.rootPath,this.app);
+
+			const builder:TodoListBuilder = new TodoListBuilder(fileCollection);
+			const todos:Todo[]= builder.build(query);
+
+			const view = new Yatodo.View(todos,el);
+			view.toHTML();
 		});
 
 		// This creates an icon in the left ribbon.

@@ -1,5 +1,5 @@
-import { Configuration } from "./Configuration";
+import { Query } from "./Query";
 
 export interface Parser{
-    parse(source:string):Configuration;
+    parse(source:string):Query;
 }

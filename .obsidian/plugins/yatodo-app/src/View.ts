@@ -1,60 +1,46 @@
-import { TodoList } from "./TodoList";
+import { Todo } from "./Todo";
 
 
 export class View{
-    todoList: TodoList;
-    el:HTMLElement;
+    todos: Todo[];
+    rootElement:HTMLElement;
 
-    private constructor(tl: TodoList,el:HTMLElement){
-        this.todoList = tl;
-        this.el = el;
+    constructor(tl: Todo[],el:HTMLElement){
+        this.todos = tl;
+        this.rootElement = el;
     }
 
-    static toHTML(tl:TodoList,el:HTMLElement): HTMLElement{
-        //let v = new View(tl,el);
-
-        //const newEl = v.addTable().addTableRow().addTableColumn("Een tekstje")
-
-        let table:HTMLTableElement = this.createTable(el);
+    toHTML(): HTMLElement{
+        let table:HTMLTableElement = this.createTable(this.rootElement);
         let heading:HTMLHeadingElement = this.createHeading(table);
-        let row1:HTMLTableRowElement = this.createRow(table);
-        /*
-        let head:HTMLHeadingElement = table.createEl("thead");
-        let th1:HTMLHeadElement = head.createEl("th").innerText = "Head 1"
-        let th2:HTMLHeadElement = head.createEl("th").innerText = "Head 2"
-        let th3:HTMLHeadElement = head.createEl("th").innerText = "Head 3"
-        let th4:HTMLHeadElement = head.createEl("th").innerText = "Head 4"
 
-        let tr1:HTMLTableRowElement = table.createEl("tr");
-        let td1:HTMLTableCellElement = tr1.createEl("td").innerText = "shzzle"
-        let td2:HTMLTableCellElement = tr1.createEl("td").innerText = "shzzle"
-        let td3:HTMLTableCellElement = tr1.createEl("td").innerText = "shzzle"
-        let td4:HTMLTableCellElement = tr1.createEl("td").innerText = "shzzle"
-        */
+        this.createRows(table);
 
-        return el;
+        return this.rootElement;
     }
 
+    private createRows(table:HTMLTableElement){
+        for(let i=0;i<this.todos.length;i++){
+            let row:HTMLTableRowElement = table.createEl("tr");
+            row.createEl("td", {text: this.todos[i].title});
+            row.createEl("td", {text: this.todos[i].project})
+            row.createEl("td", {text: this.todos[i].context as string})
+            row.createEl("td", {text: this.todos[i].status as string})
+        }
+    }
 
-    private static createTable(el:HTMLElement):HTMLTableElement{
-        return el.createEl("table");
+    private createTable(el:HTMLElement):HTMLTableElement{
+        return el.createEl("table",{cls:"yatodo"});
     }
     
-    private static createHeading(el:HTMLTableElement):HTMLHeadingElement{
+    private createHeading(el:HTMLTableElement):HTMLHeadingElement{
         let head:HTMLHeadingElement = el.createEl("thead");
-        head.createEl("th").innerText = "Head 1";
-        head.createEl("th").innerText = "Head 2";
-        head.createEl("th").innerText = "Head 3";
-        head.createEl("th").innerText = "Head 4";
+        head.createEl("th",{text:"Todo"});
+        head.createEl("th",{text:"Project"});
+        head.createEl("th",{text:"Context"});
+        head.createEl("th",{text:"Status"});
         return head;
     }
 
-    private static createRow(el:HTMLTableElement){
-        let row:HTMLTableRowElement = el.createEl("tr");
-        row.createEl("td").innerText = " cell 1";
-        row.createEl("td").innerText = " cell 2";
-        row.createEl("td").innerText = " cell 3";
-        row.createEl("td").innerText = " cell 4";
-        return row;
-    }
+   
 }
