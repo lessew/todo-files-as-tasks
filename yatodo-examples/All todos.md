@@ -1,5 +1,6 @@
 
 ```yatodo
+rootPath: todo-home/
 domain: todo-home
 projects: errands
 ```
