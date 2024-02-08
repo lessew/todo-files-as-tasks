@@ -1,8 +1,8 @@
-import { FileCollection } from "../src/FileCollection";
-import { File } from "../src/File";
+import { FileCollection } from "../src/core/FileCollection";
+import { File } from "../src/core/File";
 import { MockFile } from "./MockFile";
 import { MockFileInput } from "./MockFile";
-import { Status, Context } from "../src/FileProperties";
+import { Status, Context } from "../src/core/FileProperties";
 
 export class MockFileCollection implements FileCollection{
 

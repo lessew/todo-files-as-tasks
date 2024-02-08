@@ -1,7 +1,7 @@
-import { Parser } from "../src/Parser";
-import { YAMLParser } from "../src/YAMLParser";
-import { Query } from "../src/Query";
-import {Context,Status} from "../src/FileProperties";
+import { Parser } from "../src/core/Parser";
+import { YAMLParser } from "../src/core/YAMLParser";
+import { Query } from "../src/core/Query";
+import {Context,Status} from "../src/core/FileProperties";
 import { YAMLException } from "js-yaml";
 
 const correctlyFormatted = `

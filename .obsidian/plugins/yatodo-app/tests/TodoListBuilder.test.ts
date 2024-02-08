@@ -1,10 +1,10 @@
-import { File } from "../src/File";
+import { File } from "../src/core/File";
 import { MockFile,MockFileInput } from "./MockFile";
-import {Status,Context} from "../src/FileProperties";
-import { TodoListBuilder } from "../src/TodoListBuilder";
-import { FileCollection } from "../src/FileCollection";
+import {Status,Context} from "../src/core/FileProperties";
+import { TodoListBuilder } from "../src/core/TodoListBuilder";
+import { FileCollection } from "../src/core/FileCollection";
 import { MockFileCollection } from "./MockFileCollection";
-import { Query } from "../src/Query";
+import { Query } from "../src/core/Query";
 
 const f1:File = new MockFile({
     path:"/home/errands/jumbo1.md",

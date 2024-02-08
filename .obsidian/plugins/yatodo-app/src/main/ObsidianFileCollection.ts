@@ -1,5 +1,5 @@
-import { FileCollection } from "./FileCollection";
-import { File } from "./File";
+import { FileCollection } from "../core/FileCollection";
+import { File } from "../core/File";
 import { Vault,TFile,App } from "obsidian";
 import { ObsidianFile } from "./ObsidianFile";
 
@@ -13,14 +13,11 @@ export class ObsidianFileCollection implements FileCollection{
         this.files = [];
 
         const files = app.vault.getMarkdownFiles()
-        //console.log(rp);
         for (let i = 0; i < files.length; i++) {
-             //console.log(files[i]);
              if(this.isMatchingPath(files[i].path,this.rootPath)){
                 const f:File = new ObsidianFile(files[i] as TFile,app);
                 this.files.push(f);
              }
-             //console.log(this.files);
         }
     }
     

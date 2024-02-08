@@ -1,4 +1,4 @@
-import {File} from "./File";
+import {File} from "../core/File";
 import { App, TFile , Vault, CachedMetadata } from "obsidian";
 
 
@@ -11,7 +11,7 @@ export class ObsidianFile implements File{
        this.file = file;
        this.path = file.path;
        this.app = app;
-       console.log(this.file)
+       //console.log(this.file)
     }
 
     getFileName():string{

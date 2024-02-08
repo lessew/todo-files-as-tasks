@@ -1,6 +1,6 @@
-import { Todo } from "../src/Todo";
-import { Status, Context } from "../src/FileProperties";
-import {File} from "../src/File";
+import { Todo } from "../src/core/Todo";
+import { Status, Context } from "../src/core/FileProperties";
+import {File} from "../src/core/File";
 import { MockFile,MockFileInput } from "./MockFile";
 
 
