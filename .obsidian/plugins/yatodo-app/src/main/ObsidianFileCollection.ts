@@ -31,12 +31,5 @@ export class ObsidianFileCollection implements FileCollection{
             return false;
         }
     }
-
-    queryAllFromRootPath(): void {
-        throw new Error("Method not implemented.");
-    }
-    isValidPath(): boolean {
-        throw new Error("Method not implemented.");
-    }
     
 }
