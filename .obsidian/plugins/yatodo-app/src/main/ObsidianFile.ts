@@ -63,8 +63,4 @@ export class ObsidianFile implements File{
         throw Error("To be implemented")
     }
 
-    isValidMarkdownFile():boolean{
-        return false;//(instanceof this.file == TFile)
-       
-    }
 }
