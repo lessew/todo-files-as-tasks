@@ -39,8 +39,8 @@ export class ObsidianFile implements File{
         return false;
     }
 
-    move(newPath: string): boolean {
-        return false;
+    move(newPath: string): void {
+        throw Error("to be implemented")  
     }
     
     isMarkdownFile(): boolean {
@@ -56,14 +56,11 @@ export class ObsidianFile implements File{
             console.log(`Errror: frontmatter value not found in file ${name}`)
             return "";
         }
-        //console.log(meta);
-        //let y = MetadataCache.getFileCache(this.file);
-
-        return "to be implemented";
     }
 
-    setYAMLProperty(prop_name: string, prop_value: string): boolean {
-        return false;
+    setYAMLProperty(prop_name: string, prop_value: string): void {
+        //return false;
+        throw Error("To be implemented")
     }
 
     isValidMarkdownFile():boolean{

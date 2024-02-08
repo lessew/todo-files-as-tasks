@@ -8,11 +8,11 @@ export interface File{
     getYAMLProperty(name:string):string;
 
     // not yet used
-    move(newPath:string):boolean;
+    move(newPath:string):void;
     isFolder():boolean;
     isMarkdownFile():boolean;
     isFile():boolean;
     getFolderName():string;  
-    setYAMLProperty(prop_name:string,prop_value:string):boolean;
+    setYAMLProperty(prop_name:string,prop_value:string):void;
     
 }
