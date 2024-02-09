@@ -1,58 +1,47 @@
 import { Todo } from "../src/core/Todo";
 import { Status, Context } from "../src/core/FileProperties";
 import {File} from "../src/core/File";
-import { MockFile,MockFileInput } from "./MockFile";
+import { MockFile } from "./MockFile";
 
 
 describe('testing todo class with valid input', () => {
-    const f:MockFileInput = {
-      path:"/root/errands/jumbo.md",
-      filename:"jumbo.md",
-      title:"jumbo",
-      status:Status.next,
-      context:Context.desk,
-      project:"errands",
-      isFile:true,
-      isMarkdownFile:true,
-      isFolder:false
-    };
+   let input = {
+    path:"/root/errands/jumbo.md",
+    yaml: {status:Status.next,context:Context.desk},
+    project:"errands",
+    title:"jumbo"
+   }
 
-   let mf:File = new MockFile(f);
-   let todo = new Todo(mf);
+  let mf:File = new MockFile(input.path,input.yaml);
+  let todo = new Todo(mf);
   
     test('check if folder is correct', () => {
-        expect(todo.project).toBe(f.project);
+        expect(todo.project).toBe(input.project);
       });
 
       test('check if task name is correct', () => {
-        expect(todo.title).toBe(f.title);
+        expect(todo.title).toBe(input.title);
       });
 
     test('test if status is correct',() => {
-        expect(todo.status).toBe(f.status);
+        expect(todo.status).toBe(input.yaml.status);
     });
 
     test('test if context is correct',() => {
-      expect(todo.context).toBe(f.context);
+      expect(todo.context).toBe(input.yaml.context);
     });
 });
 
 describe('testing todo class with invalid input', () => {
-  const f:MockFileInput = {
+  let input = {
     path:"/root/errands/jumbo.md",
-    filename:"jumbo.md",
-    title:"jumbo",
-    status:"invalid status",
-    context:"invalud context",
+    yaml: {status:"invalid",context:"invalid"},
     project:"errands",
-    isFile:true,
-    isMarkdownFile:true,
-    isFolder:false
-  };
+    title:"jumbo"
+   }
 
-let mf:File = new MockFile(f);
+let mf:File = new MockFile(input.path,input.yaml);
 let todo = new Todo(mf);
-
 
   test('test if status gives errors',() => {
       expect(todo.status).toBe(false);
@@ -63,21 +52,15 @@ let todo = new Todo(mf);
   });
 
   test('test if context deep thinking is successfully read',() => {
-    const f:File = new MockFile({
+    let input = {
       path:"/root/errands/jumbo.md",
-      filename:"jumbo.md",
-      title:"deep thinking issue",
-      status:"invalid status",
-      context:Context.deep_thinking,
+      yaml: {status:Status.deferred,context:Context.deep_thinking},
       project:"errands",
-      isFile:true,
-      isMarkdownFile:true,
-      isFolder:false
-    } as MockFileInput);
-
-    const td:Todo = new Todo(f);
+      title:"jumbo"
+    }
+    let mf:File = new MockFile(input.path,input.yaml);
+    const td:Todo = new Todo(mf);
     expect(td.context).toBe(Context.deep_thinking);
-    
   });
 
 

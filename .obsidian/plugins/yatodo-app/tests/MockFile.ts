@@ -2,61 +2,31 @@ import { File } from "../src/core/File";
 import { Status, Context } from "../src/core/FileProperties";
 
 
-export class MockFile implements File{
+export class MockFile extends File{
+    yaml:YAMLMockObj;
 
-    mockFileInput:MockFileInput;
-    path:string;
+    constructor(fullPath:string,yaml:YAMLMockObj){
+        super(fullPath);
+        this.yaml = yaml;
+    }
 
-    constructor(mfi:MockFileInput){
-        this.mockFileInput = mfi;
-        this.path = mfi.path;
+    getYAMLProperty(name: string): string {
+        // @ts-ignore 
+        return this.yaml[name];
+        //throw new Error("Method not implemented.");
+    }
+    move(newFullPath: string): void {
+        // do nothing
+        //throw new Error("Method not implemented.");
+    }
+    setYAMLProperty(name: string, value: string): void {
+        // do nothing
+        throw new Error("Method not implemented.");
     }
     
-    move(newPath:string):boolean{
-        return false;
-    }
-
-    isFolder():boolean{
-        return this.mockFileInput.isFolder;
-    }
-
-    isMarkdownFile():boolean{
-        return this.mockFileInput.isMarkdownFile
-    }
-
-    isFile():boolean{
-        return this.mockFileInput.isFile;
-    }
-
-    getYAMLProperty(name:string):any{
-        return this.mockFileInput[name as keyof typeof this.mockFileInput]
-    }
-
-    setYAMLProperty(prop_name:string,prop_value:string):boolean{
-        return true;
-    }
-
-    getFolderName(): string {
-        return this.mockFileInput.project;
-    }
-
-    getFileName():string{
-        return this.mockFileInput.filename;
-    }
-
-    getFileNameWithoutExtension():string{
-        return this.mockFileInput.title;
-    }
 }
 
-export type MockFileInput = {
-    path:string,
-    filename:string,
-    title:string,
-    context:Context | string,
-    status:Status | string,
-    project:string,
-    isMarkdownFile:boolean,
-    isFile:boolean,
-    isFolder:boolean
-}
+type YAMLMockObj = {
+    context:string,
+    status:string,
+};

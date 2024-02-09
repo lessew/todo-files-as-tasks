@@ -4,7 +4,7 @@ import { Status, Context, FilePropertiesMap } from "./FileProperties";
 export class Todo{
     status:Status | false;
     context:Context | false;
-    title:string;
+    private _title:string;
     project:string;
     file:File;
 
@@ -16,14 +16,23 @@ export class Todo{
        this.deriveProjectFromFile();
     }
 
+    get title():string{
+        return this._title;
+    }
+
+    set title(title:string){
+        this._title = title;
+        this.file.setBasename(title);
+    }
+
     private deriveProjectFromFile(){
-        this.project = this.file.getFolderName();
+        this.project = this.file.getFolderNameFromFullPath();
     }
 
     private deriveTitleFromFile(){
-        const basename = this.file.getFileNameWithoutExtension();
+        const basename = this.file.getBasenameFromFullPath();
         //const title = filename.split(".")[0];
-        this.title = basename;
+        this._title = basename;
     }
 
     private deriveStatusFromFile(){

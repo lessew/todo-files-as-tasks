@@ -12,24 +12,12 @@ export class ObsidianFileCollection implements FileCollection{
         this.rootPath = rp;
         this.files = [];
 
-        const files = app.vault.getMarkdownFiles()
+        const files = app.vault.getMarkdownFiles();
         for (let i = 0; i < files.length; i++) {
-             if(this.isMatchingPath(files[i].path,this.rootPath)){
-                const f:File = new ObsidianFile(files[i] as TFile,app);
+            const f:File = new ObsidianFile(files[i] as TFile,app);
+            if(f.pathMatches(this.rootPath)){
                 this.files.push(f);
-             }
+            }
         }
     }
-    
-    isMatchingPath(filepath:string,tomatch:string){
-        if(filepath.startsWith(tomatch)){
-            //console.log(`MATCHES: ${filepath} and ${tomatch}`)
-            return true;
-        }
-        else{
-            //console.log(`Does not match: ${filepath} and ${tomatch}`)
-            return false;
-        }
-    }
-    
 }

@@ -1,18 +1,55 @@
 
-export interface File{
+export abstract class File{
 
     // used
-    path:string;
-    getFileName():string;
-    getFileNameWithoutExtension():string;
-    getYAMLProperty(name:string):string;
+    fullPath:string;
 
-    // not yet used
-    move(newPath:string):void;
-    isFolder():boolean;
-    isMarkdownFile():boolean;
-    isFile():boolean;
-    getFolderName():string;  
-    setYAMLProperty(prop_name:string,prop_value:string):void;
+    constructor(fp:string){
+        this.fullPath = fp;
+    }
+
+    getFileNameFromFullPath():string{
+        return this.fullPath.split("/").reverse()[0];
+    };
+
+    getFileExtensionFromFullPath():string{
+        const s = this.fullPath.split("/").reverse()[0].split(".");
+        if(s.length>1){
+            return "." + s.reverse()[0];
+        }
+        else{
+            return "";
+        }
+    }
+
+    getFolderPathFromFullPath():string{
+        return this.fullPath.substring(0,(this.fullPath.length - this.getFileNameFromFullPath().length))
+    }
+
+    getFolderNameFromFullPath():string{
+        return this.fullPath.split("/").reverse()[1];
+    }
+
+    getBasenameFromFullPath():string{
+        return this.getFileNameFromFullPath().split(".")[0];
+    }
+
+    isMarkdownFile(): boolean {
+        return (this.getFileExtensionFromFullPath() === ".md");
+    }
+
+    setBasename(name:string):void{
+        const newFullPath = this.getFolderPathFromFullPath() + name + this.getFileExtensionFromFullPath();
+        this.move(newFullPath);
+        this.fullPath = newFullPath;
+    }
+
+    pathMatches(needle:string):boolean{
+        return this.fullPath.startsWith(needle);
+    }
+
+    abstract getYAMLProperty(name:string):string;
+    abstract move(newFullPath:string):void;
+    abstract setYAMLProperty(name:string,value:string):void;
     
 }

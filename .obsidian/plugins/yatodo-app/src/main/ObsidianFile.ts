@@ -2,64 +2,36 @@ import {File} from "../core/File";
 import { App, TFile , Vault, CachedMetadata } from "obsidian";
 
 
-export class ObsidianFile implements File{
+export class ObsidianFile extends File{
     file:TFile;
-    path:string;
-    app:App
+    app:App;
 
     constructor(file:TFile,app:App){
-       this.file = file;
-       this.path = file.path;
-       this.app = app;
-       //console.log(this.file)
+        super(file.path);
+        this.file = file;
+        this.app = app;
     }
 
-    getFileName():string{
-        return this.file.name;
-    }
-
-    getFileNameWithoutExtension(){
-        return this.file.basename;
-    }
-
-    isFolder():boolean{
-        return false;
-    }
-
-    getFolderName(): string {
-        if(this.file.parent){
-            return this.file.parent.name;
+    move(newFullPath: string): void {
+        try{
+            this.file.vault.rename(this.file,newFullPath);
         }
-        else{
-            return "<not in a folder>";
+        catch(e){
+            throw new Error("could not move file")
         }
-    }
-
-    isFile(): boolean {
-        return false;
-    }
-
-    move(newPath: string): void {
-        throw Error("to be implemented")  
     }
     
-    isMarkdownFile(): boolean {
-        return (this.file.extension === "md");
-    }
-
     getYAMLProperty(name:string):string{
         let meta:CachedMetadata  = this.app.metadataCache.getFileCache(this.file) as CachedMetadata;
         if(meta.frontmatter && meta.frontmatter[name]){
             return meta.frontmatter[name];
         }
         else{
-            console.log(`Errror: frontmatter value not found in file ${name}`)
             return "";
         }
     }
 
     setYAMLProperty(prop_name: string, prop_value: string): void {
-        //return false;
         throw Error("To be implemented")
     }
 
