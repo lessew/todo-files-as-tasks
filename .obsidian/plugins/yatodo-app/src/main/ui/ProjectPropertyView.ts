@@ -1,7 +1,7 @@
 import { App, Modal } from "obsidian";
 import { Todo } from "src/core/Todo";
 
-export class ProjectProperty{
+export class ProjectPropertyView{
     todo:Todo;
     app:App;
 

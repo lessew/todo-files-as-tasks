@@ -2,8 +2,8 @@ import { File } from "../src/core/File";
 import { MockFile } from "./MockFile";
 import {Status,Context} from "../src/core/FileProperties";
 import { TodoListBuilder } from "../src/core/TodoListBuilder";
-import { FileCollection } from "../src/core/FileCollection";
-import { MockFileCollection } from "./MockFileCollection";
+import { FileAndFolderCollection } from "../src/core/FileAndFolderCollection";
+import { MockFileAndFolderCollection } from "./MockFileCollection";
 import { Query } from "../src/core/Query";
 
 let inputs = [
@@ -52,7 +52,7 @@ inputs.forEach(inp => {
     files.push(aFile);
 })
 
-const fileCollection:FileCollection = new MockFileCollection(files);
+const fileAndFolderCollection:FileAndFolderCollection = new MockFileAndFolderCollection(files);
 
 describe("Todo List Builder - root path is not under test as it is set at filecollection level",() => {
     let tlb:TodoListBuilder;
@@ -65,33 +65,33 @@ describe('Todo List Builder with valid input', () => {
    let tlb:TodoListBuilder;
 
     test('check filter on status next', () => {
-        tlb = new TodoListBuilder(fileCollection);
+        tlb = new TodoListBuilder(fileAndFolderCollection);
         tlb.build({ rootPath:"/home/", status:Status.next} as Query);
         expect(tlb.todos.length).toBe(3);
     });
     test('check filter on status deferred', () => {
-        tlb = new TodoListBuilder(fileCollection);
+        tlb = new TodoListBuilder(fileAndFolderCollection);
         tlb.build({ rootPath:"/home/", status:Status.deferred} as Query);
         expect(tlb.todos.length).toBe(0);
     });
     test('check filter on no status', () => {
-        tlb = new TodoListBuilder(fileCollection);
+        tlb = new TodoListBuilder(fileAndFolderCollection);
         tlb.build({ rootPath:"/home/"} as Query);
         expect(tlb.todos.length).toBe(6);
     });
 
     test('check filter on context deep thinking', () => {
-        tlb = new TodoListBuilder(fileCollection);
+        tlb = new TodoListBuilder(fileAndFolderCollection);
         tlb.build({ rootPath:"/home/", context:Context.deep_thinking} as Query);
         expect(tlb.todos.length).toBe(1);
     });
     test('check filter on context desk', () => {
-        tlb = new TodoListBuilder(fileCollection);
+        tlb = new TodoListBuilder(fileAndFolderCollection);
         tlb.build({ rootPath:"/home/", context:Context.desk} as Query);
         expect(tlb.todos.length).toBe(2);
     });
     test('check filter on no context', () => {
-        tlb = new TodoListBuilder(fileCollection);
+        tlb = new TodoListBuilder(fileAndFolderCollection);
         tlb.build({ rootPath:"/home/"} as Query);
         expect(tlb.todos.length).toBe(6);
     });

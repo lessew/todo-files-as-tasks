@@ -20,6 +20,7 @@ export class Todo{
         return this._title;
     }
 
+    // TODO: rename. does 2 things, hidden file renaming. code smell.
     set title(title:string){
         this._title = title;
         this.file.setBasename(title);

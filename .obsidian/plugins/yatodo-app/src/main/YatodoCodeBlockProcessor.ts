@@ -1,13 +1,13 @@
 import { Parser } from "src/core/Parser";
 import { Query } from "src/core/Query";
 import { YAMLParser} from "src/core/YAMLParser";
-import { FileCollection } from "src/core/FileCollection";
+import { FileAndFolderCollection } from "src/core/FileAndFolderCollection";
 import { TodoListBuilder } from "src/core/TodoListBuilder";
 import { Todo } from "src/core/Todo";
 import { ObsidianView } from "./ui/ObsidianView";
 import * as Yatodo from 'src/core/ui/View';
 
-import { ObsidianFileCollection } from "./ObsidianFileCollection";
+import { ObsidianFileAndFolderCollection } from "./ObsidianFileAndFolderCollection";
 import { App } from "obsidian";
 
 
@@ -17,9 +17,10 @@ export class YatodoCodeBlockProcessor{
 
         const parser:Parser = new YAMLParser();
         const query:Query = parser.parse(source);
-        const fileCollection: FileCollection = new ObsidianFileCollection(query.rootPath,app);
+        const fileAndFolderCollection: FileAndFolderCollection = new ObsidianFileAndFolderCollection(query.rootPath,app);
 
-        const builder:TodoListBuilder = new TodoListBuilder(fileCollection);
+
+        const builder:TodoListBuilder = new TodoListBuilder(fileAndFolderCollection);
         const todos:Todo[]= builder.build(query);
 
         const view:Yatodo.View = new ObsidianView(todos,app);

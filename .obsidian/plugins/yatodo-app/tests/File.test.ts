@@ -1,5 +1,3 @@
-// to be implemented!!
-
 import { Context, Status } from "../src/core/FileProperties";
 import { MockFile } from "./MockFile";
 import { File } from "../src/core/File";
@@ -8,14 +6,14 @@ import { File } from "../src/core/File";
 describe("testing abstract file class: pathMatches function",() => {
     const f:File = new MockFile("/home/errands/jumbo.md",{status:Status.next,context:Context.desk});
 
-    test("matches"),() =>{
+    test("matches",() => {
         expect(f.pathMatches("/home/errands")).toBe(true);
         expect(f.pathMatches("/home/errands/")).toBe(true);
         expect(f.pathMatches("/home/errands/jum")).toBe(true);
         expect(f.pathMatches("")).toBe(true);
         expect(f.pathMatches("/home/shizznet")).toBe(false);
         expect(f.pathMatches("home/errands")).toBe(false);
-    }
+    });
 });
 
 describe('testing abstract file class', () => {

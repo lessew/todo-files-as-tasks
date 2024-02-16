@@ -51,5 +51,4 @@ export abstract class File{
     abstract getYAMLProperty(name:string):string;
     abstract move(newFullPath:string):void;
     abstract setYAMLProperty(name:string,value:string):void;
-    
 }

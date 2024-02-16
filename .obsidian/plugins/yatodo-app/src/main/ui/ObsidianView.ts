@@ -1,8 +1,8 @@
 import { App } from "obsidian";
 import { Todo } from "../../core/Todo";
 import {View} from "../../core/ui/View"
-import { ProjectProperty } from "./ProjectProperty";
-import { TitleProperty } from "./TitleProperty";
+import { ProjectPropertyView } from "./ProjectPropertyView";
+import { TitlePropertyView } from "./TitlePropertyView";
 
 
 export class ObsidianView implements View{
@@ -53,12 +53,12 @@ export class ObsidianView implements View{
     }
  
     private createTitleHTML(todo:Todo,el:HTMLElement):void{
-        const tp = new TitleProperty(todo,this.app);
+        const tp = new TitlePropertyView(todo,this.app);
         tp.build(el);
     }
    
     private createProjectHTML(todo:Todo,el:HTMLElement):void{
-        const pp = new ProjectProperty(todo,this.app);
+        const pp = new ProjectPropertyView(todo,this.app);
         pp.build(el);
     }
 

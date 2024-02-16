@@ -1,12 +1,14 @@
-import { FileCollection } from "../core/FileCollection";
+import { FileAndFolderCollection } from "../core/FileAndFolderCollection";
 import { File } from "../core/File";
-import { Vault,TFile,App } from "obsidian";
+import { Folder } from "src/core/Folder";
+import { TFile,App } from "obsidian";
 import { ObsidianFile } from "./ObsidianFile";
 
-export class ObsidianFileCollection implements FileCollection{
+export class ObsidianFileAndFolderCollection implements FileAndFolderCollection{
 
     rootPath: string | false;
     files:File[];
+    folders:Folder[]; 
     
     constructor(rp:string,app:App){
         this.rootPath = rp;

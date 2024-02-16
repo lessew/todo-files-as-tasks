@@ -1,22 +1,22 @@
 import { Query } from "./Query";
-import { FileCollection } from "./FileCollection";
+import { FileAndFolderCollection } from "./FileAndFolderCollection";
 import { Todo } from "./Todo";
 import { Status, Context } from "./FileProperties";
 import { File } from "./File";
 
 export class TodoListBuilder{
-    fileCollection:FileCollection;
+    fileAndFolderCollection:FileAndFolderCollection;
     todos:Todo[];
 
-    constructor(fc:FileCollection){
-        this.fileCollection = fc;
+    constructor(fc:FileAndFolderCollection){
+        this.fileAndFolderCollection = fc;
         this.loadTodos();
     }
 
     private loadTodos(){
         this.todos = [];
 
-        this.fileCollection.files.forEach(f => {
+        this.fileAndFolderCollection.files.forEach(f => {
             let td:Todo = new Todo(f as File);
             this.todos.push(td);
         })

@@ -1,7 +1,7 @@
 import { App, Modal,Setting } from "obsidian";
 import { Todo } from "src/core/Todo";
 
-export class TitleProperty{
+export class TitlePropertyView{
     todo:Todo;
     app:App;
 
@@ -12,7 +12,7 @@ export class TitleProperty{
 
     build(rootElement:HTMLElement):void{
         let a:HTMLElement = rootElement.createEl("a",{text:this.todo.title});
-        a.addEventListener("click",this); // executes handleEvent
+        a.addEventListener("click",this); // executes this.handleEvent method
     }
 
     handleEvent(event:Event){
