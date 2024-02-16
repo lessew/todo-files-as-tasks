@@ -97,3 +97,11 @@ describe('Todo List Builder with valid input', () => {
     });
 });
 
+describe('Todo List Builder folders found', () => {
+    test('tbi', () => {
+        expect(false).toBe(true);
+    });
+    test('test if folders with no files are also included', () => {
+        expect(false).toBe(true);
+    });
+});
