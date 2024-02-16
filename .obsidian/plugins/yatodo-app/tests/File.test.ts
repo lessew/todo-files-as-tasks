@@ -96,3 +96,24 @@ describe('testing edge cases of abstract file class with file with no extension 
         expect(f.getBasenameFromFullPath()).toBe("shinzet");
     });
 });
+
+
+describe('testing calculateNewTopLevelFolderPath', () => {
+    const f1:File = new MockFile("/home/errands/jumbo",{status:Status.next,context:Context.desk});
+    const f2:File = new MockFile("/home/errands/errands/jumbo",{status:Status.next,context:Context.desk});
+
+    test('calculateNewTopLevelFolderPath valid input', () => {
+        expect(f1.calculateNewTopLevelFolderPath("work")).toBe("/home/work/jumbo");
+    });
+    test('calculateNewTopLevelFolderPath no input', () => {
+        expect(f1.calculateNewTopLevelFolderPath("")).toBe("/home/errands/jumbo");
+    });
+
+    test('calculateNewTopLevelFolderPath two folder in path with same name: valid input', () => {
+        expect(f2.calculateNewTopLevelFolderPath("work")).toBe("/home/errands/work/jumbo");
+    });
+    test('calculateNewTopLevelFolderPath two folder in path with same name: no input', () => {
+        expect(f2.calculateNewTopLevelFolderPath("")).toBe("/home/errands/errands/jumbo");
+    });
+
+});

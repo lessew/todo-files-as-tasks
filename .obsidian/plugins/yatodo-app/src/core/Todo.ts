@@ -5,7 +5,7 @@ export class Todo{
     status:Status | false;
     context:Context | false;
     private _title:string;
-    project:string;
+    private _project:string;
     file:File;
 
     constructor(f:File){
@@ -20,6 +20,15 @@ export class Todo{
         return this._title;
     }
 
+    get project():string{
+        return this._project;
+    }
+
+    set project(folderName:string){
+        this.file.moveToNewToplevelFolder(folderName);
+        this._project = folderName;
+    }
+
     // TODO: rename. does 2 things, hidden file renaming. code smell.
     set title(title:string){
         this._title = title;
@@ -27,7 +36,7 @@ export class Todo{
     }
 
     private deriveProjectFromFile(){
-        this.project = this.file.getFolderNameFromFullPath();
+        this._project = this.file.getFolderNameFromFullPath();
     }
 
     private deriveTitleFromFile(){

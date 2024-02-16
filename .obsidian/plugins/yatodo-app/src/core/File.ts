@@ -48,7 +48,27 @@ export abstract class File{
         return this.fullPath.startsWith(needle);
     }
 
+    moveToNewToplevelFolder(folderName:string){
+        const newPath = this.calculateNewTopLevelFolderPath(folderName);
+        this.move(newPath);
+    }
+
+    calculateNewTopLevelFolderPath(topLevelFolder:string):string{
+        if(topLevelFolder==""){
+            return this.fullPath;
+        }
+        const currentPath = this.fullPath;
+        const strSplit = currentPath.split("/");
+        const FOLDER_INDEX = (strSplit.length - 2);
+        strSplit[FOLDER_INDEX] = topLevelFolder;
+        const newFolderPath = strSplit.join("/");
+
+
+        return newFolderPath;
+    }
+
     abstract getYAMLProperty(name:string):string;
     abstract move(newFullPath:string):void;
+
     abstract setYAMLProperty(name:string,value:string):void;
 }

@@ -4,6 +4,7 @@ import { YAMLParser} from "src/core/YAMLParser";
 import { FileAndFolderCollection } from "src/core/FileAndFolderCollection";
 import { TodoListBuilder } from "src/core/TodoListBuilder";
 import { Todo } from "src/core/Todo";
+import { Folder } from "src/core/Folder";
 import { ObsidianView } from "./ui/ObsidianView";
 import * as Yatodo from 'src/core/ui/View';
 
@@ -17,15 +18,16 @@ export class YatodoCodeBlockProcessor{
 
         const parser:Parser = new YAMLParser();
         const query:Query = parser.parse(source);
-        const fileAndFolderCollection: FileAndFolderCollection = new ObsidianFileAndFolderCollection(query.rootPath,app);
+        const fileAndFolderCollection: FileAndFolderCollection = 
+                new ObsidianFileAndFolderCollection(query.rootPath,app);
 
 
         const builder:TodoListBuilder = new TodoListBuilder(fileAndFolderCollection);
+        const folders:Folder[] = fileAndFolderCollection.folders;
         const todos:Todo[]= builder.build(query);
 
-        const view:Yatodo.View = new ObsidianView(todos,app);
+        const view:Yatodo.View = new ObsidianView(todos,folders,app);
         view.build(el); // Code smell: rootElement already attached, no need to fetch it's return 
-
 
     }
 }

@@ -1,16 +1,19 @@
 import { App } from "obsidian";
 import { Todo } from "../../core/Todo";
-import {View} from "../../core/ui/View"
+import { Folder } from "../../core/Folder"
+import { View } from "../../core/ui/View"
 import { ProjectPropertyView } from "./ProjectPropertyView";
 import { TitlePropertyView } from "./TitlePropertyView";
 
 
 export class ObsidianView implements View{
     todos: Todo[];
+    folders: Folder[];
     app:App;
 
-    constructor(tl:Todo[],app:App){
+    constructor(tl:Todo[],folders:Folder[], app:App){
         this.todos = tl;
+        this.folders = folders;
         this.app = app;
     }
 
@@ -58,7 +61,7 @@ export class ObsidianView implements View{
     }
    
     private createProjectHTML(todo:Todo,el:HTMLElement):void{
-        const pp = new ProjectPropertyView(todo,this.app);
+        const pp = new ProjectPropertyView(todo,this.folders,this.app);
         pp.build(el);
     }
 

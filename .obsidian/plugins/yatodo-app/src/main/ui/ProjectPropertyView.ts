@@ -1,13 +1,16 @@
-import { App, Modal } from "obsidian";
+import { App, Modal, Notice, SuggestModal } from "obsidian";
 import { Todo } from "src/core/Todo";
+import { Folder } from "src/core/Folder";
 
 export class ProjectPropertyView{
     todo:Todo;
     app:App;
+    folders:Folder[];
 
-    constructor(todo:Todo,app:App){
+    constructor(todo:Todo,folders:Folder[], app:App){
         this.todo = todo;
         this.app = app;
+        this.folders = folders;
     }
 
     build(rootElement:HTMLElement):void{
@@ -16,26 +19,42 @@ export class ProjectPropertyView{
     }
 
     handleEvent(event:Event){
-        const m:SelectProjectModal =  new SelectProjectModal(this.app);
+        const m:SelectProjectModal =  new SelectProjectModal(this.todo, this.folders,this.app);
         m.open();
-        console.log(event.type);
-        console.log(this.todo);
-        //console.log(`selected: ${title}`);
+    
+      
     }
 }
 
-export class SelectProjectModal extends Modal{
-    constructor(app: App) {
+export class SelectProjectModal extends SuggestModal<Folder>{
+
+    todo:Todo;
+    folders: Folder[];
+
+    constructor(todo:Todo, folders:Folder[], app: App) {
         super(app);
+        this.folders = folders;
+        this.todo = todo;
     }
-    
-    onOpen() {
-        let { contentEl } = this;
-        contentEl.setText("Look at me, I'm a modal! 👀");
+        
+    getSuggestions(query: string): Folder[] | Promise<Folder[]> {
+        console.log(this.folders);
+        console.log(query);
+        return this.folders.filter((folder) =>
+                folder.name.toLowerCase().includes(query.toLowerCase())
+        );
     }
-    
-    onClose() {
-        let { contentEl } = this;
-        contentEl.empty();
+
+    renderSuggestion(value: Folder, el: HTMLElement) {
+        el.createEl("div", { text: value.name });
+        //el.createEl("small", { text: book.author });
+    }
+
+    onChooseSuggestion(item: Folder, evt: MouseEvent | KeyboardEvent) {
+        this.todo.project = item.name;
+        //new Notice(`Selected ${item.name}`);
+        console.log(this);
+          // @ts-ignore
+          this.app.workspace.activeLeaf.rebuildView();
     }
 }

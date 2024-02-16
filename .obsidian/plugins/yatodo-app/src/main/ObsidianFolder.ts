@@ -2,7 +2,10 @@ import { Folder } from "src/core/Folder";
 
 
 export class ObsidianFolder extends Folder{
-    test(){
-        // nothing
+    name:string;
+
+    constructor(name:string){
+        super();
+        this.name = name;
     }
 }
