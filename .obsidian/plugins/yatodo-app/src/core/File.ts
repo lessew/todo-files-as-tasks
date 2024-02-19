@@ -1,8 +1,10 @@
+import { YaTodoApp } from "./YaTodoApp";
 
 export abstract class File{
 
     // used
     fullPath:string;
+    app:YaTodoApp;
 
     constructor(fp:string){
         this.fullPath = fp;

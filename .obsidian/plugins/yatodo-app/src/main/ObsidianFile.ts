@@ -4,12 +4,12 @@ import { App, TFile , Vault, CachedMetadata } from "obsidian";
 
 export class ObsidianFile extends File{
     file:TFile;
-    app:App;
+    obsidianApp:App;
 
-    constructor(file:TFile,app:App){
+    constructor(file:TFile,obsidianApp:App){
         super(file.path);
         this.file = file;
-        this.app = app;
+        this.obsidianApp = obsidianApp;
     }
 
     move(newFullPath: string): void {
@@ -22,7 +22,7 @@ export class ObsidianFile extends File{
     }
     
     getYAMLProperty(name:string):string{
-        let meta:CachedMetadata  = this.app.metadataCache.getFileCache(this.file) as CachedMetadata;
+        let meta:CachedMetadata  = this.obsidianApp.metadataCache.getFileCache(this.file) as CachedMetadata;
         if(meta.frontmatter && meta.frontmatter[name]){
             return meta.frontmatter[name];
         }

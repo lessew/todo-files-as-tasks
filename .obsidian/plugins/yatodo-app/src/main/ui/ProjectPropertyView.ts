@@ -21,8 +21,6 @@ export class ProjectPropertyView{
     handleEvent(event:Event){
         const m:SelectProjectModal =  new SelectProjectModal(this.todo, this.folders,this.app);
         m.open();
-    
-      
     }
 }
 
