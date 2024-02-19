@@ -1,15 +1,5 @@
 import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting, View, parseFrontMatterAliases } from 'obsidian';
-/*
-import { Parser } from 'src/Parser';
-import { YAMLParser } from 'src/YAMLParser'
-import { Query } from 'src/Query';
-import { TodoListBuilder } from 'src/TodoListBuilder';
-import * as Yatodo from 'src/View'
-import { FileCollection } from 'src/FileCollection';
-import { ObsidianFileCollection } from 'src/ObsidianFileCollection';
-import { Todo} from 'src/Todo';
-*/
-import { YatodoCodeBlockProcessor } from 'src/main/YatodoCodeBlockProcessor';
+import { ObsidianYatodoApp } from 'src/main/ObsidianYatodoApp';
 
 
 interface YaTodoPluginSettings {
@@ -28,7 +18,8 @@ export default class YaTodoPlugin extends Plugin {
 		await this.loadSettings();
 
 		this.registerMarkdownCodeBlockProcessor("yatodo", (source, el, ctx) => {
-			YatodoCodeBlockProcessor.processYAML(source,el,this.app);
+			let obsidianYatodoApp:ObsidianYatodoApp = new ObsidianYatodoApp(this.app);
+			obsidianYatodoApp.executeCommand(source,el);
 		});
 
 		// This creates an icon in the left ribbon.
