@@ -3,7 +3,7 @@ import { Status, Context, FilePropertiesMap } from "./FileProperties";
 
 export class Todo{
     status:Status | false;
-    private _context:Context | false;
+    private _context:Context;
     private _title:string;
     private _project:string;
     file:File;
@@ -37,10 +37,10 @@ export class Todo{
 
     set context(c:Context){
         this._context = c;
-        this.file.setYAMLProperty("context",c as string);
+        this.file.setYAMLProperty(FilePropertiesMap.context,c as string);
     }
 
-    get context():Context | false{
+    get context():Context{
         return this._context;
     }
 
@@ -50,7 +50,6 @@ export class Todo{
 
     private deriveTitleFromFile(){
         const basename = this.file.getBasenameFromFullPath();
-        //const title = filename.split(".")[0];
         this._title = basename;
     }
 
@@ -60,8 +59,7 @@ export class Todo{
             this.status = result as Status;
         }
         else{
-            this.status = false;
-            //throw error(`Status ${result} is a non valid status. Error`)
+            this.status = Status.none;
         }
     }
 
@@ -71,8 +69,7 @@ export class Todo{
             this._context = result as Context;
         }
         else{
-            this._context = false;
-            //throw error(`Context ${result} is a non valid status. Error`)
+            this._context = Context.none;
         }
     }
 }

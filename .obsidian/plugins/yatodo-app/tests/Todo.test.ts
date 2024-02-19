@@ -44,11 +44,13 @@ let mf:File = new MockFile(input.path,input.yaml);
 let todo = new Todo(mf);
 
   test('test if status gives errors',() => {
-      expect(todo.status).toBe(false);
+      expect(todo.status).toBe(Status.none);
   });
 
   test('test if context gives errors',() => {
-    expect(todo.context).toBe(false);
+    expect(todo.context).toBe(Context.none);
+
+    //expect(new Todo(mf)).toThrow(`Context invalid is a non valid status. Error`);
   });
 
   test('test if context deep thinking is successfully read',() => {
