@@ -1,5 +1,5 @@
 import {File} from "../core/File";
-import { App, TFile , Vault, CachedMetadata } from "obsidian";
+import { App, TFile , Vault, CachedMetadata, FileManager } from "obsidian";
 
 
 export class ObsidianFile extends File{
@@ -31,8 +31,10 @@ export class ObsidianFile extends File{
         }
     }
 
-    setYAMLProperty(prop_name: string, prop_value: string): void {
-        throw Error("To be implemented")
+    setYAMLProperty(name: string, value: string): void {
+        this.obsidianApp.fileManager.processFrontMatter(this.file,(frontmatter) => {
+            frontmatter[name] = value;
+        })
     }
 
 }

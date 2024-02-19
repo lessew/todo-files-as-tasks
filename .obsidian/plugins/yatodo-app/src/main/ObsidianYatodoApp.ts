@@ -37,6 +37,6 @@ export class ObsidianYatodoApp extends YaTodoApp{
         const todos:Todo[]= builder.build(this.query);
 
         const view:Yatodo.View = new ObsidianView(todos,folders,this.obsidianApp);
-        view.build(el); // Code smell: rootElement already attached, no need to fetch it's return 
+        view.build(el); 
     }
 }

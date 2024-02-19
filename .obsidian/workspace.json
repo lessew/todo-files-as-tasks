@@ -13,26 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Welcome.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "1a4ff5c1404fd001",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "TEST file.md",
-                "mode": "source",
-                "source": false
+                "file": "yatodo-examples/All todos.md",
+                "mode": "preview",
+                "source": true
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -98,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TEST file.md",
+                "file": "yatodo-examples/All todos.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "TEST file.md",
+                "file": "yatodo-examples/All todos.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TEST file.md"
+                "file": "yatodo-examples/All todos.md"
               }
             }
           }
@@ -161,9 +148,21 @@
       "yatodo.app-plugin:Greet": false
     }
   },
-  "active": "1a4ff5c1404fd001",
+  "active": "614d54253bb1ab1d",
   "lastOpenFiles": [
+    "TEST file.md",
+    "yatodo-examples/All todos.md",
+    "todo-home/finance/asdf.md",
+    "todo-home/finance/aaaa.md",
+    "todo-home/finance/nog een twee.md",
+    "todo-home/finance/todo 3.md",
+    "todo-home/finance/todo-test-class-tester-file 1.md",
+    "todo-home/errands/1111.md",
+    "todo-home/errands/aaaa.md",
     "Welcome.md",
-    "TEST file.md"
+    "yatodo-examples",
+    "todo-home/finance",
+    "todo-home/errands",
+    "todo-home"
   ]
 }

@@ -4,6 +4,7 @@ import { Folder } from "../../core/Folder"
 import { View } from "../../core/ui/View"
 import { ProjectPropertyView } from "./ProjectPropertyView";
 import { TitlePropertyView } from "./TitlePropertyView";
+import { ContextPropertyView } from "./ContextPropertyView";
 
 
 export class ObsidianView implements View{
@@ -66,7 +67,8 @@ export class ObsidianView implements View{
     }
 
     private createContextHTML(todo:Todo,el:HTMLElement):void{
-        el.createEl("a",{text:todo.context as string});
+        const cc = new ContextPropertyView(todo,this.app);
+        cc.build(el);
     }
 
     private createStatusHTML(todo:Todo,el:HTMLElement):void{

@@ -3,7 +3,7 @@ import { Status, Context, FilePropertiesMap } from "./FileProperties";
 
 export class Todo{
     status:Status | false;
-    context:Context | false;
+    private _context:Context | false;
     private _title:string;
     private _project:string;
     file:File;
@@ -35,6 +35,15 @@ export class Todo{
         this.file.setBasename(title);
     }
 
+    set context(c:Context){
+        this._context = c;
+        this.file.setYAMLProperty("context",c as string);
+    }
+
+    get context():Context | false{
+        return this._context;
+    }
+
     private deriveProjectFromFile(){
         this._project = this.file.getFolderNameFromFullPath();
     }
@@ -59,10 +68,10 @@ export class Todo{
     private deriveContextFromFile(){
         let result:string = this.file.getYAMLProperty(FilePropertiesMap.context);
         if(result in Context){ // only works without spaces in context
-            this.context = result as Context;
+            this._context = result as Context;
         }
         else{
-            this.context = false;
+            this._context = false;
             //throw error(`Context ${result} is a non valid status. Error`)
         }
     }
