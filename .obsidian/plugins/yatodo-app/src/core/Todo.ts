@@ -2,7 +2,7 @@ import { File } from "./File";
 import { Status, Context, FilePropertiesMap } from "./FileProperties";
 
 export class Todo{
-    status:Status | false;
+    private _status:Status;
     private _context:Context;
     private _title:string;
     private _project:string;
@@ -40,8 +40,17 @@ export class Todo{
         this.file.setYAMLProperty(FilePropertiesMap.context,c as string);
     }
 
+    set status(s:Status){
+        this._status = s;
+        this.file.setYAMLProperty(FilePropertiesMap.status,s as string);
+    }
+
     get context():Context{
         return this._context;
+    }
+
+    get status():Status{
+        return this._status;
     }
 
     private deriveProjectFromFile(){
@@ -56,10 +65,10 @@ export class Todo{
     private deriveStatusFromFile(){
         let result:string = this.file.getYAMLProperty(FilePropertiesMap.status);
         if(result in Status){
-            this.status = result as Status;
+            this._status = result as Status;
         }
         else{
-            this.status = Status.none;
+            this._status = Status.none;
         }
     }
 
