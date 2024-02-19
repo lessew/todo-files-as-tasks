@@ -5,6 +5,7 @@ import { View } from "../../core/ui/View"
 import { ProjectPropertyView } from "./ProjectPropertyView";
 import { TitlePropertyView } from "./TitlePropertyView";
 import { ContextPropertyView } from "./ContextPropertyView";
+import { StatusPropertyView } from "./StatusPropertyView";
 
 
 export class ObsidianView implements View{
@@ -72,7 +73,8 @@ export class ObsidianView implements View{
     }
 
     private createStatusHTML(todo:Todo,el:HTMLElement):void{
-        el.createEl("a",{text:todo.status as string});
+        const ss = new StatusPropertyView(todo,this.app);
+        ss.build(el);
     }
 
 }
