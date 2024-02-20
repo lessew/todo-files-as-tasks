@@ -150,10 +150,24 @@
   },
   "active": "614d54253bb1ab1d",
   "lastOpenFiles": [
-    "TEST file.md",
+    "todo-home/bugs/rootpath is not respected in yaml config when selecting project.md",
     "yatodo-examples/All todos.md",
-    "todo-home/finance/todo-test-class-tester-file 1.md",
+    "todo-home/bugs/Project does not show in suggester if it has no todos.md",
+    "todo-home/features/Add field is journal.md",
+    "todo-home/features/Add field starred.md",
+    "todo-home/features/Todo fields in detail page.md",
+    "todo-home/features/Create new todo.md",
+    "todo-home/architecture-design/Update Context and Status.md",
+    "TEST file.md",
+    "todo-home/release",
+    "todo-home/New folder",
+    "todo-home/architecture-design",
+    "todo-home/design",
+    "todo-home/refactor",
+    "todo-home/features",
+    "todo-home/bugs",
     "todo-home/finance/asdf.md",
+    "todo-home/finance/todo-test-class-tester-file 1.md",
     "todo-home/finance/aaaa.md",
     "todo-home/finance/nog een twee.md",
     "todo-home/finance/todo 3.md",
@@ -162,7 +176,6 @@
     "Welcome.md",
     "yatodo-examples",
     "todo-home/finance",
-    "todo-home/errands",
-    "todo-home"
+    "todo-home/errands"
   ]
 }

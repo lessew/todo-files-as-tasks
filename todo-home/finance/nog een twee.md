@@ -1,4 +1,0 @@
----
-context: read
-status: inbox
----

@@ -1,4 +1,5 @@
 ---
-status: inbox
+status: next
 context: desk
 ---
+

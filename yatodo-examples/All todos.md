@@ -6,16 +6,6 @@ domain: todo-home
 projects: errands
 ```
 
-
-# Context: Desk
-
-```yatodo
-rootPath: todo-home/
-domain: todo-home
-projects: errands
-context: desk
-```
-
 # Status: Inbox
 
 ```yatodo
@@ -24,10 +14,25 @@ domain: todo-home
 status: inbox
 ```
 
-# Project: finance
+# New features
 
 ```yatodo
-rootPath: todo-home/finance
+rootPath: todo-home/features
+domain: todo-home
+```
+
+# Project: architecture design
+
+```yatodo
+rootPath: todo-home/architecture-design
+domain: todo-home
+```
+
+# Bugs
+
+
+```yatodo
+rootPath: todo-home/bugs
 domain: todo-home
 ```
 
