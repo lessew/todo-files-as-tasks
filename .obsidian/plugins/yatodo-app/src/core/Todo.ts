@@ -1,5 +1,5 @@
 import { File } from "./File";
-import { Status, Context, FilePropertiesMap } from "./FileProperties";
+import { Status, Context, ContextHumanRedeadableHelper, StatusHumanRedeadableHelper } from "./FileProperties";
 
 export class Todo{
     private _status:Status;
@@ -37,12 +37,12 @@ export class Todo{
 
     set context(c:Context){
         this._context = c;
-        this.file.setYAMLProperty(FilePropertiesMap.context,c as string);
+        this.file.setYAMLProperty(ContextHumanRedeadableHelper.getFieldId(),c as string);
     }
 
     set status(s:Status){
         this._status = s;
-        this.file.setYAMLProperty(FilePropertiesMap.status,s as string);
+        this.file.setYAMLProperty(StatusHumanRedeadableHelper.getFieldId(),s as string);
     }
 
     get context():Context{
@@ -63,7 +63,7 @@ export class Todo{
     }
 
     private deriveStatusFromFile(){
-        let result:string = this.file.getYAMLProperty(FilePropertiesMap.status);
+        let result:string = this.file.getYAMLProperty(StatusHumanRedeadableHelper.getFieldId());
         if(result in Status){
             this._status = result as Status;
         }
@@ -73,7 +73,7 @@ export class Todo{
     }
 
     private deriveContextFromFile(){
-        let result:string = this.file.getYAMLProperty(FilePropertiesMap.context);
+        let result:string = this.file.getYAMLProperty(ContextHumanRedeadableHelper.getFieldId());
         if(result in Context){ // only works without spaces in context
             this._context = result as Context;
         }

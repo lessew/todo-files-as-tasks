@@ -1,7 +1,7 @@
 import { App, MarkdownView, Modal, Notice, SuggestModal } from "obsidian";
 import { Todo } from "src/core/Todo";
 import { Folder } from "src/core/Folder";
-import { Context } from "src/core/FileProperties";
+import { Context, ContextHumanRedeadableHelper } from "src/core/FileProperties";
 
 export class ContextPropertyView{
     todo:Todo;
@@ -13,7 +13,8 @@ export class ContextPropertyView{
     }
 
     build(rootElement:HTMLElement):void{
-        let a:HTMLElement = rootElement.createEl("a",{text:this.todo.context as string});
+        const contextHumanReadable = ContextHumanRedeadableHelper.getHumanReadableValue(this.todo.context);
+        let a:HTMLElement = rootElement.createEl("a",{text:contextHumanReadable as string});
         a.addEventListener("click",this); // executes handleEvent
     }
 
@@ -40,7 +41,8 @@ export class SelectContextModal extends SuggestModal<Context>{
     }
 
     renderSuggestion(value: Context, el: HTMLElement) {
-        el.createEl("div", { text: value });
+        const show = ContextHumanRedeadableHelper.getHumanReadableValue(value);
+        el.createEl("div", { text: show });
     }
 
     onChooseSuggestion(item: Context, evt: MouseEvent | KeyboardEvent) {

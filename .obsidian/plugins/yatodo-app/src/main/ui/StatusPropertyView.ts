@@ -1,7 +1,7 @@
 import { App, MarkdownView, Modal, Notice, SuggestModal } from "obsidian";
 import { Todo } from "src/core/Todo";
 import { Folder } from "src/core/Folder";
-import { Status } from "src/core/FileProperties";
+import { Status, StatusHumanRedeadableHelper } from "src/core/FileProperties";
 
 export class StatusPropertyView{
     todo:Todo;
@@ -13,7 +13,8 @@ export class StatusPropertyView{
     }
 
     build(rootElement:HTMLElement):void{
-        let a:HTMLElement = rootElement.createEl("a",{text:this.todo.status as string});
+        const StatusHumanRedeadable = StatusHumanRedeadableHelper.getHumanReadableValue(this.todo.status);
+        let a:HTMLElement = rootElement.createEl("a",{text:StatusHumanRedeadable as string});
         a.addEventListener("click",this); // executes handleEvent
     }
 
@@ -39,7 +40,8 @@ export class SelectStatusModal extends SuggestModal<Status>{
     }
 
     renderSuggestion(value: Status, el: HTMLElement) {
-        el.createEl("div", { text: value });
+        const StatusHumanRedeadable = StatusHumanRedeadableHelper.getHumanReadableValue(value);
+        el.createEl("div", { text: StatusHumanRedeadable });
     }
 
     onChooseSuggestion(item: Status, evt: MouseEvent | KeyboardEvent) {
