@@ -1,14 +1,16 @@
 import { File } from "./File";
 import { Folder } from "./Folder";
+import { YaTodoApp } from "./YaTodoApp";
 
-export abstract class FileAndFolderCollection{
+export class FileAndFolderCollection{
     rootPath: string;
     files:File[];
     folders:Folder[]; 
     _folderBucket: any;
+    yatodoApp:YaTodoApp;
 
-    constructor(){
-    
+    constructor(yatodoApp:YaTodoApp){
+        this.yatodoApp = yatodoApp;
     }
 
     build(rp:string):void{
@@ -38,8 +40,9 @@ export abstract class FileAndFolderCollection{
         this.files.push(f);
     }
 
-
-    abstract getAllMarkdowndownFiles():File[];
+    getAllMarkdowndownFiles():File[]{
+        return this.yatodoApp.getAllMarkdowndownFiles();
+    }
 
 }
 

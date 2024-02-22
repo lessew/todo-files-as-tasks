@@ -21,7 +21,7 @@ export class ObsidianFile extends File{
         }
     }
     
-    getYAMLProperty(name:string):string{
+    getYAMLProperty(name:string): string {
         let meta:CachedMetadata  = this.obsidianApp.metadataCache.getFileCache(this.file) as CachedMetadata;
         if(meta.frontmatter && meta.frontmatter[name]){
             return meta.frontmatter[name];

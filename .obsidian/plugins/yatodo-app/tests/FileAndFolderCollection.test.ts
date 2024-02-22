@@ -1,7 +1,8 @@
 import { File } from "../src/core/File";
 import { MockFile } from "./MockFile";
 import {Status,Context} from "../src/core/FileProperties";
-import { MockFileAndFolderCollection } from "./MockFileAndFolderCollection";
+import { MockYatodoApp } from "./MockYatodoApp";
+import { FileAndFolderCollection } from "../src/core/FileAndFolderCollection";
 
 let inputs = [
     {
@@ -50,10 +51,17 @@ inputs.forEach(inp => {
 })
 
 
+let mockYatodoApp:MockYatodoApp = new MockYatodoApp();
+mockYatodoApp.setMarkdownFiles(files);
+
+let fileAndFolderCollection:FileAndFolderCollection = new FileAndFolderCollection(mockYatodoApp);
+fileAndFolderCollection.build("/home/");
+
 
 describe('testing valid input', () => {
-    let fafc = new MockFileAndFolderCollection(files);
    
+    let fafc:FileAndFolderCollection = new FileAndFolderCollection(mockYatodoApp);
+
      test('check if number of files is correct', () => {
         fafc.build("/home/");
          expect(fafc.files.length).toBe(5);

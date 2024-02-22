@@ -1,9 +1,9 @@
-import { App, CachedMetadata, TFile } from "obsidian";
+import { App, TFile } from "obsidian";
 import { FileAndFolderCollection } from "src/core/FileAndFolderCollection";
 import { Parser } from "src/core/Parser";
 import { Query } from "src/core/Query";
 import { YAMLParser } from "src/core/YAMLParser";
-import { ObsidianFileAndFolderCollection } from "./ObsidianFileAndFolderCollection";
+//import { ObsidianFileAndFolderCollection } from "./ObsidianFileAndFolderCollection";
 import { TodoListBuilder } from "src/core/TodoListBuilder";
 import { Folder } from "src/core/Folder";
 import { Todo } from "src/core/Todo";
@@ -29,8 +29,11 @@ export class ObsidianYatodoApp extends YaTodoApp{
         this.query = this.parser.parse(source);
         this.rootElement = el;
 
-        const fileAndFolderCollection: FileAndFolderCollection = 
-        new ObsidianFileAndFolderCollection(this.query.rootPath,this.obsidianApp);
+        //const fileAndFolderCollection: FileAndFolderCollection = 
+        //new ObsidianFileAndFolderCollection(this.query.rootPath,this.obsidianApp);
+
+        const fileAndFolderCollection:FileAndFolderCollection = new FileAndFolderCollection(this);
+        fileAndFolderCollection.build(this.query.rootPath);
 
         const builder:TodoListBuilder = new TodoListBuilder(fileAndFolderCollection);
         const folders:Folder[] = fileAndFolderCollection.folders;
@@ -38,5 +41,15 @@ export class ObsidianYatodoApp extends YaTodoApp{
 
         const view:Yatodo.View = new ObsidianView(todos,folders,this.obsidianApp);
         view.build(el); 
+    }
+
+    getAllMarkdowndownFiles():File[]{
+        const tf:TFile[] = this.obsidianApp.vault.getMarkdownFiles();
+        let files:File[] = [];
+        tf.forEach(aFile => {
+            const newFile:File = new ObsidianFile(aFile,this.obsidianApp);
+            files.push(newFile)
+        })
+        return files;
     }
 }

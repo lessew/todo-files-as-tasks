@@ -1,11 +1,4 @@
 
-
-```yatodo
-rootPath: todo-home/
-domain: todo-home
-projects: errands
-```
-
 # Status: Inbox
 
 ```yatodo
@@ -37,8 +30,12 @@ domain: todo-home
 ```
 
 
+# All 
 
-| gewone | tabel|
-| --- | --- |
-| cell1 |cell2  |
 
+
+```yatodo
+rootPath: todo-home/
+domain: todo-home
+projects: errands
+```

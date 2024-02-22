@@ -3,8 +3,8 @@ import { MockFile } from "./MockFile";
 import {Status,Context} from "../src/core/FileProperties";
 import { TodoListBuilder } from "../src/core/TodoListBuilder";
 import { FileAndFolderCollection } from "../src/core/FileAndFolderCollection";
-import { MockFileAndFolderCollection } from "./MockFileAndFolderCollection";
 import { Query } from "../src/core/Query";
+import { MockYatodoApp } from "./MockYatodoApp";
 
 let inputs = [
     {
@@ -52,7 +52,10 @@ inputs.forEach(inp => {
     files.push(aFile);
 })
 
-const fileAndFolderCollection:FileAndFolderCollection = new MockFileAndFolderCollection(files);
+let mockYatodoApp:MockYatodoApp = new MockYatodoApp();
+mockYatodoApp.setMarkdownFiles(files);
+
+let fileAndFolderCollection:FileAndFolderCollection = new FileAndFolderCollection(mockYatodoApp);
 fileAndFolderCollection.build("/home/");
 
 
