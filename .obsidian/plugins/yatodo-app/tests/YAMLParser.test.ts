@@ -2,7 +2,6 @@ import { Parser } from "../src/core/Parser";
 import { YAMLParser } from "../src/core/YAMLParser";
 import { Query } from "../src/core/Query";
 import {Context,Status} from "../src/core/FileProperties";
-import { YAMLException } from "js-yaml";
 
 const correctlyFormatted = `
 rootPath: .
