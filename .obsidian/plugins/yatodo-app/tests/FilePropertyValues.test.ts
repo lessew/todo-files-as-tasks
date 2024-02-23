@@ -1,5 +1,3 @@
-import { YaTodoApp } from "src/core/YaTodoApp";
-import { TestMockYatodoApp } from "./mainMockTestApp/TestMockYatodoApp";
 import { ValidStatusValues } from "../src/core/FileProperties";
 
 describe('FilePropertyValues Values', () => {

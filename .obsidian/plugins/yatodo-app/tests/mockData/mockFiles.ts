@@ -4,47 +4,36 @@ import { File } from "../../src/core/File";
 
 let inputs = [
     {
-        path:"/root/errands/jumbo.md",
-        yaml: {status:mockStatusIdValues.inbox,context:mockContextIdValues.desk},
-        project:"errands",
-        title:"jumbo"
+        path:"/ROOT/errands/jumbo.md",
+        yaml: {status:mockStatusIdValues.inbox,context:mockContextIdValues.desk}
     },
     {
         path:"/home/errands/hema.md",
-        yaml: {status:mockStatusIdValues.inbox,context:mockContextIdValues.desk},
-        project:"errands",
-        title:"hema"
+        yaml: {status:mockStatusIdValues.inbox,context:mockContextIdValues.desk}
     },
     {
         path:"/home/errands/diswash.md",
-        yaml: {status:mockStatusIdValues.inbox,context:mockContextIdValues.phone},
-        project:"errands",
-        title:"diswash"
+        yaml: {status:mockStatusIdValues.inbox,context:mockContextIdValues.deep_thinking}
     },
     {
         path:"/home/finance/pay-erik.md",
-        yaml: {status:mockStatusIdValues.done,context:mockContextIdValues.phone},
-        project:"finance",
-        title:"hema"
+        yaml: {status:mockStatusIdValues.done,context:mockContextIdValues.deep_thinking}
     },
     {
         path:"/home/hobby/play-with-duplo.md",
-        yaml: {status:mockStatusIdValues.done,context:mockContextIdValues.deep_thinking},
-        project:"hobby",
-        title:"play-with-duplo"
+        yaml: {status:mockStatusIdValues.done,context:mockContextIdValues.deep_thinking}
     },
     {
         path:"/home/hobby/football.md",
-        yaml: {status:mockStatusIdValues.inbox,context:mockContextIdValues.read},
-        project:"hobby",
-        title:"football"
+        yaml: {status:mockStatusIdValues.inbox,context:mockContextIdValues.desk}
     }
 ]
 
 const mockFiles:File[] = [];
 inputs.forEach(inp => {
-    const aFile:File = new TestMockFile(inp.path,inp.yaml);
-    mockFiles.push(aFile);
+    const aFile:TestMockFile = new TestMockFile(inp.path);
+    aFile.loadYaml(inp.yaml);
+    mockFiles.push(aFile as File);
 })
 
 export {mockFiles};

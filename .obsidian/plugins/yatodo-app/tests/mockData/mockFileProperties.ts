@@ -2,42 +2,23 @@ import { ValidContextValues, ValidStatusValues } from "../../src/core/FileProper
 
 export enum mockStatusIdValues {
     inbox = "inbox",
-    done="done",
-    waiting_for="waiting_for",
-    next="next",
-    deferred="deferred"
-}
-
-export enum mockStatusHumanReadableValues {
-    inbox = "Inbox",
-    done="Done",
-    waiting_for="Waiting For",
-    next="Next",
-    deferred="Deferred"
+    done="done"
 }
 
 export enum mockContextIdValues {
     desk = "desk",
-    deep_thinking = "deep_thinking",
-    phone = "phone",
-    read = "read"
+    deep_thinking = "deep_thinking"
 }
 
-export enum mockContextHumanReadableValues {
-    desk = "Desk",
-    deep_thinking = "Deep Thinking",
-    phone = "Phone",
-    read = "Read"
-}
 
-let statusValuesInboxDone = new ValidStatusValues();
-statusValuesInboxDone.addValue(mockStatusIdValues.inbox,mockStatusHumanReadableValues.inbox);
-statusValuesInboxDone.addValue(mockStatusIdValues.done,mockStatusHumanReadableValues.done);
+let validStatusValuesInboxDone = new ValidStatusValues();
+validStatusValuesInboxDone.addValue(mockStatusIdValues.inbox,mockStatusIdValues.inbox);
+validStatusValuesInboxDone.addValue(mockStatusIdValues.done,mockStatusIdValues.done);
 
-let contextValuesDeskDeepThinking = new ValidContextValues();
-contextValuesDeskDeepThinking.addValue(mockContextIdValues.desk,mockContextHumanReadableValues.desk);
-contextValuesDeskDeepThinking.addValue(mockContextIdValues.deep_thinking,mockContextHumanReadableValues.deep_thinking);
+let validContextValuesDeskDeepThinking = new ValidContextValues();
+validContextValuesDeskDeepThinking.addValue(mockContextIdValues.desk,mockContextIdValues.desk);
+validContextValuesDeskDeepThinking.addValue(mockContextIdValues.deep_thinking,mockContextIdValues.deep_thinking);
 
-export {statusValuesInboxDone};
-export {contextValuesDeskDeepThinking};
+export {validStatusValuesInboxDone};
+export {validContextValuesDeskDeepThinking};
 

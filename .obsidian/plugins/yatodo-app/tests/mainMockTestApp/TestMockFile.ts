@@ -5,9 +5,12 @@ import { Status, Context } from "../../src/core/FileProperties";
 export class TestMockFile extends File{
     yaml:{context:Context,status:Status};
 
-    constructor(fullPath:string,yaml:{context:Context,status:Status}){
+    constructor(fullPath:string){
         super(fullPath);
-        this.yaml = yaml;
+    }
+
+    loadYaml(yaml:{context:Context,status:Status}):void{
+        this.yaml = yaml
     }
 
     getYAMLProperty(name: string): string {

@@ -4,10 +4,7 @@ import { mockStatusIdValues,mockContextIdValues } from "./mockData/mockFilePrope
 
 
 describe("testing abstract file class: pathMatches function",() => {
-    const yaml = {
-        status:mockStatusIdValues.next
-    }
-    const f:File = new TestMockFile("/home/errands/jumbo.md",{status:mockStatusIdValues.next,context:mockContextIdValues.desk});
+    const f:File = new TestMockFile("/home/errands/jumbo.md");
 
     test("matches",() => {
         expect(f.pathMatches("/home/errands")).toBe(true);
@@ -19,9 +16,8 @@ describe("testing abstract file class: pathMatches function",() => {
     });
 });
 
-describe('testing abstract file class', () => {
-    const f:File = new TestMockFile("/home/errands/jumbo.md",{status:mockStatusIdValues.next,context:mockContextIdValues.desk});
-
+describe('testing abstract file class: derived functions from rootpath', () => {
+    const f:File = new TestMockFile("/home/errands/jumbo.md");
 
     test('getFileNameFromFullPath', () => {
         expect(f.getFileNameFromFullPath()).toBe("jumbo.md");
@@ -38,20 +34,37 @@ describe('testing abstract file class', () => {
     test('isMarkdownFile', () => {
         expect(f.isMarkdownFile()).toBe(true);
     });
-    test('setBasename', () => {
+});
+
+describe('testing abstract file class: set a new basename', () => {
+    test('setBasename with .md file', () => {
+        const f:File = new TestMockFile("/home/errands/jumbo.md");
         f.setBasename("shinzet");
         expect(f.getBasenameFromFullPath()).toBe("shinzet");
     });
-    test('getYAMLproperties', () => {
-        expect(f.getYAMLProperty("status")).toBe(mockStatusIdValues.next);
-        expect(f.getYAMLProperty("context")).toBe(mockContextIdValues.desk);
+
+    test('setBasename with file with no extension', () => {
+        const f:File = new TestMockFile("/home/errands/jumbo");
+        f.setBasename("shinzet");
+        expect(f.getBasenameFromFullPath()).toBe("shinzet");
     });
-    
 });
 
-describe('testing edge cases of abstract file class with file with no extension', () => {
-    const f:File = new TestMockFile("/home/errands/jumbo",{status:mockStatusIdValues.next,context:mockContextIdValues.desk});
+describe('testing abstract file class: retrieve yaml properties', () => {
+  
+    test('getYAMLproperties valid entries', () => {
+        const yaml = {status:mockStatusIdValues.done,context:mockContextIdValues.desk}
+        const f:TestMockFile = new TestMockFile("/home/errands/jumbo.md");
+        f.loadYaml(yaml);
+        expect(f.getYAMLProperty("status")).toBe(mockStatusIdValues.done);
+        expect(f.getYAMLProperty("context")).toBe(mockContextIdValues.desk);
+    });
 
+});
+
+
+describe('testing edge cases of abstract file class with file with no extension', () => {
+    const f:File = new TestMockFile("/home/errands/jumbo");
 
     test('getFileNameFromFullPath', () => {
         expect(f.getFileNameFromFullPath()).toBe("jumbo");
@@ -68,16 +81,13 @@ describe('testing edge cases of abstract file class with file with no extension'
     test('isMarkdownFile', () => {
         expect(f.isMarkdownFile()).toBe(false);
     });
-    test('setBasename', () => {
-        f.setBasename("shinzet");
-        expect(f.getBasenameFromFullPath()).toBe("shinzet");
-    });
+    
     
 });
 
 
 describe('testing edge cases of abstract file class with file with no extension and no path', () => {
-    const f:File = new TestMockFile("jumbo",{status:mockStatusIdValues.next,context:mockContextIdValues.desk});
+    const f:File = new TestMockFile("jumbo");
 
     test('getFileNameFromFullPath', () => {
         expect(f.getFileNameFromFullPath()).toBe("jumbo");
@@ -102,8 +112,8 @@ describe('testing edge cases of abstract file class with file with no extension 
 
 
 describe('testing calculateNewTopLevelFolderPath', () => {
-    const f1:File = new TestMockFile("/home/errands/jumbo",{status:mockStatusIdValues.next,context:mockContextIdValues.desk});
-    const f2:File = new TestMockFile("/home/errands/errands/jumbo",{status:mockStatusIdValues.next,context:mockContextIdValues.desk});
+    const f1:File = new TestMockFile("/home/errands/jumbo");
+    const f2:File = new TestMockFile("/home/errands/errands/jumbo");
 
     test('calculateNewTopLevelFolderPath valid input', () => {
         expect(f1.calculateNewTopLevelFolderPath("work")).toBe("/home/work/jumbo");

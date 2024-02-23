@@ -19,7 +19,7 @@ describe('testing valid input', () => {
        });
 
        test('check if number of files is correct after running build for the second time with different path', () => {
-        fafc.build("/root/");
+        fafc.build("/ROOT/");
          expect(fafc.files.length).toBe(1);
          expect(fafc.folders.length).toBe(1);
        });
