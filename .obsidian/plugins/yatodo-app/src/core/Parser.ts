@@ -1,11 +1,11 @@
-import { ContextValues, StatusValues } from "./FileProperties";
+import { ValidContextValues, ValidStatusValues } from "./FileProperties";
 import { Query } from "./Query";
 
 export abstract class Parser{
-    contextValues:ContextValues;
-    statusValues:StatusValues;
+    contextValues:ValidContextValues;
+    statusValues:ValidStatusValues;
 
-    constructor(c:ContextValues,s:StatusValues){
+    constructor(c:ValidContextValues,s:ValidStatusValues){
         this.contextValues = c;
         this.statusValues = s;
     }

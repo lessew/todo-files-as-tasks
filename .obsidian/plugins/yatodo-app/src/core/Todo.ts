@@ -1,6 +1,6 @@
 import { timeStamp } from "console";
 import { File } from "./File";
-import { Status, Context, StatusValues, ContextValues } from "./FileProperties";
+import { Status, Context, ValidStatusValues as ValidStatusValues, ValidContextValues as ValidContextValues } from "./FileProperties";
 import { YaTodoApp } from "./YaTodoApp";
 
 export class Todo{
@@ -8,15 +8,15 @@ export class Todo{
     private _context:Context;
     private _title:string;
     private _project:string;
-    private statusValues:StatusValues;
-    private contextValues:ContextValues
+    private validStatusValues:ValidStatusValues;
+    private validContextValues:ValidContextValues
 
     file:File;
 
-    constructor(f:File,statusValues:StatusValues,contextValues:ContextValues){
+    constructor(f:File,sv:ValidStatusValues,cv:ValidContextValues){
        this.file = f;
-       this.statusValues = statusValues;
-       this.contextValues = contextValues;
+       this.validStatusValues = sv;
+       this.validContextValues = cv;
        this.deriveTitleFromFile();
        this.deriveContextFromFile();
        this.deriveStatusFromFile();
@@ -44,12 +44,12 @@ export class Todo{
 
     set context(c:Context){
         this._context = c;
-        this.file.setYAMLProperty(ContextValues.fieldId,c as string);
+        this.file.setYAMLProperty(ValidContextValues.fieldId,c as string);
     }
 
     set status(s:Status){
         this._status = s;
-        this.file.setYAMLProperty(StatusValues.fieldId,s as string);
+        this.file.setYAMLProperty(ValidStatusValues.fieldId,s as string);
     }
 
     get context():Context{
@@ -70,24 +70,24 @@ export class Todo{
     }
 
     private deriveStatusFromFile(){
-        let result:string = this.file.getYAMLProperty(StatusValues.fieldId);
+        let result:string = this.file.getYAMLProperty(ValidStatusValues.fieldId);
 
-        if(this.statusValues.isSet(result)){
+        if(this.validStatusValues.isSet(result)){
             this._status = result as Status;
         }
         else{
-            this._status = StatusValues.INVALID_VALUE;
+            this._status = ValidStatusValues.INVALID_VALUE;
         }        
     }
 
     private deriveContextFromFile(){
-        let result:string = this.file.getYAMLProperty(ContextValues.fieldId);
+        let result:string = this.file.getYAMLProperty(ValidContextValues.fieldId);
 
-        if(this.contextValues.isSet(result)){
+        if(this.validContextValues.isSet(result)){
             this._context = result as Context;
         }
         else{
-            this._context = ContextValues.INVALID_VALUE;
+            this._context = ValidContextValues.INVALID_VALUE;
         }
     }
 }

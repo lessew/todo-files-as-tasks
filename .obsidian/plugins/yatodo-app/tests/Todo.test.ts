@@ -1,6 +1,6 @@
 import { Todo } from "../src/core/Todo";
 import { File } from "../src/core/File";
-import {StatusValues,ContextValues} from "../src/core/FileProperties"
+import {ValidStatusValues,ValidContextValues} from "../src/core/FileProperties"
 import { TestMockFile } from "./mainMockTestApp/TestMockFile";
 import {mockStatusIdValues, mockContextIdValues} from "./mockData/mockFileProperties";
 import { statusValuesInboxDone,contextValuesDeskDeepThinking } from "./mockData/mockFileProperties";
@@ -46,11 +46,11 @@ let mf:File = new TestMockFile(input.path,input.yaml);
 let todo = new Todo(mf,statusValuesInboxDone,contextValuesDeskDeepThinking);
 
   test('test if status gives errors',() => {
-      expect(todo.status).toBe(StatusValues.INVALID_VALUE);
+      expect(todo.status).toBe(ValidStatusValues.INVALID_VALUE);
   });
 
   test('test if context gives errors',() => {
-    expect(todo.context).toBe(ContextValues.INVALID_VALUE);
+    expect(todo.context).toBe(ValidContextValues.INVALID_VALUE);
   });
 
   test('test if context deep thinking is successfully read',() => {

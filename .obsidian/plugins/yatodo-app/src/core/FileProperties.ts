@@ -33,11 +33,11 @@ abstract class FilePropertyValues {
     }
 }
 
-export class StatusValues extends FilePropertyValues{
+export class ValidStatusValues extends FilePropertyValues{
     static fieldId = "status";
     static humanReadable_en_GB = "Status";
 }
-export class ContextValues extends FilePropertyValues{
+export class ValidContextValues extends FilePropertyValues{
     static fieldId = "context";
     static humanReadable_en_GB = "Context";
 }

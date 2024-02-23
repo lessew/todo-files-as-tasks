@@ -1,4 +1,4 @@
-import { ContextValues, StatusValues } from "../../src/core/FileProperties";
+import { ValidContextValues, ValidStatusValues } from "../../src/core/FileProperties";
 
 export enum mockStatusIdValues {
     inbox = "inbox",
@@ -30,11 +30,11 @@ export enum mockContextHumanReadableValues {
     read = "Read"
 }
 
-let statusValuesInboxDone = new StatusValues();
+let statusValuesInboxDone = new ValidStatusValues();
 statusValuesInboxDone.addValue(mockStatusIdValues.inbox,mockStatusHumanReadableValues.inbox);
 statusValuesInboxDone.addValue(mockStatusIdValues.done,mockStatusHumanReadableValues.done);
 
-let contextValuesDeskDeepThinking = new ContextValues();
+let contextValuesDeskDeepThinking = new ValidContextValues();
 contextValuesDeskDeepThinking.addValue(mockContextIdValues.desk,mockContextHumanReadableValues.desk);
 contextValuesDeskDeepThinking.addValue(mockContextIdValues.deep_thinking,mockContextHumanReadableValues.deep_thinking);
 
