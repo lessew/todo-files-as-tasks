@@ -1,5 +1,5 @@
 import {File} from "../core/File";
-import { App, TFile , Vault, CachedMetadata, FileManager } from "obsidian";
+import { App, TFile , CachedMetadata } from "obsidian";
 
 
 export class ObsidianFile extends File{
