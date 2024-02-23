@@ -1,5 +1,5 @@
 import { File } from "../../src/core/File";
-import { Status, Context } from "../../src/core/FileProperties";
+import { Status, Context } from "../../src/core/FilePropertyValues";
 
 
 export class TestMockFile extends File{

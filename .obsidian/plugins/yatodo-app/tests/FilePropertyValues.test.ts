@@ -1,4 +1,4 @@
-import { ValidStatusValues } from "../src/core/FileProperties";
+import { ValidStatusValues } from "../src/core/FilePropertyValues";
 
 describe('FilePropertyValues Values', () => {
     let statusValues:ValidStatusValues; 

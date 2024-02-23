@@ -11,7 +11,7 @@ import { ObsidianView } from "./ui/ObsidianView";
 import { YaTodoApp } from "src/core/YaTodoApp";
 import { ObsidianFile } from "./ObsidianFile";
 import { File } from "src/core/File";
-import { ValidContextValues,ValidStatusValues } from "src/core/FileProperties";
+import { ValidContextValues,ValidStatusValues } from "src/core/FilePropertyValues";
 
 export class ObsidianYatodoApp extends YaTodoApp{
     parser:Parser;

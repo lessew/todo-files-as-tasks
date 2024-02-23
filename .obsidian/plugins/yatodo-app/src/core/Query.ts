@@ -1,4 +1,4 @@
-import { Status, Context } from "./FileProperties";
+import { Status, Context } from "./FilePropertyValues";
 import { Folder } from "./Folder";
 
 export type Query = {

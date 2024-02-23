@@ -1,7 +1,7 @@
 import { Query } from "./Query";
 import { Parser } from "./Parser";
 import * as yaml from 'js-yaml'
-import { Context,Status } from "./FileProperties";
+import { Context,Status } from "./FilePropertyValues";
 
 
 /**

@@ -1,4 +1,4 @@
-import { ValidContextValues, ValidStatusValues } from "./FileProperties";
+import { ValidContextValues, ValidStatusValues } from "./FilePropertyValues";
 import { Query } from "./Query";
 
 export abstract class Parser{

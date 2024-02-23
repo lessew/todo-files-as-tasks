@@ -1,4 +1,4 @@
 ---
 status: deferred
-context: desk
+context: phone
 ---

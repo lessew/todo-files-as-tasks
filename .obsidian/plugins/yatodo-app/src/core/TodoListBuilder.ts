@@ -2,7 +2,7 @@ import { Query } from "./Query";
 import { FileAndFolderCollection } from "./FileAndFolderCollection";
 import { Todo } from "./Todo";
 import { File } from "./File";
-import { Status, Context, ValidStatusValues as ValidStatusValues, ValidContextValues as ValidContextValues } from "./FileProperties";
+import { Status, Context, ValidStatusValues as ValidStatusValues, ValidContextValues as ValidContextValues } from "./FilePropertyValues";
 
 
 export class TodoListBuilder{

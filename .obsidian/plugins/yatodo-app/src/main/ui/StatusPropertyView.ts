@@ -1,7 +1,7 @@
 import { App, MarkdownView, Modal, Notice, SuggestModal } from "obsidian";
 import { Todo } from "src/core/Todo";
 import { Folder } from "src/core/Folder";
-import { Status, StatusHumanRedeadableHelper } from "src/core/FileProperties";
+import { Status,  } from "src/core/FileProperties";
 
 export class StatusPropertyView{
     todo:Todo;
@@ -13,7 +13,7 @@ export class StatusPropertyView{
     }
 
     build(rootElement:HTMLElement):void{
-        const StatusHumanRedeadable = StatusHumanRedeadableHelper.getHumanReadableValue(this.todo.status);
+        const StatusHumanRedeadable = this.todo.validStatusValues.getValue(this.todo.status);
         let a:HTMLElement = rootElement.createEl("a",{text:StatusHumanRedeadable as string});
         a.addEventListener("click",this); // executes handleEvent
     }
@@ -27,25 +27,25 @@ export class StatusPropertyView{
 export class SelectStatusModal extends SuggestModal<Status>{
 
     todo:Todo;
+    validStatusValues:string[];
 
     constructor(todo:Todo, app: App) {
         super(app);
         this.todo = todo;
+        this.validStatusValues = this.todo.validStatusValues.getAllHumanReadableValues();
     }
         
     getSuggestions(query: string): Status[] | Promise<Status[]> {
-        return Object.values(Status).filter((c) =>
-                c.toLowerCase().includes(c.toLowerCase())
-        );
+        return this.validStatusValues;
     }
 
     renderSuggestion(value: Status, el: HTMLElement) {
-        const StatusHumanRedeadable = StatusHumanRedeadableHelper.getHumanReadableValue(value);
-        el.createEl("div", { text: StatusHumanRedeadable });
+        el.createEl("div", { text: value });
     }
 
     onChooseSuggestion(item: Status, evt: MouseEvent | KeyboardEvent) {
-        this.todo.status = item;
+        const id = this.todo.validStatusValues.getIdFromHumanReadableValue(item);
+        this.todo.status = id;
         setTimeout(
             () => this.app.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true)
         ,100)    

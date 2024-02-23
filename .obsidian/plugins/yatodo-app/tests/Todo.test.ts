@@ -1,6 +1,6 @@
 import { Todo } from "../src/core/Todo";
 import { File } from "../src/core/File";
-import {ValidStatusValues,ValidContextValues} from "../src/core/FileProperties"
+import {ValidStatusValues,ValidContextValues} from "../src/core/FilePropertyValues"
 import { TestMockFile } from "./mainMockTestApp/TestMockFile";
 import {mockStatusIdValues, mockContextIdValues} from "./mockData/mockFileProperties";
 import { validStatusValuesInboxDone,validContextValuesDeskDeepThinking } from "./mockData/mockFileProperties";

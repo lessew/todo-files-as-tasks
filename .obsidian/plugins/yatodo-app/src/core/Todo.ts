@@ -1,6 +1,6 @@
 import { timeStamp } from "console";
 import { File } from "./File";
-import { Status, Context, ValidStatusValues as ValidStatusValues, ValidContextValues as ValidContextValues } from "./FileProperties";
+import { Status, Context, ValidStatusValues as ValidStatusValues, ValidContextValues as ValidContextValues } from "./FilePropertyValues";
 import { YaTodoApp } from "./YaTodoApp";
 
 export class Todo{
@@ -8,8 +8,8 @@ export class Todo{
     private _context:Context;
     private _title:string;
     private _project:string;
-    private validStatusValues:ValidStatusValues;
-    private validContextValues:ValidContextValues
+    validStatusValues:ValidStatusValues;
+    validContextValues:ValidContextValues
 
     file:File;
 

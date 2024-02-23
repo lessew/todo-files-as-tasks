@@ -1,4 +1,4 @@
 ---
-status: deferred
+status: waiting_for
 context: desk
 ---

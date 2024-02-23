@@ -1,4 +1,4 @@
-import { ValidContextValues, ValidStatusValues } from "../../src/core/FileProperties";
+import { ValidContextValues, ValidStatusValues } from "../../src/core/FilePropertyValues";
 
 export enum mockStatusIdValues {
     inbox = "inbox",
