@@ -1,10 +1,13 @@
-import { Context, Status } from "../src/core/FileProperties";
-import { MockFile } from "./MockFile";
+import { TestMockFile } from "./mainMockTestApp/TestMockFile";
 import { File } from "../src/core/File";
+import { mockStatusIdValues,mockContextIdValues } from "./mockData/mockFileProperties";
 
 
 describe("testing abstract file class: pathMatches function",() => {
-    const f:File = new MockFile("/home/errands/jumbo.md",{status:Status.next,context:Context.desk});
+    const yaml = {
+        status:mockStatusIdValues.next
+    }
+    const f:File = new TestMockFile("/home/errands/jumbo.md",{status:mockStatusIdValues.next,context:mockContextIdValues.desk});
 
     test("matches",() => {
         expect(f.pathMatches("/home/errands")).toBe(true);
@@ -17,7 +20,7 @@ describe("testing abstract file class: pathMatches function",() => {
 });
 
 describe('testing abstract file class', () => {
-    const f:File = new MockFile("/home/errands/jumbo.md",{status:Status.next,context:Context.desk});
+    const f:File = new TestMockFile("/home/errands/jumbo.md",{status:mockStatusIdValues.next,context:mockContextIdValues.desk});
 
 
     test('getFileNameFromFullPath', () => {
@@ -40,14 +43,14 @@ describe('testing abstract file class', () => {
         expect(f.getBasenameFromFullPath()).toBe("shinzet");
     });
     test('getYAMLproperties', () => {
-        expect(f.getYAMLProperty("status")).toBe(Status.next);
-        expect(f.getYAMLProperty("context")).toBe(Context.desk);
+        expect(f.getYAMLProperty("status")).toBe(mockStatusIdValues.next);
+        expect(f.getYAMLProperty("context")).toBe(mockContextIdValues.desk);
     });
     
 });
 
 describe('testing edge cases of abstract file class with file with no extension', () => {
-    const f:File = new MockFile("/home/errands/jumbo",{status:Status.next,context:Context.desk});
+    const f:File = new TestMockFile("/home/errands/jumbo",{status:mockStatusIdValues.next,context:mockContextIdValues.desk});
 
 
     test('getFileNameFromFullPath', () => {
@@ -74,7 +77,7 @@ describe('testing edge cases of abstract file class with file with no extension'
 
 
 describe('testing edge cases of abstract file class with file with no extension and no path', () => {
-    const f:File = new MockFile("jumbo",{status:Status.next,context:Context.desk});
+    const f:File = new TestMockFile("jumbo",{status:mockStatusIdValues.next,context:mockContextIdValues.desk});
 
     test('getFileNameFromFullPath', () => {
         expect(f.getFileNameFromFullPath()).toBe("jumbo");
@@ -99,8 +102,8 @@ describe('testing edge cases of abstract file class with file with no extension 
 
 
 describe('testing calculateNewTopLevelFolderPath', () => {
-    const f1:File = new MockFile("/home/errands/jumbo",{status:Status.next,context:Context.desk});
-    const f2:File = new MockFile("/home/errands/errands/jumbo",{status:Status.next,context:Context.desk});
+    const f1:File = new TestMockFile("/home/errands/jumbo",{status:mockStatusIdValues.next,context:mockContextIdValues.desk});
+    const f2:File = new TestMockFile("/home/errands/errands/jumbo",{status:mockStatusIdValues.next,context:mockContextIdValues.desk});
 
     test('calculateNewTopLevelFolderPath valid input', () => {
         expect(f1.calculateNewTopLevelFolderPath("work")).toBe("/home/work/jumbo");

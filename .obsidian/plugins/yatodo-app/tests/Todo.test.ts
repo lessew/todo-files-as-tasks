@@ -1,19 +1,21 @@
 import { Todo } from "../src/core/Todo";
-import { Status, Context } from "../src/core/FileProperties";
-import {File} from "../src/core/File";
-import { MockFile } from "./MockFile";
+import { File } from "../src/core/File";
+import {StatusValues,ContextValues} from "../src/core/FileProperties"
+import { TestMockFile } from "./mainMockTestApp/TestMockFile";
+import {mockStatusIdValues, mockContextIdValues} from "./mockData/mockFileProperties";
+import { statusValuesInboxDone,contextValuesDeskDeepThinking } from "./mockData/mockFileProperties";
 
 
 describe('testing todo class with valid input', () => {
    let input = {
     path:"/root/errands/jumbo.md",
-    yaml: {status:Status.next,context:Context.desk},
+    yaml: {status:mockStatusIdValues.inbox,context:mockContextIdValues.desk},
     project:"errands",
     title:"jumbo"
    }
 
-  let mf:File = new MockFile(input.path,input.yaml);
-  let todo = new Todo(mf);
+  let mf:File = new TestMockFile(input.path,input.yaml);
+  let todo = new Todo(mf,statusValuesInboxDone,contextValuesDeskDeepThinking);
   
     test('check if folder is correct', () => {
         expect(todo.project).toBe(input.project);
@@ -40,29 +42,27 @@ describe('testing todo class with invalid input', () => {
     title:"jumbo"
    }
 
-let mf:File = new MockFile(input.path,input.yaml);
-let todo = new Todo(mf);
+let mf:File = new TestMockFile(input.path,input.yaml);
+let todo = new Todo(mf,statusValuesInboxDone,contextValuesDeskDeepThinking);
 
   test('test if status gives errors',() => {
-      expect(todo.status).toBe(Status.none);
+      expect(todo.status).toBe(StatusValues.INVALID_VALUE);
   });
 
   test('test if context gives errors',() => {
-    expect(todo.context).toBe(Context.none);
-
-    //expect(new Todo(mf)).toThrow(`Context invalid is a non valid status. Error`);
+    expect(todo.context).toBe(ContextValues.INVALID_VALUE);
   });
 
   test('test if context deep thinking is successfully read',() => {
     let input = {
       path:"/root/errands/jumbo.md",
-      yaml: {status:Status.deferred,context:Context.deep_thinking},
+      yaml: {status:mockStatusIdValues.deferred,context:mockContextIdValues.deep_thinking},
       project:"errands",
       title:"jumbo"
     }
-    let mf:File = new MockFile(input.path,input.yaml);
-    const td:Todo = new Todo(mf);
-    expect(td.context).toBe(Context.deep_thinking);
+    let mf:File = new TestMockFile(input.path,input.yaml);
+    const td:Todo = new Todo(mf,statusValuesInboxDone,contextValuesDeskDeepThinking);
+    expect(td.context).toBe(mockContextIdValues.deep_thinking);
   });
 
 

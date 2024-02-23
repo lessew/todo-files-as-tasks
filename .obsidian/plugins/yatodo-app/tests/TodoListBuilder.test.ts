@@ -1,59 +1,14 @@
-import { File } from "../src/core/File";
-import { MockFile } from "./MockFile";
-import {Status,Context} from "../src/core/FileProperties";
 import { TodoListBuilder } from "../src/core/TodoListBuilder";
 import { FileAndFolderCollection } from "../src/core/FileAndFolderCollection";
 import { Query } from "../src/core/Query";
-import { MockYatodoApp } from "./MockYatodoApp";
 
-let inputs = [
-    {
-        path:"/root/errands/jumbo.md",
-        yaml: {status:Status.next,context:Context.desk},
-        project:"errands",
-        title:"jumbo"
-    },
-    {
-        path:"/home/errands/hema.md",
-        yaml: {status:Status.next,context:Context.desk},
-        project:"errands",
-        title:"hema"
-    },
-    {
-        path:"/home/errands/diswash.md",
-        yaml: {status:Status.next,context:Context.phone},
-        project:"errands",
-        title:"diswash"
-    },
-    {
-        path:"/home/finance/pay-erik.md",
-        yaml: {status:Status.inbox,context:Context.phone},
-        project:"finance",
-        title:"hema"
-    },
-    {
-        path:"/home/hobby/play-with-duplo.md",
-        yaml: {status:Status.inbox,context:Context.deep_thinking},
-        project:"hobby",
-        title:"play-with-duplo"
-    },
-    {
-        path:"/home/hobby/football.md",
-        yaml: {status:Status.waiting_for,context:Context.read},
-        project:"hobby",
-        title:"football"
-    }
-]
+import { TestMockYatodoApp } from "./mainMockTestApp/TestMockYatodoApp";
+import { mockContextIdValues, mockStatusIdValues } from "./mockData/mockFileProperties";
+import {contextValuesDeskDeepThinking,statusValuesInboxDone} from "./mockData/mockFileProperties";
+import { mockFiles } from "./mockData/mockFiles";
 
-
-const files:File[] = [];
-inputs.forEach(inp => {
-    const aFile:File = new MockFile(inp.path,inp.yaml);
-    files.push(aFile);
-})
-
-let mockYatodoApp:MockYatodoApp = new MockYatodoApp();
-mockYatodoApp.setMarkdownFiles(files);
+let mockYatodoApp:TestMockYatodoApp = new TestMockYatodoApp();
+mockYatodoApp.setMarkdownFiles(mockFiles);
 
 let fileAndFolderCollection:FileAndFolderCollection = new FileAndFolderCollection(mockYatodoApp);
 fileAndFolderCollection.build("/home/");
@@ -62,44 +17,35 @@ fileAndFolderCollection.build("/home/");
 describe('Todo List Builder with valid input', () => {
    let tlb:TodoListBuilder;
 
-    test('check filter on status next', () => {
-        tlb = new TodoListBuilder(fileAndFolderCollection);
-        tlb.build({ rootPath:"/home/", status:Status.next} as Query);
+    test('check filter on status inbox', () => {
+        tlb = new TodoListBuilder(fileAndFolderCollection,statusValuesInboxDone,contextValuesDeskDeepThinking);
+        tlb.build({ rootPath:"/home/", status:mockStatusIdValues.inbox} as Query);
+        expect(tlb.todos.length).toBe(3);
+    });
+    test('check filter on status done', () => {
+        tlb = new TodoListBuilder(fileAndFolderCollection,statusValuesInboxDone,contextValuesDeskDeepThinking);
+        tlb.build({ rootPath:"/home/", status:mockStatusIdValues.done} as Query);
         expect(tlb.todos.length).toBe(2);
     });
-    test('check filter on status deferred', () => {
-        tlb = new TodoListBuilder(fileAndFolderCollection);
-        tlb.build({ rootPath:"/home/", status:Status.deferred} as Query);
-        expect(tlb.todos.length).toBe(0);
-    });
     test('check filter on no status', () => {
-        tlb = new TodoListBuilder(fileAndFolderCollection);
+        tlb = new TodoListBuilder(fileAndFolderCollection,statusValuesInboxDone,contextValuesDeskDeepThinking);
         tlb.build({ rootPath:"/home/"} as Query);
         expect(tlb.todos.length).toBe(5);
     });
 
     test('check filter on context deep thinking', () => {
-        tlb = new TodoListBuilder(fileAndFolderCollection);
-        tlb.build({ rootPath:"/home/", context:Context.deep_thinking} as Query);
+        tlb = new TodoListBuilder(fileAndFolderCollection,statusValuesInboxDone,contextValuesDeskDeepThinking);
+        tlb.build({ rootPath:"/home/", context:mockContextIdValues.deep_thinking} as Query);
         expect(tlb.todos.length).toBe(1);
     });
     test('check filter on context desk', () => {
-        tlb = new TodoListBuilder(fileAndFolderCollection);
-        tlb.build({ rootPath:"/home/", context:Context.desk} as Query);
+        tlb = new TodoListBuilder(fileAndFolderCollection,statusValuesInboxDone,contextValuesDeskDeepThinking);
+        tlb.build({ rootPath:"/home/", context:mockContextIdValues.desk} as Query);
         expect(tlb.todos.length).toBe(1);
     });
     test('check filter on no context', () => {
-        tlb = new TodoListBuilder(fileAndFolderCollection);
+        tlb = new TodoListBuilder(fileAndFolderCollection,statusValuesInboxDone,contextValuesDeskDeepThinking);
         tlb.build({ rootPath:"/home/"} as Query);
         expect(tlb.todos.length).toBe(5);
-    });
-});
-
-describe('Todo List Builder folders found', () => {
-    test('tbi', () => {
-        //expect(false).toBe(true);
-    });
-    test('test if folders with no files are also included', () => {
-        //expect(false).toBe(true);
     });
 });

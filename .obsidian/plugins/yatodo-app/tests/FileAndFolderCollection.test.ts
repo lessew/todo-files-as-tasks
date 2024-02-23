@@ -1,62 +1,12 @@
-import { File } from "../src/core/File";
-import { MockFile } from "./MockFile";
-import {Status,Context} from "../src/core/FileProperties";
-import { MockYatodoApp } from "./MockYatodoApp";
+import { TestMockYatodoApp } from "./mainMockTestApp/TestMockYatodoApp";
 import { FileAndFolderCollection } from "../src/core/FileAndFolderCollection";
+import { mockFiles } from "./mockData/mockFiles";
 
-let inputs = [
-    {
-        path:"/root/errands/jumbo.md",
-        yaml: {status:Status.next,context:Context.desk},
-        project:"errands",
-        title:"jumbo"
-    },
-    {
-        path:"/home/errands/hema.md",
-        yaml: {status:Status.next,context:Context.desk},
-        project:"errands",
-        title:"hema"
-    },
-    {
-        path:"/home/errands/diswash.md",
-        yaml: {status:Status.next,context:Context.phone},
-        project:"errands",
-        title:"diswash"
-    },
-    {
-        path:"/home/finance/pay-erik.md",
-        yaml: {status:Status.inbox,context:Context.phone},
-        project:"finance",
-        title:"hema"
-    },
-    {
-        path:"/home/hobby/play-with-duplo.md",
-        yaml: {status:Status.inbox,context:Context.deep_thinking},
-        project:"hobby",
-        title:"play-with-duplo"
-    },
-    {
-        path:"/home/hobby/football.md",
-        yaml: {status:Status.waiting_for,context:Context.read},
-        project:"hobby",
-        title:"football"
-    }
-]
-
-
-const files:File[] = [];
-inputs.forEach(inp => {
-    const aFile:File = new MockFile(inp.path,inp.yaml);
-    files.push(aFile);
-})
-
-
-let mockYatodoApp:MockYatodoApp = new MockYatodoApp();
-mockYatodoApp.setMarkdownFiles(files);
+let mockYatodoApp:TestMockYatodoApp = new TestMockYatodoApp();
+mockYatodoApp.setMarkdownFiles(mockFiles);
 
 let fileAndFolderCollection:FileAndFolderCollection = new FileAndFolderCollection(mockYatodoApp);
 fileAndFolderCollection.build("/home/");
-
 
 describe('testing valid input', () => {
    

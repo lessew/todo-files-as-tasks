@@ -1,14 +1,19 @@
 import { Query } from "./Query";
 import { FileAndFolderCollection } from "./FileAndFolderCollection";
 import { Todo } from "./Todo";
-import { Status, Context } from "./FileProperties";
 import { File } from "./File";
+import { Status, Context, StatusValues, ContextValues } from "./FileProperties";
+
 
 export class TodoListBuilder{
     fileAndFolderCollection:FileAndFolderCollection;
+    statusValues:StatusValues;
+    contextValues:ContextValues;
     todos:Todo[];
 
-    constructor(fc:FileAndFolderCollection){
+    constructor(fc:FileAndFolderCollection,sv:StatusValues,cv:ContextValues){
+        this.statusValues = sv;
+        this.contextValues = cv;
         this.fileAndFolderCollection = fc;
         this.loadTodos();
     }
@@ -17,7 +22,7 @@ export class TodoListBuilder{
         this.todos = [];
 
         this.fileAndFolderCollection.files.forEach(f => {
-            let td:Todo = new Todo(f as File);
+            let td:Todo = new Todo(f as File,this.statusValues,this.contextValues);
             this.todos.push(td);
         })
     }

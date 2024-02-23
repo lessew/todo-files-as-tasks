@@ -1,7 +1,8 @@
 import { Parser } from "../src/core/Parser";
 import { YAMLParser } from "../src/core/YAMLParser";
 import { Query } from "../src/core/Query";
-import {Context,Status} from "../src/core/FileProperties";
+import { mockContextIdValues,mockStatusIdValues } from "./mockData/mockFileProperties";
+import { statusValuesInboxDone,contextValuesDeskDeepThinking } from "./mockData/mockFileProperties";
 
 const correctlyFormatted = `
 rootPath: .
@@ -22,18 +23,18 @@ rootPath: .`;
 
 describe('Testing YAML Parser with correct format', () => {
     
-    let parser:Parser = new YAMLParser();
+    let parser:Parser = new YAMLParser(contextValuesDeskDeepThinking,statusValuesInboxDone);
   
     test('test correctly formatted string',() => {
         let q:Query = parser.parse(correctlyFormatted);
-        expect(q.context).toBe(Context.desk);
-        expect(q.status).toBe(Status.inbox);
+        expect(q.context).toBe(mockContextIdValues.desk);
+        expect(q.status).toBe(mockStatusIdValues.inbox);
         expect(q.rootPath).toBe(".");
     });  
 
     test('test correctly formatted string with no status field',() => {
         let q:Query = parser.parse(correctlyFormattedWithoutStatus);
-        expect(q.context).toBe(Context.desk);
+        expect(q.context).toBe(mockContextIdValues.desk);
         expect(q.status).toBe(undefined);
         expect(q.rootPath).toBe(".");
     });  
@@ -41,7 +42,7 @@ describe('Testing YAML Parser with correct format', () => {
     test('test correctly formatted string with no context field',() => {
         let q:Query = parser.parse(correctlyFormattedWithoutContext);
         expect(q.context).toBe(undefined);
-        expect(q.status).toBe(Status.inbox);
+        expect(q.status).toBe(mockStatusIdValues.inbox);
         expect(q.rootPath).toBe(".");
     });  
 
@@ -80,7 +81,7 @@ describe('Testing YAML Parser with correct format', () => {
 
 describe('Testing YAML Parser with incorrect format', () => {
     
-    let parser:Parser = new YAMLParser();
+    let parser:Parser = new YAMLParser(statusValuesInboxDone,contextValuesDeskDeepThinking);
   
     test('test badly formatted path',() => {
         let q:Query = parser.parse(incorrectlyFormattedPath);

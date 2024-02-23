@@ -1,15 +1,22 @@
+import { timeStamp } from "console";
 import { File } from "./File";
-import { Status, Context, ContextHumanRedeadableHelper, StatusHumanRedeadableHelper } from "./FileProperties";
+import { Status, Context, StatusValues, ContextValues } from "./FileProperties";
+import { YaTodoApp } from "./YaTodoApp";
 
 export class Todo{
     private _status:Status;
     private _context:Context;
     private _title:string;
     private _project:string;
+    private statusValues:StatusValues;
+    private contextValues:ContextValues
+
     file:File;
 
-    constructor(f:File){
+    constructor(f:File,statusValues:StatusValues,contextValues:ContextValues){
        this.file = f;
+       this.statusValues = statusValues;
+       this.contextValues = contextValues;
        this.deriveTitleFromFile();
        this.deriveContextFromFile();
        this.deriveStatusFromFile();
@@ -37,12 +44,12 @@ export class Todo{
 
     set context(c:Context){
         this._context = c;
-        this.file.setYAMLProperty(ContextHumanRedeadableHelper.getFieldId(),c as string);
+        this.file.setYAMLProperty(ContextValues.fieldId,c as string);
     }
 
     set status(s:Status){
         this._status = s;
-        this.file.setYAMLProperty(StatusHumanRedeadableHelper.getFieldId(),s as string);
+        this.file.setYAMLProperty(StatusValues.fieldId,s as string);
     }
 
     get context():Context{
@@ -63,22 +70,24 @@ export class Todo{
     }
 
     private deriveStatusFromFile(){
-        let result:string = this.file.getYAMLProperty(StatusHumanRedeadableHelper.getFieldId());
-        if(result in Status){
+        let result:string = this.file.getYAMLProperty(StatusValues.fieldId);
+
+        if(this.statusValues.isSet(result)){
             this._status = result as Status;
         }
         else{
-            this._status = Status.none;
-        }
+            this._status = StatusValues.INVALID_VALUE;
+        }        
     }
 
     private deriveContextFromFile(){
-        let result:string = this.file.getYAMLProperty(ContextHumanRedeadableHelper.getFieldId());
-        if(result in Context){ // only works without spaces in context
+        let result:string = this.file.getYAMLProperty(ContextValues.fieldId);
+
+        if(this.contextValues.isSet(result)){
             this._context = result as Context;
         }
         else{
-            this._context = Context.none;
+            this._context = ContextValues.INVALID_VALUE;
         }
     }
 }

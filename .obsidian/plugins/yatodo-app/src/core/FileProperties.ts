@@ -1,66 +1,43 @@
-export enum Context{
-    desk="desk",
-    phone="phone",
-    read="read",
-    deep_thinking="deep_thinking",
-    none="none"
-}
+export type Status = string;
+export type Context = string;
+   
 
-export enum Status{
-    inbox="inbox",
-    next="next",
-    waiting_for="waiting_for",
-    deferred="deferred",
-    none="none"
-}
+abstract class FilePropertyValues {
+    static fieldId:string;
+    static humanReadable_en_GB:string;
 
-
-export class ContextHumanRedeadableHelper {
-    static humanReadableValues = {
-        "desk": "Desk",
-        "phone": "Phone",
-        "read": "Read",
-        "deep_thinking": "Deep Thinking",
-        "none": "None"
+    static INVALID_VALUE = "<invalid value>";
+    values : Map<string,{humanReadable_en_GB:string}>;
+    constructor(){
+        this.values = new Map<string,{humanReadable_en_GB:string}>();
     }
 
-    static getFieldId(){
-        return "context";
+    addValue(id:string,humanReadable:string){
+        this.values.set(id,{humanReadable_en_GB:humanReadable});
     }
-    static getHumanReadableValue(c:Context):string{
-        const v = c as string;
-        if(v in this.humanReadableValues){
-            return this.humanReadableValues[v as keyof typeof this.humanReadableValues];
+
+    getValue(id:string):string{
+        const aValue = this.values.get(id);
+        const humanReadable = aValue?.humanReadable_en_GB;
+
+        if(typeof humanReadable === 'undefined'){
+            return FilePropertyValues.INVALID_VALUE;
+        } 
+        else{
+            return humanReadable as string;
         }
-        return "";
     }
 
-    static getHumanReadableFieldName(){
-        return "Context";
+    isSet(id:string):boolean{
+        return this.values.has(id);
     }
 }
 
-export class StatusHumanRedeadableHelper {
-    static humanReadableValues = {
-        "inbox": "Inbox",
-        "waiting_for": "Waiting For",
-        "deferred": "Deferred",
-        "next":"Next",
-        "none": "None"
-    }
-
-    static getFieldId(){
-        return "status";
-    }
-    static getHumanReadableValue(s:Status):string{
-        const v = s as string;
-        if(v in this.humanReadableValues){
-            return this.humanReadableValues[v as keyof typeof this.humanReadableValues];
-        }
-        return "";
-    }
-
-    static getHumanReadableFieldName(){
-        return "Status";
-    }
+export class StatusValues extends FilePropertyValues{
+    static fieldId = "status";
+    static humanReadable_en_GB = "Status";
+}
+export class ContextValues extends FilePropertyValues{
+    static fieldId = "context";
+    static humanReadable_en_GB = "Context";
 }

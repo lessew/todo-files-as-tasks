@@ -8,16 +8,16 @@ import { Context,Status } from "./FileProperties";
  * Todo: improve error handling. right now a default query is returned with rootpath .
  * Must find a way to gracefully report back to user where the typo sits
  **/ 
-export class YAMLParser implements Parser{
+export class YAMLParser extends Parser{
     parse(source:string):Query{
         try{
             const data:Query = yaml.load(source) as Query;
 
-            if(data.context && !(data.context in Context)){
+            if(data.context && !(this.contextValues.isSet(data.context))){
                 throw Error(`Error: Context field is invalid. Value read: ${data.context}`)
             }
 
-            if(data.status && !(data.status in Status)){
+            if(data.status && !(this.statusValues.isSet(data.status))){
                 throw Error(`Error: Status field is invalid. Value read: ${data.context}`)
             }
 
