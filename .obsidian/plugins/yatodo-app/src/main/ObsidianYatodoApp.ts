@@ -6,7 +6,6 @@ import { YAMLParser } from "src/core/YAMLParser";
 import { TodoListBuilder } from "src/core/TodoListBuilder";
 import { Folder } from "src/core/Folder";
 import { Todo } from "src/core/Todo";
-import * as Yatodo from 'src/core/ui/View';
 import { ObsidianView } from "./ui/ObsidianView";
 import { YaTodoApp } from "src/core/YaTodoApp";
 import { ObsidianFile } from "./ObsidianFile";
@@ -61,7 +60,7 @@ export class ObsidianYatodoApp extends YaTodoApp{
         const folders:Folder[] = fileAndFolderCollection.folders;
         const todos:Todo[]= builder.build(this.query);
 
-        const view:Yatodo.View = new ObsidianView(todos,folders,this.obsidianApp);
+        const view = new ObsidianView(todos,folders,this.obsidianApp);
         view.build(el); 
     }
 

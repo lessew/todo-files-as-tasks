@@ -1,14 +1,13 @@
 import { App } from "obsidian";
 import { Todo } from "../../core/Todo";
 import { Folder } from "../../core/Folder"
-import { View } from "../../core/ui/View"
 import { ProjectPropertyView } from "./ProjectPropertyView";
 import { TitlePropertyView } from "./TitlePropertyView";
 import { ContextPropertyView } from "./ContextPropertyView";
 import { StatusPropertyView } from "./StatusPropertyView";
 
 
-export class ObsidianView implements View{
+export class ObsidianView {
     todos: Todo[];
     folders: Folder[];
     app:App;
