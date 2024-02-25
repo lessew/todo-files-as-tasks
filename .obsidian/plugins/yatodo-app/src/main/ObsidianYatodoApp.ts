@@ -1,11 +1,10 @@
 import { App, TFile } from "obsidian";
 import { FileAndFolderCollection } from "src/core/FileAndFolderCollection";
-import { Parser } from "src/core/Parser";
 import { Query } from "src/core/Query";
 import { YAMLParser } from "src/core/YAMLParser";
-import { TodoListBuilder } from "src/core/TodoListBuilder";
+import { TaskList } from "src/core/TaskList";
 import { Folder } from "src/core/Folder";
-import { Todo } from "src/core/Todo";
+import { Task } from "src/core/Task";
 import { ObsidianView } from "./ui/ObsidianView";
 import { YaTodoApp } from "src/core/YaTodoApp";
 import { ObsidianFile } from "./ObsidianFile";
@@ -13,7 +12,7 @@ import { File } from "src/core/File";
 import { ValidContextValues,ValidStatusValues } from "src/core/FilePropertyValues";
 
 export class ObsidianYatodoApp extends YaTodoApp{
-    parser:Parser;
+    parser:YAMLParser;
     query:Query;
     obsidianApp:App;
     rootElement:HTMLElement;
@@ -52,13 +51,13 @@ export class ObsidianYatodoApp extends YaTodoApp{
         const fileAndFolderCollection:FileAndFolderCollection = new FileAndFolderCollection(this);
         fileAndFolderCollection.build(this.query.rootPath);
 
-        const builder:TodoListBuilder = new TodoListBuilder(
+        const builder:TaskList = new TaskList(
             fileAndFolderCollection,
             this.validStatusValues,
             this.validContextValues);
 
         const folders:Folder[] = fileAndFolderCollection.folders;
-        const todos:Todo[]= builder.build(this.query);
+        const todos:Task[]= builder.build(this.query);
 
         const view = new ObsidianView(todos,folders,this.obsidianApp);
         view.build(el); 

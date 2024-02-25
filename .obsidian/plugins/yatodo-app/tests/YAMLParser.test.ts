@@ -1,4 +1,3 @@
-import { Parser } from "../src/core/Parser";
 import { YAMLParser } from "../src/core/YAMLParser";
 import { Query } from "../src/core/Query";
 import { mockContextIdValues,mockStatusIdValues } from "./mockData/mockFileProperties";
@@ -23,7 +22,7 @@ rootPath: .`;
 
 describe('Testing YAML Parser with correct format', () => {
     
-    let parser:Parser = new YAMLParser(validContextValuesDeskDeepThinking,validStatusValuesInboxDone);
+    let parser = new YAMLParser(validContextValuesDeskDeepThinking,validStatusValuesInboxDone);
   
     test('test correctly formatted string',() => {
         let q:Query = parser.parse(correctlyFormatted);
@@ -81,7 +80,7 @@ describe('Testing YAML Parser with correct format', () => {
 
 describe('Testing YAML Parser with incorrect format', () => {
     
-    let parser:Parser = new YAMLParser(validContextValuesDeskDeepThinking,validStatusValuesInboxDone);
+    let parser = new YAMLParser(validContextValuesDeskDeepThinking,validStatusValuesInboxDone);
   
     test('test badly formatted path',() => {
         let q:Query = parser.parse(incorrectlyFormattedPath);
