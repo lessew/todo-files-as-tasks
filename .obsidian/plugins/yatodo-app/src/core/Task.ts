@@ -1,9 +1,7 @@
-import { timeStamp } from "console";
 import { File } from "./File";
-import { Status, Context, ValidStatusValues as ValidStatusValues, ValidContextValues as ValidContextValues } from "./FilePropertyValues";
-import { YaTodoApp } from "./YaTodoApp";
+import { Status, Context, ValidStatusValues, ValidContextValues } from "./FilePropertyValues";
 
-export class Todo{
+export class Task{
     private _status:Status;
     private _context:Context;
     private _title:string;

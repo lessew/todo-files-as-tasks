@@ -1,4 +1,4 @@
-import { Todo } from "../src/core/Todo";
+import { Task } from "../src/core/Task";
 import { File } from "../src/core/File";
 import {ValidStatusValues,ValidContextValues} from "../src/core/FilePropertyValues"
 import { TestMockFile } from "./mainMockTestApp/TestMockFile";
@@ -14,7 +14,7 @@ describe('testing todo class with valid input', () => {
 
   let mf:TestMockFile = new TestMockFile(input.path);
   mf.loadYaml(input.yaml);
-  let todo = new Todo(mf,validStatusValuesInboxDone,validContextValuesDeskDeepThinking);
+  let todo = new Task(mf,validStatusValuesInboxDone,validContextValuesDeskDeepThinking);
   
     test('check if folder is correct', () => {
         expect(todo.project).toBe("errands");
@@ -44,7 +44,7 @@ describe('testing todo class with invalid input', () => {
 let mf:TestMockFile = new TestMockFile(input.path);
 mf.loadYaml(input.yaml)
 
-let todo = new Todo(mf,validStatusValuesInboxDone,validContextValuesDeskDeepThinking);
+let todo = new Task(mf,validStatusValuesInboxDone,validContextValuesDeskDeepThinking);
 
   test('test if status gives errors',() => {
       expect(todo.status).toBe(ValidStatusValues.INVALID_VALUE);
@@ -61,7 +61,7 @@ let todo = new Todo(mf,validStatusValuesInboxDone,validContextValuesDeskDeepThin
     }
     let mf:TestMockFile = new TestMockFile(input.path);
     mf.loadYaml(input.yaml)
-    const td:Todo = new Todo(mf,validStatusValuesInboxDone,validContextValuesDeskDeepThinking);
+    const td:Task = new Task(mf,validStatusValuesInboxDone,validContextValuesDeskDeepThinking);
     expect(td.context).toBe(mockContextIdValues.deep_thinking);
   });
 

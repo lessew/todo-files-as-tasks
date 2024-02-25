@@ -1,5 +1,5 @@
 import { App } from "obsidian";
-import { Todo } from "../../core/Todo";
+import { Task } from "../../core/Task";
 import { Folder } from "../../core/Folder"
 import { ProjectPropertyView } from "./ProjectPropertyView";
 import { TitlePropertyView } from "./TitlePropertyView";
@@ -8,11 +8,11 @@ import { StatusPropertyView } from "./StatusPropertyView";
 
 
 export class ObsidianView {
-    todos: Todo[];
+    todos: Task[];
     folders: Folder[];
     app:App;
 
-    constructor(tl:Todo[],folders:Folder[], app:App){
+    constructor(tl:Task[],folders:Folder[], app:App){
         this.todos = tl;
         this.folders = folders;
         this.app = app;
@@ -56,22 +56,22 @@ export class ObsidianView {
         }
     }
  
-    private createTitleHTML(todo:Todo,el:HTMLElement):void{
+    private createTitleHTML(todo:Task,el:HTMLElement):void{
         const tp = new TitlePropertyView(todo,this.app);
         tp.build(el);
     }
    
-    private createProjectHTML(todo:Todo,el:HTMLElement):void{
+    private createProjectHTML(todo:Task,el:HTMLElement):void{
         const pp = new ProjectPropertyView(todo,this.folders,this.app);
         pp.build(el);
     }
 
-    private createContextHTML(todo:Todo,el:HTMLElement):void{
+    private createContextHTML(todo:Task,el:HTMLElement):void{
         const cc = new ContextPropertyView(todo,this.app);
         cc.build(el);
     }
 
-    private createStatusHTML(todo:Todo,el:HTMLElement):void{
+    private createStatusHTML(todo:Task,el:HTMLElement):void{
         const ss = new StatusPropertyView(todo,this.app);
         ss.build(el);
     }

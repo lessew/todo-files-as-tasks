@@ -1,6 +1,6 @@
 import { Query } from "./Query";
 import { FileAndFolderCollection } from "./FileAndFolderCollection";
-import { Todo } from "./Todo";
+import { Task } from "./Task";
 import { File } from "./File";
 import { Status, Context, ValidStatusValues as ValidStatusValues, ValidContextValues as ValidContextValues } from "./FilePropertyValues";
 
@@ -9,7 +9,7 @@ export class TodoListBuilder{
     fileAndFolderCollection:FileAndFolderCollection;
     validStatusValues:ValidStatusValues;
     validContextValues:ValidContextValues;
-    todos:Todo[];
+    todos:Task[];
 
     constructor(fc:FileAndFolderCollection,sv:ValidStatusValues,cv:ValidContextValues){
         this.validStatusValues = sv;
@@ -22,7 +22,7 @@ export class TodoListBuilder{
         this.todos = [];
 
         this.fileAndFolderCollection.files.forEach(f => {
-            let td:Todo = new Todo(f as File,this.validStatusValues,this.validContextValues);
+            let td:Task = new Task(f as File,this.validStatusValues,this.validContextValues);
             this.todos.push(td);
         })
     }
@@ -36,24 +36,24 @@ export class TodoListBuilder{
     };
 
     filterByStatus(s:Status):void{
-        let result:Todo[]= this.todos.filter(td => {
+        let result:Task[]= this.todos.filter(td => {
             return (td.status === s)
         })
         this.todos = result;
     }
 
     filterByContext(c:Context):void{
-        let result:Todo[] = this.todos.filter(td => {
+        let result:Task[] = this.todos.filter(td => {
             return (td.context === c)
         })    
         this.todos = result;
     }
 
-    get():Todo[]{
+    get():Task[]{
         return this.todos;
     }
 
-    build(q:Query):Todo[]{
+    build(q:Query):Task[]{
         if(q.context){
             this.filterByContext(q.context);
         }
