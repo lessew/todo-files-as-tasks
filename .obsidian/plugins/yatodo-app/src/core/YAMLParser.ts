@@ -1,14 +1,21 @@
 import { Query } from "./Query";
 import { Parser } from "./Parser";
 import * as yaml from 'js-yaml'
-import { Context,Status } from "./FilePropertyValues";
+import { ValidContextValues, ValidStatusValues } from "./FilePropertyValues";
 
 
 /**
  * Todo: improve error handling. right now a default query is returned with rootpath .
  * Must find a way to gracefully report back to user where the typo sits
  **/ 
-export class YAMLParser extends Parser{
+export class YAMLParser{
+    contextValues:ValidContextValues;
+    statusValues:ValidStatusValues;
+
+    constructor(c:ValidContextValues,s:ValidStatusValues){
+        this.contextValues = c;
+        this.statusValues = s;
+    }
     parse(source:string):Query{
         try{
             const data:Query = yaml.load(source) as Query;
