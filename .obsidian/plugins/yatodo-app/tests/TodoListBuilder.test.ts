@@ -1,4 +1,4 @@
-import { TodoListBuilder } from "../src/core/TodoListBuilder";
+import { TaskList } from "../src/core/TaskList";
 import { FileAndFolderCollection } from "../src/core/FileAndFolderCollection";
 import { Query } from "../src/core/Query";
 
@@ -15,36 +15,36 @@ fileAndFolderCollection.build("/home/");
 
 
 describe('Todo List Builder with valid input', () => {
-   let tlb:TodoListBuilder;
+   let tlb:TaskList;
 
     test('check filter on status inbox', () => {
-        tlb = new TodoListBuilder(fileAndFolderCollection,validStatusValuesInboxDone,validContextValuesDeskDeepThinking);
+        tlb = new TaskList(fileAndFolderCollection,validStatusValuesInboxDone,validContextValuesDeskDeepThinking);
         tlb.build({ rootPath:"/home/", status:mockStatusIdValues.inbox} as Query);
         expect(tlb.todos.length).toBe(3);
     });
     test('check filter on status done', () => {
-        tlb = new TodoListBuilder(fileAndFolderCollection,validStatusValuesInboxDone,validContextValuesDeskDeepThinking);
+        tlb = new TaskList(fileAndFolderCollection,validStatusValuesInboxDone,validContextValuesDeskDeepThinking);
         tlb.build({ rootPath:"/home/", status:mockStatusIdValues.done} as Query);
         expect(tlb.todos.length).toBe(2);
     });
     test('check filter on no status', () => {
-        tlb = new TodoListBuilder(fileAndFolderCollection,validStatusValuesInboxDone,validContextValuesDeskDeepThinking);
+        tlb = new TaskList(fileAndFolderCollection,validStatusValuesInboxDone,validContextValuesDeskDeepThinking);
         tlb.build({ rootPath:"/home/"} as Query);
         expect(tlb.todos.length).toBe(5);
     });
 
     test('check filter on context deep thinking', () => {
-        tlb = new TodoListBuilder(fileAndFolderCollection,validStatusValuesInboxDone,validContextValuesDeskDeepThinking);
+        tlb = new TaskList(fileAndFolderCollection,validStatusValuesInboxDone,validContextValuesDeskDeepThinking);
         tlb.build({ rootPath:"/home/", context:mockContextIdValues.deep_thinking} as Query);
         expect(tlb.todos.length).toBe(3);
     });
     test('check filter on context desk', () => {
-        tlb = new TodoListBuilder(fileAndFolderCollection,validStatusValuesInboxDone,validContextValuesDeskDeepThinking);
+        tlb = new TaskList(fileAndFolderCollection,validStatusValuesInboxDone,validContextValuesDeskDeepThinking);
         tlb.build({ rootPath:"/home/", context:mockContextIdValues.desk} as Query);
         expect(tlb.todos.length).toBe(2);
     });
     test('check filter on no context', () => {
-        tlb = new TodoListBuilder(fileAndFolderCollection,validStatusValuesInboxDone,validContextValuesDeskDeepThinking);
+        tlb = new TaskList(fileAndFolderCollection,validStatusValuesInboxDone,validContextValuesDeskDeepThinking);
         tlb.build({ rootPath:"/home/"} as Query);
         expect(tlb.todos.length).toBe(5);
     });

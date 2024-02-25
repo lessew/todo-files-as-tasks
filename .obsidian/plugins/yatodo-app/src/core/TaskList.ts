@@ -5,7 +5,7 @@ import { File } from "./File";
 import { Status, Context, ValidStatusValues as ValidStatusValues, ValidContextValues as ValidContextValues } from "./FilePropertyValues";
 
 
-export class TodoListBuilder{
+export class TaskList{
     fileAndFolderCollection:FileAndFolderCollection;
     validStatusValues:ValidStatusValues;
     validContextValues:ValidContextValues;
