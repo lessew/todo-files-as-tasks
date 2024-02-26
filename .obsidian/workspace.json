@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "yatodo-examples/Status.md",
+                "file": "yatodo-examples/Projects.md",
                 "mode": "preview",
                 "source": true
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "yatodo-examples/Status.md",
+                "file": "yatodo-examples/Projects.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "yatodo-examples/Status.md",
+                "file": "yatodo-examples/Projects.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "yatodo-examples/Status.md"
+                "file": "yatodo-examples/Projects.md"
               }
             }
           }
@@ -150,10 +150,11 @@
   },
   "active": "614d54253bb1ab1d",
   "lastOpenFiles": [
-    "TEST file.md",
     "yatodo-examples/Status.md",
+    "yatodo-examples/Context.md",
+    "yatodo-examples/Projects.md",
     "yatodo-examples/All todos.md",
-    "yatodo-examples/simple.md",
+    "TEST file.md",
     "todo-home/bugs/Add field starred.md",
     "todo-home/bugs/rootpath is not respected in yaml config when selecting project.md",
     "todo-home/bugs/Project does not show in suggester if it has no todos.md",

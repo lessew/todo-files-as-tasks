@@ -1,4 +1,4 @@
 ---
 status: inbox
-context: phone
+context: deep_thinking
 ---
