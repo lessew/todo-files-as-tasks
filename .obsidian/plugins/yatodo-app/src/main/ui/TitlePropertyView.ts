@@ -1,25 +1,27 @@
 import { App, Modal,Setting } from "obsidian";
-import { Todo } from "src/core/Todo";
+import { Task } from "src/core/Task";
 
 export class TitlePropertyView{
-    todo:Todo;
+    task:Task;
     app:App;
 
-    constructor(todo:Todo,app:App){
-        this.todo = todo;
+    constructor(task:Task,app:App){
+        this.task = task;
         this.app = app;
     }
 
     build(rootElement:HTMLElement):void{
-        let a:HTMLElement = rootElement.createEl("a",{text:this.todo.title});
+        let a:HTMLElement = rootElement.createEl("a",{text:this.task.title});
         a.addEventListener("click",this); // executes this.handleEvent method
     }
 
     handleEvent(event:Event){
         const m:updateTitleModal =  new updateTitleModal(this.app,(result) => {
-            this.todo.title = result;
-             // @ts-ignore
-             this.app.workspace.activeLeaf.rebuildView();
+            this.task.title = result;
+            setTimeout(
+              // @ts-ignore
+              () => this.app.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true)
+            ,100) 
         });
         m.open();
     }

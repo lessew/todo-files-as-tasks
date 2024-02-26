@@ -10,14 +10,14 @@ status: inbox
 # New features
 
 ```yatodo
-rootPath: todo-home/features
+rootPath: todo-home/
 domain: todo-home
 ```
 
 # Project: architecture design
 
 ```yatodo
-rootPath: todo-home/architecture-design
+rootPath: todo-home/
 domain: todo-home
 ```
 
@@ -25,7 +25,7 @@ domain: todo-home
 
 
 ```yatodo
-rootPath: todo-home/bugs
+rootPath: todo-home
 domain: todo-home
 ```
 

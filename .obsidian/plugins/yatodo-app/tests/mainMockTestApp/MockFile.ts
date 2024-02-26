@@ -1,15 +1,14 @@
 import { File } from "../../src/core/File";
-import { Status, Context } from "../../src/core/FilePropertyValues";
 
 
-export class TestMockFile extends File{
-    yaml:{context:Context,status:Status};
+export class MockFile extends File{
+    yaml:{context:string,status:string};
 
     constructor(fullPath:string){
         super(fullPath);
     }
 
-    loadYaml(yaml:{context:Context,status:Status}):void{
+    loadYaml(yaml:{context:string,status:string}):void{
         this.yaml = yaml
     }
 
@@ -17,6 +16,7 @@ export class TestMockFile extends File{
         // @ts-ignore 
         return this.yaml[name];
     }
+
     move(newFullPath: string): void {
 
     }

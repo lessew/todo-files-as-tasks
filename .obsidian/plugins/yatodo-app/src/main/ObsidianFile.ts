@@ -1,15 +1,16 @@
 import {File} from "../core/File";
 import { App, TFile , CachedMetadata } from "obsidian";
-
+import { FileSystem } from "src/core/FileSystem";
+import { ObsidianFileSystem } from "./ObsidianFileSystem";
 
 export class ObsidianFile extends File{
     file:TFile;
-    obsidianApp:App;
+    fileSystem:ObsidianFileSystem;
 
-    constructor(file:TFile,obsidianApp:App){
+    constructor(file:TFile,fs:ObsidianFileSystem){
         super(file.path);
         this.file = file;
-        this.obsidianApp = obsidianApp;
+        this.fileSystem = fs;
     }
 
     move(newFullPath: string): void {
@@ -22,7 +23,8 @@ export class ObsidianFile extends File{
     }
     
     getYAMLProperty(name:string): string {
-        let meta:CachedMetadata  = this.obsidianApp.metadataCache.getFileCache(this.file) as CachedMetadata;
+        let meta = this.fileSystem.getYAMLProperty(name,this.file);
+
         if(meta.frontmatter && meta.frontmatter[name]){
             return meta.frontmatter[name];
         }
@@ -32,9 +34,7 @@ export class ObsidianFile extends File{
     }
 
     setYAMLProperty(name: string, value: string): void {
-        this.obsidianApp.fileManager.processFrontMatter(this.file,(frontmatter) => {
-            frontmatter[name] = value;
-        })
+        this.fileSystem.setYAMLProperty(name,value,this.file);
     }
 
 }

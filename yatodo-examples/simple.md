@@ -1,0 +1,4 @@
+
+```yatodo
+rootPath: todo-home
+```

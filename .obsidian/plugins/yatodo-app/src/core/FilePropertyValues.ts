@@ -1,7 +1,3 @@
-export type Status = string;
-export type Context = string;
-   
-
 abstract class FilePropertyValues {
     static fieldId:string;
     static humanReadable_en_GB:string;
@@ -57,4 +53,8 @@ export class ValidStatusValues extends FilePropertyValues{
 export class ValidContextValues extends FilePropertyValues{
     static fieldId = "context";
     static humanReadable = "Context";
+}
+export class ValidProjectValues extends FilePropertyValues{
+    static fieldId = "project";
+    static humanReadable = "Project";
 }

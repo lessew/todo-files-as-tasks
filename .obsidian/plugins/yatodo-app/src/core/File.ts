@@ -1,9 +1,5 @@
-import { YaTodoApp } from "./YaTodoApp";
-
 export abstract class File{
-
     fullPath:string;
-    app:YaTodoApp;
 
     constructor(fp:string){
         this.fullPath = fp;
@@ -64,12 +60,11 @@ export abstract class File{
         strSplit[FOLDER_INDEX] = topLevelFolder;
         const newFolderPath = strSplit.join("/");
 
-
         return newFolderPath;
     }
 
-    abstract getYAMLProperty(name:string):string;
-    abstract move(newFullPath:string):void;
+    abstract move(newFullPath: string): void;
+    abstract getYAMLProperty(name:string): string;
+    abstract setYAMLProperty(name: string, value: string):void;
 
-    abstract setYAMLProperty(name:string,value:string):void;
 }

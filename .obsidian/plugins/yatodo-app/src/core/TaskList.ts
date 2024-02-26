@@ -1,29 +1,24 @@
 import { Query } from "./Query";
-import { FileAndFolderCollection } from "./FileAndFolderCollection";
 import { Task } from "./Task";
 import { File } from "./File";
-import { Status, Context, ValidStatusValues as ValidStatusValues, ValidContextValues as ValidContextValues } from "./FilePropertyValues";
-
+import { TaskConfiguration } from "./TaskConfiguration";
 
 export class TaskList{
-    fileAndFolderCollection:FileAndFolderCollection;
-    validStatusValues:ValidStatusValues;
-    validContextValues:ValidContextValues;
-    todos:Task[];
+    config:TaskConfiguration;
+    tasks:Task[];
 
-    constructor(fc:FileAndFolderCollection,sv:ValidStatusValues,cv:ValidContextValues){
-        this.validStatusValues = sv;
-        this.validContextValues = cv;
-        this.fileAndFolderCollection = fc;
-        this.loadTodos();
+    constructor(files:File[],query:Query,tc:TaskConfiguration){
+        this.config = tc;
+        this.loadTodos(files);
+        this.build(query);
     }
 
-    private loadTodos(){
-        this.todos = [];
+    private loadTodos(files:File[]){
+        this.tasks = [];
 
-        this.fileAndFolderCollection.files.forEach(f => {
-            let td:Task = new Task(f as File,this.validStatusValues,this.validContextValues);
-            this.todos.push(td);
+        files.forEach(f => {
+            let td:Task = new Task(f as File,this.config);
+            this.tasks.push(td);
         })
     }
 
@@ -35,25 +30,34 @@ export class TaskList{
         //return this;
     };
 
-    filterByStatus(s:Status):void{
-        let result:Task[]= this.todos.filter(td => {
+    filterByStatus(s:string):void{
+        let result:Task[]= this.tasks.filter(td => {
             return (td.status === s)
         })
-        this.todos = result;
+        this.tasks = result;
     }
 
-    filterByContext(c:Context):void{
-        let result:Task[] = this.todos.filter(td => {
+    filterByContext(c:string):void{
+        let result:Task[] = this.tasks.filter(td => {
             return (td.context === c)
         })    
-        this.todos = result;
+        this.tasks = result;
+    }
+
+    filterByPath(p:string):void{
+        let result:Task[] = this.tasks.filter(aTask => {
+            return (aTask.file.pathMatches(p));
+        })    
+        this.tasks = result;
     }
 
     get():Task[]{
-        return this.todos;
+        return this.tasks;
     }
 
-    build(q:Query):Task[]{
+    private build(q:Query):Task[]{
+        this.filterByPath(q.rootPath);
+
         if(q.context){
             this.filterByContext(q.context);
         }
@@ -61,7 +65,7 @@ export class TaskList{
             this.filterByStatus(q.status);
         }
 
-        return this.todos;
+        return this.tasks;
     }
 
 }

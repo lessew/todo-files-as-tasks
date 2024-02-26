@@ -1,75 +1,69 @@
 import { App, TFile } from "obsidian";
-import { FileAndFolderCollection } from "src/core/FileAndFolderCollection";
-import { Query } from "src/core/Query";
 import { YAMLParser } from "src/core/YAMLParser";
 import { TaskList } from "src/core/TaskList";
-import { Folder } from "src/core/Folder";
-import { Task } from "src/core/Task";
 import { ObsidianView } from "./ui/ObsidianView";
-import { YaTodoApp } from "src/core/YaTodoApp";
-import { ObsidianFile } from "./ObsidianFile";
 import { File } from "src/core/File";
-import { ValidContextValues,ValidStatusValues } from "src/core/FilePropertyValues";
+import { FileSystem } from "src/core/FileSystem";
+import { ValidContextValues,ValidProjectValues,ValidStatusValues } from "src/core/FilePropertyValues";
+import { ObsidianFileSystem } from "./ObsidianFileSystem";
+import { TaskConfiguration } from "src/core/TaskConfiguration";
 
-export class ObsidianYatodoApp extends YaTodoApp{
+export class ObsidianYatodoApp{
     parser:YAMLParser;
-    query:Query;
-    obsidianApp:App;
-    rootElement:HTMLElement;
-    validContextValues:ValidContextValues;
-    validStatusValues:ValidStatusValues;
+    obsidianApp:App; 
     
     constructor(obsidianApp:App){
-        super();
         this.obsidianApp = obsidianApp;
-        this.setValidStatusValues();
-        this.setValidContextValues();
-        this.parser = new YAMLParser(this.validContextValues,this.validStatusValues);
     }
 
-    setValidStatusValues():void{
-        this.validStatusValues = new ValidStatusValues();
-        this.validStatusValues.addValue("inbox","Inbox");
-        this.validStatusValues.addValue("next","Next");
-        this.validStatusValues.addValue("waiting_for","Waiting For");
-        this.validStatusValues.addValue("deferred","Deferred");
+    getValidStatusValues():ValidStatusValues{
+        const validStatusValues = new ValidStatusValues();
+        validStatusValues.addValue("inbox","Inbox");
+        validStatusValues.addValue("next","Next");
+        validStatusValues.addValue("waiting_for","Waiting For");
+        validStatusValues.addValue("deferred","Deferred");
+        return validStatusValues;
     }
 
-    setValidContextValues():void{
-        this.validContextValues = new ValidContextValues();
-        this.validContextValues.addValue("desk","Desk");
-        this.validContextValues.addValue("phone","Phone");
-        this.validContextValues.addValue("read","Read");
-        this.validContextValues.addValue("deep_thinking","Deep Thinking");
-        this.validContextValues.addValue("desk","Desk");
+    getValidContextValues():ValidContextValues{
+        let validContextValues = new ValidContextValues();
+        validContextValues.addValue("desk","Desk");
+        validContextValues.addValue("phone","Phone");
+        validContextValues.addValue("read","Read");
+        validContextValues.addValue("deep_thinking","Deep Thinking");
+        validContextValues.addValue("desk","Desk");
+        return validContextValues;
+    }
+
+    getValidProjectValues(fs:FileSystem):ValidProjectValues{
+        let validProjectValues = new ValidProjectValues();
+        
+        const projects = fs.getFolders();
+
+        projects.forEach((p) => {
+            validProjectValues.addValue(p,p);
+        });
+        return validProjectValues;
     }
 
     executeCommand(source:string,el:HTMLElement):void{
-        this.query = this.parser.parse(source);
-        this.rootElement = el;
+        const validContextValues = this.getValidContextValues();
+        const validStatusValues = this.getValidStatusValues();
 
-        const fileAndFolderCollection:FileAndFolderCollection = new FileAndFolderCollection(this);
-        fileAndFolderCollection.build(this.query.rootPath);
+        let parser = new YAMLParser(validContextValues,validStatusValues);
+        const query = parser.parse(source);
 
-        const builder:TaskList = new TaskList(
-            fileAndFolderCollection,
-            this.validStatusValues,
-            this.validContextValues);
+        const fs = new ObsidianFileSystem(this.obsidianApp);
+        fs.setRootPath(query.rootPath);
+        const files:File[] = fs.getMarkdownFiles();
 
-        const folders:Folder[] = fileAndFolderCollection.folders;
-        const todos:Task[]= builder.build(this.query);
+        const validProjectValues = this.getValidProjectValues(fs);
+        const config = new TaskConfiguration(validProjectValues,validStatusValues,validContextValues);
 
-        const view = new ObsidianView(todos,folders,this.obsidianApp);
+        let taskList:TaskList = new TaskList(files,query,config)
+        
+        const view = new ObsidianView(taskList,this.obsidianApp);
+
         view.build(el); 
-    }
-
-    getAllMarkdowndownFiles():File[]{
-        const tf:TFile[] = this.obsidianApp.vault.getMarkdownFiles();
-        let files:File[] = [];
-        tf.forEach(aFile => {
-            const newFile:File = new ObsidianFile(aFile,this.obsidianApp);
-            files.push(newFile)
-        })
-        return files;
     }
 }

@@ -1,58 +1,50 @@
-import { App, Modal, Notice, SuggestModal } from "obsidian";
-import { Todo } from "src/core/Todo";
-import { Folder } from "src/core/Folder";
+import { App, SuggestModal } from "obsidian";
+import { Task } from "src/core/Task";
 
 export class ProjectPropertyView{
-    todo:Todo;
+    task:Task;
     app:App;
-    folders:Folder[];
 
-    constructor(todo:Todo,folders:Folder[], app:App){
-        this.todo = todo;
+    constructor(task:Task, app:App){
+        this.task = task;
         this.app = app;
-        this.folders = folders;
     }
 
     build(rootElement:HTMLElement):void{
-        let a:HTMLElement = rootElement.createEl("a",{text:this.todo.project});
+        let a:HTMLElement = rootElement.createEl("a",{text:this.task.project});
         a.addEventListener("click",this); // executes handleEvent
     }
 
     handleEvent(event:Event){
-        const m:SelectProjectModal =  new SelectProjectModal(this.todo, this.folders,this.app);
+        const m:SelectProjectModal =  new SelectProjectModal(this.task, this.app);
         m.open();
     }
 }
 
-export class SelectProjectModal extends SuggestModal<Folder>{
+export class SelectProjectModal extends SuggestModal<string>{
+    task:Task;
 
-    todo:Todo;
-    folders: Folder[];
-
-    constructor(todo:Todo, folders:Folder[], app: App) {
+    constructor(task:Task, app: App) {
         super(app);
-        this.folders = folders;
-        this.todo = todo;
+        this.task = task;
     }
         
-    getSuggestions(query: string): Folder[] | Promise<Folder[]> {
-        console.log(this.folders);
-        console.log(query);
-        return this.folders.filter((folder) =>
-                folder.name.toLowerCase().includes(query.toLowerCase())
-        );
+    getSuggestions(query: string): string[] | Promise<string[]> {
+        const projects:string[] = this.task.config.validProjectValues.getAllHumanReadableValues();
+        return projects.filter((p) =>
+                p.toLowerCase().includes(query.toLowerCase())
+        ); 
     }
 
-    renderSuggestion(value: Folder, el: HTMLElement) {
-        el.createEl("div", { text: value.name });
-        //el.createEl("small", { text: book.author });
+    renderSuggestion(value: string, el: HTMLElement) {
+        el.createEl("div", { text: value });
     }
 
-    onChooseSuggestion(item: Folder, evt: MouseEvent | KeyboardEvent) {
-        this.todo.project = item.name;
-        //new Notice(`Selected ${item.name}`);
-        console.log(this);
-          // @ts-ignore
-          this.app.workspace.activeLeaf.rebuildView();
+    onChooseSuggestion(item: string, evt: MouseEvent | KeyboardEvent) {
+        this.task.project = item;
+        setTimeout(
+            // @ts-ignore
+            () => this.app.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true)
+        ,100)   
     }
 }

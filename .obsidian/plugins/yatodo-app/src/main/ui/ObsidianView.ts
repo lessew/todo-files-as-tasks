@@ -1,20 +1,19 @@
 import { App } from "obsidian";
 import { Task } from "../../core/Task";
-import { Folder } from "../../core/Folder"
 import { ProjectPropertyView } from "./ProjectPropertyView";
 import { TitlePropertyView } from "./TitlePropertyView";
 import { ContextPropertyView } from "./ContextPropertyView";
 import { StatusPropertyView } from "./StatusPropertyView";
+import { TaskList } from "src/core/TaskList";
 
 
 export class ObsidianView {
-    todos: Task[];
-    folders: Folder[];
+    taskList:TaskList
     app:App;
 
-    constructor(tl:Task[],folders:Folder[], app:App){
-        this.todos = tl;
-        this.folders = folders;
+    constructor(tl:TaskList,app:App){
+        //console.log(tl);
+        this.taskList = tl;
         this.app = app;
     }
 
@@ -39,19 +38,20 @@ export class ObsidianView {
     }
 
     private createRows(tableElementToAttachRowTo:HTMLTableElement){
-        for(let i=0;i<this.todos.length;i++){
+        for(let i=0;i<this.taskList.tasks.length;i++){
+            const thisTask = this.taskList.tasks[i];
             let row:HTMLTableRowElement = tableElementToAttachRowTo.createEl("tr");
             let tdTitle:HTMLTableCellElement = row.createEl("td", {});
-            this.createTitleHTML(this.todos[i],tdTitle);
+            this.createTitleHTML(thisTask,tdTitle);
 
             let tdProject:HTMLTableCellElement = row.createEl("td", {});
-            this.createProjectHTML(this.todos[i],tdProject)
+            this.createProjectHTML(thisTask,tdProject)
 
             let tdContext:HTMLTableCellElement = row.createEl("td", {})
-            this.createContextHTML(this.todos[i],tdContext);
+            this.createContextHTML(thisTask,tdContext);
 
             let tdStatus:HTMLTableCellElement = row.createEl("td", {})
-            this.createStatusHTML(this.todos[i],tdStatus);
+            this.createStatusHTML(thisTask,tdStatus);
 
         }
     }
@@ -62,7 +62,7 @@ export class ObsidianView {
     }
    
     private createProjectHTML(todo:Task,el:HTMLElement):void{
-        const pp = new ProjectPropertyView(todo,this.folders,this.app);
+        const pp = new ProjectPropertyView(todo,this.app);
         pp.build(el);
     }
 
