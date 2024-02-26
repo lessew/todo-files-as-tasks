@@ -43,7 +43,7 @@ export class ObsidianYatodoApp{
         let validProjectValues = new ValidProjectValues();
         
         const projects = fs.getFolders();
-
+ 
         projects.forEach((p) => {
             validProjectValues.addValue(p,p);
         });

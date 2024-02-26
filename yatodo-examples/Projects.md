@@ -1,15 +1,15 @@
-# Architecture-design
+# Architecture and design
 
 ```yatodo
 rootPath: todo-home
-project: architecture-design
+project: "Architecture and Design"
 ```
 
 # Bugs
 
 ```yatodo
 rootPath: todo-home
-project: bugs
+project: Bugs
 ```
 
 
@@ -17,7 +17,7 @@ project: bugs
 
 ```yatodo
 rootPath: todo-home
-project: features
+project: Features
 ```
 
 
@@ -25,5 +25,5 @@ project: features
 
 ```yatodo
 rootPath: todo-home
-project: release
+project: Release
 ```
