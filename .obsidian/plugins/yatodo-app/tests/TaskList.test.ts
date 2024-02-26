@@ -81,3 +81,14 @@ describe('Task List: filter on context deep_thinking', () => {
     });
 });
 
+describe('Task List: filter on project errands', () => {
+    let query:Query = {
+        rootPath:"/home/",
+        project:"errands"
+    }
+    let taskList = new TaskList(getFiles(),query,getConfiguration());
+    test('check filter on project errands', () => {
+        expect(taskList.get().length).toBe(1);
+    });
+});
+

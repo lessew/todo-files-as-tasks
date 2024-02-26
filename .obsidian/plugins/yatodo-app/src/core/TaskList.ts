@@ -22,6 +22,13 @@ export class TaskList{
         })
     }
 
+    filterByProject(project:string){
+        let result:Task[]= this.tasks.filter(td => {
+            return (td.project === project)
+        })
+        this.tasks = result;
+    }
+
     filterByExcludingDirectoryName(directoryToIgnore:string):void{
        // return this;
     };
@@ -64,7 +71,9 @@ export class TaskList{
         if(q.status){
             this.filterByStatus(q.status);
         }
-
+        if(q.project){
+            this.filterByProject(q.project)
+        }
         return this.tasks;
     }
 
