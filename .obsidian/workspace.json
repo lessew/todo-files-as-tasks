@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "yatodo-examples/Done.md",
+                "file": "yatodo-examples/Starred.md",
                 "mode": "preview",
                 "source": true
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "yatodo-examples/Done.md",
+                "file": "yatodo-examples/Starred.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "yatodo-examples/Done.md",
+                "file": "yatodo-examples/Starred.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "yatodo-examples/Done.md"
+                "file": "yatodo-examples/Starred.md"
               }
             }
           }
@@ -150,18 +150,19 @@
   },
   "active": "614d54253bb1ab1d",
   "lastOpenFiles": [
+    "yatodo-examples/All todos.md",
+    "yatodo-examples/Starred.md",
+    "todo-home/Architecture and  Design/Create new todo.md",
+    "yatodo-examples/Status.md",
+    "yatodo-examples/Context.md",
+    "yatodo-examples/Done.md",
     "yatodo-examples/Projects.md",
     "TEST file.md",
-    "yatodo-examples/Done.md",
-    "yatodo-examples/Status.md",
-    "yatodo-examples/All todos.md",
-    "yatodo-examples/Context.md",
     "todo-home/Bugs/Add field starred.md",
     "todo-home/Bugs/rootpath is not respected in yaml config when selecting project.md",
     "todo-home/Bugs/Project does not show in suggester if it has no todos.md",
     "todo-home/Features/Add field is journal.md",
     "todo-home/Release/Todo fields in detail page.md",
-    "todo-home/Architecture and  Design/Create new todo.md",
     "todo-home/Architecture and  Design/Update Context and Status.md",
     "todo-home/Release",
     "todo-home/New folder",

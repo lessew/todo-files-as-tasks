@@ -4,6 +4,7 @@ import { ProjectPropertyView } from "./ProjectPropertyView";
 import { TitlePropertyView } from "./TitlePropertyView";
 import { ContextPropertyView } from "./ContextPropertyView";
 import { StatusPropertyView } from "./StatusPropertyView";
+import { StarredPropertyView } from "./StarredPropertyView";
 import { TaskList } from "src/core/TaskList";
 
 
@@ -12,7 +13,6 @@ export class ObsidianView {
     app:App;
 
     constructor(tl:TaskList,app:App){
-        //console.log(tl);
         this.taskList = tl;
         this.app = app;
     }
@@ -35,6 +35,8 @@ export class ObsidianView {
         head.createEl("th",{text:"Project"});
         head.createEl("th",{text:"Context"});
         head.createEl("th",{text:"Status"});
+        head.createEl("th",{text:"Starred"});
+
     }
 
     private createRows(tableElementToAttachRowTo:HTMLTableElement){
@@ -53,6 +55,8 @@ export class ObsidianView {
             let tdStatus:HTMLTableCellElement = row.createEl("td", {})
             this.createStatusHTML(thisTask,tdStatus);
 
+            let tdStarred:HTMLTableCellElement = row.createEl("td", {})
+            this.createStarredHTML(thisTask,tdStarred);
         }
     }
  
@@ -73,6 +77,11 @@ export class ObsidianView {
 
     private createStatusHTML(todo:Task,el:HTMLElement):void{
         const ss = new StatusPropertyView(todo,this.app);
+        ss.build(el);
+    }
+
+    private createStarredHTML(todo:Task,el:HTMLElement):void{
+        const ss = new StarredPropertyView(todo,this.app);
         ss.build(el);
     }
 

@@ -1,6 +1,6 @@
 import { Task } from "../src/core/Task";
 import { File } from "../src/core/File";
-import { ValidStatusValues,ValidContextValues, ValidProjectValues } from "../src/core/FilePropertyValues"
+import { ValidStatusValues,ValidContextValues, ValidProjectValues, ValidStarredValues } from "../src/core/FilePropertyValues"
 import { TaskConfiguration } from "../src/core/TaskConfiguration";
 import { MockFile } from "./mainMockTestApp/MockFile";
 
@@ -17,8 +17,12 @@ function getConfiguration():TaskConfiguration{
   let vpv = new ValidProjectValues();
   vpv.addValue("home","Home");
   vpv.addValue("errands","Errands");
+
+  let vstv = new ValidStarredValues();
+  vstv.addValue("starred","Starred");
+  vstv.addValue("unstarred","Unstarred");
   
-  let config = new TaskConfiguration(vpv,vsv,vcv);  
+  let config = new TaskConfiguration(vpv,vsv,vcv,vstv);  
   return config;
 }
 
@@ -32,12 +36,12 @@ function getFile(input:any):File{
 describe('testing todo class with valid input', () => {
   let input = {
     path:"/root/errands/jumbo.md",
-    yaml: {status:"inbox",context:"desk"}
+    yaml: {status:"inbox",context:"desk",starred:"unstarred"}
    }
 
   let task = new Task(getFile(input),getConfiguration());
 
-     test('check if folder is correct', () => {
+     test('check if project is correct', () => {
         expect(task.project).toBe("errands");
       });
 
@@ -51,6 +55,10 @@ describe('testing todo class with valid input', () => {
 
     test('test if context is correct',() => {
       expect(task.context).toBe(input.yaml.context);
+    });
+
+    test('test if starred is correct',() => {
+      expect(task.starred).toBe(input.yaml.starred);
     });
 });
 

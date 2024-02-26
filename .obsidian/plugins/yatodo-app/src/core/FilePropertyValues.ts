@@ -58,3 +58,8 @@ export class ValidProjectValues extends FilePropertyValues{
     static fieldId = "project";
     static humanReadable = "Project";
 }
+
+export class ValidStarredValues extends FilePropertyValues{
+    static fieldId = "starred";
+    static humanReadable = "Starred";
+}

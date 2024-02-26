@@ -3,7 +3,7 @@ import { Query } from "../src/core/Query";
 import { MockFile } from "./mainMockTestApp/MockFile";
 import { File } from "../src/core/File"
 import { TaskConfiguration } from "../src/core/TaskConfiguration";
-import { ValidContextValues, ValidProjectValues, ValidStatusValues } from "../src/core/FilePropertyValues";
+import { ValidContextValues, ValidProjectValues, ValidStarredValues, ValidStatusValues } from "../src/core/FilePropertyValues";
 
 function getConfiguration():TaskConfiguration{
     let vcv = new ValidContextValues();
@@ -18,7 +18,11 @@ function getConfiguration():TaskConfiguration{
     vpv.addValue("errands","Errands");
     vpv.addValue("work","Work");
     
-    let config = new TaskConfiguration(vpv,vsv,vcv);  
+    let vstv = new ValidStarredValues();
+    vstv.addValue("starred","Starred");
+    vstv.addValue("unstarred","Unstarred");
+  
+    let config = new TaskConfiguration(vpv,vsv,vcv,vstv);  
     return config;
 }
 
@@ -26,19 +30,19 @@ function getFiles():File[]{
     let inputs = [
         {
             path:"/ROOT/errands/jumbo.md",
-            yaml: {status:"inbox",context:"desk"}
+            yaml: {status:"inbox",context:"desk",starred:"starred"}
         },
         {
             path:"/home/errands/hema.md",
-            yaml: {status:"inbox",context:"desk"}
+            yaml: {status:"inbox",context:"desk",starred:"unstarred"}
         },
         {
             path:"/home/hobby/play-with-duplo.md",
-            yaml: {status:"done",context:"deep_thinking"}
+            yaml: {status:"done",context:"deep_thinking",starred:"starred"}
         },
         {
             path:"/home/hobby/football.md",
-            yaml: {status:"inbox",context:"desk"}
+            yaml: {status:"inbox",context:"desk",starred:"unstarred"}
         }
     ]
 
@@ -88,6 +92,18 @@ describe('Task List: filter on project errands', () => {
     }
     let taskList = new TaskList(getFiles(),query,getConfiguration());
     test('check filter on project errands', () => {
+        expect(taskList.get().length).toBe(1);
+    });
+});
+
+
+describe('Task List: filter on status starred', () => {
+    let query:Query = {
+        rootPath:"/home/",
+        starred:"starred"
+    }
+    let taskList = new TaskList(getFiles(),query,getConfiguration());
+    test('check filter on status starred', () => {
         expect(taskList.get().length).toBe(1);
     });
 });

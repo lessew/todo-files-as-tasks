@@ -4,7 +4,7 @@ import { TaskList } from "src/core/TaskList";
 import { ObsidianView } from "./ui/ObsidianView";
 import { File } from "src/core/File";
 import { FileSystem } from "src/core/FileSystem";
-import { ValidContextValues,ValidProjectValues,ValidStatusValues } from "src/core/FilePropertyValues";
+import { ValidContextValues,ValidProjectValues,ValidStarredValues,ValidStatusValues } from "src/core/FilePropertyValues";
 import { ObsidianFileSystem } from "./ObsidianFileSystem";
 import { TaskConfiguration } from "src/core/TaskConfiguration";
 
@@ -14,6 +14,13 @@ export class ObsidianYatodoApp{
     
     constructor(obsidianApp:App){
         this.obsidianApp = obsidianApp;
+    }
+
+    getValidStarredValues():ValidStarredValues{
+        const validStarredValues = new ValidStarredValues();
+        validStarredValues.addValue("unstarred","✰")
+        validStarredValues.addValue("starred","⭐")
+        return validStarredValues;
     }
 
     getValidStatusValues():ValidStatusValues{
@@ -51,18 +58,27 @@ export class ObsidianYatodoApp{
     }
 
     executeCommand(source:string,el:HTMLElement):void{
-        const validContextValues = this.getValidContextValues();
-        const validStatusValues = this.getValidStatusValues();
-
-        let parser = new YAMLParser(validContextValues,validStatusValues);
-        const query = parser.parse(source);
+        const parser:YAMLParser = new YAMLParser();
+        parser.loadSource(source);
+        const rootPath = parser.parseRootPath();
 
         const fs = new ObsidianFileSystem(this.obsidianApp);
-        fs.setRootPath(query.rootPath);
+        fs.setRootPath(rootPath);
         const files:File[] = fs.getMarkdownFiles();
 
+        const validContextValues = this.getValidContextValues();
+        const validStatusValues = this.getValidStatusValues();
+        const validStarredValues = this.getValidStarredValues();
         const validProjectValues = this.getValidProjectValues(fs);
-        const config = new TaskConfiguration(validProjectValues,validStatusValues,validContextValues);
+        const config = new TaskConfiguration(
+            validProjectValues,
+            validStatusValues,
+            validContextValues,
+            validStarredValues
+        );
+
+        parser.loadConfiguration(config);
+        const query = parser.parse();
 
         let taskList:TaskList = new TaskList(files,query,config)
         

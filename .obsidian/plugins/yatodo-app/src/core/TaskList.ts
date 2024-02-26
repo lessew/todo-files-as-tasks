@@ -37,6 +37,13 @@ export class TaskList{
         //return this;
     };
 
+    filterByStarred(s:string):void{
+        let result:Task[]= this.tasks.filter(td => {
+            return (td.starred === s)
+        })
+        this.tasks = result;
+    }
+
     filterByStatus(s:string):void{
         let result:Task[]= this.tasks.filter(td => {
             return (td.status === s)
@@ -72,7 +79,10 @@ export class TaskList{
             this.filterByStatus(q.status);
         }
         if(q.project){
-            this.filterByProject(q.project)
+            this.filterByProject(q.project);
+        }
+        if(q.starred){
+            this.filterByStarred(q.starred);
         }
         return this.tasks;
     }

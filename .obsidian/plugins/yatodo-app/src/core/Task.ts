@@ -1,5 +1,5 @@
 import { File } from "./File";
-import { ValidStatusValues, ValidContextValues } from "./FilePropertyValues";
+import { ValidStatusValues, ValidContextValues, ValidStarredValues } from "./FilePropertyValues";
 import { TaskConfiguration } from "./TaskConfiguration";
 
 export class Task{
@@ -7,6 +7,8 @@ export class Task{
     private _context:string;
     private _title:string;
     private _project:string;
+    private _starred:string;
+
     config:TaskConfiguration;
    
     file:File;
@@ -18,6 +20,7 @@ export class Task{
        this.deriveContextFromFile();
        this.deriveStatusFromFile();
        this.deriveProjectFromFile();
+       this.deriveStarredFromFile();
     }
 
     get title():string{
@@ -39,16 +42,25 @@ export class Task{
         this.file.setBasename(title);
     }
 
+    set starred(s:string){
+        this._starred = s;
+        this.file.setYAMLProperty(ValidStarredValues.fieldId,s);
+    }
+
     set context(c:string){
         this._context = c;
-        this.file.setYAMLProperty(ValidContextValues.fieldId,c as string);
+        this.file.setYAMLProperty(ValidContextValues.fieldId,c);
     }
 
     set status(s:string){
         this._status = s;
-        this.file.setYAMLProperty(ValidStatusValues.fieldId,s as string);
+        this.file.setYAMLProperty(ValidStatusValues.fieldId,s);
     }
 
+    get starred():string{
+        return this._starred;
+    }
+    
     get context():string{
         return this._context;
     }
@@ -74,6 +86,17 @@ export class Task{
         }
         else{
             this._status = ValidStatusValues.INVALID_VALUE;
+        }        
+    }
+
+    private deriveStarredFromFile(){
+        let result:string = this.file.getYAMLProperty(ValidStarredValues.fieldId);
+
+        if(this.config.validStarredValues.isSet(result)){
+            this._starred = result;
+        }
+        else{
+            this._starred = ValidStarredValues.INVALID_VALUE;
         }        
     }
 

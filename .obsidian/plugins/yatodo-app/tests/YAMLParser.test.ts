@@ -1,7 +1,7 @@
 import { YAMLParser } from "../src/core/YAMLParser";
 import { Query } from "../src/core/Query";
 import { TaskConfiguration } from "../src/core/TaskConfiguration";
-import { ValidContextValues, ValidProjectValues, ValidStatusValues } from "../src/core/FilePropertyValues";
+import { ValidContextValues, ValidProjectValues, ValidStarredValues, ValidStatusValues } from "../src/core/FilePropertyValues";
 
 
 function getConfiguration():TaskConfiguration{
@@ -16,8 +16,13 @@ function getConfiguration():TaskConfiguration{
     let vpv = new ValidProjectValues();
     vpv.addValue("home","Home");
     vpv.addValue("errands","Errands");
+
+    let vstv = new ValidStarredValues();
+    vstv.addValue("starred","Starred");
+    vstv.addValue("unstarred","Unstarred");
+  
+    let config = new TaskConfiguration(vpv,vsv,vcv,vstv);  
     
-    let config = new TaskConfiguration(vpv,vsv,vcv);  
     return config;
   }
   
@@ -40,31 +45,36 @@ rootPath: .`;
 const config:TaskConfiguration = getConfiguration();
 
 describe('Testing YAML Parser with correct format', () => {
-    let parser = new YAMLParser(config.validContextValues,config.validStatusValues);
+    let parser = new YAMLParser();
+    parser.loadConfiguration(config);
   
     test('test correctly formatted string',() => {
-        let q:Query = parser.parse(correctlyFormatted);
+        parser.loadSource(correctlyFormatted);
+        let q:Query = parser.parse();
         expect(q.context).toBe("desk");
         expect(q.status).toBe("inbox");
         expect(q.rootPath).toBe(".");
     });  
 
     test('test correctly formatted string with no status field',() => {
-        let q:Query = parser.parse(correctlyFormattedWithoutStatus);
+        parser.loadSource(correctlyFormattedWithoutStatus);
+        let q:Query = parser.parse();
         expect(q.context).toBe("desk");
         expect(q.status).toBe(undefined);
         expect(q.rootPath).toBe(".");
     });  
 
     test('test correctly formatted string with no context field',() => {
-        let q:Query = parser.parse(correctlyFormattedWithoutContext);
+        parser.loadSource(correctlyFormattedWithoutContext);
+        let q:Query = parser.parse();
         expect(q.context).toBe(undefined);
         expect(q.status).toBe("inbox");
         expect(q.rootPath).toBe(".");
     });  
 
     test('test correctly formatted string with no status nor context field',() => {
-        let q:Query = parser.parse(correctlyFormattedWithoutContextAndStatus);
+        parser.loadSource(correctlyFormattedWithoutContextAndStatus);
+        let q:Query = parser.parse();
         expect(q.context).toBe(undefined);
         expect(q.status).toBe(undefined);
         expect(q.rootPath).toBe(".");
@@ -98,30 +108,36 @@ describe('Testing YAML Parser with correct format', () => {
 
 describe('Testing YAML Parser with incorrect format', () => {
     
-    let parser = new YAMLParser(config.validContextValues,config.validStatusValues);
-  
+    let parser = new YAMLParser();
+    parser.loadConfiguration(config);
+
     test('test badly formatted path',() => {
-        let q:Query = parser.parse(incorrectlyFormattedPath);
+        parser.loadSource(incorrectlyFormattedPath);
+        let q:Query = parser.parse();
         expect(q.rootPath).toBe("."); 
     });  
 
     test('test badly formatted status',() => {
-        let q:Query = parser.parse(incorrectlyFormattedStatus);
+        parser.loadSource(incorrectlyFormattedStatus);
+        let q:Query = parser.parse();
         expect(q.rootPath).toBe("."); 
     });  
 
     test('test badly formatted context',() => {
-        let q:Query = parser.parse(incorrectlyFormattedContext);
+        parser.loadSource(incorrectlyFormattedContext);
+        let q:Query = parser.parse();
         expect(q.rootPath).toBe("."); 
     });  
 
     test('test invalid status',() => {
-        let q:Query = parser.parse(invalidStatus);
+        parser.loadSource(invalidStatus);
+        let q:Query = parser.parse();
         expect(q.rootPath).toBe("."); 
     });  
     
     test('test invalid context',() => {
-        let q:Query = parser.parse(invalidContext);
+        parser.loadSource(invalidContext);
+        let q:Query = parser.parse();
         expect(q.rootPath).toBe("."); 
     });  
   });
