@@ -8,7 +8,7 @@ import { StarredPropertyView } from "./StarredPropertyView";
 import { TaskList } from "src/core/TaskList";
 
 
-export class ObsidianView {
+export class ObsidianTaskListView {
     taskList:TaskList
     app:App;
 
