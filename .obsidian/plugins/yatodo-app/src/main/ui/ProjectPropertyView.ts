@@ -1,4 +1,4 @@
-import { App, SuggestModal } from "obsidian";
+import { App, MarkdownView, SuggestModal } from "obsidian";
 import { Task } from "src/core/Task";
 
 export class ProjectPropertyView{
@@ -43,8 +43,7 @@ export class SelectProjectModal extends SuggestModal<string>{
     onChooseSuggestion(item: string, evt: MouseEvent | KeyboardEvent) {
         this.task.project = item;
         setTimeout(
-            // @ts-ignore
             () => this.app.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true)
-        ,100)   
+        ,100)  
     }
 }

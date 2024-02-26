@@ -1,4 +1,4 @@
-import { App, MarkdownView, Modal, Notice, SuggestModal } from "obsidian";
+import { App, MarkdownView, SuggestModal } from "obsidian";
 import { Task } from "src/core/Task";
 
 export class StatusPropertyView{

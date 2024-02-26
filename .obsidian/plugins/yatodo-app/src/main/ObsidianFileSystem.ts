@@ -23,14 +23,10 @@ export class ObsidianFileSystem extends FileSystem{
     getMarkdownFiles():File[]{
         const tf:TFile[] = this.obsidianApp.vault.getMarkdownFiles();
         let files:File[] = [];
-        //let folders:Map<string,boolean> = new Map();
         
         tf.forEach(aFile => {
             const newFile:File = new ObsidianFile(aFile,this);
-            //if(newFile.pathMatches(this.rootPath)){
-                files.push(newFile)
-                //folders.set(newFile.getFolderNameFromFullPath(),true)
-            //}
+            files.push(newFile);
         });
         return files;
     }

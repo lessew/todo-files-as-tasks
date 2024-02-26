@@ -22,6 +22,8 @@ export class ObsidianYatodoApp{
         validStatusValues.addValue("next","Next");
         validStatusValues.addValue("waiting_for","Waiting For");
         validStatusValues.addValue("deferred","Deferred");
+        validStatusValues.addValue("done","Done");
+
         return validStatusValues;
     }
 
@@ -32,6 +34,8 @@ export class ObsidianYatodoApp{
         validContextValues.addValue("read","Read");
         validContextValues.addValue("deep_thinking","Deep Thinking");
         validContextValues.addValue("desk","Desk");
+        validContextValues.addValue("none","None");
+
         return validContextValues;
     }
 

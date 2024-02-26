@@ -1,4 +1,4 @@
-import { App, MarkdownView, Modal, Notice, SuggestModal } from "obsidian";
+import { App, MarkdownView, SuggestModal } from "obsidian";
 import { Task } from "src/core/Task";
 import { ValidContextValues,ValidStatusValues } from "src/core/FilePropertyValues";
 
