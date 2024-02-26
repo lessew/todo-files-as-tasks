@@ -1,8 +1,26 @@
 import { YAMLParser } from "../src/core/YAMLParser";
 import { Query } from "../src/core/Query";
-import { mockContextIdValues,mockStatusIdValues } from "./mockData/mockFileProperties";
-import { validStatusValuesInboxDone,validContextValuesDeskDeepThinking } from "./mockData/mockFileProperties";
+import { TaskConfiguration } from "../src/core/TaskConfiguration";
+import { ValidContextValues, ValidProjectValues, ValidStatusValues } from "../src/core/FilePropertyValues";
 
+
+function getConfiguration():TaskConfiguration{
+    let vcv = new ValidContextValues();
+    vcv.addValue("desk","Desk");
+    vcv.addValue("deep_thinking","Deep thinking");
+    
+    let vsv = new ValidStatusValues();
+    vsv.addValue("inbox","Inbox");
+    vsv.addValue("done","Done");
+    
+    let vpv = new ValidProjectValues();
+    vpv.addValue("home","Home");
+    vpv.addValue("errands","Errands");
+    
+    let config = new TaskConfiguration(vpv,vsv,vcv);  
+    return config;
+  }
+  
 const correctlyFormatted = `
 rootPath: .
 context: desk
@@ -19,21 +37,21 @@ context: desk`;
 const correctlyFormattedWithoutContextAndStatus = `
 rootPath: .`;
 
+const config:TaskConfiguration = getConfiguration();
 
 describe('Testing YAML Parser with correct format', () => {
-    
-    let parser = new YAMLParser(validContextValuesDeskDeepThinking,validStatusValuesInboxDone);
+    let parser = new YAMLParser(config.validContextValues,config.validStatusValues);
   
     test('test correctly formatted string',() => {
         let q:Query = parser.parse(correctlyFormatted);
-        expect(q.context).toBe(mockContextIdValues.desk);
-        expect(q.status).toBe(mockStatusIdValues.inbox);
+        expect(q.context).toBe("desk");
+        expect(q.status).toBe("inbox");
         expect(q.rootPath).toBe(".");
     });  
 
     test('test correctly formatted string with no status field',() => {
         let q:Query = parser.parse(correctlyFormattedWithoutStatus);
-        expect(q.context).toBe(mockContextIdValues.desk);
+        expect(q.context).toBe("desk");
         expect(q.status).toBe(undefined);
         expect(q.rootPath).toBe(".");
     });  
@@ -41,7 +59,7 @@ describe('Testing YAML Parser with correct format', () => {
     test('test correctly formatted string with no context field',() => {
         let q:Query = parser.parse(correctlyFormattedWithoutContext);
         expect(q.context).toBe(undefined);
-        expect(q.status).toBe(mockStatusIdValues.inbox);
+        expect(q.status).toBe("inbox");
         expect(q.rootPath).toBe(".");
     });  
 
@@ -80,7 +98,7 @@ describe('Testing YAML Parser with correct format', () => {
 
 describe('Testing YAML Parser with incorrect format', () => {
     
-    let parser = new YAMLParser(validContextValuesDeskDeepThinking,validStatusValuesInboxDone);
+    let parser = new YAMLParser(config.validContextValues,config.validStatusValues);
   
     test('test badly formatted path',() => {
         let q:Query = parser.parse(incorrectlyFormattedPath);

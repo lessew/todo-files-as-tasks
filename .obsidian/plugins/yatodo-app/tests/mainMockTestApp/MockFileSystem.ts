@@ -2,7 +2,7 @@ import { File } from "../../src/core/File";
 import { FileSystem } from "src/core/FileSystem";
 
 
-export class TestMockFileSystem extends FileSystem{
+export class MockFileSystem extends FileSystem{
     yaml:{context:string,status:string};
 
 
