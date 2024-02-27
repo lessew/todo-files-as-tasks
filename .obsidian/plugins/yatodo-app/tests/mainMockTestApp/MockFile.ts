@@ -2,6 +2,7 @@ import { File } from "../../src/core/File";
 
 
 export class MockFile extends File{
+
     yaml:{context:string,status:string};
 
     constructor(fullPath:string){

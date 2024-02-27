@@ -1,6 +1,7 @@
 import { File } from "./File";
 import { ValidStatusValues, ValidContextValues, ValidStarredValues } from "./FilePropertyValues";
 import { TaskConfiguration } from "./TaskConfiguration";
+import { FileSystem } from "./FileSystem";
 
 export class Task{
     private _status:string;
@@ -21,6 +22,20 @@ export class Task{
        this.deriveStatusFromFile();
        this.deriveProjectFromFile();
        this.deriveStarredFromFile();
+    }
+
+    static async createTask(title:string,project:string,config:TaskConfiguration,fileSystem:FileSystem):Promise<void>{
+        //console.log(`${title} - ${project}`);
+        //console.log(config);
+        //console.log(fileSystem);
+        const path = fileSystem.rootPath + "/" + project + "/" + title + ".md";
+        const file:File = await fileSystem.createMarkdownFile(path);
+        let aTask = new Task(file,config);
+        aTask.context = "none";
+        aTask.status = "inbox";
+        //aTask.project = project;
+        aTask.starred = "unstarred";
+        //console.log(path)  
     }
 
     get title():string{

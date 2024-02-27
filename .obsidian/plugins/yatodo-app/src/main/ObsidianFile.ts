@@ -23,9 +23,8 @@ export class ObsidianFile extends File{
     }
     
     getYAMLProperty(name:string): string {
-        let meta = this.fileSystem.getYAMLProperty(name,this.file);
-
-        if(meta.frontmatter && meta.frontmatter[name]){
+        let meta = this.fileSystem.getYAML(this.file);
+        if(meta && meta.frontmatter && meta.frontmatter[name]){
             return meta.frontmatter[name];
         }
         else{

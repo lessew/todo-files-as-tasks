@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "yatodo-examples/Starred.md",
+                "file": "yatodo-examples/Context.md",
                 "mode": "preview",
                 "source": true
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "yatodo-examples/Starred.md",
+                "file": "yatodo-examples/Context.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "yatodo-examples/Starred.md",
+                "file": "yatodo-examples/Context.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "yatodo-examples/Starred.md"
+                "file": "yatodo-examples/Context.md"
               }
             }
           }
@@ -150,12 +150,15 @@
   },
   "active": "614d54253bb1ab1d",
   "lastOpenFiles": [
+    "todo-home/Architecture and  Design/iiiii.md",
+    "yatodo-examples/Create Todo.md",
+    "yatodo-examples/Done.md",
+    "todo-home/Bugs/wes2.md",
+    "todo-home/Architecture and  Design/wes.md",
+    "yatodo-examples/Context.md",
     "yatodo-examples/Projects.md",
     "yatodo-examples/Starred.md",
     "yatodo-examples/Status.md",
-    "yatodo-examples/Create Todo.md",
-    "yatodo-examples/Done.md",
-    "yatodo-examples/Context.md",
     "yatodo-examples/All todos.md",
     "todo-home/Architecture and  Design/Create new todo.md",
     "TEST file.md",

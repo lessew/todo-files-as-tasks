@@ -82,8 +82,16 @@ export class ObsidianYatodoApp{
     }
 
     displayCreateTaskButton(source:string,el:HTMLElement):void{
+
+        const parser:YAMLParser = new YAMLParser();
+        parser.loadSource(source);
+        const rootPath = parser.parseRootPath();
+
         const fs = new ObsidianFileSystem(this.obsidianApp);
-        const view = new ObsidianCreateButtonView(this.getConfiguration(fs),this.obsidianApp);
+        fs.setRootPath(rootPath);
+        console.log(fs);
+
+        const view = new ObsidianCreateButtonView(fs,this.getConfiguration(fs),this.obsidianApp);
         view.build(el);
     }
 

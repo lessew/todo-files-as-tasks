@@ -2,6 +2,7 @@ import { App, CachedMetadata, TFile, TFolder, normalizePath } from "obsidian";
 import { File } from "../core/File"
 import { FileSystem } from "src/core/FileSystem";
 import { ObsidianFile } from "./ObsidianFile";
+import { TaskConfiguration } from "src/core/TaskConfiguration";
 
 export class ObsidianFileSystem extends FileSystem{
   
@@ -44,7 +45,7 @@ export class ObsidianFileSystem extends FileSystem{
         return result;
     }
 
-    getYAMLProperty(name:string,file:TFile):any{
+    getYAML(file:TFile):any{
         let meta:CachedMetadata  = this.obsidianApp.metadataCache.getFileCache(file) as CachedMetadata;
         return meta;
     }
@@ -53,5 +54,11 @@ export class ObsidianFileSystem extends FileSystem{
         this.obsidianApp.fileManager.processFrontMatter(file,(frontmatter) => {
             frontmatter[name] = value;
         })
+    }
+
+    async createMarkdownFile(path:string):Promise<File>{
+        const tFile:TFile = await this.obsidianApp.vault.create(path,"");
+        const file:File = new ObsidianFile(tFile,this);
+        return file;
     }
 }
