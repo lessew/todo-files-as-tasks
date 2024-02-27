@@ -38,7 +38,7 @@ export class SelectStatusModal extends SuggestModal<string>{
     }
 
     renderSuggestion(value: string, el: HTMLElement) {
-        el.createEl("div", { text: value });
+        el.createEl("div", { text: value});
     }
 
     onChooseSuggestion(item: string, evt: MouseEvent | KeyboardEvent) {

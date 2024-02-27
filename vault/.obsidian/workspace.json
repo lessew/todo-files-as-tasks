@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "todo-home/Architecture and  Design/iiiii.md",
+                "file": "yatodo-examples/All todos.md",
                 "mode": "preview",
                 "source": true
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "todo-home/Architecture and  Design/iiiii.md",
+                "file": "yatodo-examples/All todos.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "todo-home/Architecture and  Design/iiiii.md",
+                "file": "yatodo-examples/All todos.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "todo-home/Architecture and  Design/iiiii.md"
+                "file": "yatodo-examples/All todos.md"
               }
             }
           }
@@ -151,6 +151,13 @@
   "active": "614d54253bb1ab1d",
   "lastOpenFiles": [
     "yatodo-examples/Context.md",
+    "yatodo-examples/All todos.md",
+    "yatodo-examples/Projects.md",
+    "yatodo-examples/Starred.md",
+    "yatodo-examples/Status.md",
+    "yatodo-examples/Create Todo.md",
+    "yatodo-examples/Done.md",
+    "todo-home/Architecture and  Design/iiiii.md",
     "vault/yatodo-examples/Status.md",
     "vault/yatodo-examples/Starred.md",
     "vault/yatodo-examples/Projects.md",
@@ -160,15 +167,8 @@
     "vault/yatodo-examples/All todos.md",
     "vault/yatodo-examples",
     "vault",
-    "todo-home/Architecture and  Design/iiiii.md",
-    "yatodo-examples/Create Todo.md",
-    "yatodo-examples/Done.md",
     "todo-home/Bugs/wes2.md",
     "todo-home/Architecture and  Design/wes.md",
-    "yatodo-examples/Projects.md",
-    "yatodo-examples/Starred.md",
-    "yatodo-examples/Status.md",
-    "yatodo-examples/All todos.md",
     "todo-home/Architecture and  Design/Create new todo.md",
     "TEST file.md",
     "todo-home/Bugs/Add field starred.md",
