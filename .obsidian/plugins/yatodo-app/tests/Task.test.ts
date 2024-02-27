@@ -80,3 +80,48 @@ describe('testing todo class with invalid input', () => {
   });
 
 });
+
+describe('testing toggleStarred', () => {
+  let input = {
+    path:"/root/errands/jumbo.md",
+    yaml: {status:"inbox",context:"desk",starred:"unstarred"}
+   }
+
+  let task = new Task(getFile(input),getConfiguration());
+  test('toggle twice',() => {
+    task.toggleStarred();
+    expect(task.starred).toBe("starred");
+    task.toggleStarred();
+    expect(task.starred).toBe("unstarred");
+  })
+
+  test('toggle with validStarredValues object being configured with 3 possible values',() => {
+    let conf = getConfiguration();
+    conf.validStarredValues.addValue("anothervalue","anothervalue");
+    let task = new Task(getFile(input),conf);
+    try{
+      task.toggleStarred();
+      expect(true).toBe(false);
+    }
+    catch(e){
+      expect(true).toBe(true)
+    }
+  });
+
+  
+  test('toggle with current value non existant or not valid. expect to default to val[0]',() => {
+    //let conf = getConfiguration();
+    let input = {
+      path:"/root/errands/jumbo.md",
+      yaml: {status:"inbox",context:"desk",starred:"invalid"}
+     }
+     const config = getConfiguration();
+     let task = new Task(getFile(input),config);
+     expect(task.starred).toBe(ValidStarredValues.INVALID_VALUE);
+     task.toggleStarred();
+     expect(task.starred).toBe("starred");
+     task.toggleStarred();
+     expect(task.starred).toBe("unstarred");
+  });
+
+});

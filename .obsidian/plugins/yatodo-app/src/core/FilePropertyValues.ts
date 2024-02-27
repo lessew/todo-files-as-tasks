@@ -27,6 +27,10 @@ abstract class FilePropertyValues {
         }
     }
 
+    getAllIds():string[]{
+        return [...this.values.keys()];
+    }
+
     getAllHumanReadableValues():string[]{
        return [...this.values.values()]
     }

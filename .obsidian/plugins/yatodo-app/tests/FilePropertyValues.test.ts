@@ -38,4 +38,18 @@ describe('FilePropertyValues Values', () => {
         statusValues.addValue("inbox","Inbox");
         expect(statusValues.getValue("iiiinbox")).toBe(ValidStatusValues.INVALID_VALUE)
     });
+
+    test('check getAllHumanReadableValues', () => {
+        statusValues = new ValidStatusValues();
+        statusValues.addValue("inbox","Inbox");
+        statusValues.addValue("next","Next");
+        expect(statusValues.getAllHumanReadableValues()).toEqual(["Inbox","Next"]);
+    });
+
+    test('check getAllIds', () => {
+        statusValues = new ValidStatusValues();
+        statusValues.addValue("inbox","Inbox");
+        statusValues.addValue("next","Next");
+        expect(statusValues.getAllIds()).toEqual(["inbox","next"]);
+    });
 });

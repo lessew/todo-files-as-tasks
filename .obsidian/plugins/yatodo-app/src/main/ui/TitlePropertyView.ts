@@ -11,8 +11,8 @@ export class TitlePropertyView{
     }
 
     build(rootElement:HTMLElement):void{
-        let a:HTMLElement = rootElement.createEl("a",{text:this.task.title});
-        a.addEventListener("click",this); // executes this.handleEvent method
+        let edit:HTMLElement = rootElement.createEl("a",{text:this.task.title});
+        edit.addEventListener("click",this); // executes this.handleEvent method
     }
 
     handleEvent(event:Event){

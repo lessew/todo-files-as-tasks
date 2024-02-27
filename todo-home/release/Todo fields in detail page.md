@@ -1,5 +1,5 @@
 ---
-status: starred
+status: next
 context: none
 starred: starred
 ---

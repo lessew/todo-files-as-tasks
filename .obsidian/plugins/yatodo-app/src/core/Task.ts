@@ -36,7 +36,6 @@ export class Task{
         this._project = folderName;
     }
 
-    // TODO: rename. does 2 things, hidden file renaming. code smell.
     set title(title:string){
         this._title = title;
         this.file.setBasename(title);
@@ -45,6 +44,25 @@ export class Task{
     set starred(s:string){
         this._starred = s;
         this.file.setYAMLProperty(ValidStarredValues.fieldId,s);
+    }
+
+    toggleStarred(){
+        const vals:string[] = this.config.validStarredValues.getAllIds();
+        let newVal:string;
+        if(vals.length!=2){
+            throw Error("starred property not set correctly, can only toggle between 2 possible values")
+        }
+        if(this._starred == vals[0]){
+            newVal = vals[1];
+        }
+        else if(this._starred == vals[1]){
+            newVal = vals[0];
+        }
+        else{
+            newVal = vals[0];
+        }
+        this.starred = newVal;
+
     }
 
     set context(c:string){

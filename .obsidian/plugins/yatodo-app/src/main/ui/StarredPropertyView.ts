@@ -17,35 +17,10 @@ export class StarredPropertyView{
     }
 
     handleEvent(event:Event){
-        const m:SelectStarredModal =  new SelectStarredModal(this.task,this.obsidianApp);
-        m.open();
-    }
-}
-
-export class SelectStarredModal extends SuggestModal<string>{
-
-    task:Task;
-    validStarredValues:string[];
-
-    constructor(task:Task, app: App) {
-        super(app);
-        this.task = task;
-        this.validStarredValues = this.task.config.validStarredValues.getAllHumanReadableValues();
-    }
-        
-    getSuggestions(query: string): string[] | Promise<string[]> {
-        return this.validStarredValues;
-    }
-
-    renderSuggestion(value: string, el: HTMLElement) {
-        el.createEl("div", { text: value });
-    }
-
-    onChooseSuggestion(item: string, evt: MouseEvent | KeyboardEvent) {
-        const id = this.task.config.validStarredValues.getIdFromHumanReadableValue(item);
-        this.task.starred = id;
+        console.log("clicked");
+        this.task.toggleStarred();
         setTimeout(
-            () => this.app.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true)
-        ,100)    
+            () => this.obsidianApp.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true)
+        ,100) 
     }
 }
