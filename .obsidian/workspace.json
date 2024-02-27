@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "yatodo-examples/Context.md",
+                "file": "todo-home/Architecture and  Design/iiiii.md",
                 "mode": "preview",
                 "source": true
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "yatodo-examples/Context.md",
+                "file": "todo-home/Architecture and  Design/iiiii.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "yatodo-examples/Context.md",
+                "file": "todo-home/Architecture and  Design/iiiii.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "yatodo-examples/Context.md"
+                "file": "todo-home/Architecture and  Design/iiiii.md"
               }
             }
           }
@@ -150,12 +150,21 @@
   },
   "active": "614d54253bb1ab1d",
   "lastOpenFiles": [
+    "yatodo-examples/Context.md",
+    "vault/yatodo-examples/Status.md",
+    "vault/yatodo-examples/Starred.md",
+    "vault/yatodo-examples/Projects.md",
+    "vault/yatodo-examples/Done.md",
+    "vault/yatodo-examples/Create Todo.md",
+    "vault/yatodo-examples/Context.md",
+    "vault/yatodo-examples/All todos.md",
+    "vault/yatodo-examples",
+    "vault",
     "todo-home/Architecture and  Design/iiiii.md",
     "yatodo-examples/Create Todo.md",
     "yatodo-examples/Done.md",
     "todo-home/Bugs/wes2.md",
     "todo-home/Architecture and  Design/wes.md",
-    "yatodo-examples/Context.md",
     "yatodo-examples/Projects.md",
     "yatodo-examples/Starred.md",
     "yatodo-examples/Status.md",
@@ -176,15 +185,6 @@
     "todo-home/Features",
     "todo-home/Bugs",
     "todo-home/finance/asdf.md",
-    "todo-home/finance/todo-test-class-tester-file 1.md",
-    "todo-home/finance/aaaa.md",
-    "todo-home/finance/nog een twee.md",
-    "todo-home/finance/todo 3.md",
-    "todo-home/errands/1111.md",
-    "todo-home/errands/aaaa.md",
-    "Welcome.md",
-    "yatodo-examples",
-    "todo-home/finance",
-    "todo-home/errands"
+    "yatodo-examples"
   ]
 }
