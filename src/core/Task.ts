@@ -28,9 +28,9 @@ export class Task{
         const path = fileSystem.rootPath + "/" + project + "/" + title + ".md";
         const file:File = await fileSystem.createMarkdownFile(path);
         let aTask = new Task(file,config);
-        aTask.context = "none";
-        aTask.status = "inbox";
-        aTask.starred = "unstarred";
+        aTask.context = config.validContextValues.default;
+        aTask.status = config.validStatusValues.default;
+        aTask.starred = config.validStarredValues.default;
     }
 
     get title():string{
