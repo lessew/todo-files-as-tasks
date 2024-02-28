@@ -13,8 +13,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "yatodo-examples/Create Todo.md",
-                "mode": "source",
+                "file": "todo-home/Bugs/qqqqq.md",
+                "mode": "preview",
                 "source": true
               }
             }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "yatodo-examples/Create Todo.md",
+                "file": "todo-home/Bugs/qqqqq.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "yatodo-examples/Create Todo.md",
+                "file": "todo-home/Bugs/qqqqq.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "yatodo-examples/Create Todo.md"
+                "file": "todo-home/Bugs/qqqqq.md"
               }
             }
           }
@@ -150,13 +150,14 @@
   },
   "active": "614d54253bb1ab1d",
   "lastOpenFiles": [
+    "yatodo-examples/Create Todo.md",
+    "todo-home/Bugs/qqqqq.md",
+    "yatodo-examples/Done.md",
     "yatodo-examples/All todos.md",
     "yatodo-examples/Context.md",
     "yatodo-examples/Projects.md",
     "yatodo-examples/Starred.md",
     "yatodo-examples/Status.md",
-    "yatodo-examples/Create Todo.md",
-    "yatodo-examples/Done.md",
     "todo-home/Architecture and  Design/iiiii.md",
     "vault/yatodo-examples/Status.md",
     "vault/yatodo-examples/Starred.md",
@@ -184,7 +185,6 @@
     "todo-home/refactor",
     "todo-home/Features",
     "todo-home/Bugs",
-    "todo-home/finance/asdf.md",
     "yatodo-examples"
   ]
 }

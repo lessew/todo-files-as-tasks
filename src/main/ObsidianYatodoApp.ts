@@ -21,6 +21,7 @@ export class ObsidianYatodoApp{
         const validStarredValues = new ValidStarredValues();
         validStarredValues.addValue("unstarred","✰")
         validStarredValues.addValue("starred","⭐")
+        validStarredValues.default = "unstarred";
         return validStarredValues;
     }
 
@@ -31,7 +32,7 @@ export class ObsidianYatodoApp{
         validStatusValues.addValue("waiting_for","Waiting For");
         validStatusValues.addValue("deferred","Deferred");
         validStatusValues.addValue("done","Done");
-
+        validStatusValues.default = "inbox";
         return validStatusValues;
     }
 
@@ -43,7 +44,7 @@ export class ObsidianYatodoApp{
         validContextValues.addValue("deep_thinking","Deep Thinking");
         validContextValues.addValue("desk","Desk");
         validContextValues.addValue("none","None");
-
+        validContextValues.default = "none";
         return validContextValues;
     }
 
