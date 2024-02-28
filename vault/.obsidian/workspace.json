@@ -13,8 +13,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "yatodo-examples/All todos.md",
-                "mode": "preview",
+                "file": "yatodo-examples/Create Todo.md",
+                "mode": "source",
                 "source": true
               }
             }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "yatodo-examples/All todos.md",
+                "file": "yatodo-examples/Create Todo.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "yatodo-examples/All todos.md",
+                "file": "yatodo-examples/Create Todo.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "yatodo-examples/All todos.md"
+                "file": "yatodo-examples/Create Todo.md"
               }
             }
           }
@@ -150,8 +150,8 @@
   },
   "active": "614d54253bb1ab1d",
   "lastOpenFiles": [
-    "yatodo-examples/Context.md",
     "yatodo-examples/All todos.md",
+    "yatodo-examples/Context.md",
     "yatodo-examples/Projects.md",
     "yatodo-examples/Starred.md",
     "yatodo-examples/Status.md",

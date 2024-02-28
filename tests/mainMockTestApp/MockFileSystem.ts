@@ -3,6 +3,11 @@ import { FileSystem } from "src/core/FileSystem";
 
 
 export class MockFileSystem extends FileSystem{
+    
+    createMarkdownFile(path: string): Promise<File> {
+        throw new Error("Method not implemented.");
+    }
+
     yaml:{context:string,status:string};
 
 
