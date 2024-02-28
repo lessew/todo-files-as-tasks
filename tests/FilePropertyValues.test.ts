@@ -53,3 +53,23 @@ describe('FilePropertyValues Values', () => {
         expect(statusValues.getAllIds()).toEqual(["inbox","next"]);
     });
 });
+
+describe('FilePropertyValues settting and getting default value', () => {
+    let sv = new ValidStatusValues();
+    sv.addValue("inbox","Inbox");
+
+    test('check getter when its not set', () => {
+        expect(sv.default).toBe(ValidStatusValues.INVALID_VALUE)
+    });
+
+    test('check getter when it is set', () => {
+        sv.default = "inbox";
+        expect(sv.default).toBe("inbox")
+    });
+
+    test('check getter when its key does not exist', () => {
+        sv.default = "done";
+        expect(sv.default).toBe(ValidStatusValues.INVALID_VALUE);
+    });
+});
+   

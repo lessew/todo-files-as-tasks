@@ -1,14 +1,28 @@
-abstract class FilePropertyValues {
+abstract class  FilePropertyValues{
     static fieldId:string;
     static humanReadable_en_GB:string;
 
     static INVALID_VALUE = "<invalid value>";
+    private _default:string = FilePropertyValues.INVALID_VALUE;
     values : Map<string,string>;
     reverseValuesHumanReadableToId: Map<string,string>;
 
     constructor(){
         this.values = new Map<string,string>();
         this.reverseValuesHumanReadableToId = new Map<string,string>();
+    }
+
+    set default(d:string){
+        if(this.isSet(d)){
+            this._default = d;
+        }
+        else{
+            this._default = FilePropertyValues.INVALID_VALUE;
+        }
+    }
+
+    get default():string{
+        return this._default;
     }
 
     addValue(id:string,humanReadable:string){
