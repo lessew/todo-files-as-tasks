@@ -1,6 +1,5 @@
 import { App, MarkdownView, SuggestModal } from "obsidian";
 import { Task } from "src/core/Task";
-import { ValidContextValues,ValidStatusValues } from "src/core/FilePropertyValues";
 
 export class ContextPropertyView{
     task:Task;

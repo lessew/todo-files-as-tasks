@@ -1,4 +1,4 @@
-import { App, Component, DropdownComponent, MarkdownView, Modal, Setting } from "obsidian";
+import { App, MarkdownView, Modal, Setting } from "obsidian";
 import { TaskConfiguration } from "src/core/TaskConfiguration";
 import { FileSystem } from "src/core/FileSystem";
 import { Task } from "src/core/Task";

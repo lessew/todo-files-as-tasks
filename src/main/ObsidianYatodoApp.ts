@@ -1,4 +1,4 @@
-import { App, TFile } from "obsidian";
+import { App } from "obsidian";
 import { YAMLParser } from "src/core/YAMLParser";
 import { TaskList } from "src/core/TaskList";
 import { ObsidianTaskListView } from "./ui/ObsidianTaskListView";

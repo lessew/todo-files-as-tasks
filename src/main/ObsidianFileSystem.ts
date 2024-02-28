@@ -2,7 +2,6 @@ import { App, CachedMetadata, TFile, TFolder, normalizePath } from "obsidian";
 import { File } from "../core/File"
 import { FileSystem } from "src/core/FileSystem";
 import { ObsidianFile } from "./ObsidianFile";
-import { TaskConfiguration } from "src/core/TaskConfiguration";
 
 export class ObsidianFileSystem extends FileSystem{
   
