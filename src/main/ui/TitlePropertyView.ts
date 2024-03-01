@@ -1,26 +1,39 @@
-import { App, Modal,Setting } from "obsidian";
+import { App, Modal,Setting,FileManager } from "obsidian";
 import { Task } from "src/core/Task";
 
 export class TitlePropertyView{
     task:Task;
-    app:App;
+    obsidianApp:App;
 
     constructor(task:Task,app:App){
         this.task = task;
-        this.app = app;
+        this.obsidianApp = app;
     }
 
     build(rootElement:HTMLElement):void{
-        let edit:HTMLElement = rootElement.createEl("a",{text:this.task.title});
-        edit.addEventListener("click",this); // executes this.handleEvent method
+      const href = this.task.project + "/" + this.task.title
+      
+      let title:HTMLElement = rootElement.createEl("a",
+          {
+            text:this.task.title,
+            href:href,
+            cls:"internal-link",
+            attr:{
+              target:"_blank",
+              ["data-href"]:href
+            }
+        }
+      );
+      let edit:HTMLElement = rootElement.createEl("a",{cls:"yatodo-edit",text:"[e]"});
+      edit.addEventListener("click",this); // executes this.handleEvent method
     }
 
     handleEvent(event:Event){
-        const m:updateTitleModal =  new updateTitleModal(this.app,(result) => {
+        const m:updateTitleModal =  new updateTitleModal(this.obsidianApp,(result) => {
             this.task.title = result;
             setTimeout(
               // @ts-ignore
-              () => this.app.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true)
+              () => this.obsidianApp.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true)
             ,100) 
         });
         m.open();

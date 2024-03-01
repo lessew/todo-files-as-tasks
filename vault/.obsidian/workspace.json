@@ -8,18 +8,31 @@
         "type": "tabs",
         "children": [
           {
-            "id": "614d54253bb1ab1d",
+            "id": "a772daa7e5e7b941",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "todo-home/Bugs/qqqqq.md",
+                "file": "yatodo-examples/Done.md",
                 "mode": "preview",
-                "source": true
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "003752624b318fef",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "todo-home/Bugs/Project does not show in suggester if it has no todos.md",
+                "mode": "preview",
+                "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "todo-home/Bugs/qqqqq.md",
+                "file": "todo-home/Bugs/Project does not show in suggester if it has no todos.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "todo-home/Bugs/qqqqq.md",
+                "file": "todo-home/Bugs/Project does not show in suggester if it has no todos.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "todo-home/Bugs/qqqqq.md"
+                "file": "todo-home/Bugs/Project does not show in suggester if it has no todos.md"
               }
             }
           }
@@ -148,13 +161,23 @@
       "yatodo.app-plugin:Greet": false
     }
   },
-  "active": "614d54253bb1ab1d",
+  "active": "003752624b318fef",
   "lastOpenFiles": [
-    "yatodo-examples/Create Todo.md",
-    "todo-home/Bugs/qqqqq.md",
-    "yatodo-examples/Done.md",
     "yatodo-examples/All todos.md",
     "yatodo-examples/Context.md",
+    "todo-home/Bugs/Add field starred.md",
+    "todo-home/Bugs/Project does not show in suggester if it has no todos.md",
+    "todo-home/Bugs/rootpath is not respected in yaml config when selecting project.md",
+    "todo-home/Features/delete task.md",
+    "yatodo-examples/Create Todo.md",
+    "yatodo-examples/Done.md",
+    "TEST file.md",
+    "todo-home/Bugs/qqqqq.md",
+    "todo-home/Features/customize list fields.md",
+    "todo-home/Features/click into task.md",
+    "todo-home/Features/group by context, project, status, starred.md",
+    "todo-home/Features/exclude flag in parser and builder (exclude done).md",
+    "todo-home/Architecture and  Design/Kijken naar exception handling.md",
     "yatodo-examples/Projects.md",
     "yatodo-examples/Starred.md",
     "yatodo-examples/Status.md",
@@ -168,16 +191,6 @@
     "vault/yatodo-examples/All todos.md",
     "vault/yatodo-examples",
     "vault",
-    "todo-home/Bugs/wes2.md",
-    "todo-home/Architecture and  Design/wes.md",
-    "todo-home/Architecture and  Design/Create new todo.md",
-    "TEST file.md",
-    "todo-home/Bugs/Add field starred.md",
-    "todo-home/Bugs/rootpath is not respected in yaml config when selecting project.md",
-    "todo-home/Bugs/Project does not show in suggester if it has no todos.md",
-    "todo-home/Features/Add field is journal.md",
-    "todo-home/Release/Todo fields in detail page.md",
-    "todo-home/Architecture and  Design/Update Context and Status.md",
     "todo-home/Release",
     "todo-home/New folder",
     "todo-home/Architecture and  Design",

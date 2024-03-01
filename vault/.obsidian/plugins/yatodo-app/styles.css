@@ -14,3 +14,8 @@ table.yatodo{
 table.yatodo th{
     background-color: coral;
 }
+
+a.yatodo-edit{
+    text-decoration: none;
+    color:blue
+}

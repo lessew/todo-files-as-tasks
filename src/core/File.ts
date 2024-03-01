@@ -1,5 +1,6 @@
 export abstract class File{
     fullPath:string;
+    
 
     constructor(fp:string){
         this.fullPath = fp;
