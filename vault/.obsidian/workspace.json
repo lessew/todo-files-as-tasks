@@ -14,21 +14,17 @@
               "type": "markdown",
               "state": {
                 "file": "yatodo-examples/Done.md",
-                "mode": "preview",
+                "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "003752624b318fef",
+            "id": "cf2a188d6e4ca508",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "todo-home/Bugs/Project does not show in suggester if it has no todos.md",
-                "mode": "preview",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ],
@@ -98,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "todo-home/Bugs/Project does not show in suggester if it has no todos.md",
+                "file": "yatodo-examples/Done.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "todo-home/Bugs/Project does not show in suggester if it has no todos.md",
+                "file": "yatodo-examples/Done.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +134,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "todo-home/Bugs/Project does not show in suggester if it has no todos.md"
+                "file": "yatodo-examples/Done.md"
               }
             }
           }
@@ -161,16 +157,16 @@
       "yatodo.app-plugin:Greet": false
     }
   },
-  "active": "003752624b318fef",
+  "active": "cf2a188d6e4ca508",
   "lastOpenFiles": [
+    "yatodo-examples/Done.md",
+    "todo-home/Bugs/Project does not show in suggester if it has no todos.md",
     "yatodo-examples/All todos.md",
     "yatodo-examples/Context.md",
     "todo-home/Bugs/Add field starred.md",
-    "todo-home/Bugs/Project does not show in suggester if it has no todos.md",
     "todo-home/Bugs/rootpath is not respected in yaml config when selecting project.md",
     "todo-home/Features/delete task.md",
     "yatodo-examples/Create Todo.md",
-    "yatodo-examples/Done.md",
     "TEST file.md",
     "todo-home/Bugs/qqqqq.md",
     "todo-home/Features/customize list fields.md",

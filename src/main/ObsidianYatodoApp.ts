@@ -17,62 +17,6 @@ export class ObsidianYatodoApp{
         this.obsidianApp = obsidianApp;
     }
 
-    getValidStarredValues():ValidStarredValues{
-        const validStarredValues = new ValidStarredValues();
-        validStarredValues.addValue("unstarred","✰")
-        validStarredValues.addValue("starred","⭐")
-        validStarredValues.default = "unstarred";
-        return validStarredValues;
-    }
-
-    getValidStatusValues():ValidStatusValues{
-        const validStatusValues = new ValidStatusValues();
-        validStatusValues.addValue("inbox","Inbox");
-        validStatusValues.addValue("next","Next");
-        validStatusValues.addValue("waiting_for","Waiting For");
-        validStatusValues.addValue("deferred","Deferred");
-        validStatusValues.addValue("done","Done");
-        validStatusValues.default = "inbox";
-        return validStatusValues;
-    }
-
-    getValidContextValues():ValidContextValues{
-        let validContextValues = new ValidContextValues();
-        validContextValues.addValue("desk","Desk");
-        validContextValues.addValue("phone","Phone");
-        validContextValues.addValue("read","Read");
-        validContextValues.addValue("deep_thinking","Deep Thinking");
-        validContextValues.addValue("desk","Desk");
-        validContextValues.addValue("none","None");
-        validContextValues.default = "none";
-        return validContextValues;
-    }
-
-    getValidProjectValues(fs:FileSystem):ValidProjectValues{
-        let validProjectValues = new ValidProjectValues();
-        
-        const projects = fs.getFolders();
- 
-        projects.forEach((p) => {
-            validProjectValues.addValue(p,p);
-        });
-        return validProjectValues;
-    }
-
-    getConfiguration(fs:FileSystem):TaskConfiguration{
-        const validContextValues = this.getValidContextValues();
-        const validStatusValues = this.getValidStatusValues();
-        const validStarredValues = this.getValidStarredValues();
-        const validProjectValues = this.getValidProjectValues(fs);
-        const config = new TaskConfiguration(
-            validProjectValues,
-            validStatusValues,
-            validContextValues,
-            validStarredValues
-        );
-        return config;
-    }
-
     executeCommand(source:string,el:HTMLElement):void{
         if(source.indexOf("create-todo-button")>-1){
             this.displayCreateTaskButton(source,el);
