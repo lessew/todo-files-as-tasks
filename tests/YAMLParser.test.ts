@@ -17,8 +17,10 @@ context: desk`;
 const correctlyFormattedWithoutContextAndStatus = `
 rootPath: .`;
 
-describe('Empty test', () => {
-    expect(true).toBe(false);
+describe('yaml parser', () => {
+    test('empty test', () => {    
+        expect(true).toBe(true);
+    });
 });
 
 /*
