@@ -27,15 +27,7 @@ class Helper{
         })
         return result;
     }
-
-    static getFileSystemFacade():FileSystemFacade{
-        return new MockFileSystemFacade();
-    }
   }
-
-
-
-
 
 describe('TaskBuilder building paths', () => {
     let pathInputs = [
@@ -45,11 +37,8 @@ describe('TaskBuilder building paths', () => {
         "/home/hobby/football.md"
       ]
 
-    let tb = new TaskBuilder(Helper.getFileSystemFacade());
-    // tb.init cannot be tested as it uses the filesystem
-    //tb.init("home");
-
-    tb.files = Helper.getFilesWithPaths(pathInputs);
+    let tb = new TaskBuilder(Helper.getFilesWithPaths(pathInputs));
+   
     test('taskbuilder : building path cannot be fully tested as it uses the filesystem', () => {    
         expect(tb.get().length).toBe(pathInputs.length);
     });
@@ -58,8 +47,7 @@ describe('TaskBuilder building paths', () => {
 
 describe('TaskBuilder building status', () => {
     let statusInputs = ["inbox","inbox","done","inbox"];
-    let tb = new TaskBuilder(Helper.getFileSystemFacade());
-    tb.files = Helper.getFilesWithStatus(statusInputs);
+    let tb = new TaskBuilder(Helper.getFilesWithStatus(statusInputs));
     
     test('taskbuilder : building status', () => {    
         expect(tb.filterBy("status","inbox").get().length).toBe(3);
@@ -72,8 +60,7 @@ describe('TaskBuilder building status', () => {
 
 describe('TaskBuilder building with non existing property', () => {
     let statusInputs = ["inbox","inbox","done","inbox"];
-    let tb = new TaskBuilder(Helper.getFileSystemFacade());
-    tb.files = Helper.getFilesWithStatus(statusInputs);
+    let tb = new TaskBuilder(Helper.getFilesWithPaths(statusInputs));
     
     test('taskbuilder : building status', () => {    
         expect(tb.filterBy("doesnotexist","inbox").get().length).toBe(0);

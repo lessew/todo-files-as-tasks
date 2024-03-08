@@ -94,7 +94,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "yatodo-examples/Done.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +110,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "yatodo-examples/Done.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,9 +131,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "yatodo-examples/Done.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -159,9 +155,10 @@
   },
   "active": "cf2a188d6e4ca508",
   "lastOpenFiles": [
+    "yatodo-examples/All todos.md",
+    "todo-home/Release/Todo fields in detail page.md",
     "yatodo-examples/Done.md",
     "todo-home/Bugs/Project does not show in suggester if it has no todos.md",
-    "yatodo-examples/All todos.md",
     "yatodo-examples/Context.md",
     "todo-home/Bugs/Add field starred.md",
     "todo-home/Bugs/rootpath is not respected in yaml config when selecting project.md",
@@ -184,7 +181,6 @@
     "vault/yatodo-examples/Done.md",
     "vault/yatodo-examples/Create Todo.md",
     "vault/yatodo-examples/Context.md",
-    "vault/yatodo-examples/All todos.md",
     "vault/yatodo-examples",
     "vault",
     "todo-home/Release",

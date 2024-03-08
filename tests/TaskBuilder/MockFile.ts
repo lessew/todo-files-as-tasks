@@ -12,6 +12,7 @@ export class MockFile extends File {
               
         this.properties = {
             "status":new StringProperty(this,"Status"),
+            "context":new StringProperty(this,"Context"),
         }
     }
   }

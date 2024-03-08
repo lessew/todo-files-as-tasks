@@ -3,22 +3,24 @@ import { FileSystemFacade } from "src/core/Files/FileSystemFacade";
 
 export class TaskBuilder{
     files:File[];
-    fileSystemFacade:FileSystemFacade;
 
-    constructor(fs:FileSystemFacade){
-        this.fileSystemFacade = fs;
+    constructor(files:File[]){
+        this.files = files;
     }
 
-    init(rootPath:string){
-        this.files = this.fileSystemFacade.getMarkdownFiles(rootPath); 
-    }
-
-    filterBy(propertyName:string,propertyValue:string):TaskBuilder{
+    filterBy(propertyName:string,filterValue:string):TaskBuilder{
         let filtered = this.files.filter((aFile) => {
-            const property:string = aFile.get(propertyName);
-            return (property == propertyValue)
+            const propertyValue:string = aFile.get(propertyName);
+            return (propertyValue == filterValue)
         })
         this.files = filtered;
+        return this;
+    }
+
+    bulkFilterBy(list:{propertyName:string,propertyValue:string}[]):TaskBuilder{
+        list.forEach(filterBy => {
+            this.filterBy(filterBy.propertyName,filterBy.propertyValue);
+        });
         return this;
     }
 

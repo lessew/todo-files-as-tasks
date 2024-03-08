@@ -1,61 +1,55 @@
-import { Query } from "./Query";
 import * as yaml from 'js-yaml'
-import { ValidContextValues, ValidStatusValues } from "./FilePropertyValues";
-import { TaskConfiguration } from "./TaskConfiguration";
+import { FileSystemFacade } from './Files/FileSystemFacade';
+import { FileProperty } from './Files/FileProperty';
+import { TaskBuilder } from './TaskBuilder';
+import { File } from './Files/File';
+import { Task } from 'src/main/configuration/Task';
 
-
-/**
- * Todo: improve error handling. right now a default query is returned with rootpath .
- * Must find a way to gracefully report back to user where the typo sits
- **/ 
 export class YAMLParser{
-    config:TaskConfiguration;
     source:string;
+    yaml:unknown;
+    fileProperties:Record<string,FileProperty>;
+    static DEFAULT_ROOT = "./";
 
-    constructor(){
-    }
-
-    loadSource(s:string){
-        this.source = s;
-    }
-
-    loadConfiguration(c:TaskConfiguration){
-        this.config = c;
-    }
-
-    parseRootPath():string{
+    constructor(source:string){
+        this.source = source;
         try{
-            const data = yaml.load(this.source) as {rootPath:string};
-            return data.rootPath;
+            this.yaml = yaml.load(source);
         }
         catch(e){
-            return ".";           
+            this.yaml = {
+                rootPath : YAMLParser.DEFAULT_ROOT
+            }
         }
     }
 
-    parse():Query{
+    setFilePropertiesToParse(fileProperties:Record<string,FileProperty>):void{
+        this.fileProperties = fileProperties;
+    }
+
+    getRootPath():string{
         try{
-            const data:Query = yaml.load(this.source) as Query;
-
-            if(data.context && !(this.config.validContextValues.isSet(data.context))){
-                throw Error(`Error: Context field is invalid. Value read: ${data.context}`)
-            }
-
-            if(data.status && !(this.config.validStatusValues.isSet(data.status))){
-                throw Error(`Error: Status field is invalid. Value read: ${data.context}`)
-            }
-
-            if(data.starred && !(this.config.validStarredValues.isSet(data.starred))){
-                throw Error(`Error: Starred field is invalid. Value read: ${data.starred}`)
-            }
-
-            return data;
+            const rp:string = (this.yaml as{rootPath:string}).rootPath;
+            return rp;
         }
         catch(e){
-            //console.error(`Error with parsing data: ${source}`);
-            return {
-                rootPath: "."
-            } as Query;
+            return YAMLParser.DEFAULT_ROOT; 
         }
+    }
+   
+    parse():{propertyName:string,propertyValue:string}[]{
+        let result:{propertyName:string,propertyValue:string}[] = [];
+
+        for(const propertyName in this.fileProperties){
+            const property:FileProperty = this.fileProperties[propertyName];
+
+            const yaml = this.yaml as any;
+
+            if(propertyName in yaml){
+                const filterValue:string = yaml[propertyName];
+                result.push({propertyName:propertyName,propertyValue:filterValue})
+            }
+        }
+        return result;
     }
 }

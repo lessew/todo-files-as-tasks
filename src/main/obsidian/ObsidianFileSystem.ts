@@ -1,13 +1,12 @@
 import { App, CachedMetadata, TFile, TFolder, normalizePath } from "obsidian";
-import { FileSystem } from "src/core/Files/FileSystemFacade";
+import { FileSystemFacade } from "src/core/Files/FileSystemFacade";
 import { File } from "src/core/Files/File";
 import { Task } from "src/main/configuration/Task";
 
-export class ObsidianFileSystem extends FileSystem{
+export class ObsidianFileSystem implements FileSystemFacade{
     obsidianApp:App;   
 
     constructor(app:App){
-        super();
         this.obsidianApp = app;
     }
 
