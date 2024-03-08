@@ -1,5 +1,5 @@
 import { App, CachedMetadata, TFile, TFolder, normalizePath } from "obsidian";
-import { FileSystem } from "src/core/Files/FileSystem";
+import { FileSystem } from "src/core/Files/FileSystemFacade";
 import { File } from "src/core/Files/File";
 import { Task } from "src/main/configuration/Task";
 

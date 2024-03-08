@@ -2,7 +2,7 @@ import { AbstractFileProperty,FileProperty } from "../FileProperty";
 
 export class WhitelistProperty extends AbstractFileProperty{
     allowedValues:string[];
-    value:string;
+    _value:string;
 
     matches(needle:string):boolean{
         if(this.value!==undefined){
@@ -10,8 +10,22 @@ export class WhitelistProperty extends AbstractFileProperty{
         }
         return false;
     }
+    
     setAllowedValues(vals:string[]):FileProperty{
         this.allowedValues = vals;
         return this;
+    }
+
+    get value():string{
+        return this._value;
+    }
+
+    set value(val:string){
+        if(this.allowedValues.includes(val)){
+            this._value = val;
+        }
+        else{
+            this._value = WhitelistProperty.INVALID_VALUE;
+        }
     }
 }

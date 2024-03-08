@@ -1,6 +1,6 @@
 import { AbstractFileProperty } from "../FileProperty";
 
-export class FilePathProperty extends AbstractFileProperty{
+export class PathProperty extends AbstractFileProperty{
     value:string;
     matches(needle:string):boolean{
         if(this.value!==undefined){
@@ -52,27 +52,7 @@ export class FilePathProperty extends AbstractFileProperty{
         const FOLDER_INDEX = (strSplit.length - 2);
         strSplit[FOLDER_INDEX] = foldername;
         const newFolderPath = strSplit.join("/");
-
         return newFolderPath;
     }
-    /*
-    setBasename(name:string):void{
-        const newFullPath = this.folderPath + name + this.fileExtension;
-        this.move(newFullPath);
-        this.value = newFullPath;
-    }
-    */
-
-    /*
-    moveToNewToplevelFolder(folderName:string){
-        const newPath = this.calculateNewTopLevelFolderPath(folderName);
-        this.move(newPath);
-    }
-    */
-    /*
-    calculateNewTopLevelFolderPath(topLevelFolder:string):string{
-       return this.getNewFullPathWithTopLevelFolder(topLevelFolder);
-    }
-    */
 }
     

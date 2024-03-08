@@ -1,27 +1,29 @@
-import { Task } from "../main/configuration/Task";
 import { File } from "src/core/Files/File";
-import { FileProperty } from "src/core/Files/FileProperty";
-import { FileSystem } from "src/core/Files/FileSystem";
+import { FileSystemFacade } from "src/core/Files/FileSystemFacade";
 
 export class TaskBuilder{
-    files:File[]
-    fileSystem:FileSystem
+    files:File[];
+    fileSystemFacade:FileSystemFacade;
 
-    constructor(fs:FileSystem){
-        this.fileSystem = fs;
+    constructor(fs:FileSystemFacade){
+        this.fileSystemFacade = fs;
     }
 
-    getFiles(rootPath:string){
-        this.files = this.fileSystem.getMarkdownFiles(rootPath);
-        
+    init(rootPath:string){
+        this.files = this.fileSystemFacade.getMarkdownFiles(rootPath); 
     }
 
     filterBy(propertyName:string,propertyValue:string):TaskBuilder{
         let filtered = this.files.filter((aFile) => {
-            const property:FileProperty = aFile.get(propertyName);
-            return (property.value == propertyValue)
+            const property:string = aFile.get(propertyName);
+            return (property == propertyValue)
         })
         this.files = filtered;
         return this;
     }
+
+    get():File[]{
+        return this.files;
+    }
+
 }

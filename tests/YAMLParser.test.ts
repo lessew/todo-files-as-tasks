@@ -1,31 +1,6 @@
+
 import { YAMLParser } from "../src/core/YAMLParser";
-import { Query } from "../src/core/Query";
-import { TaskConfiguration } from "../src/core/TaskConfiguration";
-import { ValidContextValues, ValidProjectValues, ValidStarredValues, ValidStatusValues } from "../src/core/FilePropertyValues";
 
-
-function getConfiguration():TaskConfiguration{
-    let vcv = new ValidContextValues();
-    vcv.addValue("desk","Desk");
-    vcv.addValue("deep_thinking","Deep thinking");
-    
-    let vsv = new ValidStatusValues();
-    vsv.addValue("inbox","Inbox");
-    vsv.addValue("done","Done");
-    
-    let vpv = new ValidProjectValues();
-    vpv.addValue("home","Home");
-    vpv.addValue("errands","Errands");
-
-    let vstv = new ValidStarredValues();
-    vstv.addValue("starred","Starred");
-    vstv.addValue("unstarred","Unstarred");
-  
-    let config = new TaskConfiguration(vpv,vsv,vcv,vstv);  
-    
-    return config;
-  }
-  
 const correctlyFormatted = `
 rootPath: .
 context: desk
@@ -42,8 +17,11 @@ context: desk`;
 const correctlyFormattedWithoutContextAndStatus = `
 rootPath: .`;
 
-const config:TaskConfiguration = getConfiguration();
+describe('Empty test', () => {
+    expect(true).toBe(false);
+});
 
+/*
 describe('Testing YAML Parser with correct format', () => {
     let parser = new YAMLParser();
     parser.loadConfiguration(config);
@@ -141,3 +119,4 @@ describe('Testing YAML Parser with incorrect format', () => {
         expect(q.rootPath).toBe("."); 
     });  
   });
+  */

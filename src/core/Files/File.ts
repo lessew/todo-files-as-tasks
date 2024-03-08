@@ -1,40 +1,72 @@
-import { FilePathProperty } from "./FileProperties/FilePathProperty";
+import { PathProperty } from "./FileProperties/PathProperty";
 import { FileProperty } from "./FileProperty";
-import { FileSystem } from "./FileSystem";
+import { FileSystemFacade } from "./FileSystemFacade";
 
 export class File {
-    fullPath:FilePathProperty;
+    fullPath:PathProperty;
     properties:Record<string,FileProperty>;
-    fileSystem:FileSystem;
+    fileSystemFacade:FileSystemFacade;
+    static ERR_PROPERTY_INVALID = "ERROR: invalid property";
+    static ERR_PROPERTY_NO_VALUE = "ERROR: no value set for property"
    
-    constructor(fullpath:string,fs:FileSystem){
-        let fp = new FilePathProperty(this,"fullpath");
+    constructor(fullpath:string,fs:FileSystemFacade){
+        let fp = new PathProperty(this,"fullpath");
         fp.value = fullpath;
         this.fullPath = fp;
-        this.fileSystem = fs;
+        this.fileSystemFacade = fs;
     }
 
-    get(prop:string):FileProperty{
-        const r = this.properties[prop];
-        return r;
+    propertyIsSet(name:string):boolean{
+        return (name in this.properties);
+    }
+
+    get(prop:string):string{
+        if(this.propertyIsSet(prop)){
+            const r = this.properties[prop];
+            if(typeof r.value === "string"){
+                return r.value
+            }
+            return File.ERR_PROPERTY_NO_VALUE;
+        }
+        return File.ERR_PROPERTY_INVALID;
     }
 
     set(name:string,value:string):void{
-        let r = this.properties[name];
-        r.value = value;
+        if(this.propertyIsSet(name)){
+            let r = this.properties[name];
+            try{
+                r.value = value;
+                this.setYAMLProperty(name,value);
+            }
+            catch(e){
+                console.log("error:" + e);
+            }
+        }
+        //throw new Error(File.ERR_PROPERTY_INVALID);
     }
 
-
     move(newFullPath: string): void{
-        this.fileSystem.move(this,newFullPath);
+        this.fileSystemFacade.move(this,newFullPath);
     }
     
     getYAMLProperty(name:string): string{
-        return this.fileSystem.getYAMLProperty(this,name);
+        return this.fileSystemFacade.getYAMLProperty(this,name);
     }
     
     setYAMLProperty(name: string, value: string):void{
-        this.fileSystem.setYAMLProperty(this,name,value);
+        this.fileSystemFacade.setYAMLProperty(this,name,value);
+    }
+
+    setBasename(name:string):void{
+        const newFullPath = this.fullPath.getNewFullPathWithBasename(name);
+        this.move(newFullPath);
+        this.fullPath.value = newFullPath;
+    }
+
+    moveToNewToplevelFolder(folderName:string){
+        const newPath = this.fullPath.getNewFullPathWithTopLevelFolder(folderName);
+        this.fullPath.value = newPath;
+        this.move(newPath);
     }
 
     /* TBI

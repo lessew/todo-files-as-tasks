@@ -1,5 +1,5 @@
 import { File } from "src/core/Files/File";
-import { FileSystem } from "src/core/Files/FileSystem";
+import { FileSystemFacade } from "src/core/Files/FileSystemFacade";
 import { FileProperty } from "src/core/Files/FileProperty";
 import { WhitelistProperty } from "src/core/Files/FileProperties/WhiteListProperty";
 import { StringProperty } from "src/core/Files/FileProperties/StringProperty";
@@ -8,7 +8,7 @@ import { StringProperty } from "src/core/Files/FileProperties/StringProperty";
 export class Task extends File {
     properties: Record<string, FileProperty>;
    
-    constructor(fullPath:string,fs:FileSystem){
+    constructor(fullPath:string,fs:FileSystemFacade){
         super(fullPath,fs);
               
         this.properties = {
