@@ -3,6 +3,7 @@ import { FileSystemFacade } from "src/core/Files/FileSystemFacade";
 import { FileProperty } from "src/core/Files/FileProperty";
 import { WhitelistProperty } from "src/core/Files/FileProperties/WhiteListProperty";
 import { StringProperty } from "src/core/Files/FileProperties/StringProperty";
+import { BooleanProperty } from "src/core/Files/FileProperties/BooleanProperty";
 
 
 export class Task extends File {
@@ -26,8 +27,8 @@ export class Task extends File {
         return project;
     }
 
-    getStarredProperty():WhitelistProperty{
-        let starred = new WhitelistProperty(this,"Starred");
+    getStarredProperty():BooleanProperty{
+        let starred = new BooleanProperty(this,"Starred");
         starred.setAllowedValues([
             "starred",
             "unstarred"
