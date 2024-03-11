@@ -17,11 +17,15 @@ export class WhitelistProperty extends AbstractFileProperty{
     }
 
     get value():string{
+        if(typeof this._value !== "string"){
+            this._value = this.dao.retrieve();
+        }
         return this._value;
     }
 
     set value(val:string){
         if(this.allowedValues.includes(val)){
+            this.dao.persist(val);
             this._value = val;
         }
         else{

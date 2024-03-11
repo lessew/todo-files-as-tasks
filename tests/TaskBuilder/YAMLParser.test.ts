@@ -1,5 +1,5 @@
 
-import { MockFileSystemFacade } from "../../tests/Mocks/MockFileSystemFacade";
+import { MockFileSystemFacade } from "../FileProperties/MockFileSystemFacade";
 import { YAMLParser } from "../../src/core/YAMLParser";
 import { MockFile } from "./MockFile";
 

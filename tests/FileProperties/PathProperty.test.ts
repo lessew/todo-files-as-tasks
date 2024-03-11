@@ -1,15 +1,19 @@
 import { PathProperty } from "../../src/core/Files/FileProperties/PathProperty";
 import { File } from "../../src/core/Files/File";
-import { MockFileSystemFacade } from "../Mocks/MockFileSystemFacade";
+import { MockFileSystemFacade } from "./MockFileSystemFacade";
 import { FileSystemFacade } from "../../src/core/Files/FileSystemFacade";
+import { PathPropertyDAO } from "src/core/Files/FilePropertyDAOs/PathPropertyDAO";
+import { MockFilePropertyDAO } from "./MockFilePropertyDAO";
 
 class Helper {
     static getPathProperty(p:string):PathProperty{
-        let fs:FileSystemFacade = new MockFileSystemFacade();
-        let f = new File(p,fs);
-        let sp = new PathProperty(f,"PathProperty");
-        sp.value = p;
-        return sp;
+        let fsf:FileSystemFacade = new MockFileSystemFacade();
+        let f = new File(p,fsf);
+        let prop = new PathProperty("PathProperty");
+        let dao:PathPropertyDAO = new MockFilePropertyDAO(f,prop,fsf);
+        prop.setDAO(dao);
+        prop.value = p;
+        return prop;
     }
 }
 

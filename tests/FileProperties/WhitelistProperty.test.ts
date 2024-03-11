@@ -1,14 +1,18 @@
 import { WhitelistProperty } from "../../src/core/Files/FileProperties/WhiteListProperty";
 import { File } from "../../src/core/Files/File";
-import { MockFileSystemFacade } from "../Mocks/MockFileSystemFacade";
+import { MockFileSystemFacade } from "./MockFileSystemFacade";
 import { FileSystemFacade } from "../../src/core/Files/FileSystemFacade";
+import { FilePropertyDAO } from "src/core/Files/FileProperty";
+import { MockFilePropertyDAO } from "./MockFilePropertyDAO";
 
 
 class Helper{
     static getWhitelistProperty(options:string[]):WhitelistProperty{
-        let fs:FileSystemFacade = new MockFileSystemFacade();
-        let f = new File("/path/",fs);
-        let sp = new WhitelistProperty(f,"WhitelistProperty");
+        let fsf:FileSystemFacade = new MockFileSystemFacade();
+        let f = new File("/path/",fsf);
+        let sp = new WhitelistProperty("WhitelistProperty");
+        let dao:FilePropertyDAO = new MockFilePropertyDAO(f,sp,fsf);
+        sp.setDAO(dao);
         sp.setAllowedValues(options);
         return sp;
     }

@@ -1,6 +1,7 @@
 import { PathProperty } from "./FileProperties/PathProperty";
 import { FileProperty } from "./FileProperty";
 import { FileSystemFacade } from "./FileSystemFacade";
+import { PathPropertyDAO } from "./FilePropertyDAOs/PathPropertyDAO";
 
 export class File {
     fullPath:PathProperty;
@@ -9,11 +10,14 @@ export class File {
     static ERR_PROPERTY_INVALID = "ERROR: invalid property";
     static ERR_PROPERTY_NO_VALUE = "ERROR: no value set for property"
    
-    constructor(fullpath:string,fs:FileSystemFacade){
-        let fp = new PathProperty(this,"fullpath");
+    constructor(fullpath:string,fsf:FileSystemFacade){
+        this.fileSystemFacade = this.fileSystemFacade;
+        let fp = new PathProperty("fullpath");
+        let dao = new PathPropertyDAO(this,fp,fsf)
+        fp.setDAO(dao);
+        
         fp.value = fullpath;
         this.fullPath = fp;
-        this.fileSystemFacade = fs;
     }
 
     propertyIsSet(name:string):boolean{

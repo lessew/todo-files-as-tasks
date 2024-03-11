@@ -1,16 +1,21 @@
-import { MockFileSystemFacade } from "../../tests/Mocks/MockFileSystemFacade";
+import { MockFileSystemFacade } from "./MockFileSystemFacade";
 import { BooleanProperty } from "../../src/core/Files/FileProperties/BooleanProperty";
 import { FileSystemFacade } from "../../src/core/Files/FileSystemFacade";
 import { File } from "../../src/core/Files/File";
 import * as exp from "constants";
+import { FilePropertyDAO } from "src/core/Files/FileProperty";
+import { MockFilePropertyDAO } from "./MockFilePropertyDAO";
 
 class Helper{
   static getBooleanProperty():BooleanProperty{
-      let fs:FileSystemFacade = new MockFileSystemFacade();
-      let f = new File("/path/",fs);
-      let sp = new BooleanProperty(f,"StringProperty");
-      sp.setAllowedValues(["true","false"]);
-      return sp;
+      let fsf:FileSystemFacade = new MockFileSystemFacade();
+      let f = new File("/path/",fsf);
+
+      let bp = new BooleanProperty("BooleanProperty");
+      let dao:FilePropertyDAO = new MockFilePropertyDAO(f,bp,fsf);
+      bp.setDAO(dao);
+      bp.setAllowedValues(["true","false"]);
+      return bp;
   }
 }
 

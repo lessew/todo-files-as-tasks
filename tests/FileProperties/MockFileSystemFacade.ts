@@ -2,11 +2,14 @@ import { File } from "../../src/core/Files/File";
 import { FileSystemFacade } from "../../src/core/Files/FileSystemFacade";
 
 export class MockFileSystemFacade implements FileSystemFacade{
-    getMarkdownFiles(path: string): File[] {
+
+    rootPath:string;
+
+    getMarkdownFiles(): File[] {
         //throw new Error("Method not implemented.");
         return [];
     }
-    getFolders(path: string): string[] {
+    getFolders(): string[] {
         return [];
         //throw new Error("Method not implemented.");
     }

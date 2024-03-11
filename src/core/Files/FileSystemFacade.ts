@@ -1,8 +1,9 @@
 import { File } from "./File";
 
 export interface FileSystemFacade {
-    getMarkdownFiles(path:string):File[];
-    getFolders(path:string):string[];
+    rootPath:string;
+    getMarkdownFiles():File[];
+    getFolders():string[];
     createMarkdownFile(path:string):Promise<File>;
     normalizePath(path:string):string;
     move(file:File,newFullPath: string): void;

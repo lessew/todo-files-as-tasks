@@ -2,7 +2,7 @@ import { TaskBuilder } from "../../src/core/TaskBuilder";
 import { File } from "../../src/core/Files/File";
 import { MockFile } from "../../tests/TaskBuilder/MockFile";
 import { FileSystemFacade } from "../../src/core/Files/FileSystemFacade";
-import { MockFileSystemFacade } from "../../tests/Mocks/MockFileSystemFacade";
+import { MockFileSystemFacade } from "../FileProperties/MockFileSystemFacade";
 
 class Helper{
     static getFilesWithPaths(paths:string[]):File[]{

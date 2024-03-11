@@ -5,16 +5,19 @@ import { Task } from "src/main/configuration/Task";
 
 export class ObsidianFileSystem implements FileSystemFacade{
     obsidianApp:App;   
+    rootPath: string;
 
-    constructor(app:App){
+    constructor(app:App,rp:string){
         this.obsidianApp = app;
+        this.rootPath = rp;
     }
 
     normalizePath(rp:string):string{
         return normalizePath(rp);
     }
 
-    getMarkdownFiles(path:string):File[]{
+    getMarkdownFiles():File[]{
+        const path = this.rootPath;
         const tf:TFile[] = this.obsidianApp.vault.getMarkdownFiles();
         let files:File[] = [];
         
@@ -25,7 +28,8 @@ export class ObsidianFileSystem implements FileSystemFacade{
         return files;
     }
 
-    getFolders(path:string):string[]{
+    getFolders():string[]{
+        const path = this.rootPath;
         let result:string[] = [];
         const rootFolder = this.obsidianApp.vault.getAbstractFileByPath(path);
         if(rootFolder instanceof TFolder){
