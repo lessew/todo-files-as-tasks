@@ -1,6 +1,6 @@
-import { File } from "../../src/core/Files/File";
+/* import { File } from "../../src/core/Files/File";
 import { FileSystemFacade } from "../../src/core/Files/FileSystemFacade";
-import { FileProperty } from "../../src/core/Files/FileProperty";
+import { FileProperty } from "../../src/core/Files/Property";
 import { StringProperty } from "../../src/core/Files/FileProperties/StringProperty";
 import { MockFilePropertyDAO } from "../../tests/FileProperties/MockFilePropertyDAO";
 
@@ -24,4 +24,4 @@ export class MockFile extends File {
             "context":context,
         }
     }
-  }
+  } */

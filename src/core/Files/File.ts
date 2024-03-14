@@ -1,19 +1,16 @@
-import { PathProperty } from "./FileProperties/PathProperty";
-import { FileProperty } from "./FileProperty";
-import { FileSystemFacade } from "./FileSystemFacade";
-import { PathPropertyDAO } from "./FilePropertyDAOs/PathPropertyDAO";
+import { PathProperty } from "./Properties/PathProperty";
+import { Property } from "../AbstractProperty";
+import { PathPropertyDAO } from "../../main/obsidian/PathPropertyDAO";
 
 export class File {
     fullPath:PathProperty;
-    properties:Record<string,FileProperty>;
-    fileSystemFacade:FileSystemFacade;
+    properties:Record<string,Property>;
     static ERR_PROPERTY_INVALID = "ERROR: invalid property";
     static ERR_PROPERTY_NO_VALUE = "ERROR: no value set for property"
    
-    constructor(fullpath:string,fsf:FileSystemFacade){
-        this.fileSystemFacade = this.fileSystemFacade;
+    constructor(fullpath:string){
         let fp = new PathProperty("fullpath");
-        let dao = new PathPropertyDAO(this,fp,fsf)
+        let dao = new PathPropertyDAO(this,fp);
         fp.setDAO(dao);
         
         fp.value = fullpath;
@@ -23,7 +20,7 @@ export class File {
     propertyIsSet(name:string):boolean{
         return (name in this.properties);
     }
-
+/*
     get(prop:string):string{
         if(this.propertyIsSet(prop)){
             const r = this.properties[prop];
@@ -48,7 +45,8 @@ export class File {
         }
         //throw new Error(File.ERR_PROPERTY_INVALID);
     }
-
+    */
+/*
     move(newFullPath: string): void{
         this.fileSystemFacade.move(this,newFullPath);
     }
@@ -71,6 +69,13 @@ export class File {
         const newPath = this.fullPath.getNewFullPathWithTopLevelFolder(folderName);
         this.fullPath.value = newPath;
         this.move(newPath);
+    }
+*/
+    loadPropertyValues():void{
+        for(const propertyName in this.properties){
+            const prop:FileProperty = this.properties[propertyName];
+            prop.loadValue();
+        }
     }
 
     /* TBI

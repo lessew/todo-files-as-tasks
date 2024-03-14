@@ -1,8 +1,8 @@
-import { FileProperty, FilePropertyDAO } from "../FileProperty";
-import { File } from "../File";
+import { FileProperty, FilePropertyDAO } from "../../core/AbstractProperty";
+import { File } from "../../core/Files/File";
 import { FileSystemFacade } from "../FileSystemFacade";
 
-export class TopLevelFolderPropertyDAO implements FilePropertyDAO {
+export class ToplevelFolderPropertyDAO implements FilePropertyDAO {
     fp:FileProperty;
     f:File;
     fsf:FileSystemFacade;

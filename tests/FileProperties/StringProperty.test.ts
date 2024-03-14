@@ -1,33 +1,22 @@
-import { StringProperty } from "../../src/core/Files/FileProperties/StringProperty";
-import { File } from "../../src/core/Files/File";
-import { MockFileSystemFacade } from "./MockFileSystemFacade";
-import { FileSystemFacade } from "../../src/core/Files/FileSystemFacade";
-import { MockFilePropertyDAO } from "./MockFilePropertyDAO";
-import { FilePropertyDAO } from "../../src/core/Files/FileProperty";
+import { StringProperty } from "../../src/core/Files/Properties/StringProperty";
+import { PropertyDAO } from "../../src/core/Interfaces/PropertyDAO";
+import { MockPropertyDAO } from "../../tests/Mocks/MockPropertyDAO";
 
 class Helper{
-    static getStringProperty():StringProperty{
-        let fsf:FileSystemFacade = new MockFileSystemFacade();
-        let f = new File("/path/",fsf);
+    static getStringProperty(propName:string,propValue:string):StringProperty{
+        let dao:PropertyDAO = new MockPropertyDAO(propValue);
+        let sp = new StringProperty(propName,"dummyfileid",dao);
 
-        let sp = new StringProperty("StringProperty");
-        let dao:FilePropertyDAO = new MockFilePropertyDAO(f,sp,fsf);
-        sp.setDAO(dao);
         return sp;
     }
 }
 
 describe('stringproperty test', () => {
+    const name = "title";
+    const val = "some random title";
+    let sp = Helper.getStringProperty(name,val);
 
-    let sp = Helper.getStringProperty();
-    
-    test('correct property name', () => {
-        expect(sp.name).toBe("StringProperty");
-    });
-    test('correct property name', () => {
-        sp.value = "shizzle"
-        expect(sp.value).toBe("shizzle");
-    });
-
-
-});
+    test('correct value', () => {
+        expect(sp.validate("correct")).toBe(true);
+    });  
+}); 

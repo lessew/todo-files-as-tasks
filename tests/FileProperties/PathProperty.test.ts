@@ -1,53 +1,65 @@
-import { PathProperty } from "../../src/core/Files/FileProperties/PathProperty";
-import { File } from "../../src/core/Files/File";
-import { MockFileSystemFacade } from "./MockFileSystemFacade";
-import { FileSystemFacade } from "../../src/core/Files/FileSystemFacade";
-import { PathPropertyDAO } from "src/core/Files/FilePropertyDAOs/PathPropertyDAO";
-import { MockFilePropertyDAO } from "./MockFilePropertyDAO";
+import { PathProperty } from "../../src/core/Files/Properties/PathProperty";
+import { PropertyDAO } from "../../src/core/Interfaces/PropertyDAO";
+import { MockPropertyDAO } from "../../tests/Mocks/MockPropertyDAO";
 
-class Helper {
-    static getPathProperty(p:string):PathProperty{
-        let fsf:FileSystemFacade = new MockFileSystemFacade();
-        let f = new File(p,fsf);
-        let prop = new PathProperty("PathProperty");
-        let dao:PathPropertyDAO = new MockFilePropertyDAO(f,prop,fsf);
-        prop.setDAO(dao);
-        prop.value = p;
-        return prop;
+class Helper{
+    static getPathProperty(propName:string,path:string):PathProperty{
+        let dao:PropertyDAO = new MockPropertyDAO(path);
+        let sp = new PathProperty(propName,path,dao); // the prop value is also the id of the file
+
+        return sp;
     }
 }
 
+describe('athproperty test validation function', () => {
+        let sp = Helper.getPathProperty("path","dummy");
 
-describe('pathproperty; methods', () => {
-    const pp = Helper.getPathProperty("/home/errands/jumbo.md");
+    test('correct values', () => {
+        expect(sp.validate("/this/that/such/that/thing.md")).toBe(true);
+        expect(sp.validate("./")).toBe(true);
+        expect(sp.validate("/this/")).toBe(true); 
 
-    test("matches",() => {
-        expect(pp.matches("/home/errands")).toBe(true);
-        expect(pp.matches("/home/errands/")).toBe(true);
-        expect(pp.matches("/home/errands/jum")).toBe(true);
-        expect(pp.matches("")).toBe(true);
-        expect(pp.matches("/home/shizznet")).toBe(false);
-        expect(pp.matches("home/errands")).toBe(false);
-    });
+    });  
+    test('incorrect values', () =>{
+        expect(sp.validate("")).toBe(false);
+        expect(sp.validate("/this!")).toBe(false);
+        expect(sp.validate("/t   his")).toBe(false);
+
+    })
+}); 
+
+
+describe('pathproperty test helper functions', () => {
+    let pp = Helper.getPathProperty("path","/path/to/workproject/this.md");
     test('filename', () => {
-        expect(pp.filename).toBe("jumbo.md");
+        expect(pp.filename).toBe("this.md");
     });
     test('fileExtension', () => {
         expect(pp.fileExtension).toBe(".md");
     });
     test('folderpath', () => {
-        expect(pp.folderPath).toBe("/home/errands/");
+        expect(pp.folderPath).toBe("/path/to/workproject/");
     });
     test('basename', () => {
-        expect(pp.basename).toBe("jumbo");
+        expect(pp.basename).toBe("this");
+    });
+    test('folder', () => {
+        expect(pp.folderName).toBe("workproject");
     });
     test('ismarkdownfile', () => {
         expect(pp.isMarkdownFile()).toBe(true);
     });
-});
+    test('newfolderpath', () => {
+        expect(pp.getNewFullPathWithTopLevelFolder("anotherproject")).toBe("/path/to/anotherproject/this.md");
+    });
+    test('newpath', () => {
+        expect(pp.getNewFullPathWithBasename("adjustedfilename")).toBe("/path/to/workproject/adjustedfilename.md");
+    });
+}); 
+
 
 describe('pathproperty edge case: filename without extension', () => {
-    const pp = Helper.getPathProperty("/home/errands/jumbo");
+    const pp = Helper.getPathProperty("path","/home/errands/jumbo");
 
     test('getFileNameFromFullPath', () => {
         expect(pp.filename).toBe("jumbo");
@@ -68,7 +80,7 @@ describe('pathproperty edge case: filename without extension', () => {
 
 
 describe('pathproperty edge case: filename without extension and no path', () => {
-    const pp = Helper.getPathProperty("jumbo");
+    const pp = Helper.getPathProperty("path","jumbo");
 
     test('getFileNameFromFullPath', () => {
         expect(pp.filename).toBe("jumbo");
@@ -89,7 +101,7 @@ describe('pathproperty edge case: filename without extension and no path', () =>
 
 
 describe('testing calculateNewTopLevelFolderPath', () => {
-    const pp = Helper.getPathProperty("/home/errands/jumbo");
+    const pp = Helper.getPathProperty("path","/home/errands/jumbo");
 
     test('calculateNewTopLevelFolderPath valid input', () => {
         expect(pp.getNewFullPathWithTopLevelFolder("work")).toBe("/home/work/jumbo");
@@ -98,7 +110,7 @@ describe('testing calculateNewTopLevelFolderPath', () => {
         expect(pp.getNewFullPathWithTopLevelFolder("")).toBe("/home/errands/jumbo");
     });
 
-    const pp2 = Helper.getPathProperty("/home/errands/errands/jumbo");
+    const pp2 = Helper.getPathProperty("path","/home/errands/errands/jumbo");
 
     test('calculateNewTopLevelFolderPath two folder in path with same name: valid input', () => {
         expect(pp2.getNewFullPathWithTopLevelFolder("work")).toBe("/home/errands/work/jumbo");
@@ -108,9 +120,8 @@ describe('testing calculateNewTopLevelFolderPath', () => {
     });
 });
 
-
 describe('testing matches edge case with starting and without starting slash', () => {
-    const pp = Helper.getPathProperty("/home/errands/jumbo");
+    const pp = Helper.getPathProperty("path","/home/errands/jumbo");
 
     test('match with starting slash', () => {
         expect(pp.matches("/home/errands")).toBe(true);
@@ -118,4 +129,4 @@ describe('testing matches edge case with starting and without starting slash', (
     test('no match without starting slash', () => {
         expect(pp.matches("home/errands")).toBe(false);
     });
-});
+}); 

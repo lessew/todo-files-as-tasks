@@ -1,20 +1,17 @@
 import { App } from "obsidian";
-import { Task } from "../../core/Task";
 import { ProjectPropertyView } from "./ProjectPropertyView";
 import { TitlePropertyView } from "./TitlePropertyView";
 import { ContextPropertyView } from "./ContextPropertyView";
 import { StatusPropertyView } from "./StatusPropertyView";
 import { StarredPropertyView } from "./StarredPropertyView";
-import { TaskList } from "src/core/TaskList";
+
 
 
 export class ObsidianTaskListView {
-    taskList:TaskList
-    app:App;
+    taskList:TaskList;
 
-    constructor(tl:TaskList,app:App){
+    constructor(tl:TaskList){
         this.taskList = tl;
-        this.app = app;
     }
 
     build(rootElement:HTMLElement):HTMLElement{

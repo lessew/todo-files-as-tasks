@@ -1,53 +1,50 @@
-import { MockFileSystemFacade } from "./MockFileSystemFacade";
-import { BooleanProperty } from "../../src/core/Files/FileProperties/BooleanProperty";
-import { FileSystemFacade } from "../../src/core/Files/FileSystemFacade";
-import { File } from "../../src/core/Files/File";
-import * as exp from "constants";
-import { FilePropertyDAO } from "src/core/Files/FileProperty";
-import { MockFilePropertyDAO } from "./MockFilePropertyDAO";
 
-class Helper{
-  static getBooleanProperty():BooleanProperty{
-      let fsf:FileSystemFacade = new MockFileSystemFacade();
-      let f = new File("/path/",fsf);
+import { BooleanProperty } from "../../src/core/Files/Properties/BooleanProperty";
+import { PropertyDAO } from "../../src/core/Interfaces/PropertyDAO";
+import { MockPropertyDAO } from "../../tests/Mocks/MockPropertyDAO";
 
-      let bp = new BooleanProperty("BooleanProperty");
-      let dao:FilePropertyDAO = new MockFilePropertyDAO(f,bp,fsf);
-      bp.setDAO(dao);
-      bp.setAllowedValues(["true","false"]);
-      return bp;
-  }
-}
 
-describe('BooleanProperty test', () => {
-  const sp = Helper.getBooleanProperty();
+
+describe('BooleanProperty test correct input', () => {
+  let options = ["true","false"];
+  let dao:PropertyDAO = new MockPropertyDAO("true");
+  let prop = new BooleanProperty("flagged","dummyfileid",dao,options);
+
   test('correct property value', () => {
-    sp.value = "true";
-      expect(sp.value).toBe("true");
-  });
-  test('toggle function', () => {
-    sp.value = "true";
-    expect(sp.value).toBe("true");
-    const val1 = sp.toggle();
-    expect(sp.value).toBe("false");
-    expect (val1).toBe("false");
-    const val2 = sp.toggle();
-    expect(sp.value).toBe("true");
-    expect (val2).toBe("true");
+      expect(prop.value).toBe("true");
   });
 });
 
-describe('BooleanProperty with incorrect input', () => {
-  const sp = Helper.getBooleanProperty();
+describe('BooleanProperty test incorrect input:more than 2 values', () => {
+  let options = ["true","false","athird"];
+  let dao:PropertyDAO = new MockPropertyDAO("true");
 
-  test('with three possible values', () => {
+  test('incorrect property value should throw error', () => {
     try{
-      sp.setAllowedValues(["true","false","error"]);
+      let prop = new BooleanProperty("flagged","dummyfileid",dao,options);
       expect(true).toBe(false);
     }
     catch(e){
-      expect(true).toBe(true);
+      expect(true).toBe(true)
     }
+  });
+});
+
+describe('BooleanProperty test toggle', () => {
+  let options = ["true","false"];
+  let dao:PropertyDAO = new MockPropertyDAO("true");
+  let prop = new BooleanProperty("flagged","dummyfileid",dao,options);
+  test('toggle once', () => {
+    prop.toggle();
+    expect(prop.value).toBe("false");
+  });
+  test('toggle twice', () => {
+    prop.toggle();
+    expect(prop.value).toBe("true");
+  });
+  test('toggle thrice', () => {
+    prop.toggle();
+    expect(prop.value).toBe("false");
   });
 
 });

@@ -1,14 +1,18 @@
-import { AbstractFileProperty } from "../FileProperty";
+import { PropertyDAO } from "src/core/Interfaces/PropertyDAO";
+import { AbstractProperty } from "../../AbstractProperty";
 
-export class PathProperty extends AbstractFileProperty{
-    value:string;
-    matches(needle:string):boolean{
-        if(this.value!==undefined){
-            return this.value.startsWith(needle);
-        }
-        return false;
-    }
+export class PathProperty extends AbstractProperty{
+    regExp:RegExp = /^[a-zA-Z\/\.]+$/
   
+    constructor(name:string,fileID:string,dao:PropertyDAO){
+        super(name,fileID,dao);
+    }
+
+    validate(newVal:string):boolean{
+        const match = this.regExp.test(newVal);
+        return match;
+    }
+
     get filename():string{
         return this.value.split("/").reverse()[0];
     };

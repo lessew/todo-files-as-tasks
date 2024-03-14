@@ -1,34 +1,40 @@
 import { File } from "src/core/Files/File";
-import { FileSystemFacade } from "src/core/Files/FileSystemFacade";
 import { FileProperty } from "src/core/Files/FileProperty";
 import { WhitelistProperty } from "src/core/Files/FileProperties/WhiteListProperty";
 import { StringProperty } from "src/core/Files/FileProperties/StringProperty";
 import { BooleanProperty } from "src/core/Files/FileProperties/BooleanProperty";
-import { YAMLPropertyDAO } from "src/core/Files/FilePropertyDAOs/YAMLPropertyDAO";
-import { TopLevelFolderPropertyDAO } from "src/core/Files/FilePropertyDAOs/TopLevelFolderPropertyDAO";
+import { YAMLPropertyDAO } from "./YAMLPropertyDAO";
+import { TopLevelFolderPropertyDAO } from "src/main/obsidian/TopLevelFolderPropertyDAO2";
 
+export class TaskFactory{
 
-export class Task extends File {
-    properties: Record<string, FileProperty>;
-   
-    constructor(fullPath:string,fsf:FileSystemFacade){
-        super(fullPath,fsf);
-              
-        this.properties = {
-            "title":this.getTitleProperty(),
-            "project":this.getProjectProperty(),
-            "starred":this.getStarredProperty(),
-            "status":this.getStatusProperty(),
-            "context":this.getContextProperty()
+    static createTask(fullPath:string):File{
+        let task = new File(fullPath);
+        task.properties = TaskFactory.getProperties();
+        
+        return task;
+    }
+
+    static getProperties():Record<string,FileProperty>{
+        const f = new TaskFactory();
+
+        let properties: Record<string, FileProperty> = {
+            "title":f.getTitleProperty(),
+            "project":f.getProjectProperty(),
+            "starred":f.getStarredProperty(),
+            "status":f.getStatusProperty(),
+            "context":f.getContextProperty()
         }
+        return properties;
     }
 
     getTitleProperty():StringProperty{
         let title = new StringProperty("Title");
-        let dao = new YAMLPropertyDAO(this,title,this.fileSystemFacade);
+        let dao = new YAMLPropertyDAO(title);
         title.setDAO(dao);
         return title;
     }
+    
     getProjectProperty():WhitelistProperty{
         let project = new WhitelistProperty("Project");
         let dao = new TopLevelFolderPropertyDAO(this,project,this.fileSystemFacade);
@@ -76,5 +82,4 @@ export class Task extends File {
         context.setDAO(dao);
         return context;
     }
-
-  }
+}

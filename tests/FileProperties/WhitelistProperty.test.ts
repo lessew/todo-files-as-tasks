@@ -1,37 +1,25 @@
-import { WhitelistProperty } from "../../src/core/Files/FileProperties/WhiteListProperty";
-import { File } from "../../src/core/Files/File";
-import { MockFileSystemFacade } from "./MockFileSystemFacade";
-import { FileSystemFacade } from "../../src/core/Files/FileSystemFacade";
-import { FilePropertyDAO } from "src/core/Files/FileProperty";
-import { MockFilePropertyDAO } from "./MockFilePropertyDAO";
+import { WhitelistProperty } from "../../src/core/Files/Properties/WhitelistProperty";
+import { PropertyDAO } from "../../src/core/Interfaces/PropertyDAO";
+import { MockPropertyDAO } from "../Mocks/MockPropertyDAO";
 
 
 class Helper{
-    static getWhitelistProperty(options:string[]):WhitelistProperty{
-        let fsf:FileSystemFacade = new MockFileSystemFacade();
-        let f = new File("/path/",fsf);
-        let sp = new WhitelistProperty("WhitelistProperty");
-        let dao:FilePropertyDAO = new MockFilePropertyDAO(f,sp,fsf);
-        sp.setDAO(dao);
-        sp.setAllowedValues(options);
+    static getWhitelistProperty(propName:string,propValue:string,options:string[]):WhitelistProperty{
+        let dao:PropertyDAO = new MockPropertyDAO(propValue);
+        let sp = new WhitelistProperty(propName,"dummyfileid",dao,options);
         return sp;
     }
 }
 
-describe('whitelistproperty test', () => {
-    const sp = Helper.getWhitelistProperty(["inbox","next","waiting for"]);
-    test('correct property value', () => {
-        sp.value = "inbox";
-        expect(sp.value).toBe("inbox");
-    });
-    test('correct property value with whitespaces', () => {
-        sp.value = "waiting for";
-        expect(sp.value).toBe("waiting for");
-    });
-    test('incorrect property value', () => {
-        sp.value = "incorr";
-        expect(sp.value).toBe(WhitelistProperty.INVALID_VALUE);
-    });
-
-
+describe('whitelistproperty test: validate function', () => {
+    const sp = Helper.getWhitelistProperty("context","next",["next","waiting for"]);
+    test('testing validate function with correct input', () => {
+        expect(sp.validate("next")).toBe(true);
+    })
+    test('testing validate function with correct input', () => {
+        expect(sp.validate("waiting for")).toBe(true);
+    })
+    test('testing validate function with incorrect input', () => {
+        expect(sp.validate("next222")).toBe(false);
+    })
 });

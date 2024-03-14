@@ -1,6 +1,6 @@
 import * as yaml from 'js-yaml'
 import { FileSystemFacade } from './Files/FileSystemFacade';
-import { FileProperty } from './Files/FileProperty';
+import { FileProperty } from './AbstractProperty';
 import { TaskBuilder } from './TaskBuilder';
 import { File } from './Files/File';
 import { Task } from 'src/main/configuration/Task';
@@ -8,8 +8,9 @@ import { Task } from 'src/main/configuration/Task';
 export class YAMLParser{
     source:string;
     yaml:unknown;
-    fileProperties:Record<string,FileProperty>;
     static DEFAULT_ROOT = "./";
+    static ACTION_LIST = "list";
+    static ACTION_CREATE_BUTTON = "create_button";
 
     constructor(source:string){
         this.source = source;
@@ -23,11 +24,7 @@ export class YAMLParser{
         }
     }
 
-    setFilePropertiesToParse(fileProperties:Record<string,FileProperty>):void{
-        this.fileProperties = fileProperties;
-    }
-
-    getRootPath():string{
+    parseRootPath():string{
         try{
             const rp:string = (this.yaml as{rootPath:string}).rootPath;
             return rp;
@@ -36,12 +33,16 @@ export class YAMLParser{
             return YAMLParser.DEFAULT_ROOT; 
         }
     }
+
+    parseAction():string{
+        return YAMLParser.ACTION_LIST;
+    }
    
-    parse():{propertyName:string,propertyValue:string}[]{
+    parseFilters(properties:Record<string,FileProperty):{propertyName:string,propertyValue:string}[]{
         let result:{propertyName:string,propertyValue:string}[] = [];
 
-        for(const propertyName in this.fileProperties){
-            const property:FileProperty = this.fileProperties[propertyName];
+        for(const propertyName in properties){
+            const property:FileProperty = properties[propertyName];
 
             const yaml = this.yaml as any;
 
