@@ -1,4 +1,4 @@
-import { StringProperty } from "../../src/core/Files/Properties/StringProperty";
+import { StringProperty } from "../../src/core/Properties/StringProperty";
 import { PropertyDAO } from "../../src/core/Interfaces/PropertyDAO";
 import { MockPropertyDAO } from "../../tests/Mocks/MockPropertyDAO";
 

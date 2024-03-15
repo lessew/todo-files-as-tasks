@@ -1,4 +1,4 @@
-import { WhitelistProperty } from "../../src/core/Files/Properties/WhitelistProperty";
+import { WhitelistProperty } from "../../src/core/Properties/WhitelistProperty";
 import { PropertyDAO } from "../../src/core/Interfaces/PropertyDAO";
 import { MockPropertyDAO } from "../Mocks/MockPropertyDAO";
 

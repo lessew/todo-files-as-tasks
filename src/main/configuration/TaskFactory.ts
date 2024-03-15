@@ -2,14 +2,15 @@ import { Property } from "src/core/Interfaces/Property";
 import { File,WhitelistProperty,StringProperty,BooleanProperty } from "src/core/core-module";
 import { YAMLPropertyDAO,PathPropertyDAO,ObsidianWrapper } from "../obsidian/obsidian-module";
 import { ToplevelFolderProperty } from "src/core/Properties/ToplevelFolderProperty";
+import { FolderListDAO } from "src/core/Interfaces/FolderListDAO";
+import { FolderList } from "../obsidian/FolderList";
 
 export class TaskFactory{
-
-    wrapper:ObsidianWrapper;
+    folderListDAO:FolderListDAO;
     fullPath:string;
 
-    constructor(wrapper:ObsidianWrapper,fullPath:string){
-        this.wrapper = wrapper;
+    constructor(folderListDAO:FolderListDAO,fullPath:string){
+        this.folderListDAO = folderListDAO;
         this.fullPath = fullPath;
     }
 
@@ -21,8 +22,8 @@ export class TaskFactory{
     }
 
     static getProperties(fullPath:string):Record<string,Property>{
-        const wrapper = ObsidianWrapper.getInstance();
-        const f = new TaskFactory(wrapper,fullPath);
+        const folderListDAO:FolderListDAO = new FolderList();
+        const f = new TaskFactory(folderListDAO,fullPath);
 
         let properties: Record<string, Property> = {
             "title":f.getTitleProperty(),
@@ -42,7 +43,7 @@ export class TaskFactory{
     
     getProjectProperty():ToplevelFolderProperty{
         let dao = new PathPropertyDAO();
-        let projects = this.wrapper.getFolders();
+        let projects = this.folderListDAO.getFolders(this.fullPath);
         let project = new ToplevelFolderProperty("Project",this.fullPath,dao,projects);
         return project;
     }

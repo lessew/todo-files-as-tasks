@@ -1,5 +1,5 @@
 import { PropertyDAO } from "src/core/Interfaces/PropertyDAO";
-import { ObsidianWrapper } from "./ObsidianWrapper";
+import { ObsidianWrapper } from "../ObsidianWrapper";
 import { CachedMetadata, TFile } from "obsidian";
 
 export class YAMLPropertyDAO implements PropertyDAO{

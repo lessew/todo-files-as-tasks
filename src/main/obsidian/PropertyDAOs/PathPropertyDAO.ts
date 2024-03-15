@@ -1,15 +1,15 @@
 import { TFile } from "obsidian";
-import { PropertyDAO } from "../../core/Interfaces/PropertyDAO";
-import { ObsidianWrapper } from "./ObsidianWrapper";
+import { PropertyDAO } from "../../../core/Interfaces/PropertyDAO";
+import { ObsidianWrapper } from "../ObsidianWrapper";
 
 export class PathPropertyDAO implements PropertyDAO {
   
     persist(fileID:string,propertyName:string,val:string):void{
      
-        const obsidianWrapper = ObsidianWrapper.getInstance();
-        const tf:TFile  = obsidianWrapper.getTFile(fileID);
+        const wrapper = ObsidianWrapper.getInstance();
+        const tf:TFile  = wrapper.getTFile(fileID);
         try{
-            obsidianWrapper.obsidianApp.vault.rename(tf,val);
+            wrapper.obsidianApp.vault.rename(tf,val);
         }
         catch(e){
             throw new Error("could not move file")

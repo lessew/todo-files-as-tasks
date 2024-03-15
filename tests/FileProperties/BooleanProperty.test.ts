@@ -1,5 +1,5 @@
 
-import { BooleanProperty } from "../../src/core/Files/Properties/BooleanProperty";
+import { BooleanProperty } from "../../src/core/Properties/BooleanProperty";
 import { PropertyDAO } from "../../src/core/Interfaces/PropertyDAO";
 import { MockPropertyDAO } from "../../tests/Mocks/MockPropertyDAO";
 

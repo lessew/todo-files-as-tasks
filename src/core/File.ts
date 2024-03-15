@@ -1,6 +1,6 @@
 import { PathProperty } from "./Properties/PathProperty";
 import { Property } from "./Interfaces/Property";
-import { PathPropertyDAO } from "../main/obsidian/PathPropertyDAO";
+import { PathPropertyDAO } from "../main/obsidian/PropertyDAOs/PathPropertyDAO";
 
 export class File {
     fullPath:PathProperty;
