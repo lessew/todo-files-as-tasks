@@ -5,6 +5,7 @@ import { TaskFactory } from "../TaskFactory";
 export class ObsidianWrapper{
     private static instance:ObsidianWrapper;
     obsidianApp:App;
+    rootPath:string;
 
     private constructor(){}
 
@@ -13,42 +14,16 @@ export class ObsidianWrapper{
         ObsidianWrapper.instance.obsidianApp = app;
     }
 
+    setRootpath(path:string){
+        this.rootPath = path;
+    }
+
     public static getInstance():ObsidianWrapper{
         return ObsidianWrapper.instance;
     }
 
     getTFile(path:string):TFile{
         return this.obsidianApp.vault.getAbstractFileByPath(path) as TFile;
-    }
-
-    move(file: File, newFullPath: string): void {
-        const tf:TFile  = this.getTFile(file.fullPath.value)
-        try{
-            this.obsidianApp.vault.rename(tf,newFullPath);
-        }
-        catch(e){
-            throw new Error("could not move file")
-        }
-    }
-
-    
-    getYAMLProperty(file: File, name: string): string {
-        const tf:TFile  = this.getTFile(file.fullPath.get())
-        let meta:CachedMetadata  = this.obsidianApp.metadataCache.getFileCache(tf) as CachedMetadata;
-        if(meta && meta.frontmatter && meta.frontmatter[name]){
-            return meta.frontmatter[name];
-        }
-        else{
-            return "";
-        }
-    }
-
-    setYAMLProperty(file: File, name: string, value: string): void {
-        const tf:TFile  = this.getTFile(file.fullPath.value)
-        this.obsidianApp.fileManager.processFrontMatter(tf,(frontmatter) => {
-            frontmatter[name] = value;
-        })
-        throw new Error("Method not implemented.");
     }
 
     
@@ -67,9 +42,9 @@ export class ObsidianWrapper{
         return files;
     }
 
-    getFolders(path:string):string[]{
+    getFolders():string[]{
         let result:string[] = [];
-        const rootFolder = this.obsidianApp.vault.getAbstractFileByPath(path);
+        const rootFolder = this.obsidianApp.vault.getAbstractFileByPath(this.rootPath);
         if(rootFolder instanceof TFolder){
             rootFolder.children.forEach(child => {
                 if(child instanceof TFolder){

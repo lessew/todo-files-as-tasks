@@ -1,22 +1,23 @@
-import { FileProperty, FilePropertyDAO } from "../../core/AbstractProperty";
-import { File } from "../../core/Files/File";
+import { TFile } from "obsidian";
+import { PropertyDAO } from "../../core/Interfaces/PropertyDAO";
+import { ObsidianWrapper } from "./ObsidianWrapper";
 
-export class PathPropertyDAO implements FilePropertyDAO {
-    file:File;
-    fileProperty:FileProperty
-
-    constructor(file:File,property:FileProperty){
-        this.file = file;
-        this.fileProperty = property;
+export class PathPropertyDAO implements PropertyDAO {
+  
+    persist(fileID:string,propertyName:string,val:string):void{
+     
+        const obsidianWrapper = ObsidianWrapper.getInstance();
+        const tf:TFile  = obsidianWrapper.getTFile(fileID);
+        try{
+            obsidianWrapper.obsidianApp.vault.rename(tf,val);
+        }
+        catch(e){
+            throw new Error("could not move file")
+        }
     }
 
-    persist(val:string):void{
-        // tbi
-        //this.fsf.setYAMLProperty(this.f,this.fp.name,this.fp.value);
+    retrieve(fileID:string,propertyName:string):string{
+        return fileID;
     }
 
-    retrieve():string{
-        return "";
-        //return this.fsf.getYAMLProperty(this.f,this.fp.name);
-    }
 }

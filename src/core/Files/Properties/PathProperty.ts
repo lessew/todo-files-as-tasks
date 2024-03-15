@@ -2,7 +2,7 @@ import { PropertyDAO } from "src/core/Interfaces/PropertyDAO";
 import { AbstractProperty } from "../../AbstractProperty";
 
 export class PathProperty extends AbstractProperty{
-    regExp:RegExp = /^[a-zA-Z\/\.]+$/
+    regExp:RegExp = /^[a-zA-Z\/\.]+$/;
   
     constructor(name:string,fileID:string,dao:PropertyDAO){
         super(name,fileID,dao);
@@ -13,12 +13,9 @@ export class PathProperty extends AbstractProperty{
         return match;
     }
 
-    get filename():string{
-        return this.value.split("/").reverse()[0];
-    };
 
-    get fileExtension():string{
-        const s = this.value.split("/").reverse()[0].split(".");
+    getFileExtension():string{
+        const s = this.getValue().split("/").reverse()[0].split(".");
         if(s.length>1){
             return "." + s.reverse()[0];
         }
@@ -27,36 +24,43 @@ export class PathProperty extends AbstractProperty{
         }
     }
 
-    get folderPath():string{
-        return this.value.substring(0,(this.value.length - this.filename.length))
+    getFilename():string{
+        return this.getValue().split("/").reverse()[0];
+    };
+    
+    getFolderName():string{
+        return this.getValue().split("/").reverse()[1];
+    }
+    
+    getFolderPath():string{
+        return this.getValue().substring(0,(this.getValue().length - this.getFilename().length))
     }
 
-    get folderName():string{
-        return this.value.split("/").reverse()[1];
-    }
-
-    get basename():string{
-        return this.filename.split(".")[0];
+    getBasename():string{
+        return this.getFilename().split(".")[0];
     }
 
     isMarkdownFile(): boolean {
-        return (this.fileExtension === ".md");
+        return (this.getFileExtension() === ".md");
     }
 
     getNewFullPathWithBasename(basename:string){ //replaces setbasename
-        return this.folderPath + basename + this.fileExtension;
+        return this.getFolderPath() + basename + this.getFileExtension();
     }
 
-    getNewFullPathWithTopLevelFolder(foldername:string){
-        if(foldername==""){
-            return this.value;
-        }
-        const currentPath = this.value;
+    
+    getNewFullPathWithTopLevelFolder(newFoldername:string){
+        if(newFoldername==""){
+            return this.getValue();
+        } 
+        const currentPath = this.fileID;
         const strSplit = currentPath.split("/");
         const FOLDER_INDEX = (strSplit.length - 2);
-        strSplit[FOLDER_INDEX] = foldername;
+        strSplit[FOLDER_INDEX] = newFoldername;
         const newFolderPath = strSplit.join("/");
         return newFolderPath;
     }
+
+
 }
     

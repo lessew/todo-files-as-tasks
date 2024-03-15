@@ -11,7 +11,7 @@ describe('BooleanProperty test correct input', () => {
   let prop = new BooleanProperty("flagged","dummyfileid",dao,options);
 
   test('correct property value', () => {
-      expect(prop.value).toBe("true");
+      expect(prop.getValue()).toBe("true");
   });
 });
 
@@ -36,15 +36,15 @@ describe('BooleanProperty test toggle', () => {
   let prop = new BooleanProperty("flagged","dummyfileid",dao,options);
   test('toggle once', () => {
     prop.toggle();
-    expect(prop.value).toBe("false");
+    expect(prop.getValue()).toBe("false");
   });
   test('toggle twice', () => {
     prop.toggle();
-    expect(prop.value).toBe("true");
+    expect(prop.getValue()).toBe("true");
   });
   test('toggle thrice', () => {
     prop.toggle();
-    expect(prop.value).toBe("false");
+    expect(prop.getValue()).toBe("false");
   });
 
 });

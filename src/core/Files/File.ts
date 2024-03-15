@@ -71,12 +71,6 @@ export class File {
         this.move(newPath);
     }
 */
-    loadPropertyValues():void{
-        for(const propertyName in this.properties){
-            const prop:FileProperty = this.properties[propertyName];
-            prop.loadValue();
-        }
-    }
 
     /* TBI
     static async createTask(title:string,project:string,config:TaskConfiguration,fileSystem:FileSystem):Promise<void>{

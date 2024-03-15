@@ -14,27 +14,27 @@ class Helper{
 describe('mockabstractproperty test', () => {
     const name = "title";
     const val = "some random title";
-    let sp = Helper.getProperty(name,val);
+    let prop = Helper.getProperty(name,val);
     
     test('correct property name', () => {
-        expect(sp.name).toBe(name);
+        expect(prop.name).toBe(name);
     });
     test('correct property value', () => {
-        expect(sp.value).toBe(val);
+        expect(prop.getValue()).toBe(val);
     });
     test('change property value', () =>{
-        sp.setValidatesTo(true);
-        sp.value = "new value";
-        expect(sp.value).toBe("new value")
+        prop.setValidatesTo(true);
+        prop.setValue("new value");
+        expect(prop.getValue()).toBe("new value")
     })
     test('change property value incorrectly', () =>{
-        sp.setValidatesTo(false);
+        prop.setValidatesTo(false);
         try{
-            sp.value = "new value222";
+            prop.setValue("new value222");
             expect(true).toBe(false);
         }
         catch(e){
-            expect(sp.value).toBe("new value")
+            expect(prop.getValue()).toBe("new value")
         }
     })
 });

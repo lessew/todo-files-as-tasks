@@ -12,9 +12,9 @@ export class BooleanProperty extends WhitelistProperty {
         }
     }
   
-    toggle():string{
-        this.value = (this.value==this.allowedValues[0]) ? this.allowedValues[1] : this.allowedValues[0];
-        return this.value;
+    toggle():void{
+        const newValue = (this.getValue()==this.allowedValues[0]) ? this.allowedValues[1] : this.allowedValues[0];
+        this.setValue(newValue);
     }
    
 }

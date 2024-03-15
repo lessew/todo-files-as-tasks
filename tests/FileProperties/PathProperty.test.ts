@@ -5,9 +5,9 @@ import { MockPropertyDAO } from "../../tests/Mocks/MockPropertyDAO";
 class Helper{
     static getPathProperty(propName:string,path:string):PathProperty{
         let dao:PropertyDAO = new MockPropertyDAO(path);
-        let sp = new PathProperty(propName,path,dao); // the prop value is also the id of the file
+        let prop = new PathProperty(propName,path,dao); // the prop value is also the id of the file
 
-        return sp;
+        return prop;
     }
 }
 
@@ -32,19 +32,19 @@ describe('athproperty test validation function', () => {
 describe('pathproperty test helper functions', () => {
     let pp = Helper.getPathProperty("path","/path/to/workproject/this.md");
     test('filename', () => {
-        expect(pp.filename).toBe("this.md");
+        expect(pp.getFilename()).toBe("this.md");
     });
     test('fileExtension', () => {
-        expect(pp.fileExtension).toBe(".md");
+        expect(pp.getFileExtension()).toBe(".md");
     });
     test('folderpath', () => {
-        expect(pp.folderPath).toBe("/path/to/workproject/");
+        expect(pp.getFolderPath()).toBe("/path/to/workproject/");
     });
     test('basename', () => {
-        expect(pp.basename).toBe("this");
+        expect(pp.getBasename()).toBe("this");
     });
     test('folder', () => {
-        expect(pp.folderName).toBe("workproject");
+        expect(pp.getFolderName()).toBe("workproject");
     });
     test('ismarkdownfile', () => {
         expect(pp.isMarkdownFile()).toBe(true);
@@ -62,16 +62,16 @@ describe('pathproperty edge case: filename without extension', () => {
     const pp = Helper.getPathProperty("path","/home/errands/jumbo");
 
     test('getFileNameFromFullPath', () => {
-        expect(pp.filename).toBe("jumbo");
+        expect(pp.getFilename()).toBe("jumbo");
     });
     test('getFileExtensionFromFullPath', () => {
-        expect(pp.fileExtension).toBe("");
+        expect(pp.getFileExtension()).toBe("");
     });
     test('getFolderPathFromFullPath', () => {
-        expect(pp.folderPath).toBe("/home/errands/");
+        expect(pp.getFolderPath()).toBe("/home/errands/");
     });
     test('getBasenameFromFullPath', () => {
-        expect(pp.basename).toBe("jumbo");
+        expect(pp.getBasename()).toBe("jumbo");
     });
     test('isMarkdownFile', () => {
         expect(pp.isMarkdownFile()).toBe(false);
@@ -83,16 +83,16 @@ describe('pathproperty edge case: filename without extension and no path', () =>
     const pp = Helper.getPathProperty("path","jumbo");
 
     test('getFileNameFromFullPath', () => {
-        expect(pp.filename).toBe("jumbo");
+        expect(pp.getFilename()).toBe("jumbo");
     });
     test('getFileExtensionFromFullPath', () => {
-        expect(pp.fileExtension).toBe("");
+        expect(pp.getFileExtension()).toBe("");
     });
     test('getFolderPathFromFullPath', () => {
-        expect(pp.folderPath).toBe("");
+        expect(pp.getFolderPath()).toBe("");
     });
     test('getBasenameFromFullPath', () => {
-        expect(pp.basename).toBe("jumbo");
+        expect(pp.getBasename()).toBe("jumbo");
     });
     test('isMarkdownFile', () => {
         expect(pp.isMarkdownFile()).toBe(false);

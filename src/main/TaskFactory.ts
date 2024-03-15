@@ -1,24 +1,29 @@
-import { File } from "src/core/Files/File";
-import { FileProperty } from "src/core/Files/FileProperty";
-import { WhitelistProperty } from "src/core/Files/FileProperties/WhiteListProperty";
-import { StringProperty } from "src/core/Files/FileProperties/StringProperty";
-import { BooleanProperty } from "src/core/Files/FileProperties/BooleanProperty";
-import { YAMLPropertyDAO } from "./YAMLPropertyDAO";
-import { TopLevelFolderPropertyDAO } from "src/main/obsidian/TopLevelFolderPropertyDAO2";
+import { Property } from "src/core/Interfaces/Property";
+import { File,WhitelistProperty,StringProperty,BooleanProperty } from "src/core/core-module";
+import { YAMLPropertyDAO,PathPropertyDAO,ObsidianWrapper } from "../main/obsidian/obsidian-module";
 
 export class TaskFactory{
 
+    wrapper:ObsidianWrapper;
+    fullPath:string;
+
+    constructor(wrapper:ObsidianWrapper,fullPath:string){
+        this.wrapper = wrapper;
+        this.fullPath = fullPath;
+    }
+
     static createTask(fullPath:string):File{
         let task = new File(fullPath);
-        task.properties = TaskFactory.getProperties();
+        task.properties = TaskFactory.getProperties(fullPath);
         
         return task;
     }
 
-    static getProperties():Record<string,FileProperty>{
-        const f = new TaskFactory();
+    static getProperties(fullPath:string):Record<string,Property>{
+        const wrapper = ObsidianWrapper.getInstance();
+        const f = new TaskFactory(wrapper,fullPath);
 
-        let properties: Record<string, FileProperty> = {
+        let properties: Record<string, Property> = {
             "title":f.getTitleProperty(),
             "project":f.getProjectProperty(),
             "starred":f.getStarredProperty(),
@@ -29,29 +34,26 @@ export class TaskFactory{
     }
 
     getTitleProperty():StringProperty{
-        let title = new StringProperty("Title");
-        let dao = new YAMLPropertyDAO(title);
-        title.setDAO(dao);
+        let dao = new YAMLPropertyDAO();
+        let title = new StringProperty("Title",this.fullPath,dao);
         return title;
     }
     
     getProjectProperty():WhitelistProperty{
-        let project = new WhitelistProperty("Project");
-        let dao = new TopLevelFolderPropertyDAO(this,project,this.fileSystemFacade);
-        project.setDAO(dao);
-        let vals = this.fileSystemFacade.getFolders();
-        project.setAllowedValues(vals);
+        let dao = new PathPropertyDAO();
+        let projects = this.wrapper.getFolders();
+        let project = new WhitelistProperty("Project",this.fullPath,dao,projects);
+        project.setAllowedValues(projects);
         return project;
     }
 
     getStarredProperty():BooleanProperty{
-        let starred = new BooleanProperty("Starred");
+        let dao = new YAMLPropertyDAO();
+        let starred = new BooleanProperty("Starred",);
         starred.setAllowedValues([
             "starred",
             "unstarred"
         ])
-        let dao = new YAMLPropertyDAO(this,starred,this.fileSystemFacade);
-        starred.setDAO(dao);
         return starred;
     }
 

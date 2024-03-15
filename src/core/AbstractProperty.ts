@@ -7,7 +7,7 @@ export abstract class AbstractProperty implements Property{
     name:string;
     fileID:string;
     dao:PropertyDAO;
-    _value:string;
+    private value:string;
 
     static INVALID_VALUE:string ="-invalid_value-";
 
@@ -18,34 +18,34 @@ export abstract class AbstractProperty implements Property{
         return this;
     }
 
-    get value():string{
-        if(typeof this._value === 'undefined'){
+    getValue():string{
+        if(typeof this.value === 'undefined'){
            this.initializeValue();
         }
         
-        return this._value;
+        return this.value;
     }
 
     private initializeValue(){
         const val = this.dao.retrieve(this.fileID,this.name)
         if(!this.validate(val)){
-            this._value = AbstractProperty.INVALID_VALUE;
+            this.setValue(AbstractProperty.INVALID_VALUE);
         }
         else{
-            this._value = val;
+            this.setValue(val);
         }
     }
 
-    set value(val:string){
+    setValue(val:string){
         if(this.validate(val)){
-            this._value = val;
-            this.dao.persist(this.fileID,this.name,this._value);
+            this.value = val;
+            this.dao.persist(this.fileID,this.name,this.getValue());
         }
     }
 
     matches(needle:string):boolean{
-        if(this.value!==undefined){
-            return this.value.startsWith(needle);
+        if(this.getValue()!==undefined){
+            return this.getValue().startsWith(needle);
         }
         return false;
     }
