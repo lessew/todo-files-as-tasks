@@ -1,5 +1,4 @@
-import { File } from "src/core/Files/File";
-import { FileSystemFacade } from "src/core/Files/FileSystemFacade";
+import { File } from "src/core/File";
 
 export class TaskBuilder{
     files:File[];

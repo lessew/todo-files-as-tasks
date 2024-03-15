@@ -1,5 +1,5 @@
 import { PropertyDAO } from "src/core/Interfaces/PropertyDAO";
-import { AbstractProperty } from "../../AbstractProperty";
+import { AbstractProperty } from "../AbstractProperty";
 
 export class PathProperty extends AbstractProperty{
     regExp:RegExp = /^[a-zA-Z\/\.]+$/;

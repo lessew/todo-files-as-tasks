@@ -12,7 +12,7 @@ export class Main{
 
         const action = parser.parseAction();
         if(action==Core.YAMLParser.ACTION_LIST){
-            const properties = ObsidianImpl.TaskFactory.getProperties();
+            const properties = ObsidianImpl.TaskFactory.getProperties(rootPath);
             const filters = parser.parseFilters(properties);
             const files = ObsidianImpl.ObsidianWrapper.getInstance().getMarkdownFiles(rootPath);
             const taskBuilder = new Core.TaskBuilder(files);

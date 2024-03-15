@@ -2,7 +2,7 @@ import * as yaml from 'js-yaml'
 import { FileSystemFacade } from './Files/FileSystemFacade';
 import { FileProperty } from './AbstractProperty';
 import { TaskBuilder } from './TaskBuilder';
-import { File } from './Files/File';
+import { File } from './File';
 import { Task } from 'src/main/configuration/Task';
 
 export class YAMLParser{

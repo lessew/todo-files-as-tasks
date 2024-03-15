@@ -1,6 +1,7 @@
 import { Property } from "src/core/Interfaces/Property";
 import { File,WhitelistProperty,StringProperty,BooleanProperty } from "src/core/core-module";
-import { YAMLPropertyDAO,PathPropertyDAO,ObsidianWrapper } from "../main/obsidian/obsidian-module";
+import { YAMLPropertyDAO,PathPropertyDAO,ObsidianWrapper } from "../obsidian/obsidian-module";
+import { ToplevelFolderProperty } from "src/core/Properties/ToplevelFolderProperty";
 
 export class TaskFactory{
 
@@ -12,7 +13,7 @@ export class TaskFactory{
         this.fullPath = fullPath;
     }
 
-    static createTask(fullPath:string):File{
+    static loadTask(fullPath:string):File{
         let task = new File(fullPath);
         task.properties = TaskFactory.getProperties(fullPath);
         
@@ -39,49 +40,39 @@ export class TaskFactory{
         return title;
     }
     
-    getProjectProperty():WhitelistProperty{
+    getProjectProperty():ToplevelFolderProperty{
         let dao = new PathPropertyDAO();
         let projects = this.wrapper.getFolders();
-        let project = new WhitelistProperty("Project",this.fullPath,dao,projects);
-        project.setAllowedValues(projects);
+        let project = new ToplevelFolderProperty("Project",this.fullPath,dao,projects);
         return project;
     }
 
     getStarredProperty():BooleanProperty{
         let dao = new YAMLPropertyDAO();
-        let starred = new BooleanProperty("Starred",);
-        starred.setAllowedValues([
-            "starred",
-            "unstarred"
-        ])
+        let starred = new BooleanProperty("Starred",this.fullPath,dao,["starred","unstarred"]);
         return starred;
     }
 
     getStatusProperty():WhitelistProperty{
-        let status = new WhitelistProperty("Status");
-        status.setAllowedValues([
+        let dao = new YAMLPropertyDAO();
+        let status = new WhitelistProperty("Status",this.fullPath,dao,[
             "Inbox",
             "Next",
             "Deferred",
             "Waiting",
             "Done"
         ]);
-        let dao = new YAMLPropertyDAO(this,status,this.fileSystemFacade);
-        status.setDAO(dao);
-
         return status;
     }
 
     getContextProperty():WhitelistProperty{
-        let context = new WhitelistProperty("Context");
-        context.setAllowedValues([
+        let dao = new YAMLPropertyDAO();
+        let context = new WhitelistProperty("Context",this.fullPath,dao,[
             "Desk",
             "Deep",
             "Phone",
             "Read"
         ]);
-        let dao = new YAMLPropertyDAO(this,context,this.fileSystemFacade);
-        context.setDAO(dao);
         return context;
     }
 }

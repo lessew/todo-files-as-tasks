@@ -1,4 +1,4 @@
-import { File } from "./Files/File";
+import { File } from "./File";
 import { PropertyDAO } from "./Interfaces/PropertyDAO";
 import { Property } from "./Interfaces/Property";
 

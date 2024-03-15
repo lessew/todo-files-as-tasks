@@ -1,7 +1,5 @@
 import { PropertyDAO } from "src/core/Interfaces/PropertyDAO";
-import { Property } from "../../Interfaces/Property";
 import { WhitelistProperty } from "./WhitelistProperty";
-import { hasUncaughtExceptionCaptureCallback } from "process";
 
 export class BooleanProperty extends WhitelistProperty {
     

@@ -1,5 +1,5 @@
-import { AbstractProperty } from "../../AbstractProperty";
-import { PropertyDAO } from "../../Interfaces/PropertyDAO";
+import { AbstractProperty } from "../AbstractProperty";
+import { PropertyDAO } from "../Interfaces/PropertyDAO";
 
 export class WhitelistProperty extends AbstractProperty{
     allowedValues:string[];

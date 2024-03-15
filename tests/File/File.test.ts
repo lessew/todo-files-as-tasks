@@ -1,4 +1,4 @@
- import { File } from "../../src/core/Files/File";
+ import { File } from "../../src/core/File";
 
 describe('Empty test', () => {
     test('empty', () => {    
