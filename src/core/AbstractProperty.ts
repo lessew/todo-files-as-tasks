@@ -1,4 +1,3 @@
-import { File } from "./File";
 import { PropertyDAO } from "./Interfaces/PropertyDAO";
 import { Property } from "./Interfaces/Property";
 
@@ -7,7 +6,7 @@ export abstract class AbstractProperty implements Property{
     name:string;
     fileID:string;
     dao:PropertyDAO;
-    private value:string;
+    protected value:string;
 
     static INVALID_VALUE:string ="-invalid_value-";
 
@@ -29,10 +28,10 @@ export abstract class AbstractProperty implements Property{
     private initializeValue(){
         const val = this.dao.retrieve(this.fileID,this.name)
         if(!this.validate(val)){
-            this.setValue(AbstractProperty.INVALID_VALUE);
+            this.value = AbstractProperty.INVALID_VALUE;
         }
         else{
-            this.setValue(val);
+            this.value = val;
         }
     }
 

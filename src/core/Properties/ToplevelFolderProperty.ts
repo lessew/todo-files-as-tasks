@@ -2,20 +2,29 @@ import { PropertyDAO } from "src/core/Interfaces/PropertyDAO";
 import { PathProperty } from "./PathProperty";
 
 export class ToplevelFolderProperty extends PathProperty{
-    allowedProjectValues:string[];
+    allowedValues:string[];
 
     constructor(name:string,fileID:string,dao:PropertyDAO,vals:string[]){
         super(name,fileID,dao);
-        this.allowedProjectValues = vals;
+        this.allowedValues = vals;
     }
-
-    // inheritance does not seem to work propertly with 3 level classes. this is a workaround
-    //getValue():string{return super.getValue();}
-    //setValue(val:string):void{super.setValue(val);}
-    //getFileID():string{return super.fileID}
     
     validate(newValue:string){
-        return (this.allowedProjectValues.indexOf(newValue) != -1)
+        return (this.allowedValues.indexOf(newValue) != -1)
+    }
+
+    
+    getValue():string{        
+        if(typeof this.value === 'undefined'){
+            this.value = this.getFolderName(); 
+        }
+        return this.value;
+    }
+
+    
+    setValue(val:string){
+        const newPath = this.getNewFullPathWithTopLevelFolder(val);
+        this.dao.persist(this.fileID,this.name,newPath);
     }
 
 

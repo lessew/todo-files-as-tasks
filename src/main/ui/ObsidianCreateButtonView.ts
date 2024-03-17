@@ -1,11 +1,7 @@
 import { App, MarkdownView, Modal, Setting } from "obsidian";
-import { TaskConfiguration } from "src/core/TaskConfiguration";
-import { FileSystem } from "src/core/FileSystem";
-import { Task } from "src/core/Task";
 
-
+/*
 export class ObsidianCreateButtonView{
-    config:TaskConfiguration;
     app:App;
     fileSystem:FileSystem;
 
@@ -100,3 +96,4 @@ class CreateTaskModal extends Modal{
         contentEl.empty();
     }
 }
+*/

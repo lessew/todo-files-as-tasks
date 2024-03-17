@@ -1,7 +1,7 @@
 import { App, Modal,Setting,FileManager } from "obsidian";
 import { BasenameProperty } from "src/core/Properties/BasenameProperty";
 
-export class TitlePropertyView{
+export class BasenamePropertyView{
     prop:BasenameProperty;
     obsidianApp:App;
 
@@ -29,7 +29,7 @@ export class TitlePropertyView{
     }
 
     handleEvent(event:Event){
-        const m:updateTitleModal =  new updateTitleModal(this.obsidianApp,(result) => {
+        const m:updateBasenameModal =  new updateBasenameModal(this.obsidianApp,(result) => {
             this.prop.setValue(result);
             setTimeout(
               // @ts-ignore
@@ -40,7 +40,7 @@ export class TitlePropertyView{
     }
 }
 
-class updateTitleModal extends Modal{
+class updateBasenameModal extends Modal{
     result: string;
     onSubmit: (result: string) => void;
 

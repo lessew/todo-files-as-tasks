@@ -1,7 +1,5 @@
-/* 
-import { MockFileSystemFacade } from "../FileProperties/MockFileSystemFacade";
+
 import { YAMLParser } from "../../src/core/YAMLParser";
-import { MockFile } from "./MockFile";
 
 const correctlyFormatted = `
 rootPath: .
@@ -20,11 +18,10 @@ describe('yaml parser correctly formatted', () => {
     let p = new YAMLParser(correctlyFormatted);
     
     test('rootPath', () => {    
-        expect(p.getRootPath()).toBe(".");
+        expect(p.parseRootPath()).toBe(".");
     });
-
+/*
     test('filters',() => {
-        const n = new MockFile("dummy",new MockFileSystemFacade());
         p.setFilePropertiesToParse(n.properties)
 
         const filters:{propertyName:string,propertyValue:string}[] = p.parse();
@@ -35,9 +32,10 @@ describe('yaml parser correctly formatted', () => {
         expect(filters[0].propertyName).toBe("status");
         expect(filters[0].propertyValue).toBe("inbox")
     })
+    */
 });
 
-
+/*
 describe('yaml parser correctly formatted without context', () => {
     let p = new YAMLParser(correctlyFormattedWithoutContext);
    
@@ -52,7 +50,9 @@ describe('yaml parser correctly formatted without context', () => {
         expect(filters[0].propertyValue).toBe("inbox")
     })
 });
+*/
 
+/*
 describe('yaml parser only rootpath', () => {
     let p = new YAMLParser(onlyRootPath);
 
@@ -63,6 +63,7 @@ describe('yaml parser only rootpath', () => {
         expect(filters.length).toBe(0);
     })
 });
+*/
 
 const incorrectlyFormattedPath = `
 rootPath: !@#$
@@ -74,16 +75,21 @@ rootPath: .
 context222: desk
 status111: !@#`;
 
+const trailingslashinrootpath = `
+rootPath: todo-home/
+context222: desk
+status111: !@#`;
+
 
 
 describe('yaml parser correctly formatted', () => {
     let p = new YAMLParser(incorrectlyFormattedPath);
     
     test('rootPath', () => {    
-        expect(p.getRootPath()).toBe(YAMLParser.DEFAULT_ROOT);
+        expect(p.parseRootPath()).toBe(YAMLParser.DEFAULT_ROOT);
     });
 });
-
+/*
 describe('yaml parser with properties that are not set in task', () => {
     let p = new YAMLParser(nonvalidproperties);
 
@@ -94,10 +100,13 @@ describe('yaml parser with properties that are not set in task', () => {
         expect(filters.length).toBe(0);
     })
 });
- */
+*/
 
-describe('Empty test', () => {
-    test('empty', () => {    
-        expect(true).toBe(true);
+describe('yaml parser with path ending on slash (not allowed)', () => {
+    let p = new YAMLParser(trailingslashinrootpath);
+
+    test('rootPath', () => {    
+        expect(p.parseRootPath()).toBe(YAMLParser.DEFAULT_ROOT);
     });
 });
+ 

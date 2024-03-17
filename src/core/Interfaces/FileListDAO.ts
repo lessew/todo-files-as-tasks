@@ -1,5 +1,7 @@
-import { File } from "../core-module";
+import { FolderList } from "src/main/obsidian/FolderList";
+import { File } from "../File";
 
 export interface FileListDAO{
-    getMarkdownFiles(rootPath:string):File[];
+    files:File[];
+    init(rootPath:string,folderList:FolderList):void;
 }

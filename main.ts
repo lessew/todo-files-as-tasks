@@ -1,5 +1,5 @@
 import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting, View, parseFrontMatterAliases } from 'obsidian';
-import { ObsidianYatodoApp } from 'src/main/ObsidianYatodoApp';
+import { Main } from 'src/main/Main';
 
 
 interface YaTodoPluginSettings {
@@ -18,8 +18,7 @@ export default class YaTodoPlugin extends Plugin {
 		await this.loadSettings();
 
 		this.registerMarkdownCodeBlockProcessor("yatodo", (source, el, ctx) => {
-			let obsidianYatodoApp:ObsidianYatodoApp = new ObsidianYatodoApp(this.app);
-			obsidianYatodoApp.executeCommand(source,el);
+			Main.run(source,el,this.app);
 		});
 
 		// This creates an icon in the left ribbon.

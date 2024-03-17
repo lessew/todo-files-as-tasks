@@ -1,4 +1,4 @@
-import { File } from "../core-module";
+import { File } from "../File";
 
 export interface FileDAO{
     createMarkdownFile(path:string):Promise<File>;

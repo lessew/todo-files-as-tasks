@@ -1,3 +1,5 @@
+
 export interface FolderListDAO{
-    getFolders(rootPath:string):string[];
+    folders:string[];
+    init(folderPath:string):void;
 }

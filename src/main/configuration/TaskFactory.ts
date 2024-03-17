@@ -1,62 +1,62 @@
 import { Property } from "src/core/Interfaces/Property";
-import { File,WhitelistProperty,StringProperty,BooleanProperty } from "src/core/core-module";
-import { YAMLPropertyDAO,PathPropertyDAO,ObsidianWrapper } from "../obsidian/obsidian-module";
+import { File } from "src/core/File";
+import { WhitelistProperty } from "src/core/Properties/WhitelistProperty";
+import { StringProperty } from "src/core/Properties/StringProperty";
+import { BooleanProperty } from "src/core/Properties/BooleanProperty";
+import { YAMLPropertyDAO } from "../obsidian/PropertyDAOs/YAMLPropertyDAO";
+import { PathPropertyDAO } from "../obsidian/PropertyDAOs/PathPropertyDAO";
 import { ToplevelFolderProperty } from "src/core/Properties/ToplevelFolderProperty";
 import { FolderListDAO } from "src/core/Interfaces/FolderListDAO";
 import { FolderList } from "../obsidian/FolderList";
+import { BasenameProperty } from "src/core/Properties/BasenameProperty";
+import { ObsidianWrapper } from "../obsidian/ObsidianWrapper";
 
 export class TaskFactory{
-    folderListDAO:FolderListDAO;
-    fullPath:string;
+    rootFolder:string;
 
-    constructor(folderListDAO:FolderListDAO,fullPath:string){
-        this.folderListDAO = folderListDAO;
-        this.fullPath = fullPath;
+    constructor(rootFolder:string){
+        this.rootFolder = rootFolder;
     }
 
-    static loadTask(fullPath:string):File{
-        let task = new File(fullPath);
-        task.properties = TaskFactory.getProperties(fullPath);
-        
+    static loadTask(fullPathOfTask:string,folderList:FolderList):File{
+        let task = new File(fullPathOfTask);
+        task.properties = TaskFactory.getProperties(fullPathOfTask,folderList);
         return task;
     }
 
-    static getProperties(fullPath:string):Record<string,Property>{
-        const folderListDAO:FolderListDAO = new FolderList();
-        const f = new TaskFactory(folderListDAO,fullPath);
-
+    static getProperties(fullPathOfTask:string,folderList:FolderList):Record<string, Property>{
         let properties: Record<string, Property> = {
-            "title":f.getTitleProperty(),
-            "project":f.getProjectProperty(),
-            "starred":f.getStarredProperty(),
-            "status":f.getStatusProperty(),
-            "context":f.getContextProperty()
+            "title":TaskFactory.getTitleProperty(fullPathOfTask),
+            "project":TaskFactory.getProjectProperty(fullPathOfTask,folderList),
+            "starred":TaskFactory.getStarredProperty(fullPathOfTask),
+            "status":TaskFactory.getStatusProperty(fullPathOfTask),
+            "context":TaskFactory.getContextProperty(fullPathOfTask)
         }
         return properties;
     }
 
-    getTitleProperty():StringProperty{
-        let dao = new YAMLPropertyDAO();
-        let title = new StringProperty("Title",this.fullPath,dao);
+    static getTitleProperty(fullPathOfTask:string):StringProperty{
+        let dao = new PathPropertyDAO();
+        let title = new BasenameProperty("Title",fullPathOfTask,dao);
         return title;
     }
     
-    getProjectProperty():ToplevelFolderProperty{
+    static getProjectProperty(fullPathOfTask:string,folderList:FolderList):ToplevelFolderProperty{
         let dao = new PathPropertyDAO();
-        let projects = this.folderListDAO.getFolders(this.fullPath);
-        let project = new ToplevelFolderProperty("Project",this.fullPath,dao,projects);
+        let projects = folderList.folders;
+        let project = new ToplevelFolderProperty("Project",fullPathOfTask,dao,projects);
         return project;
     }
 
-    getStarredProperty():BooleanProperty{
+    static getStarredProperty(fullPathOfTask:string):BooleanProperty{
         let dao = new YAMLPropertyDAO();
-        let starred = new BooleanProperty("Starred",this.fullPath,dao,["starred","unstarred"]);
+        let starred = new BooleanProperty("Starred",fullPathOfTask,dao,["starred","unstarred"]);
         return starred;
     }
 
-    getStatusProperty():WhitelistProperty{
+    static getStatusProperty(fullPathOfTask:string):WhitelistProperty{
         let dao = new YAMLPropertyDAO();
-        let status = new WhitelistProperty("Status",this.fullPath,dao,[
+        let status = new WhitelistProperty("Status",fullPathOfTask,dao,[
             "Inbox",
             "Next",
             "Deferred",
@@ -66,9 +66,9 @@ export class TaskFactory{
         return status;
     }
 
-    getContextProperty():WhitelistProperty{
+    static getContextProperty(fullPathOfTask:string):WhitelistProperty{
         let dao = new YAMLPropertyDAO();
-        let context = new WhitelistProperty("Context",this.fullPath,dao,[
+        let context = new WhitelistProperty("Context",fullPathOfTask,dao,[
             "Desk",
             "Deep",
             "Phone",

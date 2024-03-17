@@ -1,19 +1,14 @@
-import { App,CachedMetadata,TFile,TFolder,normalizePath } from "obsidian";
-import { File } from "src/core/File";
-import { TaskFactory } from "../configuration/TaskFactory";
+import { App,TFile,normalizePath } from "obsidian";
 
 export class ObsidianWrapper{
     private static instance:ObsidianWrapper;
     obsidianApp:App;
     rootPath:string;
-
-    public static init(app:App){
+   
+    public static async init(app:App,rootPath:string){
         ObsidianWrapper.instance = new ObsidianWrapper();
         ObsidianWrapper.instance.obsidianApp = app;
-    }
-
-    setRootpath(path:string){
-        this.rootPath = path;
+        ObsidianWrapper.instance.rootPath = rootPath;
     }
 
     public static getInstance():ObsidianWrapper{
@@ -24,12 +19,7 @@ export class ObsidianWrapper{
         return this.obsidianApp.vault.getAbstractFileByPath(path) as TFile;
     }
 
-    
     normalizePath(rp:string):string{
         return normalizePath(rp);
     }
-
-    
-
-
 }

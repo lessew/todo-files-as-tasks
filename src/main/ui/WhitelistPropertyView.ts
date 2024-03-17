@@ -1,38 +1,37 @@
 import { App, MarkdownView, SuggestModal } from "obsidian";
-import { PropertyView } from "./PropertyView";
-import { Property } from "src/core/Interfaces/Property";
 import { WhitelistProperty } from "src/core/Properties/WhitelistProperty";
 
-export class ContextPropertyView extends PropertyView{
+export class WhitelistPropertyView{
    
-    wlp:WhitelistProperty;
+    prop:WhitelistProperty;
+    obsidianApp:App;
 
-    constructor(prop:Property, app:App){
-        super(prop,app);
-        this.wlp = prop as WhitelistProperty;
+    constructor(prop:WhitelistProperty, app:App){
+        this.prop = prop;
+        this.obsidianApp = app;
     }
 
     build(rootElement:HTMLElement):void{
-        const contextHumanReadable = this.task.config.validContextValues.getValue(this.task.context);
+        const contextHumanReadable = this.prop.getValue();
         let a:HTMLElement = rootElement.createEl("a",{text:contextHumanReadable as string});
         a.addEventListener("click",this); // executes handleEvent
     }
 
     handleEvent(event:Event){
-        const m:SelectContextModal =  new SelectContextModal(this.task,this.obsidianApp);
+        const m:SelectWhitelistModal =  new SelectWhitelistModal(this.prop,this.obsidianApp);
         m.open();
     }
 }
 
-export class SelectContextModal extends SuggestModal<string>{
+export class SelectWhitelistModal extends SuggestModal<string>{
 
-    task:Task;
+    prop:WhitelistProperty;
     validContextValues:string[];
 
-    constructor(task:Task, app: App) {
+    constructor(prop:WhitelistProperty, app: App) {
         super(app);
-        this.task = task;
-        this.validContextValues = this.task.config.validContextValues.getAllHumanReadableValues();
+        this.prop = prop;
+        this.validContextValues = this.prop.allowedValues;
     }
         
     getSuggestions(query: string): string[] | Promise<string[]> {
@@ -44,8 +43,8 @@ export class SelectContextModal extends SuggestModal<string>{
     }
 
     onChooseSuggestion(item: string, evt: MouseEvent | KeyboardEvent) {
-        const id = this.task.config.validContextValues.getIdFromHumanReadableValue(item);
-        this.task.context = id;
+        //const id = this.task.config.validContextValues.getIdFromHumanReadableValue(item);
+        this.prop.setValue(item);
         setTimeout(
             () => this.app.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true)
         ,100)        

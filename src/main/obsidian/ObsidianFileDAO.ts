@@ -1,8 +1,8 @@
 import { FileDAO } from "src/core/Interfaces/FileDAO";
-import { ObsidianWrapper } from "./obsidian-module";
+import { ObsidianWrapper } from "./ObsidianWrapper";
 import { TFile } from "obsidian";
 import { TaskFactory } from "../configuration/TaskFactory";
-import { File } from "src/core/core-module";
+import { File } from "src/core/File";
 
 export class ObsidianFileDAO implements FileDAO{
    

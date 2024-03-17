@@ -1,9 +1,5 @@
 import * as yaml from 'js-yaml'
-import { FileSystemFacade } from './Files/FileSystemFacade';
-import { FileProperty } from './AbstractProperty';
-import { TaskBuilder } from './TaskBuilder';
-import { File } from './File';
-import { Task } from 'src/main/configuration/Task';
+import { Property } from './Interfaces/Property';
 
 export class YAMLParser{
     source:string;
@@ -38,11 +34,11 @@ export class YAMLParser{
         return YAMLParser.ACTION_LIST;
     }
    
-    parseFilters(properties:Record<string,FileProperty):{propertyName:string,propertyValue:string}[]{
+    parseFilters(properties:Record<string,Property>):{propertyName:string,propertyValue:string}[]{
         let result:{propertyName:string,propertyValue:string}[] = [];
 
         for(const propertyName in properties){
-            const property:FileProperty = properties[propertyName];
+            const property:Property = properties[propertyName];
 
             const yaml = this.yaml as any;
 

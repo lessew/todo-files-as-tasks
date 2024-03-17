@@ -2,6 +2,6 @@
 [[delete task]]
 
 ```yatodo
-rootPath: todo-home/
+rootPath: todo-home
 
 ```

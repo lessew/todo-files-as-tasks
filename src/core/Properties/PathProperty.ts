@@ -13,9 +13,12 @@ export class PathProperty extends AbstractProperty{
         return match;
     }
 
+    getHref():string{
+        return this.fileID;
+    }
 
     getFileExtension():string{
-        const s = this.getValue().split("/").reverse()[0].split(".");
+        const s = this.fileID.split("/").reverse()[0].split(".");
         if(s.length>1){
             return "." + s.reverse()[0];
         }
@@ -25,15 +28,15 @@ export class PathProperty extends AbstractProperty{
     }
 
     getFilename():string{
-        return this.getValue().split("/").reverse()[0];
+        return this.fileID.split("/").reverse()[0];
     };
     
     getFolderName():string{
-        return this.getValue().split("/").reverse()[1];
+        return this.fileID.split("/").reverse()[1];
     }
     
     getFolderPath():string{
-        return this.getValue().substring(0,(this.getValue().length - this.getFilename().length))
+        return this.fileID.substring(0,(this.getValue().length - this.getFilename().length))
     }
 
     getBasename():string{
@@ -51,7 +54,7 @@ export class PathProperty extends AbstractProperty{
     
     getNewFullPathWithTopLevelFolder(newFoldername:string){
         if(newFoldername==""){
-            return this.getValue();
+            return this.value;
         } 
         const currentPath = this.fileID;
         const strSplit = currentPath.split("/");

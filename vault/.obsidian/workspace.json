@@ -23,8 +23,12 @@
             "id": "cf2a188d6e4ca508",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "yatodo-examples/All todos.md",
+                "mode": "preview",
+                "source": true
+              }
             }
           }
         ],
@@ -94,6 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "yatodo-examples/All todos.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,6 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "yatodo-examples/All todos.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -131,7 +137,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "yatodo-examples/All todos.md"
+              }
             }
           }
         ]
@@ -155,24 +163,25 @@
   },
   "active": "cf2a188d6e4ca508",
   "lastOpenFiles": [
-    "yatodo-examples/All todos.md",
-    "todo-home/Release/Todo fields in detail page.md",
-    "yatodo-examples/Done.md",
-    "todo-home/Bugs/Project does not show in suggester if it has no todos.md",
     "yatodo-examples/Context.md",
+    "yatodo-examples/All todos.md",
+    "yatodo-examples/Create Todo.md",
+    "yatodo-examples/Projects.md",
+    "yatodo-examples/Starred.md",
+    "yatodo-examples/Done.md",
+    "todo-home/Bugs/wes2.md",
+    "TEST file.md",
+    "todo-home/Release/Todo fields in detail page.md",
+    "todo-home/Bugs/Project does not show in suggester if it has no todos.md",
     "todo-home/Bugs/Add field starred.md",
     "todo-home/Bugs/rootpath is not respected in yaml config when selecting project.md",
     "todo-home/Features/delete task.md",
-    "yatodo-examples/Create Todo.md",
-    "TEST file.md",
     "todo-home/Bugs/qqqqq.md",
     "todo-home/Features/customize list fields.md",
     "todo-home/Features/click into task.md",
     "todo-home/Features/group by context, project, status, starred.md",
     "todo-home/Features/exclude flag in parser and builder (exclude done).md",
     "todo-home/Architecture and  Design/Kijken naar exception handling.md",
-    "yatodo-examples/Projects.md",
-    "yatodo-examples/Starred.md",
     "yatodo-examples/Status.md",
     "todo-home/Architecture and  Design/iiiii.md",
     "vault/yatodo-examples/Status.md",
@@ -180,7 +189,6 @@
     "vault/yatodo-examples/Projects.md",
     "vault/yatodo-examples/Done.md",
     "vault/yatodo-examples/Create Todo.md",
-    "vault/yatodo-examples/Context.md",
     "vault/yatodo-examples",
     "vault",
     "todo-home/Release",
