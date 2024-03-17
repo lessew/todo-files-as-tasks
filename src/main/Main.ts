@@ -28,7 +28,7 @@ export class Main{
       
         const action = parser.parseAction();
         if(action==YAMLParser.ACTION_LIST){
-            setTimeout(() => {
+            //setTimeout(() => {
                 const properties = TaskFactory.getProperties(rootPath,folderList);
                 const filters = parser.parseFilters(properties);
                 const files = fileList.files;
@@ -36,7 +36,7 @@ export class Main{
                 const filteredFiles = taskBuilder.bulkFilterBy(filters).get();
                 const view = new ObsidianTaskListView(filteredFiles,ObsidianWrapper.getInstance().obsidianApp);
                 view.build(el);
-            },1250)
+           // },1250)
             
         }
     }

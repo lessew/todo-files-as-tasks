@@ -31,7 +31,6 @@ export class SelectToplevelFolderModal extends SuggestModal<string>{
     constructor(prop:ToplevelFolderProperty, app: App) {
         super(app);
         this.prop = prop;
-        console.log(prop);
         this.validContextValues = this.prop.allowedValues;
     }
         
