@@ -1,5 +1,6 @@
 import { App, Modal,Setting,MarkdownView } from "obsidian";
 import { BasenameProperty } from "src/core/Properties/BasenameProperty";
+import { ObsidianWrapper } from "src/main/obsidian/ObsidianWrapper";
 
 export class BasenamePropertyView{
     obsidianApp:App;
@@ -31,10 +32,7 @@ export class BasenamePropertyView{
     handleEvent(event:Event){
         const m:UpdateBasenameModal =  new UpdateBasenameModal(this.obsidianApp,(result) => {
             this.prop.setValue(result);
-            setTimeout(
-              // @ts-ignore
-              () => this.obsidianApp.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true)
-            ,100) 
+            ObsidianWrapper.getInstance().refreshUI();
         });
         m.open();
     }

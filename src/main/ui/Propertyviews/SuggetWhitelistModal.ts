@@ -1,5 +1,6 @@
 import { App, MarkdownView, SuggestModal } from "obsidian";
 import { Property } from "src/core/Interfaces/Property";
+import { ObsidianWrapper } from "src/main/obsidian/ObsidianWrapper";
 
 export class SuggestWhitelistModal extends SuggestModal<string>{
 
@@ -27,12 +28,6 @@ export class SuggestWhitelistModal extends SuggestModal<string>{
 
     onChooseSuggestion(item: string, evt: MouseEvent | KeyboardEvent) {
         this.prop.setValue(item);
-        this.reloadPage();
-    }
-
-    reloadPage():void{
-        setTimeout(
-            () => this.app.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true)
-        ,100)   
+        ObsidianWrapper.getInstance().refreshUI();
     }
 }

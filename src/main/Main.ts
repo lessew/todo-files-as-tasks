@@ -4,9 +4,9 @@ import { YAMLParser } from "src/core/YAMLParser";
 import { ObsidianWrapper } from "./obsidian/ObsidianWrapper";
 import { TaskBuilder } from "src/core/TaskBuilder";
 import { ObsidianTaskListView } from "./ui/ObsidianTaskListView";
-import { FileListDAO } from "src/core/Interfaces/FileListDAO";
 import { FileList } from "./obsidian/FileList";
 import { FolderList } from "./obsidian/FolderList";
+import { ObsidianCreateTaskButtonView } from "./ui/ObsidianCreateTaskButtonView";
 
 
 
@@ -34,6 +34,10 @@ export class Main{
             const taskBuilder = new TaskBuilder(files);
             const filteredFiles = taskBuilder.bulkFilterBy(filters).get();
             const view = new ObsidianTaskListView(filteredFiles,ObsidianWrapper.getInstance().obsidianApp);
+            view.build(el);
+        }
+        else if(action==YAMLParser.ACTION_CREATE_BUTTON){
+            const view = new ObsidianCreateTaskButtonView(app);
             view.build(el);
         }
     }

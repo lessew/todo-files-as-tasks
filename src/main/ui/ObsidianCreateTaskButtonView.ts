@@ -1,14 +1,12 @@
 import { App, MarkdownView, Modal, Setting } from "obsidian";
+import { ObsidianWrapper } from "../obsidian/ObsidianWrapper";
 
-/*
-export class ObsidianCreateButtonView{
-    app:App;
-    fileSystem:FileSystem;
 
-    constructor(fileSystem:FileSystem,config:TaskConfiguration,app:App){
-        this.config = config;
-        this.app = app;
-        this.fileSystem = fileSystem;
+export class ObsidianCreateTaskButtonView{
+    obsidianApp:App;
+
+    constructor(app:App){
+        this.obsidianApp = app;
     }
 
     build(rootElement:HTMLElement):void{
@@ -17,43 +15,42 @@ export class ObsidianCreateButtonView{
     }
 
     handleEvent(event:Event){
-        const m:CreateTaskModal =  new CreateTaskModal(this.app,this.config,(result:any) => {
+        console.log(event);
+        const m:CreateTaskModal =  new CreateTaskModal(this.obsidianApp,(result:any) => {
             console.log("create: TBI")
             console.log(result.project)
             console.log(result.title);
-            Task.createTask(result.title,result.project,this.config,this.fileSystem);
-            setTimeout(
-                () => this.app.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true)
-            ,100)  
+            //Task.createTask(result.title,result.project,this.config,this.fileSystem);
+            //setTimeout(
+            //    () => this.app.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true)
+            //,100)  
+            ObsidianWrapper.getInstance().refreshUI();
         });
         m.open();
+        
     }
 }
 
 
 class CreateTaskModal extends Modal{
     result:any;
-    config:TaskConfiguration;
 
     onSubmit: (result: string) => void;
 
-    constructor(app: App, config:TaskConfiguration,onSubmit: (result: any) => void) {
+    constructor(app: App,onSubmit: (result: any) => void) {
         super(app);
         this.result = {
             title: "",
             project: ""
         }
         this.onSubmit = onSubmit;
-        this.config = config;
     }
 
     getProjectValuesInRecord():Record<string,string>{
-        const valuesInMap = this.config.validProjectValues.values;
-        let valuesInRecord:Record<string,string> = {};
-
-        valuesInMap.forEach((id,val) => {
-            valuesInRecord[id] = val;
-        });
+        let valuesInRecord:Record<string,string> = {
+            "this":"that",
+            "zus":"zo"
+        };
         return valuesInRecord;
     }
     
@@ -96,4 +93,3 @@ class CreateTaskModal extends Modal{
         contentEl.empty();
     }
 }
-*/

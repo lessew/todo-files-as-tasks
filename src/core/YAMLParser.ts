@@ -31,6 +31,9 @@ export class YAMLParser{
     }
 
     parseAction():string{
+        if(this.source.indexOf(YAMLParser.ACTION_CREATE_BUTTON)>-1){
+            return YAMLParser.ACTION_CREATE_BUTTON;
+        }
         return YAMLParser.ACTION_LIST;
     }
    

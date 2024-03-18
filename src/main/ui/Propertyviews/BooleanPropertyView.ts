@@ -1,6 +1,7 @@
 import { App, MarkdownView, SuggestModal } from "obsidian";
 import { BooleanProperty } from "src/core/Properties/BooleanProperty";
 import { SuggestWhitelistModal } from "./SuggetWhitelistModal";
+import { ObsidianWrapper } from "src/main/obsidian/ObsidianWrapper";
 
 export class BooleanPropertyView{
    
@@ -19,9 +20,6 @@ export class BooleanPropertyView{
 
     handleEvent(event:Event){
         this.prop.toggle();
-        setTimeout(
-            () => this.obsidianApp.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true)
-        ,100)  
-        //m.open();
+        ObsidianWrapper.getInstance().refreshUI();
     }
 }

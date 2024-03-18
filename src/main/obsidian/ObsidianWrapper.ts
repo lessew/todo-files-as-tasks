@@ -1,4 +1,4 @@
-import { App,TFile,normalizePath } from "obsidian";
+import { App,MarkdownView,TFile,normalizePath } from "obsidian";
 
 export class ObsidianWrapper{
     private static instance:ObsidianWrapper;
@@ -21,5 +21,11 @@ export class ObsidianWrapper{
 
     normalizePath(rp:string):string{
         return normalizePath(rp);
+    }
+
+    refreshUI():void{
+        setTimeout(
+            () => this.obsidianApp.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true)
+        ,100)  
     }
 }
