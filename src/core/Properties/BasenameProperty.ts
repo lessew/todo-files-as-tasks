@@ -21,5 +21,7 @@ export class BasenameProperty extends PathProperty{
     setValue(val:string){
         const newPath = this.getNewFullPathWithBasename(val);
         this.dao.persist(this.fileID,this.name,newPath);
+        this.value = val;
+        this.fileID = newPath;
     }
 }

@@ -36,7 +36,7 @@ export class PathProperty extends AbstractProperty{
     }
     
     getFolderPath():string{
-        return this.fileID.substring(0,(this.getValue().length - this.getFilename().length))
+        return this.fileID.substring(0,(this.fileID.length - this.getFilename().length))
     }
 
     getBasename():string{
@@ -47,14 +47,14 @@ export class PathProperty extends AbstractProperty{
         return (this.getFileExtension() === ".md");
     }
 
-    getNewFullPathWithBasename(basename:string){ //replaces setbasename
+    getNewFullPathWithBasename(basename:string){ 
         return this.getFolderPath() + basename + this.getFileExtension();
     }
 
     
     getNewFullPathWithTopLevelFolder(newFoldername:string){
         if(newFoldername==""){
-            return this.value;
+            return this.fileID;
         } 
         const currentPath = this.fileID;
         const strSplit = currentPath.split("/");

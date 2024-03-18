@@ -11,7 +11,7 @@ class Helper{
     }
 }
 
-describe('athproperty test validation function', () => {
+describe('pathproperty test validation function', () => {
         let sp = Helper.getPathProperty("path","dummy");
 
     test('correct values', () => {
@@ -103,20 +103,20 @@ describe('pathproperty edge case: filename without extension and no path', () =>
 describe('testing calculateNewTopLevelFolderPath', () => {
     const pp = Helper.getPathProperty("path","/home/errands/jumbo");
 
-    test('calculateNewTopLevelFolderPath valid input', () => {
+    test('getNewFullPathWithTopLevelFolder valid input', () => {
         expect(pp.getNewFullPathWithTopLevelFolder("work")).toBe("/home/work/jumbo");
     });
-   // test('calculateNewTopLevelFolderPath no input', () => {
-     //   expect(pp.getNewFullPathWithTopLevelFolder("")).toBe("/home/errands/jumbo");
-   // });
+    test('getNewFullPathWithTopLevelFolder no input', () => {
+        expect(pp.getNewFullPathWithTopLevelFolder("")).toBe("/home/errands/jumbo");
+    });
 
     const pp2 = Helper.getPathProperty("path","/home/errands/errands/jumbo");
 
-    test('calculateNewTopLevelFolderPath two folder in path with same name: valid input', () => {
+    test('getNewFullPathWithTopLevelFolder two folder in path with same name: valid input', () => {
         expect(pp2.getNewFullPathWithTopLevelFolder("work")).toBe("/home/errands/work/jumbo");
     });
-    test('calculateNewTopLevelFolderPath two folder in path with same name: no input', () => {
-        //expect(pp2.getNewFullPathWithTopLevelFolder("")).toBe("/home/errands/errands/jumbo");
+    test('getNewFullPathWithTopLevelFolder two folder in path with same name: no input', () => {
+        expect(pp2.getNewFullPathWithTopLevelFolder("")).toBe("/home/errands/errands/jumbo");
     });
 });
 
@@ -130,3 +130,14 @@ describe('testing matches edge case with starting and without starting slash', (
         expect(pp.matches("home/errands")).toBe(false);
     });
 }); 
+
+
+describe('testing getNewFullPathWithBasename', () => {
+    const prop = Helper.getPathProperty("path","/home/errands/jumbo.md");
+
+    test('getNewFullPathWithTopLevelFolder valid input', () => {
+        expect(prop.getNewFullPathWithBasename("albertheijn")).toBe("/home/errands/albertheijn.md");
+    });
+
+});
+
