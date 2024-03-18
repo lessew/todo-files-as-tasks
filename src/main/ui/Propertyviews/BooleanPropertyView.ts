@@ -19,7 +19,11 @@ export class BooleanPropertyView{
     }
 
     handleEvent(event:Event){
-        const m:SuggestWhitelistModal =  new SuggestWhitelistModal(this.prop,this.obsidianApp);
-        m.open();
+        //const m:SuggestWhitelistModal =  new SuggestWhitelistModal(this.prop,this.obsidianApp);
+        this.prop.toggle();
+        setTimeout(
+            () => this.obsidianApp.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true)
+        ,100)  
+        //m.open();
     }
 }
