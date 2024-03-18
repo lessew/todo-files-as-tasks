@@ -6,14 +6,16 @@ export abstract class AbstractProperty implements Property{
     name:string;
     fileID:string;
     dao:PropertyDAO;
+    DEFAULT_VALUE: string;
     protected value:string;
 
     static INVALID_VALUE:string ="-invalid_value-";
 
-    constructor(name:string,fileID:string,dao:PropertyDAO){
+    constructor(name:string,fileID:string,default_value:string,dao:PropertyDAO){
         this.name = name;
         this.dao = dao;
         this.fileID = fileID;
+        this.DEFAULT_VALUE = default_value;
         return this;
     }
 
@@ -28,7 +30,7 @@ export abstract class AbstractProperty implements Property{
     private initializeValue(){
         const val = this.dao.retrieve(this.fileID,this.name)
         if(!this.validate(val)){
-            this.value = AbstractProperty.INVALID_VALUE;
+            this.value = this.DEFAULT_VALUE;
         }
         else{
             this.value = val;
