@@ -1,4 +1,3 @@
-import { PathProperty } from "../../src/core/Properties/PathProperty";
 import { PropertyDAO } from "../../src/core/Interfaces/PropertyDAO";
 import { MockPropertyDAO } from "../../tests/Mocks/MockPropertyDAO";
 import { BasenameProperty } from "../../src/core/Properties/BasenameProperty";
