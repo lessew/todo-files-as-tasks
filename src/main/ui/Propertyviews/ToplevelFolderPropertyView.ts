@@ -1,5 +1,6 @@
 import { App, MarkdownView, SuggestModal } from "obsidian";
 import { ToplevelFolderProperty } from "src/core/Properties/ToplevelFolderProperty";
+import { SuggestWhitelistModal } from "./SuggetWhitelistModal";
 
 export class ToplevelFolderPropertyView{
    
@@ -18,35 +19,7 @@ export class ToplevelFolderPropertyView{
     }
 
     handleEvent(event:Event){
-        const m:SelectToplevelFolderModal =  new SelectToplevelFolderModal(this.prop,this.obsidianApp);
+        const m:SuggestWhitelistModal =  new SuggestWhitelistModal(this.prop,this.obsidianApp);
         m.open();
-    }
-}
-
-export class SelectToplevelFolderModal extends SuggestModal<string>{
-
-    prop:ToplevelFolderProperty;
-    validContextValues:string[];
-
-    constructor(prop:ToplevelFolderProperty, app: App) {
-        super(app);
-        this.prop = prop;
-        this.validContextValues = this.prop.allowedValues;
-    }
-        
-    getSuggestions(query: string): string[] | Promise<string[]> {
-        return this.validContextValues;
-    }
-
-    renderSuggestion(value: string, el: HTMLElement) {
-        el.createEl("div", { text: value });
-    }
-
-    onChooseSuggestion(item: string, evt: MouseEvent | KeyboardEvent) {
-        //const id = this.task.config.validContextValues.getIdFromHumanReadableValue(item);
-        this.prop.setValue(item);
-        setTimeout(
-            () => this.app.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true)
-        ,100)        
     }
 }

@@ -1,13 +1,13 @@
-import { App, Modal,Setting,FileManager } from "obsidian";
+import { App, Modal,Setting,MarkdownView } from "obsidian";
 import { BasenameProperty } from "src/core/Properties/BasenameProperty";
 
 export class BasenamePropertyView{
-    prop:BasenameProperty;
     obsidianApp:App;
+    prop:BasenameProperty;
 
     constructor(prop:BasenameProperty,app:App){
-        this.prop = prop;
         this.obsidianApp = app;
+        this.prop = prop;
     }
 
     build(rootElement:HTMLElement):void{

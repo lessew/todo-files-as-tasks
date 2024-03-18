@@ -1,5 +1,6 @@
 import { App, MarkdownView, SuggestModal } from "obsidian";
 import { BooleanProperty } from "src/core/Properties/BooleanProperty";
+import { SuggestWhitelistModal } from "./SuggetWhitelistModal";
 
 export class BooleanPropertyView{
    
@@ -18,35 +19,7 @@ export class BooleanPropertyView{
     }
 
     handleEvent(event:Event){
-        const m:SelectBooleanModal =  new SelectBooleanModal(this.prop,this.obsidianApp);
+        const m:SuggestWhitelistModal =  new SuggestWhitelistModal(this.prop,this.obsidianApp);
         m.open();
-    }
-}
-
-export class SelectBooleanModal extends SuggestModal<string>{
-
-    prop:BooleanProperty;
-    validContextValues:string[];
-
-    constructor(prop:BooleanProperty, app: App) {
-        super(app);
-        this.prop = prop;
-        this.validContextValues = this.prop.allowedValues;
-    }
-        
-    getSuggestions(query: string): string[] | Promise<string[]> {
-        return this.validContextValues;
-    }
-
-    renderSuggestion(value: string, el: HTMLElement) {
-        el.createEl("div", { text: value });
-    }
-
-    onChooseSuggestion(item: string, evt: MouseEvent | KeyboardEvent) {
-        //const id = this.task.config.validContextValues.getIdFromHumanReadableValue(item);
-        this.prop.setValue(item);
-        setTimeout(
-            () => this.app.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true)
-        ,100)        
     }
 }
