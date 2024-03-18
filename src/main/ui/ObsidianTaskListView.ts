@@ -1,16 +1,13 @@
 import { App } from "obsidian";
-import { ProjectPropertyView } from "./ProjectPropertyView";
-import { TitlePropertyView } from "./TitlePropertyView";
-import { ContextPropertyView } from "./ContextPropertyView";
-import { StatusPropertyView } from "./StatusPropertyView";
-import { StarredPropertyView } from "./StarredPropertyView";
 import { File } from "src/core/File";
 import { BasenameProperty } from "src/core/Properties/BasenameProperty";
-import { BasenamePropertyView } from "./BasenamePropertyView";
-import { WhitelistPropertyView } from "./WhitelistPropertyView";
+import { BasenamePropertyView } from "./Propertyviews/BasenamePropertyView";
+import { WhitelistPropertyView } from "./Propertyviews/WhitelistPropertyView";
 import { WhitelistProperty } from "src/core/Properties/WhitelistProperty";
 import { ToplevelFolderProperty } from "src/core/Properties/ToplevelFolderProperty";
-import { ToplevelFolderPropertyView } from "./ToplevelFolderPropertyView";
+import { ToplevelFolderPropertyView } from "./Propertyviews/ToplevelFolderPropertyView";
+import { BooleanProperty } from "src/core/Properties/BooleanProperty";
+import { BooleanPropertyView } from "./Propertyviews/BooleanPropertyView";
 
 
 
@@ -54,7 +51,7 @@ export class ObsidianTaskListView {
 
             let tdProject:HTMLTableCellElement = row.createEl("td", {});
             this.createProjectHTML(thisTask,tdProject)
-/*
+
             let tdContext:HTMLTableCellElement = row.createEl("td", {})
             this.createContextHTML(thisTask,tdContext);
 
@@ -63,7 +60,7 @@ export class ObsidianTaskListView {
 
             let tdStarred:HTMLTableCellElement = row.createEl("td", {})
             this.createStarredHTML(thisTask,tdStarred);
-            */
+        
         }
     }
  
@@ -76,20 +73,20 @@ export class ObsidianTaskListView {
         const pp = new ToplevelFolderPropertyView(task.properties["project"] as ToplevelFolderProperty,this.obsidianApp);
         pp.build(el);
     }
-/*
-    private createContextHTML(todo:Task,el:HTMLElement):void{
-        const cc = new ContextPropertyView(todo,this.app);
+
+    private createContextHTML(task:File,el:HTMLElement):void{
+        const cc = new WhitelistPropertyView(task.properties["context"] as WhitelistProperty,this.obsidianApp);
         cc.build(el);
     }
 
-    private createStatusHTML(todo:Task,el:HTMLElement):void{
-        const ss = new StatusPropertyView(todo,this.app);
+    private createStatusHTML(task:File,el:HTMLElement):void{
+        const ss = new WhitelistPropertyView(task.properties["status"] as WhitelistProperty,this.obsidianApp);
         ss.build(el);
     }
 
-    private createStarredHTML(todo:Task,el:HTMLElement):void{
-        const ss = new StarredPropertyView(todo,this.app);
+    private createStarredHTML(task:File,el:HTMLElement):void{
+        const ss = new BooleanPropertyView(task.properties["starred"] as BooleanProperty,this.obsidianApp);
         ss.build(el);
     }
-*/
+
 }
