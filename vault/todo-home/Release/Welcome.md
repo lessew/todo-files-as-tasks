@@ -1,5 +1,5 @@
 ---
-Starred: unstarred
+Starred: ⭐
 ---
 This is your new *vault*.
 

@@ -4,5 +4,5 @@ status: inbox
 starred: unstarred
 Context: Phone
 Status: Deferred
-Starred: unstarred
+Starred: ✰
 ---

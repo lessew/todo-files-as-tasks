@@ -13,13 +13,11 @@ export class BooleanPropertyView{
     }
 
     build(rootElement:HTMLElement):void{
-        const contextHumanReadable = this.prop.getValue();
-        let a:HTMLElement = rootElement.createEl("a",{text:contextHumanReadable as string});
+        let a:HTMLElement = rootElement.createEl("span",{text:this.prop.getValue()});
         a.addEventListener("click",this); // executes handleEvent
     }
 
     handleEvent(event:Event){
-        //const m:SuggestWhitelistModal =  new SuggestWhitelistModal(this.prop,this.obsidianApp);
         this.prop.toggle();
         setTimeout(
             () => this.obsidianApp.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true)

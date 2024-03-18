@@ -1,5 +1,5 @@
 ---
-Starred: unstarred
+Starred: ✰
 ---
 ```
 :1:

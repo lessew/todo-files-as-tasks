@@ -4,6 +4,6 @@ status: inbox
 starred: unstarred
 Context: Phone
 Status: Inbox
-Starred: unstarred
+Starred: ✰
 ---
 [[customize list fields]]

@@ -50,7 +50,7 @@ export class TaskFactory{
 
     static getStarredProperty(fullPathOfTask:string):BooleanProperty{
         let dao = new YAMLPropertyDAO();
-        let starred = new BooleanProperty("Starred",fullPathOfTask,dao,["starred","unstarred"]);
+        let starred = new BooleanProperty("Starred",fullPathOfTask,dao,["⭐","✰"]);
         return starred;
     }
 
