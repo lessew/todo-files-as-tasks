@@ -29,7 +29,7 @@ export class BasenamePropertyView{
     }
 
     handleEvent(event:Event){
-        const m:updateBasenameModal =  new updateBasenameModal(this.obsidianApp,(result) => {
+        const m:UpdateBasenameModal =  new UpdateBasenameModal(this.obsidianApp,(result) => {
             this.prop.setValue(result);
             setTimeout(
               // @ts-ignore
@@ -40,7 +40,7 @@ export class BasenamePropertyView{
     }
 }
 
-class updateBasenameModal extends Modal{
+class UpdateBasenameModal extends Modal{
     result: string;
     onSubmit: (result: string) => void;
 
