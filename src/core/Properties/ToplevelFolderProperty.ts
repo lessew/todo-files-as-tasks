@@ -4,8 +4,8 @@ import { PathProperty } from "./PathProperty";
 export class ToplevelFolderProperty extends PathProperty{
     allowedValues:string[];
 
-    constructor(name:string,fileID:string,dao:PropertyDAO,vals:string[]){
-        super(name,fileID,dao);
+    constructor(name:string,fileID:string,default_value:string,dao:PropertyDAO,vals:string[]){
+        super(name,fileID,default_value,dao);
         this.allowedValues = vals;
     }
     

@@ -1,12 +1,16 @@
-import { App, MarkdownView, Modal, Setting } from "obsidian";
+import { App, Modal, Setting } from "obsidian";
 import { ObsidianWrapper } from "../obsidian/ObsidianWrapper";
+import { FolderList } from "../obsidian/FolderList";
+import { ObsidianFileDAO } from "../obsidian/ObsidianFileDAO";
 
 
 export class ObsidianCreateTaskButtonView{
     obsidianApp:App;
+    projects:FolderList;
 
-    constructor(app:App){
+    constructor(app:App,folderList:FolderList){
         this.obsidianApp = app;
+        this.projects = folderList;
     }
 
     build(rootElement:HTMLElement):void{
@@ -15,43 +19,39 @@ export class ObsidianCreateTaskButtonView{
     }
 
     handleEvent(event:Event){
-        console.log(event);
-        const m:CreateTaskModal =  new CreateTaskModal(this.obsidianApp,(result:any) => {
-            console.log("create: TBI")
-            console.log(result.project)
-            console.log(result.title);
-            //Task.createTask(result.title,result.project,this.config,this.fileSystem);
-            //setTimeout(
-            //    () => this.app.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true)
-            //,100)  
+        const m:CreateTaskModal =  new CreateTaskModal(this.obsidianApp,this.projects.folders,(result:any) => {
+            let dao = new ObsidianFileDAO();
+            const path = ObsidianWrapper.getInstance().rootPath + "/" + result.project + "/" + result.title + ".md";
+            dao.createMarkdownFile(path,this.projects);
             ObsidianWrapper.getInstance().refreshUI();
         });
         m.open();
-        
     }
 }
 
 
 class CreateTaskModal extends Modal{
     result:any;
+    folderList:string[];
 
     onSubmit: (result: string) => void;
 
-    constructor(app: App,onSubmit: (result: any) => void) {
+    constructor(app: App,folderList:string[],onSubmit: (result: any) => void) {
         super(app);
         this.result = {
             title: "",
             project: ""
         }
         this.onSubmit = onSubmit;
+        this.folderList = folderList;
     }
 
     getProjectValuesInRecord():Record<string,string>{
-        let valuesInRecord:Record<string,string> = {
-            "this":"that",
-            "zus":"zo"
-        };
-        return valuesInRecord;
+        let projects:Record<string,string> = {};
+        for(let i=0;i<this.folderList.length;i++){
+            projects[this.folderList[i]] = this.folderList[i];
+        }
+        return projects;
     }
     
     onOpen() {

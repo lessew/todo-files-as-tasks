@@ -3,8 +3,8 @@ import { WhitelistProperty } from "./WhitelistProperty";
 
 export class BooleanProperty extends WhitelistProperty {
     
-    constructor(name:string,fileID:string,dao:PropertyDAO,vals:string[]){
-        super(name,fileID,dao,vals);
+    constructor(name:string,fileID:string,default_value:string,dao:PropertyDAO,vals:string[]){
+        super(name,fileID,default_value,dao,vals);
         if(vals.length!=2){
             throw new Error(`Booleanproperty can only have exactly two values but ${vals.length} were provided`);
         }

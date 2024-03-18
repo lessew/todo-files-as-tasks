@@ -1,5 +1,5 @@
 ```yatodo
 rootPath: todo-home
-type: create-todo-button
+type: create_button
 ```
 

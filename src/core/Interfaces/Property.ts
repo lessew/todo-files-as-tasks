@@ -7,4 +7,5 @@ export interface Property{
     matches(needle:string):boolean;
     getValue():string;
     setValue(val:string):void;
+    DEFAULT_VALUE:string;
 }

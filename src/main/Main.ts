@@ -37,7 +37,7 @@ export class Main{
             view.build(el);
         }
         else if(action==YAMLParser.ACTION_CREATE_BUTTON){
-            const view = new ObsidianCreateTaskButtonView(app);
+            const view = new ObsidianCreateTaskButtonView(app,folderList);
             view.build(el);
         }
     }

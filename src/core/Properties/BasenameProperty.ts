@@ -2,9 +2,9 @@ import { PropertyDAO } from "src/core/Interfaces/PropertyDAO";
 import { PathProperty } from "./PathProperty";
 
 export class BasenameProperty extends PathProperty{
-
-    constructor(name:string,fileID:string,dao:PropertyDAO){
-        super(name,fileID,dao);
+    
+    constructor(name:string,fileID:string,default_value:string,dao:PropertyDAO){
+        super(name,fileID,default_value,dao);
     }
 
     validate(newValue:string):boolean{

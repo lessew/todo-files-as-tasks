@@ -4,8 +4,8 @@ import { PropertyDAO } from "../Interfaces/PropertyDAO";
 export class WhitelistProperty extends AbstractProperty{
     allowedValues:string[];
 
-    constructor(name:string,fileID:string,dao:PropertyDAO,vals:string[]){
-        super(name,fileID,dao);
+    constructor(name:string,fileID:string,default_value:string,dao:PropertyDAO,vals:string[]){
+        super(name,fileID,default_value,dao);
         this.allowedValues = vals;
     }
 

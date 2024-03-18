@@ -2,6 +2,7 @@
 context: desk
 status: done
 starred: unstarred
+Starred: ⭐
 ---
 
 
