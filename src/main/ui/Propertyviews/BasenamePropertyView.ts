@@ -12,20 +12,7 @@ export class BasenamePropertyView extends PropertyView{
     }
 
     build(rootElement:HTMLElement):void{
-      const href = this.prop.getHref();
-      
-      let title:HTMLElement = rootElement.createEl("a",
-          {
-            text:this.prop.getValue(),
-            href:href,
-            cls:"internal-link",
-            attr:{
-              target:"_blank",
-              ["data-href"]:href
-            }
-        }
-      );
-      let edit:HTMLElement = rootElement.createEl("a",{cls:"yatodo-edit",text:"[e]"});
+      let edit:HTMLElement = rootElement.createEl("a",{cls:"yatodo-edit",text:this.prop.getValue(),title:"Edit"});
       edit.addEventListener("click",this); // executes this.handleEvent method
     }
 

@@ -21,7 +21,7 @@ export class WhitelistPropertyView extends PropertyView{
         }
         else if(this.prop.isEmptyValue()){
             text = this.statusNotSet;
-            hover = "property has no value or is not set"
+            hover = "Property has no value or is not set"
         }
         else{
             text = this.prop.getValue();

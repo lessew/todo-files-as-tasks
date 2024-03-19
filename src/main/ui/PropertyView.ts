@@ -4,6 +4,8 @@ export class PropertyView{
     obsidianApp:App;
     statusNotSet:string = "◌";
     statusInvalid:string = "⊗";
+    editIcon:string = "✎";
+    newWindowIcon:string = "✇";
 
     constructor(app:App){
         this.obsidianApp = app;

@@ -8,6 +8,7 @@ import { ToplevelFolderProperty } from "src/core/Properties/ToplevelFolderProper
 import { ToplevelFolderPropertyView } from "./Propertyviews/ToplevelFolderPropertyView";
 import { BooleanProperty } from "src/core/Properties/BooleanProperty";
 import { BooleanPropertyView } from "./Propertyviews/BooleanPropertyView";
+import { LinkView } from "./Propertyviews/LinkView";
 
 export class TaskListView {
     taskList:File[];
@@ -32,7 +33,8 @@ export class TaskListView {
 
     private createHeading(tableElementToAttachHeadingTo:HTMLTableElement):void{
         let head:HTMLHeadingElement = tableElementToAttachHeadingTo.createEl("thead");
-        head.createEl("th",{text:"Todo"});
+        head.createEl("th",{text:"Task"});
+        head.createEl("th",{text:"Link"});
         head.createEl("th",{text:"Project"});
         head.createEl("th",{text:"Context"});
         head.createEl("th",{text:"Status"});
@@ -44,8 +46,11 @@ export class TaskListView {
         for(let i=0;i<this.taskList.length;i++){
             const thisTask:File = this.taskList[i];
             let row:HTMLTableRowElement = tableElementToAttachRowTo.createEl("tr");
-            let tdTitle:HTMLTableCellElement = row.createEl("td", {});
-            this.createTitleHTML(thisTask,tdTitle);
+            let tdTitleLink:HTMLTableCellElement = row.createEl("td", {});
+            this.createEditTitleHTML(thisTask,tdTitleLink);
+
+            let tdTitleEdit:HTMLTableCellElement = row.createEl("td", {});
+            this.createLinkHTML(thisTask,tdTitleEdit);
 
             let tdProject:HTMLTableCellElement = row.createEl("td", {});
             this.createProjectHTML(thisTask,tdProject)
@@ -61,10 +66,17 @@ export class TaskListView {
         
         }
     }
- 
-    private createTitleHTML(task:File,el:HTMLElement):void{
-        const tp = new BasenamePropertyView(task.properties["title"] as BasenameProperty,this.obsidianApp);
+
+    private createEditTitleHTML(task:File,el:HTMLElement):void{
+        let prop = task.properties["title"] as BasenameProperty;
+        const tp = new BasenamePropertyView(prop,this.obsidianApp);
         tp.build(el);
+    }
+
+    private createLinkHTML(task:File,el:HTMLElement):void{
+        let prop = task.properties["title"] as BasenameProperty;
+        const lv = new LinkView(this.obsidianApp);
+        lv.build(el,"link",prop.getHref());
     }
    
     private createProjectHTML(task:File,el:HTMLElement):void{
@@ -73,7 +85,9 @@ export class TaskListView {
     }
 
     private createContextHTML(task:File,el:HTMLElement):void{
-        const cc = new WhitelistPropertyView(task.properties["context"] as WhitelistProperty,this.obsidianApp);
+        const cc = new WhitelistPropertyView(
+            task.properties["context"] as WhitelistProperty,
+            this.obsidianApp);
         cc.build(el);
     }
 
