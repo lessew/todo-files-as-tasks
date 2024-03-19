@@ -19,10 +19,10 @@ export class CreateTaskButtonView{
     }
 
     handleEvent(event:Event){
-        const m:CreateTaskModal =  new CreateTaskModal(this.obsidianApp,this.projects.folders,(result:any) => {
+        const m:CreateTaskModal =  new CreateTaskModal(this.obsidianApp,this.projects,(result:any) => {
             let dao = new ObsidianFileDAO();
             const path = ObsidianWrapper.getInstance().rootPath + "/" + result.project + "/" + result.title + ".md";
-            dao.createMarkdownFile(path,this.projects);
+            dao.createMarkdownFile(path);
             ObsidianWrapper.getInstance().refreshUI();
         });
         m.open();
@@ -32,11 +32,11 @@ export class CreateTaskButtonView{
 
 class CreateTaskModal extends Modal{
     result:any;
-    folderList:string[];
+    folderList:FolderList;
 
     onSubmit: (result: string) => void;
 
-    constructor(app: App,folderList:string[],onSubmit: (result: any) => void) {
+    constructor(app: App,folderList:FolderList,onSubmit: (result: any) => void) {
         super(app);
         this.result = {
             title: "",
@@ -46,14 +46,6 @@ class CreateTaskModal extends Modal{
         this.folderList = folderList;
     }
 
-    getProjectValuesInRecord():Record<string,string>{
-        let projects:Record<string,string> = {};
-        for(let i=0;i<this.folderList.length;i++){
-            projects[this.folderList[i]] = this.folderList[i];
-        }
-        return projects;
-    }
-    
     onOpen() {
         let { contentEl } = this;
         contentEl.createEl("h1", { text: "New Task" });
@@ -69,7 +61,7 @@ class CreateTaskModal extends Modal{
         .setName("Project")
         .addDropdown((dropdown) =>
             dropdown
-            .addOptions(this.getProjectValuesInRecord())
+            .addOptions(this.folderList.getFoldersAsRecord())
             .addOption("--Select Project--","--Select Project--")
             .onChange((value) => {
                 this.result.project = value

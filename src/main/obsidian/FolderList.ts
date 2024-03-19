@@ -22,4 +22,12 @@ export class FolderList implements FolderListDAO{
         }
         this.folders = result;
     }
+
+    getFoldersAsRecord():Record<string,string>{
+        let projects:Record<string,string> = {};
+        for(let i=0;i<this.folders.length;i++){
+            projects[this.folders[i]] = this.folders[i];
+        }
+        return projects;
+    }
 }
