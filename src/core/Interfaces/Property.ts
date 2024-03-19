@@ -3,7 +3,7 @@ import { PropertyDAO } from "./PropertyDAO";
 export interface Property{
     name:string;
     dao:PropertyDAO;
-    isValidValue:boolean;
+    loadedValueIsValid():boolean;
     matches(needle:string):boolean;
     getValue():string;
     setValue(val:string):void;

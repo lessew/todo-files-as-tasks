@@ -30,14 +30,14 @@ describe('whitelistproperty isValidValue is set correctly', () => {
     prop.initializeValue();
 
     test('testing validate function with correct input', () => {
-        expect(prop.isValidValue).toBe(true);
+        expect(prop.loadedValueIsValid()).toBe(true);
     })
 
     const prop2 = Helper.getWhitelistProperty("context","invalid",["next","waiting for"]);
     prop2.initializeValue();
 
     test('testing validate function with correct input', () => {
-        expect(prop2.isValidValue).toBe(false);
+        expect(prop2.loadedValueIsValid()).toBe(false);
     })
 
 });

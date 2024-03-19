@@ -16,14 +16,17 @@ export class ToplevelFolderProperty extends PathProperty implements OptionsPrope
     
     getValue():string{        
         if(typeof this.value === 'undefined'){
-            if(this.validate(this.getFolderName())){
-                this.isValidValue = true;
+            const folderName = this.getFolderName();
+            if(this.validate(folderName)){
+                this._loadedValueIsValid = true;
             }
             else{
-                this.isValidValue = false; // file is in folder that is not part of the allowed projects
+                console.log(`doest not validate: ${folderName}`)
+
+                this._loadedValueIsValid = false; // file is in folder that is not part of the allowed projects
             }
             
-            this.value = this.getFolderName(); 
+            this.value = folderName; 
         }
         return this.value;
     }

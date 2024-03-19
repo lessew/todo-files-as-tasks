@@ -1,25 +1,26 @@
 import { App, MarkdownView, SuggestModal } from "obsidian";
-import { Property } from "src/core/Interfaces/Property";
-import { ObsidianWrapper } from "src/main/obsidian/ObsidianWrapper";
+import { OptionsProperty, Property } from "src/core/Interfaces/Property";
 
 export class SuggestWhitelistModal extends SuggestModal<string>{
 
-    prop:Property;
-    validContextValues:string[];
+    prop:OptionsProperty;
+    validValues:string[];
+    onSubmit: (result:string) => void;
 
-    constructor(prop:Property, app: App) {
+    constructor(prop:OptionsProperty, onSubmit: (result:string) => void, app: App) {
         super(app);
         this.prop = prop;
+        this.onSubmit = onSubmit;
         if(typeof this.prop.allowedValues != 'undefined'){
-            this.validContextValues = this.prop.allowedValues ;
+            this.validValues = this.prop.allowedValues ;
         }
         else{
-            this.validContextValues = [];
+            this.validValues = [];
         }
     }
         
     getSuggestions(query: string): string[] | Promise<string[]> {
-        return this.validContextValues;
+        return this.validValues;
     }
 
     renderSuggestion(value: string, el: HTMLElement) {
@@ -27,7 +28,6 @@ export class SuggestWhitelistModal extends SuggestModal<string>{
     }
 
     onChooseSuggestion(item: string, evt: MouseEvent | KeyboardEvent) {
-        this.prop.setValue(item);
-        ObsidianWrapper.getInstance().refreshUI();
+        this.onSubmit(item);
     }
 }

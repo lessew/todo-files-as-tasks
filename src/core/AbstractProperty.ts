@@ -6,7 +6,7 @@ export abstract class AbstractProperty implements Property{
     name:string;
     fileID:string;
     dao:PropertyDAO;
-    isValidValue:boolean;
+    _loadedValueIsValid:boolean;
     protected value:string;
 
     static INVALID_VALUE:string ="-invalid_value-";
@@ -16,6 +16,10 @@ export abstract class AbstractProperty implements Property{
         this.dao = dao;
         this.fileID = fileID;
         return this;
+    }
+
+    loadedValueIsValid():boolean{
+        return this._loadedValueIsValid;
     }
 
     isEmptyValue():boolean{
@@ -37,12 +41,12 @@ export abstract class AbstractProperty implements Property{
 
     initializeValue():void{
         const val = this.dao.retrieve(this.fileID,this.name)
-        if(!this.validate(val)){
+        if(!this.validate(val) && val!=""){
             this.value = "";
-            this.isValidValue = false;
+            this._loadedValueIsValid = false;
         }
         else{
-            this.isValidValue = true;
+            this._loadedValueIsValid = true;
             this.value = val;
         }
     }

@@ -1,13 +1,13 @@
-import { App, Modal,Setting,MarkdownView } from "obsidian";
+import { App, Modal,Setting } from "obsidian";
 import { BasenameProperty } from "src/core/Properties/BasenameProperty";
 import { ObsidianWrapper } from "src/main/obsidian/ObsidianWrapper";
+import { PropertyView } from "../PropertyView";
 
-export class BasenamePropertyView{
-    obsidianApp:App;
+export class BasenamePropertyView extends PropertyView{
     prop:BasenameProperty;
 
     constructor(prop:BasenameProperty,app:App){
-        this.obsidianApp = app;
+        super(app);
         this.prop = prop;
     }
 
@@ -32,7 +32,7 @@ export class BasenamePropertyView{
     handleEvent(event:Event){
         const m:UpdateBasenameModal =  new UpdateBasenameModal(this.obsidianApp,(result) => {
             this.prop.setValue(result);
-            ObsidianWrapper.getInstance().refreshUI();
+            this.refreshUI();
         });
         m.open();
     }

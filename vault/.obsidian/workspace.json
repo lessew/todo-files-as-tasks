@@ -25,8 +25,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "todo-home/Architecture and  Design/Test multiple level folder structures.md",
-                "mode": "source",
+                "file": "yatodo-examples/All todos.md",
+                "mode": "preview",
                 "source": true
               }
             }
@@ -98,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "todo-home/Architecture and  Design/Test multiple level folder structures.md",
+                "file": "yatodo-examples/All todos.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "todo-home/Architecture and  Design/Test multiple level folder structures.md",
+                "file": "yatodo-examples/All todos.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "todo-home/Architecture and  Design/Test multiple level folder structures.md"
+                "file": "yatodo-examples/All todos.md"
               }
             }
           }
@@ -164,13 +164,13 @@
   "active": "cf2a188d6e4ca508",
   "lastOpenFiles": [
     "todo-home/Release/Readme.md.md",
+    "yatodo-examples/All todos.md",
+    "yatodo-examples/Context.md",
+    "todo-home/Features/Velden context, status kunnen aanpassen in config.md",
     "todo-home/Architecture and  Design/Test multiple level folder structures.md",
     "todo-home/Features/archive task.md",
-    "yatodo-examples/All todos.md",
     "yatodo-examples/Status.md",
     "yatodo-examples/Starred and Unstarred.md",
-    "todo-home/Features/Velden context, status kunnen aanpassen in config.md",
-    "yatodo-examples/Context.md",
     "todo-home/Features/create label field.md",
     "todo-home/Release/qqqqqqqqqqq1.md",
     "todo-home/Features/group by context, project, status, starred.md",
