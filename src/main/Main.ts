@@ -6,7 +6,7 @@ import { TaskBuilder } from "src/core/TaskBuilder";
 import { TaskListView } from "./ui/TaskListView";
 import { FileList } from "./obsidian/FileList";
 import { FolderList } from "./obsidian/FolderList";
-import { reateTaskButtonView } from "./ui/CreateTaskButtonView";
+import { CreateTaskButtonView } from "./ui/CreateTaskButtonView";
 
 
 

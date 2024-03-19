@@ -19,25 +19,4 @@ export class PathPropertyDAO implements PropertyDAO {
     retrieve(fileID:string,propertyName:string):string{
         return fileID;
     }
-
-    
-/*
-    move(newFullPath: string): void{
-        this.fileSystemFacade.move(this,newFullPath);
-    }
-    
-    setBasename(name:string):void{
-        const newFullPath = this.fullPath.getNewFullPathWithBasename(name);
-        this.move(newFullPath);
-        this.fullPath.value = newFullPath;
-    }
-
-    moveToNewToplevelFolder(folderName:string){
-        const newPath = this.fullPath.getNewFullPathWithTopLevelFolder(folderName);
-        this.fullPath.value = newPath;
-        this.move(newPath);
-    }
-*/
-
-
 }

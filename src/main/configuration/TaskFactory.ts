@@ -6,10 +6,8 @@ import { BooleanProperty } from "src/core/Properties/BooleanProperty";
 import { YAMLPropertyDAO } from "../obsidian/PropertyDAOs/YAMLPropertyDAO";
 import { PathPropertyDAO } from "../obsidian/PropertyDAOs/PathPropertyDAO";
 import { ToplevelFolderProperty } from "src/core/Properties/ToplevelFolderProperty";
-import { FolderListDAO } from "src/core/Interfaces/FolderListDAO";
 import { FolderList } from "../obsidian/FolderList";
 import { BasenameProperty } from "src/core/Properties/BasenameProperty";
-import { ObsidianWrapper } from "../obsidian/ObsidianWrapper";
 
 export class TaskFactory{
     rootFolder:string;
