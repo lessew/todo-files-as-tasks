@@ -10,5 +10,4 @@ type: create_button
 
 ```yatodo
 rootPath: todo-home
-
 ```

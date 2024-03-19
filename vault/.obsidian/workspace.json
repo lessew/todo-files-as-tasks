@@ -25,8 +25,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "yatodo-examples/Status.md",
-                "mode": "preview",
+                "file": "todo-home/Architecture and  Design/Test multiple level folder structures.md",
+                "mode": "source",
                 "source": true
               }
             }
@@ -98,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "yatodo-examples/Status.md",
+                "file": "todo-home/Architecture and  Design/Test multiple level folder structures.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "yatodo-examples/Status.md",
+                "file": "todo-home/Architecture and  Design/Test multiple level folder structures.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "yatodo-examples/Status.md"
+                "file": "todo-home/Architecture and  Design/Test multiple level folder structures.md"
               }
             }
           }
@@ -163,32 +163,32 @@
   },
   "active": "cf2a188d6e4ca508",
   "lastOpenFiles": [
-    "yatodo-examples/Starred and Unstarred.md",
+    "todo-home/Release/Readme.md.md",
+    "todo-home/Architecture and  Design/Test multiple level folder structures.md",
+    "todo-home/Features/archive task.md",
     "yatodo-examples/All todos.md",
-    "yatodo-examples/Projects.md",
-    "yatodo-examples/Done.md",
-    "yatodo-examples/Context.md",
-    "yatodo-examples/Create Todo.md",
-    "todo-home/Architecture and  Design/ppllkkiiuuhbn.md",
-    "todo-home/Release/aaaa.md",
-    "todo-home/Bugs/wes2.md",
-    "todo-home/Release/234.md",
-    "todo-home/Bugs/Todo fields in detail page.md",
-    "todo-home/Bugs/Project does not show in suggester if it has no todos.md",
-    "todo-home/Bugs/Add field starred.md",
-    "todo-home/Bugs/rootpath is not respected in yaml config when selecting project.md",
-    "todo-home/Release/aaqqq.md",
-    "todo-home/Bugs/qqqqq.md",
-    "todo-home/Release/qqqqqqqqqqq1.md",
-    "todo-home/Release/aaawww.md",
-    "todo-home/Architecture and  Design/group by context, project, status, starred.md",
-    "todo-home/Architecture and  Design/Kijken naar exception handling.md",
     "yatodo-examples/Status.md",
+    "yatodo-examples/Starred and Unstarred.md",
+    "todo-home/Features/Velden context, status kunnen aanpassen in config.md",
+    "yatodo-examples/Context.md",
+    "todo-home/Features/create label field.md",
+    "todo-home/Release/qqqqqqqqqqq1.md",
+    "todo-home/Features/group by context, project, status, starred.md",
+    "todo-home/Architecture and  Design/wes.md",
+    "todo-home/Architecture and  Design/Update Context and Status.md",
+    "todo-home/Architecture and  Design/ppllkkiiuuhbn.md",
     "todo-home/Architecture and  Design/iiiii.md",
-    "vault/yatodo-examples/Status.md",
-    "vault/yatodo-examples/Starred.md",
-    "vault/yatodo-examples/Projects.md",
-    "vault/yatodo-examples/Done.md",
+    "todo-home/Architecture and  Design/Create new todo.md",
+    "todo-home/Bugs/Add field starred.md",
+    "todo-home/Bugs/Project does not show in suggester if it has no todos.md",
+    "todo-home/Bugs/qqqqq.md",
+    "todo-home/Bugs/rootpath is not respected in yaml config when selecting project.md",
+    "todo-home/Bugs/Todo fields in detail page.md",
+    "todo-home/Bugs/wes2.md",
+    "todo-home/Features/Welcome.md",
+    "todo-home/Features/delete task.md",
+    "todo-home/Release/add field is journal 2.md",
+    "todo-home/Release/aaqqq.md",
     "vault/yatodo-examples",
     "vault",
     "todo-home/Release",
