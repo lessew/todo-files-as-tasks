@@ -2,28 +2,28 @@
 
 ```yatodo
 rootPath: todo-home
-context: desk
+context: Desk
 ```
 
 # Deep thinking
 
 ```yatodo
 rootPath: todo-home
-context: deep_thinking
+context: Deep
 ```
 
 # Phone
 
 ```yatodo
 rootPath: todo-home
-context: phone
+context: Phone
 ```
 
 # Read
 
 ```yatodo
 rootPath: todo-home
-context: read
+context: Read
 ```
 
 
@@ -31,6 +31,6 @@ context: read
 
 ```yatodo
 rootPath: todo-home
-context: none
+context: None
 ```
 

@@ -1,11 +1,16 @@
+
+
+# Starred
+
 ```yatodo
 rootPath: todo-home/
-starred: starred
+starred: ⭐
 ```
 
 # Unstarred
 
 ```yatodo
 rootPath: todo-home/
-starred: unstarred
+starred: ✰
 ```
+

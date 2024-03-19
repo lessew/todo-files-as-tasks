@@ -4,7 +4,7 @@ import { FolderList } from "../obsidian/FolderList";
 import { ObsidianFileDAO } from "../obsidian/ObsidianFileDAO";
 
 
-export class ObsidianCreateTaskButtonView{
+export class CreateTaskButtonView{
     obsidianApp:App;
     projects:FolderList;
 

@@ -3,7 +3,7 @@
 
 ```yatodo
 rootPath: todo-home/
-status: inbox
+status: Inbox
 ```
 
 
@@ -11,26 +11,26 @@ status: inbox
 
 ```yatodo
 rootPath: todo-home/
-status: next
+status: Next
 ```
 
 # Waiting For
 
 ```yatodo
 rootPath: todo-home/
-status: waiting_for
+status: Waiting
 ```
 
 # Deferred
 
 ```yatodo
 rootPath: todo-home/
-status: deferred
+status: Deferred
 ```
 
 # Done
 
 ```yatodo
 rootPath: todo-home/
-status: done
+status: Done
 ```

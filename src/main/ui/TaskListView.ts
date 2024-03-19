@@ -9,9 +9,7 @@ import { ToplevelFolderPropertyView } from "./Propertyviews/ToplevelFolderProper
 import { BooleanProperty } from "src/core/Properties/BooleanProperty";
 import { BooleanPropertyView } from "./Propertyviews/BooleanPropertyView";
 
-
-
-export class ObsidianTaskListView {
+export class TaskListView {
     taskList:File[];
     obsidianApp:App;
 
