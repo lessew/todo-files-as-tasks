@@ -3,9 +3,13 @@ import { PropertyDAO } from "./PropertyDAO";
 export interface Property{
     name:string;
     dao:PropertyDAO;
-    allowedValues?:string[];
+    isValidValue:boolean;
     matches(needle:string):boolean;
     getValue():string;
     setValue(val:string):void;
-    DEFAULT_VALUE:string;
+    isEmptyValue():boolean;
+}
+
+export interface OptionsProperty extends Property{
+    allowedValues:string[];
 }

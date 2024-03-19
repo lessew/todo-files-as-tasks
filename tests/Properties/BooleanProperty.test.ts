@@ -3,12 +3,16 @@ import { BooleanProperty } from "../../src/core/Properties/BooleanProperty";
 import { PropertyDAO } from "../../src/core/Interfaces/PropertyDAO";
 import { MockPropertyDAO } from "../../tests/Mocks/MockPropertyDAO";
 
-
+class Helper{
+  static getProperty(initialValue:string,options:string[]):BooleanProperty{
+    let dao:PropertyDAO = new MockPropertyDAO(initialValue);
+    let prop = new BooleanProperty("flagged","dummyfileid",dao,options);
+    return prop;
+  }
+}
 
 describe('BooleanProperty test correct input', () => {
-  let options = ["true","false"];
-  let dao:PropertyDAO = new MockPropertyDAO("true");
-  let prop = new BooleanProperty("flagged","dummyfileid",dao,options);
+  let prop = Helper.getProperty("true",["true","false"]);
 
   test('correct property value', () => {
       expect(prop.getValue()).toBe("true");
@@ -31,9 +35,8 @@ describe('BooleanProperty test incorrect input:more than 2 values', () => {
 });
 
 describe('BooleanProperty test toggle', () => {
-  let options = ["true","false"];
-  let dao:PropertyDAO = new MockPropertyDAO("true");
-  let prop = new BooleanProperty("flagged","dummyfileid",dao,options);
+  let prop = Helper.getProperty("true",["true","false"]);
+
   test('toggle once', () => {
     prop.toggle();
     expect(prop.getValue()).toBe("false");

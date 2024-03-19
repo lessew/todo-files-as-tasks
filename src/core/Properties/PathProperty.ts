@@ -4,8 +4,8 @@ import { AbstractProperty } from "../AbstractProperty";
 export class PathProperty extends AbstractProperty{
     regExp:RegExp = /^[a-zA-Z\/\.]+$/;
   
-    constructor(name:string,fileID:string,default_value:string,dao:PropertyDAO){
-        super(name,fileID,default_value,dao);
+    constructor(name:string,fileID:string,dao:PropertyDAO){
+        super(name,fileID,dao);
     }
 
     validate(newVal:string):boolean{

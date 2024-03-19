@@ -23,3 +23,21 @@ describe('whitelistproperty test: validate function', () => {
         expect(sp.validate("next222")).toBe(false);
     })
 });
+
+
+describe('whitelistproperty isValidValue is set correctly', () => {
+    const prop = Helper.getWhitelistProperty("context","next",["next","waiting for"]);
+    prop.initializeValue();
+
+    test('testing validate function with correct input', () => {
+        expect(prop.isValidValue).toBe(true);
+    })
+
+    const prop2 = Helper.getWhitelistProperty("context","invalid",["next","waiting for"]);
+    prop2.initializeValue();
+
+    test('testing validate function with correct input', () => {
+        expect(prop2.isValidValue).toBe(false);
+    })
+
+});

@@ -11,10 +11,18 @@ class Helper{
 }
 
 describe('athproperty test validation function', () => {
-        let sp = Helper.getTopLevelFolderProperty("/path/to/work/tasks.md","dummy",["home","errands","work"]);
+    let prop = Helper.getTopLevelFolderProperty("project","/path/to/work/tasks.md",["home","errands","work"]);
 
     test('correct values', () => {
-       expect(true).toBe(true);
-
-    });  
+       expect(prop.getValue()).toBe("work");
+    }); 
+    test('test validation function values', () => {
+        expect(prop.validate("errands")).toBe(true);
+        expect(prop.validate("notgood")).toBe(false);
+     });  
+     test('changing value', () => {
+        prop.setValue("errands");
+        expect(prop.getValue()).toBe("errands");
+        expect(prop.fileID).toBe("/path/to/errands/tasks.md");
+     }); 
 });

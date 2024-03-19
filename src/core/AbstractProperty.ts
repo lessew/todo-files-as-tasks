@@ -6,17 +6,25 @@ export abstract class AbstractProperty implements Property{
     name:string;
     fileID:string;
     dao:PropertyDAO;
-    DEFAULT_VALUE: string;
+    isValidValue:boolean;
     protected value:string;
 
     static INVALID_VALUE:string ="-invalid_value-";
 
-    constructor(name:string,fileID:string,default_value:string,dao:PropertyDAO){
+    constructor(name:string,fileID:string,dao:PropertyDAO){
         this.name = name;
         this.dao = dao;
         this.fileID = fileID;
-        this.DEFAULT_VALUE = default_value;
         return this;
+    }
+
+    isEmptyValue():boolean{
+        if(this.getValue()==""){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     getValue():string{
@@ -27,12 +35,14 @@ export abstract class AbstractProperty implements Property{
         return this.value;
     }
 
-    private initializeValue(){
+    initializeValue():void{
         const val = this.dao.retrieve(this.fileID,this.name)
         if(!this.validate(val)){
-            this.value = this.DEFAULT_VALUE;
+            this.value = "";
+            this.isValidValue = false;
         }
         else{
+            this.isValidValue = true;
             this.value = val;
         }
     }
@@ -52,5 +62,4 @@ export abstract class AbstractProperty implements Property{
     }
 
     abstract validate(newValue:string):boolean;
-   }
-
+}

@@ -1,11 +1,12 @@
 import { AbstractProperty } from "../AbstractProperty";
+import { OptionsProperty } from "../Interfaces/Property";
 import { PropertyDAO } from "../Interfaces/PropertyDAO";
 
-export class WhitelistProperty extends AbstractProperty{
+export class WhitelistProperty extends AbstractProperty implements OptionsProperty{
     allowedValues:string[];
 
-    constructor(name:string,fileID:string,default_value:string,dao:PropertyDAO,vals:string[]){
-        super(name,fileID,default_value,dao);
+    constructor(name:string,fileID:string,dao:PropertyDAO,vals:string[]){
+        super(name,fileID,dao);
         this.allowedValues = vals;
     }
 

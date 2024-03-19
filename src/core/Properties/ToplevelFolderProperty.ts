@@ -1,21 +1,28 @@
 import { PropertyDAO } from "src/core/Interfaces/PropertyDAO";
 import { PathProperty } from "./PathProperty";
+import { OptionsProperty } from "../Interfaces/Property";
 
-export class ToplevelFolderProperty extends PathProperty{
+export class ToplevelFolderProperty extends PathProperty implements OptionsProperty{
     allowedValues:string[];
 
-    constructor(name:string,fileID:string,default_value:string,dao:PropertyDAO,vals:string[]){
-        super(name,fileID,default_value,dao);
+    constructor(name:string,fileID:string,dao:PropertyDAO,vals:string[]){
+        super(name,fileID,dao);
         this.allowedValues = vals;
     }
     
     validate(newValue:string){
         return (this.allowedValues.indexOf(newValue) != -1)
     }
-
     
     getValue():string{        
         if(typeof this.value === 'undefined'){
+            if(this.validate(this.getFolderName())){
+                this.isValidValue = true;
+            }
+            else{
+                this.isValidValue = false; // file is in folder that is not part of the allowed projects
+            }
+            
             this.value = this.getFolderName(); 
         }
         return this.value;
@@ -25,6 +32,9 @@ export class ToplevelFolderProperty extends PathProperty{
     setValue(val:string){
         const newPath = this.getNewFullPathWithTopLevelFolder(val);
         this.dao.persist(this.fileID,this.name,newPath);
+        
+        this.fileID = newPath;
+        this.value = val;
     }
 
 
