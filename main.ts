@@ -10,7 +10,7 @@ export default class YaTodoPlugin extends Plugin {
 		await this.loadSettings();
 
 		this.registerMarkdownCodeBlockProcessor("yatodo", (source, el, ctx) => {
-			Main.run(source,el,this.app);
+			Main.run(source,el,this.settings,this.app);
 		});
 
 		// This adds a simple command that can be triggered anywhere

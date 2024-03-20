@@ -7,29 +7,23 @@ import { PathPropertyDAO } from "../obsidian/PropertyDAOs/PathPropertyDAO";
 import { ToplevelFolderProperty } from "src/core/Properties/ToplevelFolderProperty";
 import { FolderList } from "../obsidian/FolderList";
 import { BasenameProperty } from "src/core/Properties/BasenameProperty";
+import { YaTodoPluginSettings } from "../ui/SettingsTab";
 
 export class TaskFactory{
-    rootFolder:string;
-    noneCharacter:string = "∅";
-    invalidCharacter:string = "⊕";
 
-    constructor(rootFolder:string){
-        this.rootFolder = rootFolder;
-    }
-
-    static loadTask(fullPathOfTask:string,folderList:FolderList):File{
+    static loadTask(fullPathOfTask:string,settings:YaTodoPluginSettings,folderList:FolderList):File{
         let task = new File(fullPathOfTask);
-        task.properties = TaskFactory.getProperties(fullPathOfTask,folderList);
+        task.properties = TaskFactory.getProperties(fullPathOfTask,settings,folderList);
         return task;
     }
 
-    static getProperties(fullPathOfTask:string,folderList:FolderList):Record<string, Property>{
+    static getProperties(fullPathOfTask:string,settings:YaTodoPluginSettings,folderList:FolderList):Record<string, Property>{
         let properties: Record<string, Property> = {
             "title":TaskFactory.getTitleProperty(fullPathOfTask),
             "project":TaskFactory.getProjectProperty(fullPathOfTask,folderList),
-            "starred":TaskFactory.getStarredProperty(fullPathOfTask),
-            "status":TaskFactory.getStatusProperty(fullPathOfTask),
-            "context":TaskFactory.getContextProperty(fullPathOfTask)
+            "starred":TaskFactory.getStarredProperty(fullPathOfTask,settings.starredValues),
+            "status":TaskFactory.getStatusProperty(fullPathOfTask,settings.statusValues),
+            "context":TaskFactory.getContextProperty(fullPathOfTask,settings.contextValues)
         }
         return properties;
     }
@@ -47,14 +41,18 @@ export class TaskFactory{
         return project;
     }
 
-    static getStarredProperty(fullPathOfTask:string):BooleanProperty{
+    static getStarredProperty(fullPathOfTask:string,values:string):BooleanProperty{
         let dao = new YAMLPropertyDAO();
-        let starred = new BooleanProperty("Starred",fullPathOfTask,dao,["⭐","✰"]);
+        let vals = values.split(",");
+        let starred = new BooleanProperty("Starred",fullPathOfTask,dao,vals);
         return starred;
     }
 
-    static getStatusProperty(fullPathOfTask:string):WhitelistProperty{
+    static getStatusProperty(fullPathOfTask:string,values:string):WhitelistProperty{
         let dao = new YAMLPropertyDAO();
+        let vals = values.split(",");
+        let status = new WhitelistProperty("Status",fullPathOfTask,dao,vals);
+       /*
         let status = new WhitelistProperty("Status",fullPathOfTask,dao,[
             "Inbox",
             "Next",
@@ -62,11 +60,15 @@ export class TaskFactory{
             "Waiting",
             "Done"
         ]);
+        */
         return status;
     }
 
-    static getContextProperty(fullPathOfTask:string):WhitelistProperty{
+    static getContextProperty(fullPathOfTask:string,values:string):WhitelistProperty{
         let dao = new YAMLPropertyDAO();
+        let vals = values.split(",");
+        let context = new WhitelistProperty("Context",fullPathOfTask,dao,vals);
+        /*
         let context = new WhitelistProperty("Context",fullPathOfTask,dao,[
             "Desk",
             "Deep",
@@ -74,6 +76,7 @@ export class TaskFactory{
             "Read",
             "None"
         ]);
+        */
         return context;
     }
 }

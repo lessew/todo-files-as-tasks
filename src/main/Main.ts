@@ -7,11 +7,12 @@ import { TaskListView } from "./ui/TaskListView";
 import { FileList } from "./obsidian/FileList";
 import { FolderList } from "./obsidian/FolderList";
 import { CreateTaskButtonView } from "./ui/CreateTaskButtonView";
+import { YaTodoPluginSettings } from "./ui/SettingsTab";
 
 
 
 export class Main{
-    static  run(source:string,el:HTMLElement,app:App):void{
+    static  run(source:string,el:HTMLElement,settings:YaTodoPluginSettings,app:App):void{
 
         const parser:YAMLParser = new YAMLParser(source);
         const rootPath:string = parser.parseRootPath();
@@ -24,11 +25,11 @@ export class Main{
         folderList.init(rootPath);
 
         const fileList = new FileList();
-        fileList.init(rootPath,folderList);
+        fileList.init(rootPath,settings,folderList);
       
         const action = parser.parseAction();
         if(action==YAMLParser.ACTION_LIST){
-            const properties = TaskFactory.getProperties(rootPath,folderList);
+            const properties = TaskFactory.getProperties(rootPath,settings,folderList);
             const filters = parser.parseFilters(properties);
             const files = fileList.files;
             const taskBuilder = new TaskBuilder(files);
