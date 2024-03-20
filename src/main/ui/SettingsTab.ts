@@ -21,6 +21,8 @@ export class YatodoSettingTab extends PluginSettingTab {
 	display(): void {
 		const {containerEl} = this;
 		containerEl.empty();
+        containerEl.createEl("h1",{text:"Yatodo App"})
+        //containerEl.createEl("hr");
         this.setContextValues(containerEl);
         this.setStatusValues(containerEl);
         this.setStarredValues(containerEl);
@@ -29,7 +31,7 @@ export class YatodoSettingTab extends PluginSettingTab {
     setContextValues(containerEl:HTMLElement):void{
         new Setting(containerEl)
         .setName('Context values')
-        .setDesc('All valid values the context property may have')
+        .setDesc('All allowed values for "context", comma seperated')
         .addText(text => text
             .setPlaceholder('Enter values')
             .setValue(this.plugin.settings.contextValues)
@@ -42,7 +44,7 @@ export class YatodoSettingTab extends PluginSettingTab {
     setStatusValues(containerEl:HTMLElement):void{
         new Setting(containerEl)
         .setName('Status values')
-        .setDesc('All valid values the status property may have')
+        .setDesc('All allowed values for "status", comma seperated')
         .addText(text => text
             .setPlaceholder('Enter values')
             .setValue(this.plugin.settings.statusValues)
@@ -54,7 +56,7 @@ export class YatodoSettingTab extends PluginSettingTab {
     setStarredValues(containerEl:HTMLElement):void{
         new Setting(containerEl)
         .setName('Starred values')
-        .setDesc('All valid values the status property may have')
+        .setDesc('All allowed values for "context", comma seperated')
         .addText(text => text
             .setPlaceholder('Enter values')
             .setValue(this.plugin.settings.starredValues)
