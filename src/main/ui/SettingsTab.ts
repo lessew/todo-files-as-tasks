@@ -1,6 +1,14 @@
 import YaTodoPlugin from "main";
 import { App, PluginSettingTab, Setting } from "obsidian";
 
+export interface YaTodoPluginSettings {
+	mySetting: string;
+}
+
+export const DEFAULT_SETTINGS: YaTodoPluginSettings = {
+	mySetting: 'default'
+}
+
 export class YatodoSettingTab extends PluginSettingTab {
 	plugin: YaTodoPlugin;
 
