@@ -70,6 +70,8 @@ describe('TaskBuilder building with non existing property', () => {
 
  */
 
+export {}
+
 describe('Empty test', () => {
     test('empty', () => {    
         expect(true).toBe(true);

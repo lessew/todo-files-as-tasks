@@ -1,5 +1,4 @@
 import { File } from "src/core/File";
-import { FolderList } from "src/main/obsidian/FolderList";
 
 export class TaskBuilder{
     files:File[];
