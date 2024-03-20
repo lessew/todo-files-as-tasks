@@ -4,7 +4,7 @@ import { TaskFactory } from "../configuration/TaskFactory";
 import { File } from "src/core/File";
 import { FileListDAO } from "src/core/Interfaces/FileListDAO";
 import { FolderList } from "./FolderList";
-import { YaTodoPluginSettings } from "../ui/SettingsTab";
+import { YaTodoPluginSettings } from "../../core/Interfaces/Settings";
 
 export class FileList implements FileListDAO{
     files:File[];

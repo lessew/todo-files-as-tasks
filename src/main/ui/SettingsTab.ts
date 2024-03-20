@@ -3,7 +3,6 @@ import { App, PluginSettingTab, Setting } from "obsidian";
 import { YaTodoPluginSettings } from "src/core/Interfaces/Settings";
 
 
-
 export const DEFAULT_SETTINGS: YaTodoPluginSettings = {
     contextValues: "Desk, Deep, Phone, Read, None",
     statusValues:"Inbox, Next, Deferred, Waiting, Done",
@@ -66,3 +65,4 @@ export class YatodoSettingTab extends PluginSettingTab {
             }));
     }
 }
+

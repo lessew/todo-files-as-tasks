@@ -1,4 +1,5 @@
 import { App, MarkdownView } from "obsidian";
+import { ObsidianWrapper } from "../obsidian/ObsidianWrapper";
 
 export class PropertyView{
     obsidianApp:App;
@@ -12,8 +13,6 @@ export class PropertyView{
     }
 
     refreshUI():void{
-        setTimeout(
-            () => this.obsidianApp.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true)
-        ,100)  
+        ObsidianWrapper.getInstance().refreshUI();
     }
 }

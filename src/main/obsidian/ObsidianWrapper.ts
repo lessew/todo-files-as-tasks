@@ -23,4 +23,10 @@ export class ObsidianWrapper{
         return normalizePath(rp);
     }
 
+    refreshUI():void{
+        setTimeout(
+            () => this.obsidianApp.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true)
+        ,100)  
+    }
+
 }

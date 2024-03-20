@@ -1,6 +1,7 @@
 import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting, View, parseFrontMatterAliases } from 'obsidian';
 import { Main } from 'src/main/Main';
-import {DEFAULT_SETTINGS, YaTodoPluginSettings, YatodoSettingTab} from "src/main/ui/SettingsTab"
+import {DEFAULT_SETTINGS, YatodoSettingTab} from "src/main/ui/SettingsTab"
+import { YaTodoPluginSettings } from 'src/core/Interfaces/Settings';
 
 
 export default class YaTodoPlugin extends Plugin {

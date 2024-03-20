@@ -7,7 +7,7 @@ import { PathPropertyDAO } from "../obsidian/PropertyDAOs/PathPropertyDAO";
 import { ToplevelFolderProperty } from "src/core/Properties/ToplevelFolderProperty";
 import { FolderList } from "../obsidian/FolderList";
 import { BasenameProperty } from "src/core/Properties/BasenameProperty";
-import { YaTodoPluginSettings } from "../ui/SettingsTab";
+import { YaTodoPluginSettings } from "src/core/Interfaces/Settings";
 
 export class TaskFactory{
 
@@ -52,15 +52,6 @@ export class TaskFactory{
         let dao = new YAMLPropertyDAO();
         let vals = values.split(",");
         let status = new WhitelistProperty("Status",fullPathOfTask,dao,vals);
-       /*
-        let status = new WhitelistProperty("Status",fullPathOfTask,dao,[
-            "Inbox",
-            "Next",
-            "Deferred",
-            "Waiting",
-            "Done"
-        ]);
-        */
         return status;
     }
 
@@ -68,15 +59,6 @@ export class TaskFactory{
         let dao = new YAMLPropertyDAO();
         let vals = values.split(",");
         let context = new WhitelistProperty("Context",fullPathOfTask,dao,vals);
-        /*
-        let context = new WhitelistProperty("Context",fullPathOfTask,dao,[
-            "Desk",
-            "Deep",
-            "Phone",
-            "Read",
-            "None"
-        ]);
-        */
         return context;
     }
 }

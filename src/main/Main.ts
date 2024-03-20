@@ -7,7 +7,7 @@ import { TaskListView } from "./ui/TaskListView";
 import { FileList } from "./obsidian/FileList";
 import { FolderList } from "./obsidian/FolderList";
 import { CreateTaskButtonView } from "./ui/CreateTaskButtonView";
-import { YaTodoPluginSettings } from "./ui/SettingsTab";
+import { YaTodoPluginSettings } from "src/core/Interfaces/Settings";
 
 
 
