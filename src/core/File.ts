@@ -1,6 +1,7 @@
 import { PathProperty } from "./Properties/PathProperty";
 import { Property } from "./Interfaces/Property";
 import { PathPropertyDAO } from "../main/obsidian/PropertyDAOs/PathPropertyDAO";
+import { PropertyDAO } from "./Interfaces/PropertyDAO";
 
 export class File {
     fullPath:PathProperty;
@@ -8,9 +9,8 @@ export class File {
     static ERR_PROPERTY_INVALID = "ERROR: invalid property";
     static ERR_PROPERTY_NO_VALUE = "ERROR: no value set for property"
    
-    constructor(fullpath:string){
-        let pathDAO = new PathPropertyDAO();
-        let fp = new PathProperty("fullpath",fullpath,pathDAO);
+    constructor(fullpath:string,pathPropertyDAO:PropertyDAO){
+        let fp = new PathProperty("fullpath",fullpath,pathPropertyDAO);
         
         fp.setValue(fullpath);
         this.fullPath = fp;

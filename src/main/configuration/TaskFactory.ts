@@ -8,11 +8,13 @@ import { ToplevelFolderProperty } from "src/core/Properties/ToplevelFolderProper
 import { FolderList } from "../obsidian/FolderList";
 import { BasenameProperty } from "src/core/Properties/BasenameProperty";
 import { YaTodoPluginSettings } from "src/core/Interfaces/Settings";
+import { PropertyDAO } from "src/core/Interfaces/PropertyDAO";
 
 export class TaskFactory{
 
     static loadTask(fullPathOfTask:string,settings:YaTodoPluginSettings,folderList:FolderList):File{
-        let task = new File(fullPathOfTask);
+        let pathDao:PropertyDAO = new PathPropertyDAO();
+        let task = new File(fullPathOfTask,pathDao);
         task.properties = TaskFactory.getProperties(fullPathOfTask,settings,folderList);
         return task;
     }
