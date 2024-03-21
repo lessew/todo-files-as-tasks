@@ -4,8 +4,8 @@ import { YaTodoPluginSettings } from "src/core/Interfaces/Settings";
 
 
 export const DEFAULT_SETTINGS: YaTodoPluginSettings = {
-    contextValues: "Desk, Deep, Phone, Read, None",
-    statusValues:"Inbox, Next, Deferred, Waiting, Done",
+    contextValues: "Desk,Deep,Phone,Read,None",
+    statusValues:"Inbox,Next,Deferred,Waiting,Done",
     starredValues: "⭐,✰"
 }
 
@@ -21,7 +21,6 @@ export class YatodoSettingTab extends PluginSettingTab {
 		const {containerEl} = this;
 		containerEl.empty();
         containerEl.createEl("h1",{text:"Yatodo App"})
-        //containerEl.createEl("hr");
         this.setContextValues(containerEl);
         this.setStatusValues(containerEl);
         this.setStarredValues(containerEl);
