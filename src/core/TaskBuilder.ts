@@ -1,4 +1,4 @@
-import { File } from "src/core/File";
+import { File } from "./File";
 
 export class TaskBuilder{
     files:File[];
