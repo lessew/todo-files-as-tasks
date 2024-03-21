@@ -1,9 +1,42 @@
- import { File } from "../../src/core/File";
+ import { MockFile } from "../../tests/Mocks/MockFile";
+import { File } from "../../src/core/File";
+import { WhitelistProperty } from "../../src/core/Properties/WhitelistProperty";
+import { MockPropertyDAO } from "../../tests/Mocks/MockPropertyDAO";
 
-describe('Empty test', () => {
-    test('empty', () => {    
-        expect(true).toBe(true);
+
+class Helper{
+    static getFile(path:string,status:string,context:string):File{
+        let aFile:File = new MockFile(path);
+        aFile.properties = {
+            "status": new WhitelistProperty("Status-not-used",path,new MockPropertyDAO(status),["Inbox","Done"]),
+            "context": new WhitelistProperty("Context-not-used",path,new MockPropertyDAO(context),["Desk","Read"])
+        }
+        return aFile;
+    }
+}
+
+describe('File: test', () => {
+    test('propertyIsSet', () => {    
+        let file = Helper.getFile("/path/to/file.md","Inbox","Desk");
+        expect(file.propertyIsSet("status")).toBe(true);
+        expect(file.propertyIsSet("context")).toBe(true);
+        expect(file.propertyIsSet("nonexistent")).toBe(false);
+        expect(file.propertyIsSet("")).toBe(false);
     });
+    test("ismarkdownfile",() => {
+        let file = Helper.getFile("/path/to/file.md","Inbox","Desk");
+        expect(file.isMarkdownFile()).toBe(true);
+        file = Helper.getFile("/path/to/file.mda","Inbox","Desk");
+        expect(file.isMarkdownFile()).toBe(false);
+        file = Helper.getFile("/path/to/file","Inbox","Desk");
+        expect(file.isMarkdownFile()).toBe(false);
+    })
+    test("get",() => {
+        let file = Helper.getFile("/path/to/file.md","Inbox","Desk");
+        expect(file.get("status")).toBe("Inbox");
+        expect(file.get("context")).toBe("Desk");
+        expect(file.get("nonexistant")).toBe(File.ERR_PROPERTY_INVALID);
+    })
 });
 
 
