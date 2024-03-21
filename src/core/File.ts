@@ -9,8 +9,8 @@ export class File {
     static ERR_PROPERTY_INVALID = "ERROR: invalid property";
     static ERR_PROPERTY_NO_VALUE = "ERROR: no value set for property"
    
-    constructor(fullpath:string,pathPropertyDAO:PropertyDAO){
-        let fp = new PathProperty("fullpath",fullpath,pathPropertyDAO);
+    constructor(fullpath:string,propertyDAO:PropertyDAO){
+        let fp = new PathProperty("fullpath",fullpath,propertyDAO);
         
         fp.setValue(fullpath);
         this.fullPath = fp;
