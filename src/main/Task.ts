@@ -2,17 +2,17 @@ import { Property } from "src/core/Interfaces/Property";
 import { File } from "src/core/File";
 import { WhitelistProperty } from "src/core/Properties/WhitelistProperty";
 import { BooleanProperty } from "src/core/Properties/BooleanProperty";
-import { YAMLPropertyDAO } from "../obsidian/PropertyDAOs/YAMLPropertyDAO";
-import { PathPropertyDAO } from "../obsidian/PropertyDAOs/PathPropertyDAO";
+import { YAMLPropertyDAO } from "./obsidian/PropertyDAOs/YAMLPropertyDAO";
+import { PathPropertyDAO } from "./obsidian/PropertyDAOs/PathPropertyDAO";
 import { ToplevelFolderProperty } from "src/core/Properties/ToplevelFolderProperty";
-import { FolderList } from "../obsidian/FolderList";
+import { FolderList } from "./obsidian/FolderList";
 import { BasenameProperty } from "src/core/Properties/BasenameProperty";
 import { YaTodoPluginSettings } from "src/core/Interfaces/Settings";
 import { PropertyDAO } from "src/core/Interfaces/PropertyDAO";
 
 export class Task{
 
-    static loadTask(fullPathOfTask:string,settings:YaTodoPluginSettings,folderList:FolderList):File{
+    static load(fullPathOfTask:string,settings:YaTodoPluginSettings,folderList:FolderList):File{
         let pathDao:PropertyDAO = new PathPropertyDAO();
         let task = new File(fullPathOfTask,pathDao);
         task.properties = Task.getProperties(fullPathOfTask,settings,folderList);

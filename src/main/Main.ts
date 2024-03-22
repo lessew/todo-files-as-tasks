@@ -1,5 +1,5 @@
 import { App } from "obsidian";
-import { Task } from "./configuration/Task";
+import { Task } from "./Task";
 import { YAMLParser } from "src/core/YAMLParser";
 import { ObsidianWrapper } from "./obsidian/ObsidianWrapper";
 import { TaskListView } from "./ui/TaskListView";
