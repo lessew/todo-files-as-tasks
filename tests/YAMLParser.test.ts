@@ -78,10 +78,22 @@ describe('yaml parser with not valid value', () => {
 });
 
 
+
 const notdone = `
 rootPath: todo-home/
 context: desk
 status: not done`;
+
+
+describe('yaml parser: parse operator test', () => {
+    let p = new YAMLParser(notdone);
+    let result = p.parseOperator("not done");
+    test("testing parseoperator", () => {
+        expect(result.operator).toBe("exclude");
+        expect(result.value).toBe("done");
+    })
+});
+
 
 describe('yaml parser with negating filter', () => {
     let p = new YAMLParser(notdone);
@@ -91,7 +103,9 @@ describe('yaml parser with negating filter', () => {
     let result = p.parseFilters(filters);
     test("testing filter", () => {    
         expect(result.length).toBe(1);
-       // expect(result[0].)
+        expect(result[0].propertyName).toBe("status");
+        expect(result[0].propertyValue).toBe("done");
+        expect(result[0].operator).toBe("exclude");
     });
 
 });

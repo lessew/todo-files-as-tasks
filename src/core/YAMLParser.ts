@@ -1,6 +1,6 @@
 import * as yaml from 'js-yaml'
 import { Property } from './Interfaces/Property';
-
+import { Filter } from './Interfaces/Filter';
 
 export class YAMLParser{
     source:string;
@@ -8,6 +8,7 @@ export class YAMLParser{
     static DEFAULT_ROOT = "./";
     static ACTION_LIST = "list";
     static ACTION_CREATE_BUTTON = "create_button";
+    static EXCLUDE_TOKEN = "not ";
 
     constructor(source:string){
         this.source = source;
@@ -38,12 +39,8 @@ export class YAMLParser{
         return YAMLParser.ACTION_LIST;
     }
    
-   // validateParsedFilter(propertyName:string,allowedValues:string[]):boolean{
-
-   // }
-
-    parseFilters(properties:Record<string,Property>):{propertyName:string,propertyValue:string}[]{
-        let result:{propertyName:string,propertyValue:string}[] = [];
+    parseFilters(properties:Record<string,Property>):Filter[]{
+        let result:Filter[] = [];
 
         for(const propertyName in properties){
             const property:Property = properties[propertyName];
@@ -52,12 +49,32 @@ export class YAMLParser{
 
             if(propertyName in yaml){
                 const filterValue:string = yaml[propertyName];
-                if(property.validate(filterValue)){
-                    result.push({propertyName:propertyName,propertyValue:filterValue})
+
+                let valop = this.parseOperator(filterValue);
+
+                if(property.validate(valop.value)){
+                    result.push({
+                        propertyName:propertyName,
+                        propertyValue:valop.value,
+                        operator:valop.operator
+                    })
                 }
             }
         }
         return result;
+    }
+
+    parseOperator(val:string):{operator:"include" | "exclude",value:string}{
+        let operator:"include" | "exclude" = "include";
+        let resultValue = val;
+        if(val.startsWith(YAMLParser.EXCLUDE_TOKEN)){
+            operator = "exclude";
+            resultValue = val.substring(YAMLParser.EXCLUDE_TOKEN.length,val.length);
+        }
+        return {
+            operator:operator,
+            value:resultValue
+        }
     }
 }
 
