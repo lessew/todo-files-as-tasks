@@ -1,6 +1,7 @@
 import * as yaml from 'js-yaml'
 import { Property } from './Interfaces/Property';
 
+
 export class YAMLParser{
     source:string;
     yaml:unknown;
@@ -37,6 +38,10 @@ export class YAMLParser{
         return YAMLParser.ACTION_LIST;
     }
    
+   // validateParsedFilter(propertyName:string,allowedValues:string[]):boolean{
+
+   // }
+
     parseFilters(properties:Record<string,Property>):{propertyName:string,propertyValue:string}[]{
         let result:{propertyName:string,propertyValue:string}[] = [];
 
@@ -47,9 +52,12 @@ export class YAMLParser{
 
             if(propertyName in yaml){
                 const filterValue:string = yaml[propertyName];
-                result.push({propertyName:propertyName,propertyValue:filterValue})
+                if(property.validate(filterValue)){
+                    result.push({propertyName:propertyName,propertyValue:filterValue})
+                }
             }
         }
         return result;
     }
 }
+

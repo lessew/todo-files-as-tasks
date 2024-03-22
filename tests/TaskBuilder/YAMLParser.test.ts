@@ -1,5 +1,8 @@
 
+import { WhitelistProperty } from "../../src/core/Properties/WhitelistProperty";
 import { YAMLParser } from "../../src/core/YAMLParser";
+import { MockPropertyDAO } from "../../tests/Mocks/MockPropertyDAO";
+import { Property } from "../../src/core/Interfaces/Property";
 
 const correctlyFormatted = `
 rootPath: .
@@ -56,4 +59,39 @@ describe('yaml parser with path ending on slash (not allowed)', () => {
         expect(p.parseRootPath()).toBe(YAMLParser.DEFAULT_ROOT);
     });
 });
- 
+
+
+const errorvalue = `
+rootPath: todo-home/
+context: desk
+status: statusnotvalid`;
+
+describe('yaml parser with not valid value', () => {
+    let p = new YAMLParser(errorvalue);
+    let filters:Record<string,Property>={
+        "status":new WhitelistProperty("status","/path/todo.md",new MockPropertyDAO("-"),["done","inbox"])
+    }
+    let result = p.parseFilters(filters);
+    test("testing filter", () => {    
+        expect(result.length).toBe(0);
+    });
+});
+
+
+const notdone = `
+rootPath: todo-home/
+context: desk
+status: not done`;
+
+describe('yaml parser with negating filter', () => {
+    let p = new YAMLParser(notdone);
+    let filters:Record<string,Property>={
+        "status":new WhitelistProperty("status","/path/todo.md",new MockPropertyDAO("-"),["done","inbox"])
+    }
+    let result = p.parseFilters(filters);
+    test("testing filter", () => {    
+        expect(result.length).toBe(1);
+       // expect(result[0].)
+    });
+
+});
