@@ -34,7 +34,7 @@ export class YatodoSettingTab extends PluginSettingTab {
             .setPlaceholder('Enter values')
             .setValue(this.plugin.settings.contextValues)
             .onChange(async (value) => {
-                this.plugin.settings.contextValues = value;
+                this.plugin.settings.contextValues = value.trim();
                 await this.plugin.saveSettings();
             }));
     }
@@ -47,7 +47,7 @@ export class YatodoSettingTab extends PluginSettingTab {
             .setPlaceholder('Enter values')
             .setValue(this.plugin.settings.statusValues)
             .onChange(async (value) => {
-                this.plugin.settings.statusValues = value;
+                this.plugin.settings.statusValues = value.trim();
                 await this.plugin.saveSettings();
             }));
     }
@@ -59,7 +59,7 @@ export class YatodoSettingTab extends PluginSettingTab {
             .setPlaceholder('Enter values')
             .setValue(this.plugin.settings.starredValues)
             .onChange(async (value) => {
-                this.plugin.settings.starredValues = value;
+                this.plugin.settings.starredValues = value.trim();
                 await this.plugin.saveSettings();
             }));
     }
