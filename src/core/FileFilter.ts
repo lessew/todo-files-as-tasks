@@ -1,5 +1,5 @@
 import { File } from "./File";
-import { Filter } from "./Interfaces/Filter";
+import { Filter, Filter_Operator } from "./Interfaces/Filter";
 
 export class FileFilter{
     files:File[];
@@ -12,13 +12,12 @@ export class FileFilter{
         let filtered = this.files.filter((aFile) => {
             const propertyValue:string = aFile.get(filter.propertyName);
 
-            if(filter.operator=="include"){
-                return (propertyValue == filter.propertyValue)
-            }
-            else if(filter.operator=="exclude"){
+            if(filter.operator==Filter_Operator.exclude){
                 return (propertyValue != filter.propertyValue)
             }
-
+            else if(filter.operator==Filter_Operator.include){
+                return (propertyValue == filter.propertyValue)
+            }
         })
         this.files = filtered;
         return this;

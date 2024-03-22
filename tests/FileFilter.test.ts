@@ -12,8 +12,8 @@ class Helper {
         testerFiles.forEach((obj => {
             let aFile:File = new MockFile(obj.path);
             aFile.properties = {
-                "status": new WhitelistProperty("Status-not-used",obj.path,new MockPropertyDAO(obj.status),["Inbox","Done"]),
-                "context": new WhitelistProperty("Context-not-used",obj.path,new MockPropertyDAO(obj.context),["Desk","Read"])
+                "status": new WhitelistProperty("status",obj.path,new MockPropertyDAO(obj.status),["Inbox","Done"]),
+                "context": new WhitelistProperty("context",obj.path,new MockPropertyDAO(obj.context),["Desk","Phone"])
             }
             result.push(aFile);
         }));
@@ -90,7 +90,7 @@ describe('BulkFilterBy', () => {
 });
 
 
-describe('Filter By not (single', () => {
+describe('Filter By not (single)', () => {
     let builder = new FileFilter(files);
     test('Test filtering by status (whitelistproperty)', () => {   
         builder.filterBy({

@@ -3,6 +3,7 @@ import { WhitelistProperty } from "../src/core/Properties/WhitelistProperty";
 import { YAMLParser } from "../src/core/YAMLParser";
 import { MockPropertyDAO } from "./Mocks/MockPropertyDAO";
 import { Property } from "../src/core/Interfaces/Property";
+import { Filter_Operator } from "../src/core/Interfaces/Filter";
 
 const correctlyFormatted = `
 rootPath: .
@@ -105,7 +106,7 @@ describe('yaml parser with negating filter', () => {
         expect(result.length).toBe(1);
         expect(result[0].propertyName).toBe("status");
         expect(result[0].propertyValue).toBe("done");
-        expect(result[0].operator).toBe("exclude");
+        expect(result[0].operator).toBe(Filter_Operator.exclude);
     });
 
 });

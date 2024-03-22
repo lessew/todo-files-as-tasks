@@ -1,6 +1,6 @@
 import * as yaml from 'js-yaml'
 import { Property } from './Interfaces/Property';
-import { Filter } from './Interfaces/Filter';
+import { Filter, Filter_Operator } from './Interfaces/Filter';
 
 export class YAMLParser{
     source:string;
@@ -64,11 +64,11 @@ export class YAMLParser{
         return result;
     }
 
-    parseOperator(val:string):{operator:"include" | "exclude",value:string}{
-        let operator:"include" | "exclude" = "include";
+    parseOperator(val:string):{operator:Filter_Operator,value:string}{
+        let operator = Filter_Operator.include;
         let resultValue = val;
         if(val.startsWith(YAMLParser.EXCLUDE_TOKEN)){
-            operator = "exclude";
+            operator = Filter_Operator.exclude
             resultValue = val.substring(YAMLParser.EXCLUDE_TOKEN.length,val.length);
         }
         return {
