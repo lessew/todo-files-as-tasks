@@ -11,7 +11,14 @@ export class FileFilter{
     filterBy(filter:Filter):FileFilter{
         let filtered = this.files.filter((aFile) => {
             const propertyValue:string = aFile.get(filter.propertyName);
-            return (propertyValue == filter.propertyValue)
+
+            if(filter.operator=="include"){
+                return (propertyValue == filter.propertyValue)
+            }
+            else if(filter.operator=="exclude"){
+                return (propertyValue != filter.propertyValue)
+            }
+
         })
         this.files = filtered;
         return this;
