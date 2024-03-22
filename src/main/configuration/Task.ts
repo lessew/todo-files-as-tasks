@@ -10,22 +10,22 @@ import { BasenameProperty } from "src/core/Properties/BasenameProperty";
 import { YaTodoPluginSettings } from "src/core/Interfaces/Settings";
 import { PropertyDAO } from "src/core/Interfaces/PropertyDAO";
 
-export class TaskFactory{
+export class Task{
 
     static loadTask(fullPathOfTask:string,settings:YaTodoPluginSettings,folderList:FolderList):File{
         let pathDao:PropertyDAO = new PathPropertyDAO();
         let task = new File(fullPathOfTask,pathDao);
-        task.properties = TaskFactory.getProperties(fullPathOfTask,settings,folderList);
+        task.properties = Task.getProperties(fullPathOfTask,settings,folderList);
         return task;
     }
 
     static getProperties(fullPathOfTask:string,settings:YaTodoPluginSettings,folderList:FolderList):Record<string, Property>{
         let properties: Record<string, Property> = {
-            "title":TaskFactory.getTitleProperty(fullPathOfTask),
-            "project":TaskFactory.getProjectProperty(fullPathOfTask,folderList),
-            "starred":TaskFactory.getStarredProperty(fullPathOfTask,settings.starredValues),
-            "status":TaskFactory.getStatusProperty(fullPathOfTask,settings.statusValues),
-            "context":TaskFactory.getContextProperty(fullPathOfTask,settings.contextValues)
+            "title":Task.getTitleProperty(fullPathOfTask),
+            "project":Task.getProjectProperty(fullPathOfTask,folderList),
+            "starred":Task.getStarredProperty(fullPathOfTask,settings.starredValues),
+            "status":Task.getStatusProperty(fullPathOfTask,settings.statusValues),
+            "context":Task.getContextProperty(fullPathOfTask,settings.contextValues)
         }
         return properties;
     }

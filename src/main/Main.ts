@@ -1,5 +1,5 @@
 import { App } from "obsidian";
-import { TaskFactory } from "./configuration/TaskFactory";
+import { Task } from "./configuration/Task";
 import { YAMLParser } from "src/core/YAMLParser";
 import { ObsidianWrapper } from "./obsidian/ObsidianWrapper";
 import { TaskListView } from "./ui/TaskListView";
@@ -29,7 +29,7 @@ export class Main{
       
         const action = parser.parseAction();
         if(action==YAMLParser.ACTION_LIST){
-            const properties = TaskFactory.getProperties(rootPath,settings,folderList);
+            const properties = Task.getProperties(rootPath,settings,folderList);
             const filters = parser.parseFilters(properties);
             const files = fileList.files;
             const fileFilter = new FileFilter(files);

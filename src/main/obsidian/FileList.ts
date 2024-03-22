@@ -1,6 +1,6 @@
 import { App, TFile } from "obsidian";
 import { ObsidianWrapper } from "./ObsidianWrapper";
-import { TaskFactory } from "../configuration/TaskFactory";
+import { TaskFactory } from "../configuration/Task";
 import { File } from "src/core/File";
 import { FileListDAO } from "src/core/Interfaces/FileListDAO";
 import { FolderList } from "./FolderList";
