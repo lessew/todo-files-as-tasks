@@ -1,13 +1,13 @@
 import { File } from "./File";
 
-export class TaskBuilder{
+export class FileFilter{
     files:File[];
 
     constructor(files:File[]){
         this.files = files;
     }
 
-    filterBy(propertyName:string,filterValue:string):TaskBuilder{
+    filterBy(propertyName:string,filterValue:string):FileFilter{
         let filtered = this.files.filter((aFile) => {
             const propertyValue:string = aFile.get(propertyName);
             return (propertyValue == filterValue)
@@ -16,7 +16,7 @@ export class TaskBuilder{
         return this;
     }
 
-    bulkFilterBy(list:{propertyName:string,propertyValue:string}[]):TaskBuilder{
+    bulkFilterBy(list:{propertyName:string,propertyValue:string}[]):FileFilter{
         list.forEach(filterBy => {
             this.filterBy(filterBy.propertyName,filterBy.propertyValue);
         });

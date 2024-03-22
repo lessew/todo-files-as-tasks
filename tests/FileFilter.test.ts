@@ -1,8 +1,8 @@
- import { TaskBuilder } from "../../src/core/TaskBuilder";
-import { MockFile } from "../../tests/Mocks/MockFile";
-import { File } from "../../src/core/File";
-import { WhitelistProperty } from "../../src/core/Properties/WhitelistProperty";
-import { MockPropertyDAO } from "../../tests/Mocks/MockPropertyDAO";
+ import { FileFilter } from "../src/core/FileFilter";
+import { MockFile } from "./Mocks/MockFile";
+import { File } from "../src/core/File";
+import { WhitelistProperty } from "../src/core/Properties/WhitelistProperty";
+import { MockPropertyDAO } from "./Mocks/MockPropertyDAO";
 
 
 class Helper {
@@ -46,13 +46,13 @@ let testerFiles = [file1,file2,file3,file4];
 let files = Helper.getFiles(testerFiles)
 
 describe('Filter By (single)', () => {
-    let builder = new TaskBuilder(files);
+    let builder = new FileFilter(files);
     test('Test filtering by status (whitelistproperty)', () => {   
         builder.filterBy("status","Inbox");
         expect(builder.files.length).toBe(2);
     });
 
-    builder = new TaskBuilder(files);
+    builder = new FileFilter(files);
     test('Test filtering by status - file with invalid value as its not part of the whitelist', () => {   
         builder.filterBy("status","InvalidValue");
         expect(builder.files.length).toBe(0);
@@ -61,7 +61,7 @@ describe('Filter By (single)', () => {
 
 
 describe('BulkFilterBy', () => {
-    let builder = new TaskBuilder(files);
+    let builder = new FileFilter(files);
     test('Test filtering by status (whitelistproperty)', () => {   
         let filters:{propertyName:string,propertyValue:string}[] = [
             {propertyName:"status",propertyValue:"Inbox"},
