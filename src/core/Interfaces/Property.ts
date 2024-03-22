@@ -8,6 +8,7 @@ export interface Property{
     getValue():string;
     setValue(val:string):void;
     isEmptyValue():boolean;
+    validate(newValue:string):boolean;
 }
 
 export interface OptionsProperty extends Property{
