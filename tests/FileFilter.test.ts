@@ -3,6 +3,7 @@ import { MockFile } from "./Mocks/MockFile";
 import { File } from "../src/core/File";
 import { WhitelistProperty } from "../src/core/Properties/WhitelistProperty";
 import { MockPropertyDAO } from "./Mocks/MockPropertyDAO";
+import {Filter} from "../src/core/Interfaces/Filter";
 
 
 class Helper {
@@ -48,13 +49,21 @@ let files = Helper.getFiles(testerFiles)
 describe('Filter By (single)', () => {
     let builder = new FileFilter(files);
     test('Test filtering by status (whitelistproperty)', () => {   
-        builder.filterBy("status","Inbox");
+        builder.filterBy({
+            propertyName:"status",
+            propertyValue:"Inbox",
+            operator:"include"
+        });
         expect(builder.files.length).toBe(2);
     });
 
     builder = new FileFilter(files);
     test('Test filtering by status - file with invalid value as its not part of the whitelist', () => {   
-        builder.filterBy("status","InvalidValue");
+        builder.filterBy({
+            propertyName:"status",
+            propertyValue:"InvalidStatus",
+            operator:"include"
+        });
         expect(builder.files.length).toBe(0);
     });
 });
@@ -63,10 +72,17 @@ describe('Filter By (single)', () => {
 describe('BulkFilterBy', () => {
     let builder = new FileFilter(files);
     test('Test filtering by status (whitelistproperty)', () => {   
-        let filters:{propertyName:string,propertyValue:string}[] = [
-            {propertyName:"status",propertyValue:"Inbox"},
-            {propertyName:"context",propertyValue:"Desk"},
-
+        let filters:Filter[] = [
+            {
+                propertyName:"status",
+                propertyValue:"Inbox",
+                operator:"include"
+            },
+            {
+                propertyName:"context",
+                propertyValue:"Desk",
+                operator:"include"
+            },
         ]
         builder.bulkFilterBy(filters);
         expect(builder.files.length).toBe(1);

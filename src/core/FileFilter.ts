@@ -1,4 +1,5 @@
 import { File } from "./File";
+import { Filter } from "./Interfaces/Filter";
 
 export class FileFilter{
     files:File[];
@@ -7,18 +8,18 @@ export class FileFilter{
         this.files = files;
     }
 
-    filterBy(propertyName:string,filterValue:string):FileFilter{
+    filterBy(filter:Filter):FileFilter{
         let filtered = this.files.filter((aFile) => {
-            const propertyValue:string = aFile.get(propertyName);
-            return (propertyValue == filterValue)
+            const propertyValue:string = aFile.get(filter.propertyName);
+            return (propertyValue == filter.propertyValue)
         })
         this.files = filtered;
         return this;
     }
 
-    bulkFilterBy(list:{propertyName:string,propertyValue:string}[]):FileFilter{
+    bulkFilterBy(list:Filter[]):FileFilter{
         list.forEach(filterBy => {
-            this.filterBy(filterBy.propertyName,filterBy.propertyValue);
+            this.filterBy(filterBy);
         });
         return this;
     }
