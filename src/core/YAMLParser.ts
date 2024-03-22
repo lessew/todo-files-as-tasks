@@ -69,11 +69,11 @@ export class YAMLParser{
         let resultValue = val;
         if(val.startsWith(YAMLParser.EXCLUDE_TOKEN)){
             operator = Filter_Operator.exclude
-            resultValue = val.substring(YAMLParser.EXCLUDE_TOKEN.length,val.length);
+            resultValue = val.substring(YAMLParser.EXCLUDE_TOKEN.length,val.length).trim();
         }
         return {
             operator:operator,
-            value:resultValue
+            value:resultValue.trim()
         }
     }
 }

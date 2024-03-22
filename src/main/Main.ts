@@ -2,12 +2,12 @@ import { App } from "obsidian";
 import { TaskFactory } from "./configuration/TaskFactory";
 import { YAMLParser } from "src/core/YAMLParser";
 import { ObsidianWrapper } from "./obsidian/ObsidianWrapper";
-import { TaskBuilder } from "src/core/TaskBuilder";
 import { TaskListView } from "./ui/TaskListView";
 import { FileList } from "./obsidian/FileList";
 import { FolderList } from "./obsidian/FolderList";
 import { CreateTaskButtonView } from "./ui/CreateTaskButtonView";
 import { YaTodoPluginSettings } from "src/core/Interfaces/Settings";
+import { FileFilter } from "src/core/FileFilter";
 
 
 
@@ -32,8 +32,8 @@ export class Main{
             const properties = TaskFactory.getProperties(rootPath,settings,folderList);
             const filters = parser.parseFilters(properties);
             const files = fileList.files;
-            const taskBuilder = new TaskBuilder(files);
-            const filteredFiles = taskBuilder.bulkFilterBy(filters).get();
+            const fileFilter = new FileFilter(files);
+            const filteredFiles = fileFilter.bulkFilterBy(filters).get();
             const view = new TaskListView(filteredFiles,ObsidianWrapper.getInstance().obsidianApp);
             view.build(el);
         }

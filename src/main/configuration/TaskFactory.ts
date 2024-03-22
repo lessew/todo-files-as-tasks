@@ -32,35 +32,35 @@ export class TaskFactory{
 
     static getTitleProperty(fullPathOfTask:string):BasenameProperty{
         let dao = new PathPropertyDAO();
-        let title = new BasenameProperty("Title",fullPathOfTask, dao);
+        let title = new BasenameProperty("title",fullPathOfTask, dao);
         return title;
     }
     
     static getProjectProperty(fullPathOfTask:string,folderList:FolderList):ToplevelFolderProperty{
         let dao = new PathPropertyDAO();
         let projects = folderList.folders;
-        let project = new ToplevelFolderProperty("Project",fullPathOfTask,dao,projects);
+        let project = new ToplevelFolderProperty("project",fullPathOfTask,dao,projects);
         return project;
     }
 
     static getStarredProperty(fullPathOfTask:string,values:string):BooleanProperty{
         let dao = new YAMLPropertyDAO();
         let vals = values.split(",");
-        let starred = new BooleanProperty("Starred",fullPathOfTask,dao,vals);
+        let starred = new BooleanProperty("starred",fullPathOfTask,dao,vals);
         return starred;
     }
 
     static getStatusProperty(fullPathOfTask:string,values:string):WhitelistProperty{
         let dao = new YAMLPropertyDAO();
         let vals = values.split(",");
-        let status = new WhitelistProperty("Status",fullPathOfTask,dao,vals);
+        let status = new WhitelistProperty("status",fullPathOfTask,dao,vals);
         return status;
     }
 
     static getContextProperty(fullPathOfTask:string,values:string):WhitelistProperty{
         let dao = new YAMLPropertyDAO();
         let vals = values.split(",");
-        let context = new WhitelistProperty("Context",fullPathOfTask,dao,vals);
+        let context = new WhitelistProperty("context",fullPathOfTask,dao,vals);
         return context;
     }
 }

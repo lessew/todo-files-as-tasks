@@ -110,3 +110,21 @@ describe('yaml parser with negating filter', () => {
     });
 
 });
+
+
+
+ 
+
+describe('yaml parser: parse operator with whitespaces test', () => {
+    let p = new YAMLParser(notdone);
+    let result = p.parseOperator("not   done  ");
+    test("testing parseoperator", () => {
+        expect(result.operator).toBe("exclude");
+        expect(result.value).toBe("done");
+    })
+    let result2 = p.parseOperator("   done  ");
+    test("testing parseoperator", () => {
+        expect(result2.operator).toBe("include");
+        expect(result2.value).toBe("done");
+    })
+});
