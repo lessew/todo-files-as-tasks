@@ -7,19 +7,19 @@ import { PathPropertyDAO } from "./obsidian/PropertyDAOs/PathPropertyDAO";
 import { ToplevelFolderProperty } from "src/core/Properties/ToplevelFolderProperty";
 import { FolderList } from "./obsidian/FolderList";
 import { BasenameProperty } from "src/core/Properties/BasenameProperty";
-import { YaTodoPluginSettings } from "src/core/Interfaces/Settings";
+import { FATPluginSettings } from "src/core/Interfaces/FATPluginSettings";
 import { PropertyDAO } from "src/core/Interfaces/PropertyDAO";
 
 export class Task{
 
-    static load(fullPathOfTask:string,settings:YaTodoPluginSettings,folderList:FolderList):File{
+    static load(fullPathOfTask:string,settings:FATPluginSettings,folderList:FolderList):File{
         let pathDao:PropertyDAO = new PathPropertyDAO();
         let task = new File(fullPathOfTask,pathDao);
         task.properties = Task.getProperties(fullPathOfTask,settings,folderList);
         return task;
     }
 
-    static getProperties(fullPathOfTask:string,settings:YaTodoPluginSettings,folderList:FolderList):Record<string, Property>{
+    static getProperties(fullPathOfTask:string,settings:FATPluginSettings,folderList:FolderList):Record<string, Property>{
         let properties: Record<string, Property> = {
             "title":Task.getTitleProperty(fullPathOfTask),
             "project":Task.getProjectProperty(fullPathOfTask,folderList),

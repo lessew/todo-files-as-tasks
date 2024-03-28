@@ -6,13 +6,13 @@ import { TaskListView } from "./ui/TaskListView";
 import { FileList } from "./obsidian/FileList";
 import { FolderList } from "./obsidian/FolderList";
 import { CreateTaskButtonView } from "./ui/CreateTaskButtonView";
-import { YaTodoPluginSettings } from "src/core/Interfaces/Settings";
+import { FATPluginSettings } from "src/core/Interfaces/FATPluginSettings";
 import { FileFilter } from "src/core/FileFilter";
 
 
 
 export class Main{
-    static  run(source:string,el:HTMLElement,settings:YaTodoPluginSettings,app:App):void{
+    static  run(source:string,el:HTMLElement,settings:FATPluginSettings,app:App):void{
 
         const parser:YAMLParser = new YAMLParser(source);
         const rootPath:string = parser.parseRootPath();

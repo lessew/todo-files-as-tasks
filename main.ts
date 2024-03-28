@@ -1,11 +1,11 @@
 import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting, View, parseFrontMatterAliases } from 'obsidian';
 import { Main } from 'src/main/Main';
-import {DEFAULT_SETTINGS, YatodoSettingTab} from "src/main/ui/SettingsTab"
-import { TodoFATPluginSettings } from 'src/core/Interfaces/Settings';
+import {DEFAULT_SETTINGS, FATSettingTab} from "src/main/ui/FATSettingsTab"
+import { FATPluginSettings } from 'src/core/Interfaces/FATPluginSettings';
 
 
-export default class TodoFATPlugin extends Plugin {
-	settings: TodoFATPluginSettings;
+export default class FATPlugin extends Plugin {
+	settings: FATPluginSettings;
 
 	async onload() {
 		await this.loadSettings();
@@ -15,7 +15,7 @@ export default class TodoFATPlugin extends Plugin {
 		});
 
 		// This adds a settings tab so the user can configure various aspects of the plugin
-		this.addSettingTab(new YatodoSettingTab(this.app, this));
+		this.addSettingTab(new FATSettingTab(this.app, this));
 
 		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
 		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));

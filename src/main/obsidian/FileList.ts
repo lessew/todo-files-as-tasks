@@ -4,12 +4,12 @@ import { Task } from "../Task";
 import { File } from "src/core/File";
 import { FileListDAO } from "src/core/Interfaces/FileListDAO";
 import { FolderList } from "./FolderList";
-import { YaTodoPluginSettings } from "../../core/Interfaces/Settings";
+import { FATPluginSettings } from "../../core/Interfaces/FATPluginSettings";
 
 export class FileList implements FileListDAO{
     files:File[];
 
-    init(rootPath:string,settings:YaTodoPluginSettings,folderList:FolderList):void{
+    init(rootPath:string,settings:FATPluginSettings,folderList:FolderList):void{
         const wrapper = ObsidianWrapper.getInstance();
 
         const tf:TFile[] = wrapper.obsidianApp.vault.getMarkdownFiles();

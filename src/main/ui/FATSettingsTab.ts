@@ -1,18 +1,18 @@
-import YaTodoPlugin from "main";
+import FATPlugin from "main";
 import { App, PluginSettingTab, Setting } from "obsidian";
-import { YaTodoPluginSettings } from "src/core/Interfaces/Settings";
+import { FATPluginSettings } from "src/core/Interfaces/FATPluginSettings";
 
 
-export const DEFAULT_SETTINGS: YaTodoPluginSettings = {
+export const DEFAULT_SETTINGS: FATPluginSettings = {
     contextValues: "Desk,Deep,Phone,Read,None",
     statusValues:"Inbox,Next,Deferred,Waiting,Done",
     starredValues: "✰,⭐"
 }
 
-export class YatodoSettingTab extends PluginSettingTab {
-	plugin: YaTodoPlugin;
+export class FATSettingTab extends PluginSettingTab {
+	plugin: FATPlugin;
 
-	constructor(app: App, plugin: YaTodoPlugin) {
+	constructor(app: App, plugin: FATPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
