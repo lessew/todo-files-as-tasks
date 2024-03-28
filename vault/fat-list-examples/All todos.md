@@ -1,5 +1,5 @@
 
-```yatodo
+```fat
 rootPath: todo-home
 type: create_button
 ```
@@ -10,14 +10,14 @@ type: create_button
 
 ## Not done
 
-```yatodo
+```fat
 rootPath: todo-home
 status: not Done
 ```
 
 ## Done
 
-```yatodo
+```fat
 rootPath: todo-home
 status: Done
 ```
