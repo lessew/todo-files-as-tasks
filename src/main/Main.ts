@@ -36,7 +36,7 @@ export class Main{
     static displayActionList(el:HTMLElement,parser:YAMLParser,rootPath:string,settings:FATPluginSettings,folderList:FolderList):void{
         const fileList = new FileList();
         fileList.init(rootPath,settings,folderList);
-
+//TODO use settings not proprerties to parse 
         const properties = Task.getProperties(rootPath,settings,folderList);
         const filters = parser.parseFilters(properties);
         const files = fileList.files;
