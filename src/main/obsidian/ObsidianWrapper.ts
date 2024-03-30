@@ -1,5 +1,7 @@
 import { App,MarkdownView,TFile,normalizePath } from "obsidian";
 
+
+// TODO make obsidianApp private and create proxy methods. To allow mock
 export class ObsidianWrapper{
     private static instance:ObsidianWrapper;
     obsidianApp:App;
