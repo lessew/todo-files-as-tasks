@@ -2,6 +2,7 @@ import { PathProperty } from "./Properties/PathProperty";
 import { Property } from "./Interfaces/Property";
 import { PropertyDAO } from "./Interfaces/PropertyDAO";
 
+// TODO move errors into external class
 export class File {
     fullPath:PathProperty;
     properties:Record<string,Property>;
