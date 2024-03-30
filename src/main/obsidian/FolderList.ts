@@ -5,6 +5,8 @@ import { TFolder } from "obsidian";
 export class FolderList implements FolderListDAO{
     folders:string[];
     
+
+// TODO account for case with nested folders.
      init(rootPath:string):void{
         let result:string[] = [];
         const wrapper = ObsidianWrapper.getInstance();
