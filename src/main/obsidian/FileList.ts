@@ -12,6 +12,7 @@ export class FileList implements FileListDAO{
     init(rootPath:string,settings:FATPluginSettings,folderList:FolderList):void{
         const wrapper = ObsidianWrapper.getInstance();
 
+// TODO adjust to start iteration from rootfolder, do not query all files
         const tf:TFile[] = wrapper.obsidianApp.vault.getMarkdownFiles();
         let files:File[] = [];
         
