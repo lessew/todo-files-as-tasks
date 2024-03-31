@@ -1,4 +1,3 @@
-import { Property } from "../../src/core/Interfaces/Property";
 import { PropertyDAO } from "../../src/core/Interfaces/PropertyDAO";
 
 export class MockPropertyDAO implements PropertyDAO{

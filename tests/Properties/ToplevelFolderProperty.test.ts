@@ -5,7 +5,7 @@ import { ToplevelFolderProperty } from "../../src/core/Properties/ToplevelFolder
 class Helper{
     static getTopLevelFolderProperty(propName:string,path:string,allowedFolders:string[]):ToplevelFolderProperty{
         let dao:PropertyDAO = new MockPropertyDAO(path);
-        let prop = new ToplevelFolderProperty(propName,path,dao,allowedFolders); 
+        let prop = new ToplevelFolderProperty(propName,path,dao,{allowedValues:allowedFolders,defaultValue:""}); 
         return prop;
     }
 }

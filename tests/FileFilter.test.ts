@@ -12,8 +12,14 @@ class Helper {
         testerFiles.forEach((obj => {
             let aFile:File = new MockFile(obj.path);
             aFile.properties = {
-                "status": new WhitelistProperty("status",obj.path,new MockPropertyDAO(obj.status),["Inbox","Done"]),
-                "context": new WhitelistProperty("context",obj.path,new MockPropertyDAO(obj.context),["Desk","Phone"])
+                "status": new WhitelistProperty("status",
+                    obj.path,
+                    new MockPropertyDAO(obj.status),
+                    {allowedValues:["Inbox","Done"],defaultValue:""}),
+                "context": new WhitelistProperty("context",
+                    obj.path,
+                    new MockPropertyDAO(obj.context),
+                    {allowedValues:["Desk","Phone"], defaultValue:""})
             }
             result.push(aFile);
         }));

@@ -1,19 +1,20 @@
+import { MockProperty } from "../Mocks/MockProperty";
 import { PropertyDAO } from "../../src/core/Interfaces/PropertyDAO";
 import { MockPropertyDAO } from "../Mocks/MockPropertyDAO";
-import { MockAbstractProperty } from "../Mocks/MockAbstractProperty"
+import { PropertySettings } from "src/core/PropertySettings";
 
 
 class Helper{
-    static getMockAbstractProperty(propName:string,propValue:string):MockAbstractProperty{
+    static getMockProperty(propName:string,propValue:string):MockProperty{
         let dao:PropertyDAO = new MockPropertyDAO(propValue);
-        let sp = new MockAbstractProperty(propName,"dummyfileid",dao);
+        let sp = new MockProperty(propName,"dummyfileid",dao, {defaultValue:""} as PropertySettings);
         return sp;
     }
     
-    static getPropertyWithNonExistingDAO():MockAbstractProperty{
+    static getPropertyWithNonExistingDAO():MockProperty{
         let dao:MockPropertyDAO = new MockPropertyDAO("-");
         dao.setPropertyNameToNotExist();
-        let prop = new MockAbstractProperty("dummy","dummyfileid",dao);
+        let prop = new MockProperty("dummy","dummyfileid",dao,{defaultValue:""} as PropertySettings);
         return prop;
     }
 }
@@ -21,7 +22,7 @@ class Helper{
 describe('mockabstractproperty test', () => {
     const name = "title";
     const val = "some random title";
-    let prop = Helper.getMockAbstractProperty(name,val);
+    let prop = Helper.getMockProperty(name,val);
     
     test('correct property name', () => {
         expect(prop.name).toBe(name);
@@ -50,13 +51,13 @@ describe('mockabstractproperty check isempty method', () => {
     let propName = "context";
     let propValue = "";
 
-    let prop = Helper.getMockAbstractProperty(propName,propValue);
+    let prop = Helper.getMockProperty(propName,propValue);
     test('should be empty', () => {
         expect(prop.isEmptyValue()).toBe(true);
     })
     const propName2 = "context";
     const propValue2 = "next";
-    let prop2 = Helper.getMockAbstractProperty(propName2,propValue2);
+    let prop2 = Helper.getMockProperty(propName2,propValue2);
     test('should not be empty', () => {
         expect(prop2.isEmptyValue()).toBe(false);
     })

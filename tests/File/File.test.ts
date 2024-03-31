@@ -8,8 +8,17 @@ class Helper{
     static getFile(path:string,status:string,context:string):File{
         let aFile:File = new MockFile(path);
         aFile.properties = {
-            "status": new WhitelistProperty("Status-not-used",path,new MockPropertyDAO(status),["Inbox","Done"]),
-            "context": new WhitelistProperty("Context-not-used",path,new MockPropertyDAO(context),["Desk","Read"])
+            "status": new WhitelistProperty(
+                "Status-not-used",
+                path,
+                new MockPropertyDAO(status),
+                {allowedValues:["Inbox","Done"],defaultValue:""}
+            ),
+            "context": new WhitelistProperty(
+                "Context-not-used",
+                path,
+                new MockPropertyDAO(context),{allowedValues:["Desk","Read"],defaultValue:""}
+            )
         }
         return aFile;
     }

@@ -1,3 +1,4 @@
+// TODO remove underscore
 export enum Filter_Operator {
     include="include",
     exclude="exclude"

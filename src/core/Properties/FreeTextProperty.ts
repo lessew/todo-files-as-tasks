@@ -1,10 +1,11 @@
-import { AbstractProperty } from "../AbstractProperty";
+import { Property } from "../Property";
 import { PropertyDAO } from "../Interfaces/PropertyDAO";
+import { PropertySettings } from "../PropertySettings";
 
-export class FreeTextProperty extends AbstractProperty{
+export class FreeTextProperty extends Property{
     
-    constructor(name:string,fileID:string,dao:PropertyDAO){
-        super(name,fileID,dao);
+    constructor(name:string,fileID:string,dao:PropertyDAO,settings:PropertySettings){
+        super(name,fileID,dao,settings);
     }
     
     validate(newVal:string):boolean{

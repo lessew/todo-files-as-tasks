@@ -1,6 +1,6 @@
 import { PathProperty } from "./Properties/PathProperty";
-import { Property } from "./Interfaces/Property";
 import { PropertyDAO } from "./Interfaces/PropertyDAO";
+import { Property } from "./Property";
 
 // TODO move errors into external class
 export class File {
@@ -10,7 +10,7 @@ export class File {
     static ERR_PROPERTY_NO_VALUE = "ERROR: no value set for property"
    
     constructor(fullpath:string,propertyDAO:PropertyDAO){
-        let fp = new PathProperty("fullpath",fullpath,propertyDAO);
+        let fp = new PathProperty("fullpath",fullpath,propertyDAO,{defaultValue:""});
         
         fp.setValue(fullpath);
         this.fullPath = fp;

@@ -1,17 +1,14 @@
 import { PropertyDAO } from "src/core/Interfaces/PropertyDAO";
 import { PathProperty } from "./PathProperty";
-import { OptionsProperty } from "../Interfaces/Property";
+import { PropertySettings } from "../PropertySettings";
+export class ToplevelFolderProperty extends PathProperty{
 
-export class ToplevelFolderProperty extends PathProperty implements OptionsProperty{
-    allowedValues:string[];
-
-    constructor(name:string,fileID:string,dao:PropertyDAO,vals:string[]){
-        super(name,fileID,dao);
-        this.allowedValues = vals;
+    constructor(name:string,fileID:string,dao:PropertyDAO,settings:PropertySettings){
+        super(name,fileID,dao,settings);
     }
     
     validate(newValue:string){
-        return (this.allowedValues.indexOf(newValue) != -1)
+        return (this.settings.allowedValues?.indexOf(newValue) != -1)
     }
     
     getValue():string{        

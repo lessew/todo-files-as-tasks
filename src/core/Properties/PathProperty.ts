@@ -1,11 +1,12 @@
 import { PropertyDAO } from "src/core/Interfaces/PropertyDAO";
-import { AbstractProperty } from "../AbstractProperty";
+import { Property } from "../Property";
+import { PropertySettings } from "../PropertySettings";
 
-export class PathProperty extends AbstractProperty{
+export class PathProperty extends Property{
     regExp:RegExp = /^[a-zA-Z\/\.]+$/;
   
-    constructor(name:string,fileID:string,dao:PropertyDAO){
-        super(name,fileID,dao);
+    constructor(name:string,fileID:string,dao:PropertyDAO,propSettings:PropertySettings){
+        super(name,fileID,dao,propSettings);
     }
 
     validate(newVal:string):boolean{

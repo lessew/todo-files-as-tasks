@@ -1,20 +1,22 @@
 import { PropertyDAO } from "./Interfaces/PropertyDAO";
-import { Property } from "./Interfaces/Property";
+import { PropertySettings } from "./PropertySettings";
 
 // TODO merge interface into abstract class, rename abstract class to Proprty
-export abstract class AbstractProperty implements Property{
+export abstract class Property{
     name:string;
     fileID:string;
     dao:PropertyDAO;
     _loadedValueIsValid:boolean;
+    settings:PropertySettings;
     protected value:string;
 
     static INVALID_VALUE:string ="-invalid_value-";
 
-    constructor(name:string,fileID:string,dao:PropertyDAO){
+    constructor(name:string,fileID:string,dao:PropertyDAO,settings:PropertySettings){
         this.name = name;
         this.dao = dao;
         this.fileID = fileID;
+        this.settings = settings;
         return this;
     }
 

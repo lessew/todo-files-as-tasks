@@ -5,7 +5,7 @@ import { BasenameProperty } from "../../src/core/Properties/BasenameProperty";
 class Helper{
     static getBasenameProperty(propName:string,path:string):BasenameProperty{
         let dao:PropertyDAO = new MockPropertyDAO(path);
-        let prop = new BasenameProperty(propName,path,dao); 
+        let prop = new BasenameProperty(propName,path,dao,{defaultValue:""}); 
         return prop;
     }
 }

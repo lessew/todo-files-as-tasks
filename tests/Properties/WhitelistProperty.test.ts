@@ -6,7 +6,7 @@ import { MockPropertyDAO } from "../Mocks/MockPropertyDAO";
 class Helper{
     static getWhitelistProperty(propName:string,propValue:string,options:string[]):WhitelistProperty{
         let dao:PropertyDAO = new MockPropertyDAO(propValue);
-        let sp = new WhitelistProperty(propName,"dummyfileid",dao,options);
+        let sp = new WhitelistProperty(propName,"dummyfileid",dao,{allowedValues:options,defaultValue:""});
         return sp;
     }
 }

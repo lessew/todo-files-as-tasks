@@ -5,7 +5,7 @@ import { MockPropertyDAO } from "../../tests/Mocks/MockPropertyDAO";
 class Helper{
     static getPathProperty(propName:string,path:string):PathProperty{
         let dao:PropertyDAO = new MockPropertyDAO(path);
-        let prop = new PathProperty(propName,path,dao); // the prop value is also the id of the file
+        let prop = new PathProperty(propName,path,dao,{defaultValue:""}); // the prop value is also the id of the file
 
         return prop;
     }

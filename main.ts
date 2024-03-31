@@ -1,11 +1,11 @@
 import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting, View, parseFrontMatterAliases } from 'obsidian';
+import { FATSettings } from 'src/main/FileAsTask';
 import { Main } from 'src/main/Main';
 import {DEFAULT_SETTINGS, FATSettingTab} from "src/main/ui/FATSettingsTab"
-import { FATPluginSettings } from 'src/core/Interfaces/FATPluginSettings';
 
 
 export default class FATPlugin extends Plugin {
-	settings: FATPluginSettings;
+	settings: FATSettings;
 
 	async onload() {
 		await this.loadSettings();

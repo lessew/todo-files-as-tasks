@@ -2,8 +2,8 @@
 import { WhitelistProperty } from "../src/core/Properties/WhitelistProperty";
 import { YAMLParser } from "../src/core/YAMLParser";
 import { MockPropertyDAO } from "./Mocks/MockPropertyDAO";
-import { Property } from "../src/core/Interfaces/Property";
 import { Filter_Operator } from "../src/core/Interfaces/Filter";
+import { Property } from "src/core/Property";
 
 const correctlyFormatted = `
 rootPath: .
@@ -69,10 +69,18 @@ status: statusnotvalid`;
 
 describe('yaml parser with not valid value', () => {
     let p = new YAMLParser(errorvalue);
-    let filters:Record<string,Property>={
-        "status":new WhitelistProperty("status","/path/todo.md",new MockPropertyDAO("-"),["done","inbox"])
+    
+    let settings:FATPluginSettings = {
+        status:{
+            allowedValues:["done","inbox"],
+            defaultValue:""
+        }
     }
-    let result = p.parseFilters(filters);
+
+    //let filters:Record<string,Property>={
+    //    "status":new WhitelistProperty("status","/path/todo.md",new MockPropertyDAO("-"),["done","inbox"])
+    //}
+    let result = p.parseFilters(settings);
     test("testing filter", () => {    
         expect(result.length).toBe(0);
     });
