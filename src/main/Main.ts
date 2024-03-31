@@ -35,10 +35,17 @@ export class Main{
 
     static displayActionList(el:HTMLElement,parser:YAMLParser,rootPath:string,settings:FATSettings,folderList:FolderList):void{
         const fileList = new FileList();
+<<<<<<< HEAD
         fileList.init(rootPath,settings);
 
         //const properties = Task.getProperties(rootPath,settings,folderList);
         const filters = parser.parseFilters(settings);
+=======
+        fileList.init(rootPath,settings,folderList);
+//TODO use settings not proprerties to parse 
+        const properties = Task.getProperties(rootPath,settings,folderList);
+        const filters = parser.parseFilters(properties);
+>>>>>>> bcec1a4e7fc4aebce5f87738f9aa1d07b35b2e74
         const files = fileList.files;
         const fileFilter = new FileFilter(files);
         const filteredFiles = fileFilter.bulkFilterBy(filters).get();
