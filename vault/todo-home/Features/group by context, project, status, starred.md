@@ -1,6 +1,6 @@
 ---
 context: none
 status: inbox
-starred: unstarred
+starred: ⭐
 Starred: ⭐
 ---

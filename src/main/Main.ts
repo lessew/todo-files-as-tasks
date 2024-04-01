@@ -1,5 +1,4 @@
 import { App } from "obsidian";
-import { FATSettings } from "./FileAsTask";
 import { YAMLParser } from "src/core/YAMLParser";
 import { ObsidianWrapper } from "./obsidian/ObsidianWrapper";
 import { TaskListView } from "./ui/TaskListView";
@@ -7,6 +6,7 @@ import { FileList } from "./obsidian/FileList";
 import { FolderList } from "./obsidian/FolderList";
 import { CreateTaskButtonView } from "./ui/CreateTaskButtonView";
 import { FileFilter } from "src/core/FileFilter";
+import { FATSettings } from "./FileAsTaskSettings";
 
 
 
@@ -26,28 +26,20 @@ export class Main{
 
         const action = parser.parseAction();
         if(action==YAMLParser.ACTION_LIST){
-           Main.displayActionList(el,parser,rootPath,settings,folderList)
+           Main.displayActionList(el,parser,rootPath,settings)
         }
         else if(action==YAMLParser.ACTION_CREATE_BUTTON){
            Main.displayCreateTaskButton(el,app,folderList)
         }
     }
 
-    static displayActionList(el:HTMLElement,parser:YAMLParser,rootPath:string,settings:FATSettings,folderList:FolderList):void{
+    static displayActionList(el:HTMLElement,parser:YAMLParser,rootPath:string,settings:FATSettings):void{
+               
         const fileList = new FileList();
-<<<<<<< HEAD
         fileList.init(rootPath,settings);
 
-        //const properties = Task.getProperties(rootPath,settings,folderList);
         const filters = parser.parseFilters(settings);
-=======
-        fileList.init(rootPath,settings,folderList);
-//TODO use settings not proprerties to parse 
-        const properties = Task.getProperties(rootPath,settings,folderList);
-        const filters = parser.parseFilters(properties);
->>>>>>> bcec1a4e7fc4aebce5f87738f9aa1d07b35b2e74
-        const files = fileList.files;
-        const fileFilter = new FileFilter(files);
+        const fileFilter = new FileFilter(fileList.files);
         const filteredFiles = fileFilter.bulkFilterBy(filters).get();
         const view = new TaskListView(filteredFiles,ObsidianWrapper.getInstance().obsidianApp);
         view.build(el);

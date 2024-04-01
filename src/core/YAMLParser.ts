@@ -1,7 +1,6 @@
 import * as yaml from 'js-yaml'
-import { Property } from './Interfaces/Property';
 import { Filter, Filter_Operator } from './Interfaces/Filter';
-import { FATPluginSettings, PropertySettings } from 'src/main/FileAsTask';
+import { FATSettings } from 'src/main/FileAsTaskSettings';
 
 export class YAMLParser{
     source:string;
@@ -40,26 +39,19 @@ export class YAMLParser{
         return YAMLParser.ACTION_LIST;
     }
    
-    parseFilters(settings:FATPluginSettings):Filter[]{
+    parseFilters(settings:FATSettings):Filter[]{
         let result:Filter[] = [];
 
-        for(const propertyName in settings){
-            //const propSetting:PropertySettings = settings[propertyName];
-            
+        for(const propertyName in settings){            
             const yaml = this.yaml as any;
-
             if(propertyName in yaml){
                 const filterValue:string = yaml[propertyName];
-
                 let valop = this.parseOperator(filterValue);
-
-                //if(property.validate(valop.value)){
-                    result.push({
-                        propertyName:propertyName,
-                        propertyValue:valop.value,
-                        operator:valop.operator
-                    })
-                //}
+                result.push({
+                    propertyName:propertyName,
+                    propertyValue:valop.value,
+                    operator:valop.operator
+                })
             }
         }
         return result;

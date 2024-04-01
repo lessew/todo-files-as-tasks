@@ -28,7 +28,7 @@ export class ObsidianWrapper{
     refreshUI():void{
         setTimeout(
             () => this.obsidianApp.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true)
-        ,100)  
+        ,200)  
     }
 
 }

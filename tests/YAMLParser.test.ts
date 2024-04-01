@@ -1,9 +1,22 @@
-
-import { WhitelistProperty } from "../src/core/Properties/WhitelistProperty";
 import { YAMLParser } from "../src/core/YAMLParser";
-import { MockPropertyDAO } from "./Mocks/MockPropertyDAO";
 import { Filter_Operator } from "../src/core/Interfaces/Filter";
-import { Property } from "src/core/Property";
+import { FATSettings,FATPROPERTY } from "../src/main/FileAsTaskSettings";
+
+class Helper {
+    static getSettings(statusAllowedValues:string[]):FATSettings{
+        return {
+            [FATPROPERTY.status]: {
+                allowedValues: statusAllowedValues,
+                defaultValue: ""
+            },
+            [FATPROPERTY.title]: {defaultValue: ""},
+            [FATPROPERTY.project]: {defaultValue: ""},
+            [FATPROPERTY.context]: {defaultValue: ""},
+            [FATPROPERTY.starred]: {defaultValue: ""}
+        }
+    }
+}
+
 
 const correctlyFormatted = `
 rootPath: .
@@ -67,22 +80,14 @@ rootPath: todo-home/
 context: desk
 status: statusnotvalid`;
 
-describe('yaml parser with not valid value', () => {
+describe('yaml parser with not valid value - should not have any effect and caught elsewhere', () => {
     let p = new YAMLParser(errorvalue);
     
-    let settings:FATPluginSettings = {
-        status:{
-            allowedValues:["done","inbox"],
-            defaultValue:""
-        }
-    }
+    let settings:FATSettings = Helper.getSettings(["done","inbox"]);
 
-    //let filters:Record<string,Property>={
-    //    "status":new WhitelistProperty("status","/path/todo.md",new MockPropertyDAO("-"),["done","inbox"])
-    //}
     let result = p.parseFilters(settings);
     test("testing filter", () => {    
-        expect(result.length).toBe(0);
+        expect(result.length).toBe(2);
     });
 });
 
@@ -106,12 +111,11 @@ describe('yaml parser: parse operator test', () => {
 
 describe('yaml parser with negating filter', () => {
     let p = new YAMLParser(notdone);
-    let filters:Record<string,Property>={
-        "status":new WhitelistProperty("status","/path/todo.md",new MockPropertyDAO("-"),["done","inbox"])
-    }
-    let result = p.parseFilters(filters);
+    let settings:FATSettings = Helper.getSettings(["done","inbox"]);
+   
+    let result = p.parseFilters(settings);
     test("testing filter", () => {    
-        expect(result.length).toBe(1);
+        expect(result.length).toBe(2);
         expect(result[0].propertyName).toBe("status");
         expect(result[0].propertyValue).toBe("done");
         expect(result[0].operator).toBe(Filter_Operator.exclude);

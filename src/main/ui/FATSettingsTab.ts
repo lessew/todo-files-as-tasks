@@ -1,28 +1,7 @@
 import FATPlugin from "main";
 import { App, PluginSettingTab, Setting } from "obsidian";
-import { FATProperty, FATSettings } from "../FileAsTask";
+import { FATPROPERTY, FATSettings } from "../FileAsTaskSettings";
 
-
-export const DEFAULT_SETTINGS: FATSettings = {
-    [FATProperty.context]:{
-        allowedValues:["Desk","Deep","Phone","Read","None"],
-        defaultValue:"None"
-    },
-    [FATProperty.status]:{
-        allowedValues:["Inbox","Next","Deferred","Waiting","Done"],
-        defaultValue:"Inbox"
-    },
-    [FATProperty.starred]:{
-        allowedValues:["✰","⭐"],
-        defaultValue:"✰"
-    },
-    [FATProperty.title]:{
-        defaultValue:"no title"
-    },
-    [FATProperty.project]:{
-        defaultValue:"no project"
-    }
-}
 
 export class FATSettingTab extends PluginSettingTab {
 	plugin: FATPlugin;
@@ -47,9 +26,9 @@ export class FATSettingTab extends PluginSettingTab {
         .setDesc('All allowed values for "context", comma seperated')
         .addText(text => text
             .setPlaceholder('Enter values')
-            .setValue(this.plugin.settings[FATProperty.context].allowedValues!.join(","))
+            .setValue(this.plugin.settings[FATPROPERTY.context].allowedValues!.join(","))
             .onChange(async (value) => {
-                this.plugin.settings[FATProperty.context].allowedValues = value.trim().split(",");
+                this.plugin.settings[FATPROPERTY.context].allowedValues = value.trim().split(",");
                 await this.plugin.saveSettings();
             }));
     }
@@ -60,9 +39,9 @@ export class FATSettingTab extends PluginSettingTab {
         .setDesc('All allowed values for "status", comma seperated')
         .addText(text => text
             .setPlaceholder('Enter values')
-            .setValue(this.plugin.settings[FATProperty.status].allowedValues!.join(","))
+            .setValue(this.plugin.settings[FATPROPERTY.status].allowedValues!.join(","))
             .onChange(async (value) => {
-                this.plugin.settings[FATProperty.status].allowedValues = value.trim().split(",");
+                this.plugin.settings[FATPROPERTY.status].allowedValues = value.trim().split(",");
                 await this.plugin.saveSettings();
             }));
     }
@@ -72,9 +51,9 @@ export class FATSettingTab extends PluginSettingTab {
         .setDesc('All allowed values for "context", comma seperated')
         .addText(text => text
             .setPlaceholder('Enter values')
-            .setValue(this.plugin.settings[FATProperty.starred].allowedValues!.join(","))
+            .setValue(this.plugin.settings[FATPROPERTY.starred].allowedValues!.join(","))
             .onChange(async (value) => {
-                this.plugin.settings[FATProperty.starred].allowedValues = value.trim().split(",");
+                this.plugin.settings[FATPROPERTY.starred].allowedValues = value.trim().split(",");
                 await this.plugin.saveSettings();
             }));
     }

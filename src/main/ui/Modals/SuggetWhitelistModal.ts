@@ -1,22 +1,17 @@
 import { App, MarkdownView, SuggestModal } from "obsidian";
-import { OptionsProperty, Property } from "src/core/Interfaces/Property";
+import { Property } from "src/core/Property";
 
 export class SuggestWhitelistModal extends SuggestModal<string>{
 
-    prop:OptionsProperty;
+    prop:Property;
     validValues:string[];
     onSubmit: (result:string) => void;
 
-    constructor(prop:OptionsProperty, onSubmit: (result:string) => void, app: App) {
+    constructor(prop:Property, onSubmit: (result:string) => void, app: App) {
         super(app);
         this.prop = prop;
         this.onSubmit = onSubmit;
-        if(typeof this.prop.allowedValues != 'undefined'){
-            this.validValues = this.prop.allowedValues ;
-        }
-        else{
-            this.validValues = [];
-        }
+        this.validValues = this.prop.settings.allowedValues!;
     }
         
     getSuggestions(query: string): string[] | Promise<string[]> {
