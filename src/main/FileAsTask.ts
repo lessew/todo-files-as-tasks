@@ -9,21 +9,26 @@ import { PropertyDAO } from "src/core/Interfaces/PropertyDAO";
 import { PropertySettings } from "src/core/PropertySettings";
 import { Property } from "src/core/Property";
 
-export enum FATProperty{
-    context="context",
-    status="status",
-    project="project",
-    title="title",
-    starred="starred"
-}
+export const FATPROPERTY = {
+    context:"context",
+    status:"status",
+    project:"project",
+    title:"title",
+    starred:"starred"
+} as const;
+
+type ObjectValues<T> = T[keyof T];
+type FATProperty = ObjectValues<typeof FATPROPERTY>;
+
 
 export class FATSettings {
-    [FATProperty.title]:PropertySettings;
-    [FATProperty.project]:PropertySettings;
-    [FATProperty.context]:PropertySettings;
-    [FATProperty.starred]:PropertySettings;
-    [FATProperty.status]:PropertySettings;
+    [FATPROPERTY.title]:PropertySettings;
+    [FATPROPERTY.project]:PropertySettings;
+    [FATPROPERTY.context]:PropertySettings;
+    [FATPROPERTY.starred]:PropertySettings;
+    [FATPROPERTY.status]:PropertySettings;
 }
+
 
 export class FileAsTask{
 
@@ -32,31 +37,31 @@ export class FileAsTask{
         let task = new File(fullPathOfTask,pathDao);
 
         let properties:Record<FATProperty, Property> = {
-            [FATProperty.title]:new BasenameProperty(
-                FATProperty.title,
+            [FATPROPERTY.title]:new BasenameProperty(
+                FATPROPERTY.title,
                 fullPathOfTask, 
                 new PathPropertyDAO(),
-                settings[FATProperty.title]),
-            [FATProperty.project]:new ToplevelFolderProperty(
-                FATProperty.project,
+                settings[FATPROPERTY.title]),
+            [FATPROPERTY.project]:new ToplevelFolderProperty(
+                FATPROPERTY.project,
                 fullPathOfTask,
                 new PathPropertyDAO(),
-                settings[FATProperty.project]),
-            [FATProperty.starred]:new BooleanProperty(
-                FATProperty.starred,
+                settings[FATPROPERTY.project]),
+            [FATPROPERTY.starred]:new BooleanProperty(
+                FATPROPERTY.starred,
                 fullPathOfTask,
                 new YAMLPropertyDAO(),
-                settings[FATProperty.starred]),
-            [FATProperty.status]:new WhitelistProperty(
-                FATProperty.status,
+                settings[FATPROPERTY.starred]),
+            [FATPROPERTY.status]:new WhitelistProperty(
+                FATPROPERTY.status,
                 fullPathOfTask,
                 new YAMLPropertyDAO(),
-                settings[FATProperty.status]),
-            [FATProperty.context]:new WhitelistProperty(
-                FATProperty.context,
+                settings[FATPROPERTY.status]),
+            [FATPROPERTY.context]:new WhitelistProperty(
+                FATPROPERTY.context,
                 fullPathOfTask,
                 new YAMLPropertyDAO(),
-                settings[FATProperty.context])
+                settings[FATPROPERTY.context])
         }
         task.properties = properties;
         return task;
