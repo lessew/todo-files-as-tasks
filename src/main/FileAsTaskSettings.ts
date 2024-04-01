@@ -12,6 +12,8 @@ export const FATPROPERTY = {
 type ObjectValues<T> = T[keyof T];
 export type FATProperty = ObjectValues<typeof FATPROPERTY>;
 
+export type FATSettings = Record<FATProperty,PropertySettings>;
+/*
 export class FATSettings {
     [FATPROPERTY.title]:PropertySettings;
     [FATPROPERTY.project]:PropertySettings;
@@ -19,6 +21,7 @@ export class FATSettings {
     [FATPROPERTY.starred]:PropertySettings;
     [FATPROPERTY.status]:PropertySettings;
 }
+*/
 
 export const DEFAULT_SETTINGS: FATSettings = {
     [FATPROPERTY.context]:{

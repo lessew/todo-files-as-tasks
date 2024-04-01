@@ -8,6 +8,9 @@ import { BasenameProperty } from "../../src/core/Properties/BasenameProperty";
 import { PropertyDAO } from "../../src/core/Interfaces/PropertyDAO";
 import { Property } from "../../src/core/Property";
 import { FATPROPERTY, FATProperty, FATSettings } from "./FileAsTaskSettings";
+import { ObsidianFileDAO } from "./obsidian/ObsidianFileDAO";
+import { ObsidianWrapper } from "./obsidian/ObsidianWrapper";
+import { PropertySettings } from "src/core/PropertySettings";
 
 export class FileAsTask{
 
@@ -44,6 +47,20 @@ export class FileAsTask{
         }
         task.properties = properties;
         return task;
+    }
+
+    // TODO fix create method. default value properties are not saved, file is not created and no error message displayed
+    static async create(project:string,title:string,settings:FATSettings){
+        let dao = new ObsidianFileDAO();
+        const path = ObsidianWrapper.getInstance().rootPath + "/" + project + "/" + title + ".md";
+        await dao.createMarkdownFile(path);
+        let file:File = FileAsTask.load(path,settings);
+
+        //let property: keyof typeof setting;
+        for(let propName in settings){
+            let val = settings[propName as FATProperty].defaultValue;
+            file.properties[propName].setValue(val);
+        }
     }
 
 }

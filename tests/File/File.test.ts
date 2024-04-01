@@ -1,4 +1,4 @@
- import { MockFile } from "../../tests/Mocks/MockFile";
+import { MockFile } from "../../tests/Mocks/MockFile";
 import { File } from "../../src/core/File";
 import { WhitelistProperty } from "../../src/core/Properties/WhitelistProperty";
 import { MockPropertyDAO } from "../../tests/Mocks/MockPropertyDAO";

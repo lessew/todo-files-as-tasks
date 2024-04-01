@@ -2,6 +2,7 @@ import { App, Modal, Setting } from "obsidian";
 import { ObsidianWrapper } from "../obsidian/ObsidianWrapper";
 import { FolderList } from "../obsidian/FolderList";
 import { ObsidianFileDAO } from "../obsidian/ObsidianFileDAO";
+import { FileAsTask } from "../FileAsTask";
 
 
 export class CreateTaskButtonView{
@@ -20,9 +21,8 @@ export class CreateTaskButtonView{
 
     handleEvent(event:Event){
         const m:CreateTaskModal =  new CreateTaskModal(this.obsidianApp,this.projects,(result:any) => {
-            let dao = new ObsidianFileDAO();
-            const path = ObsidianWrapper.getInstance().rootPath + "/" + result.project + "/" + result.title + ".md";
-            dao.createMarkdownFile(path);
+            //FileAsTask.create(result.project,result.title);
+           
             ObsidianWrapper.getInstance().refreshUI();
         });
         m.open();
