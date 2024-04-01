@@ -1,9 +1,9 @@
 import { YAMLParser } from "../src/core/YAMLParser";
-import { Filter_Operator } from "../src/core/Interfaces/Filter";
+import { FilterOperator } from "../src/core/Interfaces/Filter";
 import { FATSettings,FATPROPERTY } from "../src/main/FileAsTaskSettings";
 
 class Helper {
-    statiFilterOperatortatusAllowedValues:string[]):FATSettings{
+    static getSettings(statusAllowedValues:string[]):FATSettings{
         return {
             [FATPROPERTY.status]: {
                 allowedValues: statusAllowedValues,
@@ -118,7 +118,7 @@ describe('yaml parser with negating filter', () => {
         expect(result.length).toBe(2);
         expect(result[0].propertyName).toBe("status");
         expect(result[0].propertyValue).toBe("done");
-        expect(result[0].operator).toBe(Filter_Operator.exclude);
+        expect(result[0].operator).toBe(FilterOperator.exclude);
     });
 
 });
