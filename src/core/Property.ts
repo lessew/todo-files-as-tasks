@@ -1,7 +1,6 @@
 import { PropertyDAO } from "./Interfaces/PropertyDAO";
 import { PropertySettings } from "./PropertySettings";
 
-// TODO merge interface into abstract class, rename abstract class to Proprty
 export abstract class Property{
     name:string;
     fileID:string;

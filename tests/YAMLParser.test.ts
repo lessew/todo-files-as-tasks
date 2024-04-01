@@ -3,7 +3,7 @@ import { Filter_Operator } from "../src/core/Interfaces/Filter";
 import { FATSettings,FATPROPERTY } from "../src/main/FileAsTaskSettings";
 
 class Helper {
-    static getSettings(statusAllowedValues:string[]):FATSettings{
+    statiFilterOperatortatusAllowedValues:string[]):FATSettings{
         return {
             [FATPROPERTY.status]: {
                 allowedValues: statusAllowedValues,
@@ -106,7 +106,7 @@ describe('yaml parser: parse operator test', () => {
         expect(result.operator).toBe("exclude");
         expect(result.value).toBe("done");
     })
-});
+});FilterOperator
 
 
 describe('yaml parser with negating filter', () => {

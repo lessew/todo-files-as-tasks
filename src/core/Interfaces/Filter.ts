@@ -1,5 +1,4 @@
-// TODO remove underscore
-export enum Filter_Operator {
+export enum FilterOperator {
     include="include",
     exclude="exclude"
 }
@@ -7,5 +6,5 @@ export enum Filter_Operator {
 export type Filter = {
     propertyName:string,
     propertyValue:string,
-    operator:Filter_Operator
+    operator:FilterOperator
 }

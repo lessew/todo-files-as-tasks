@@ -3,7 +3,7 @@ import { MockFile } from "./Mocks/MockFile";
 import { File } from "../src/core/File";
 import { WhitelistProperty } from "../src/core/Properties/WhitelistProperty";
 import { MockPropertyDAO } from "./Mocks/MockPropertyDAO";
-import {Filter, Filter_Operator} from "../src/core/Interfaces/Filter";
+import {Filter, FilterOperator} from "../src/core/Interfaces/Filter";
 
 
 class Helper {
@@ -58,7 +58,7 @@ describe('Filter By (single)', () => {
         builder.filterBy({
             propertyName:"status",
             propertyValue:"Inbox",
-            operator:Filter_Operator.include
+            operator:FilterOperator.include
         });
         expect(builder.files.length).toBe(2);
     });
@@ -68,7 +68,7 @@ describe('Filter By (single)', () => {
         builder.filterBy({
             propertyName:"status",
             propertyValue:"InvalidStatus",
-            operator:Filter_Operator.include
+            operator:FilterOperator.include
         });
         expect(builder.files.length).toBe(0);
     });
@@ -82,12 +82,12 @@ describe('BulkFilterBy', () => {
             {
                 propertyName:"status",
                 propertyValue:"Inbox",
-                operator:Filter_Operator.include
+                operator:FilterOperator.include
             },
             {
                 propertyName:"context",
                 propertyValue:"Desk",
-                operator:Filter_Operator.exclude
+                operator:FilterOperator.exclude
             },
         ]
         builder.bulkFilterBy(filters);
@@ -102,7 +102,7 @@ describe('Filter By not (single)', () => {
         builder.filterBy({
             propertyName:"context",
             propertyValue:"Phone",
-            operator:Filter_Operator.exclude
+            operator:FilterOperator.exclude
         });
         expect(builder.files.length).toBe(3);
     });

@@ -1,5 +1,5 @@
 import * as yaml from 'js-yaml'
-import { Filter, Filter_Operator } from './Interfaces/Filter';
+import { Filter, FilterOperator } from './Interfaces/Filter';
 import { FATSettings } from 'src/main/FileAsTaskSettings';
 
 export class YAMLParser{
@@ -57,11 +57,11 @@ export class YAMLParser{
         return result;
     }
 
-    parseOperator(val:string):{operator:Filter_Operator,value:string}{
-        let operator = Filter_Operator.include;
+    parseOperator(val:string):{operator:FilterOperator,value:string}{
+        let operator = FilterOperator.include;
         let resultValue = val;
         if(val.startsWith(YAMLParser.EXCLUDE_TOKEN)){
-            operator = Filter_Operator.exclude
+            operator = FilterOperator.exclude
             resultValue = val.substring(YAMLParser.EXCLUDE_TOKEN.length,val.length).trim();
         }
         return {
