@@ -1,4 +1,4 @@
-import { App, TFile } from "obsidian";
+import { App, TAbstractFile, TFile, TFolder } from "obsidian";
 import { ObsidianWrapper } from "./ObsidianWrapper";
 import { FileAsTask } from "../FileAsTask";
 import { File } from "src/core/File";
@@ -10,19 +10,41 @@ export class FileList implements FileListDAO{
 
     init(rootPath:string,settings:FATSettings):void{
         const wrapper = ObsidianWrapper.getInstance();
+                
+        const root = wrapper.obsidianApp.vault.getAbstractFileByPath(rootPath);
+        let tFiles:TFile[] = [];
+        if(root instanceof TFolder){
+            tFiles = FileList.getAllFilesFromRootPath(root);
+        }
+        else{
+            throw Error("RootPath is not a folder");
+        }
+        this.files = FileList.loadAllFilesAsTasks(tFiles,settings);
+    }
 
-        // TODO adjust to start iteration from rootfolder, do not query all files
-        const tf:TFile[] = wrapper.obsidianApp.vault.getMarkdownFiles();
+    static loadAllFilesAsTasks(tFiles:TFile[],settings:FATSettings):File[]{
         let files:File[] = [];
-        
-        tf.forEach(aFile => {
-            if(aFile.path.indexOf(rootPath)>-1){
-               const newFile:File = FileAsTask.load(aFile.path,settings);
-               if(newFile.isMarkdownFile()){
-                    files.push(newFile);
-                }
+        tFiles.forEach(aFile => {
+            const newFile:File = FileAsTask.load(aFile.path,settings);
+            if(newFile.isMarkdownFile()){
+                files.push(newFile);
             }
         });
-        this.files = files;
+        return files;
     }
+
+    static getAllFilesFromRootPath(folder:TFolder):TFile[]{
+        let files:TFile[] = [];
+        folder.children.forEach((child) => {
+            if(child instanceof TFolder){
+                const filesInFolder = FileList.getAllFilesFromRootPath(child);                
+                files = [...files, ...filesInFolder];
+            }
+            else{
+                files.push(child as TFile);
+            }
+        });
+        return files;
+    }
+
 }

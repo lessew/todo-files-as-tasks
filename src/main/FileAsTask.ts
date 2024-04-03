@@ -10,7 +10,6 @@ import { Property } from "../../src/core/Property";
 import { FATPROPERTY, FATProperty, FATSettings } from "./FileAsTaskSettings";
 import { ObsidianFileDAO } from "./obsidian/ObsidianFileDAO";
 import { ObsidianWrapper } from "./obsidian/ObsidianWrapper";
-import { PropertySettings } from "src/core/PropertySettings";
 
 export class FileAsTask{
 
