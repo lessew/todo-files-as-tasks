@@ -1,18 +1,16 @@
 import { App, Modal, Setting } from "obsidian";
 import { ObsidianWrapper } from "../obsidian/ObsidianWrapper";
-import { FolderList } from "../obsidian/FolderList";
-import { ObsidianFileDAO } from "../obsidian/ObsidianFileDAO";
-import { FileAsTask } from "../FileAsTask";
-import { FATSettings } from "../FileAsTaskSettings";
+import { FATSettings, FATSettingsHelper } from "../FileAsTaskSettings";
 
 
 export class CreateTaskButtonView{
     obsidianApp:App;
     projects:string[];
+    settings:FATSettings;
 
     constructor(app:App,settings:FATSettings){
         this.obsidianApp = app;
-        this.projects = settings.project.allowedValues as string[];
+        this.settings = settings;
     }
 
     build(rootElement:HTMLElement):void{
@@ -21,10 +19,10 @@ export class CreateTaskButtonView{
     }
 
     handleEvent(event:Event){
-        const m:CreateTaskModal =  new CreateTaskModal(this.obsidianApp,this.projects,(result:any) => {
+        const m:CreateTaskModal =  new CreateTaskModal(this.obsidianApp,this.settings,(result:any) => {
             //FileAsTask.create(result.project,result.title);
            
-            ObsidianWrapper.getInstance().refreshUI();
+            ObsidianWrapper.getInstance().reloadUI();
         });
         m.open();
     }
@@ -62,7 +60,7 @@ class CreateTaskModal extends Modal{
         .setName("Project")
         .addDropdown((dropdown) =>
             dropdown
-            //.addOptions(this.folderList.getFoldersAsRecord())
+            .addOptions(FATSettingsHelper.allowedValuesToRecord(this.settings.project.allowedValues!))
             .addOption("--Select Project--","--Select Project--")
             .onChange((value) => {
                 this.result.project = value

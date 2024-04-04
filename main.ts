@@ -9,8 +9,9 @@ export default class FATPlugin extends Plugin {
 
 	async onload() {
 		await this.loadSettings();
-		
+
 		this.registerMarkdownCodeBlockProcessor("fat", (source, el, ctx) => {
+			console.log(source);
 			let main = new Main(source,el,this.settings,this.app);
 			main.load();
 		});

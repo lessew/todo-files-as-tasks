@@ -23,6 +23,20 @@ export class FATSettings {
 }
 */
 
+export class FATSettingsHelper {
+    static allowedValuesToRecord(allowedValues:string[]):Record<string,string>{
+        let result:Record<string,string> = {};
+        for(let i=0;i<allowedValues.length;i++){
+            result[allowedValues[i]] = allowedValues[i];
+        }
+        return result;
+    }
+
+    //static allowedValuesToString(allowedValues:string[]):string{
+    //    return allowedValues.join(",");
+    //}
+}
+
 export const DEFAULT_SETTINGS: FATSettings = {
     [FATPROPERTY.context]:{
         allowedValues:["Desk","Deep","Phone","Read","None"],

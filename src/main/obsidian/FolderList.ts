@@ -6,11 +6,11 @@ export class FolderList implements FolderListDAO{
     folders:string[];
     
 
-// TODO account for case with nested folders.
+    // TODO account for case with nested folders.
      init(rootPath:string):void{
         let result:string[] = [];
         const wrapper = ObsidianWrapper.getInstance();
-        const rootFolder = wrapper.obsidianApp.vault.getAbstractFileByPath(rootPath);
+        const rootFolder = wrapper.getTFolder(rootPath);
         if(rootFolder instanceof TFolder){
             rootFolder.children.forEach(child => {
                 if(child instanceof TFolder){
@@ -25,11 +25,4 @@ export class FolderList implements FolderListDAO{
         this.folders = result;
     }
 
-    getFoldersAsRecord():Record<string,string>{
-        let projects:Record<string,string> = {};
-        for(let i=0;i<this.folders.length;i++){
-            projects[this.folders[i]] = this.folders[i];
-        }
-        return projects;
-    }
 }

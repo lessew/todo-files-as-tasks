@@ -11,7 +11,7 @@ export class FileList implements FileListDAO{
     init(rootPath:string,settings:FATSettings):void{
         const wrapper = ObsidianWrapper.getInstance();
                 
-        const root = wrapper.obsidianApp.vault.getAbstractFileByPath(rootPath);
+        const root = wrapper.getTFolder(rootPath);
         let tFiles:TFile[] = [];
         if(root instanceof TFolder){
             tFiles = FileList.getAllFilesFromRootPath(root);

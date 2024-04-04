@@ -1,9 +1,8 @@
 import { triggerAsyncId } from "async_hooks";
-import { App,Editor,MarkdownEditView,MarkdownView,TFile,normalizePath,Events } from "obsidian";
+import { App,Editor,MarkdownEditView,MarkdownView,TFile,normalizePath,Events, TFolder, CachedMetadata } from "obsidian";
 import { Main } from "../Main";
 
 
-// TODO make obsidianApp private and create proxy methods. To allow mock
 export class ObsidianWrapper{
     private static instance:ObsidianWrapper;
     obsidianApp:App;
@@ -29,46 +28,39 @@ export class ObsidianWrapper{
         return this.obsidianApp.vault.getAbstractFileByPath(path) as TFile;
     }
 
+    getTFolder(path:string):TFolder{
+        return this.obsidianApp.vault.getAbstractFileByPath(path) as TFolder;
+    }
+
+    getMeta(tf:TFile):CachedMetadata{
+        return this.obsidianApp.metadataCache.getFileCache(tf) as CachedMetadata;
+    }
+
+    setMeta(tf:TFile,propName:string,propValue:string):void{
+        this.obsidianApp.fileManager.processFrontMatter(tf,(frontmatter) => {
+            frontmatter[propName] = propValue;
+        })
+    }
+
+    createEmptyFile(path:string):void{
+        this.obsidianApp.vault.create(path,"");
+    }
+
+    moveFile(tf:TFile,path:string):void{
+        this.obsidianApp.vault.rename(tf,path);
+    }
+
     normalizePath(rp:string):string{
         return normalizePath(rp);
     }
 
-    // TODO FIX does not work in editor view
-    refreshUI():void{
-
+    reloadUI():void{
         setTimeout(
             () => {
-                console.log("refresh");
                 this.mains.forEach((main) =>{
                     main.load();
                 });
-                /*
-                //this.main.load();
-                //console.log(this.obsidianApp.workspace.getActiveViewOfType(MarkdownView))
-                //this.obsidianApp.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true);
-                
-                const view = this.obsidianApp.workspace.getActiveViewOfType(MarkdownView) as MarkdownView;
-                const editor:Editor = view.editor as Editor;
-                const currentText = editor.getValue() + " " as string;
-                //editor.setValue(currentText);
-
-                //console.log(editor.getValue());
-                //editor.focus();
-                //editor.setValue(editor.getValue());
-                //this.obsidianApp.workspace.trigger('editor-change',editor,view);
-                //this.obsidianApp.workspace.trigger('css-change',editor,view);
-                let file = this.obsidianApp.workspace.getActiveFile() as TFile;
-                this.obsidianApp.vault.modify(file,currentText)
-                //console.log(this.obsidianApp.vault)
-                //window.tmpie = this.obsidianApp;
-                //editor.setValue
-                // option: touch the file. not sure of event is fired
-                //this.obsidianApp.vault.process(file, (data) => {
-                //    return data;
-                //  })
-                */
             }
-        ,500)  
+        ,150)  
     }
-
 }

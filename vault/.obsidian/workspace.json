@@ -22,7 +22,7 @@
               "type": "markdown",
               "state": {
                 "file": "fat-list-examples/All todos.md",
-                "mode": "source",
+                "mode": "preview",
                 "source": false
               }
             }
@@ -162,7 +162,7 @@
     "fat-list-examples/Create Todo.md",
     "fat-list-examples/Status.md",
     "todo-home/Release/create label field.md",
-    "todo-home/Bugs/Velden context, status kunnen aanpassen in config.md",
+    "todo-home/Features/Velden context, status kunnen aanpassen in config.md",
     "yatodo-examples/Context.md",
     "yatodo-examples/All todos.md",
     "todo-home/Features/delete task.md",
@@ -173,7 +173,7 @@
     "yatodo-examples/Status.md",
     "yatodo-examples/Starred and Unstarred.md",
     "todo-home/Release/qqqqqqqqqqq1.md",
-    "todo-home/Bugs/group by context, project, status, starred.md",
+    "todo-home/Release/group by context, project, status, starred.md",
     "todo-home/Architecture and  Design/wes.md",
     "todo-home/Architecture and  Design/Update Context and Status.md",
     "todo-home/Architecture and  Design/ppllkkiiuuhbn.md",
