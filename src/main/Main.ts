@@ -15,12 +15,21 @@ export class Main{
     el:HTMLElement;
     settings:FATSettings;
     app:App;
+    wrapperIsInit:boolean;
 
     constructor(source:string,el:HTMLElement,settings:FATSettings,app:App){
         this.source = source;
         this.el = el;
         this.settings = settings;
         this.app = app;
+        this.wrapperIsInit = false;
+    }
+
+    initialiseWrapperOnce(rootPath:string):void{
+        if(!this.wrapperIsInit){
+            ObsidianWrapper.init(this,this.app,rootPath)
+            this.wrapperIsInit = true;
+        }
     }
 
     load():void{
@@ -28,8 +37,8 @@ export class Main{
         const parser:YAMLParser = new YAMLParser(this.source);
         const rootPath:string = parser.parseRootPath();
 
-        // load obsidianwrapper so that other objects can access the obsidianapp
-        ObsidianWrapper.init(this,this.app,rootPath); 
+        // TODO find a nicer way to prevent circular calls
+        this.initialiseWrapperOnce(rootPath);
 
         // load files and folders from obsidian / filesystem
         const folderList = new FolderList();

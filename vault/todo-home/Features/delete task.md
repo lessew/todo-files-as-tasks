@@ -3,5 +3,6 @@ Starred: ✰
 Context: Desk
 Status: " Deferred"
 status: Deferred
-context: Phone
+context: Deep
+starred: ✰
 ---
