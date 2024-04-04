@@ -9,7 +9,6 @@ export class ObsidianWrapper{
     mains:Main[];
    
     public static async init(main:Main, app:App,rootPath:string){
-        console.log(ObsidianWrapper.instance)
         if(typeof ObsidianWrapper.instance === "undefined"){
             ObsidianWrapper.instance = new ObsidianWrapper();
             ObsidianWrapper.instance.obsidianApp = app;
