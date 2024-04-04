@@ -1,4 +1,4 @@
-import { App, TAbstractFile, TFile, TFolder } from "obsidian";
+import { TFile, TFolder } from "obsidian";
 import { ObsidianWrapper } from "./ObsidianWrapper";
 import { FileAsTask } from "../FileAsTask";
 import { File } from "src/core/File";
