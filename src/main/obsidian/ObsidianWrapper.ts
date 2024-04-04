@@ -1,5 +1,4 @@
-import { triggerAsyncId } from "async_hooks";
-import { App,Editor,MarkdownEditView,MarkdownView,TFile,normalizePath,Events, TFolder, CachedMetadata } from "obsidian";
+import { App,TFile,normalizePath, TFolder, CachedMetadata } from "obsidian";
 import { Main } from "../Main";
 
 
