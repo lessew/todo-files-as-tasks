@@ -1,4 +1,0 @@
----
-Starred: ⭐
-status: Done
----

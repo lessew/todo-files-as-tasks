@@ -11,42 +11,54 @@ import { FATSettings } from "./FileAsTaskSettings";
 
 
 export class Main{
-    static  run(source:string,el:HTMLElement,settings:FATSettings,app:App):void{
+    source:string;
+    el:HTMLElement;
+    settings:FATSettings;
+    app:App;
 
-        const parser:YAMLParser = new YAMLParser(source);
+    constructor(source:string,el:HTMLElement,settings:FATSettings,app:App){
+        this.source = source;
+        this.el = el;
+        this.settings = settings;
+        this.app = app;
+    }
+
+    load():void{
+        this.el.innerHTML = "";
+        const parser:YAMLParser = new YAMLParser(this.source);
         const rootPath:string = parser.parseRootPath();
 
         // load obsidianwrapper so that other objects can access the obsidianapp
-        ObsidianWrapper.init(app,rootPath); 
+        ObsidianWrapper.init(this,this.app,rootPath); 
 
         // load files and folders from obsidian / filesystem
         const folderList = new FolderList();
         folderList.init(rootPath);
-        settings.project.allowedValues = folderList.folders;
+        this.settings.project.allowedValues = folderList.folders;
 
         const action = parser.parseAction();
         if(action==YAMLParser.ACTION_LIST){
-           Main.displayActionList(el,parser,rootPath,settings)
+           this.displayActionList(parser,rootPath)
         }
         else if(action==YAMLParser.ACTION_CREATE_BUTTON){
-           Main.displayCreateTaskButton(el,app,folderList)
+           this.displayCreateTaskButton();
         }
     }
 
-    static displayActionList(el:HTMLElement,parser:YAMLParser,rootPath:string,settings:FATSettings):void{
+    displayActionList(parser:YAMLParser,rootPath:string):void{
                
         const fileList = new FileList();
-        fileList.init(rootPath,settings);
+        fileList.init(rootPath,this.settings);
 
-        const filters = parser.parseFilters(settings);
+        const filters = parser.parseFilters(this.settings);
         const fileFilter = new FileFilter(fileList.files);
         const filteredFiles = fileFilter.bulkFilterBy(filters).get();
-        const view = new TaskListView(filteredFiles,ObsidianWrapper.getInstance().obsidianApp);
-        view.build(el);
+        const view = new TaskListView(filteredFiles,this.app);
+        view.build(this.el);
     }
 
-    static displayCreateTaskButton(el:HTMLElement,obsidianApp:App,folderList:FolderList):void{
-        const view = new CreateTaskButtonView(obsidianApp,folderList);
-        view.build(el);
+    displayCreateTaskButton():void{
+        const view = new CreateTaskButtonView(this.app,this.settings);
+        view.build(this.el);
     }
 }

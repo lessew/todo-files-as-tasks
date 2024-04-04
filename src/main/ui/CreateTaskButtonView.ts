@@ -3,15 +3,16 @@ import { ObsidianWrapper } from "../obsidian/ObsidianWrapper";
 import { FolderList } from "../obsidian/FolderList";
 import { ObsidianFileDAO } from "../obsidian/ObsidianFileDAO";
 import { FileAsTask } from "../FileAsTask";
+import { FATSettings } from "../FileAsTaskSettings";
 
 
 export class CreateTaskButtonView{
     obsidianApp:App;
-    projects:FolderList;
+    projects:string[];
 
-    constructor(app:App,folderList:FolderList){
+    constructor(app:App,settings:FATSettings){
         this.obsidianApp = app;
-        this.projects = folderList;
+        this.projects = settings.project.allowedValues as string[];
     }
 
     build(rootElement:HTMLElement):void{
@@ -29,21 +30,21 @@ export class CreateTaskButtonView{
     }
 }
 
-
+// TODO: add properties and settings to dropdown
 class CreateTaskModal extends Modal{
     result:any;
-    folderList:FolderList;
+    settings:FATSettings;
 
     onSubmit: (result: string) => void;
 
-    constructor(app: App,folderList:FolderList,onSubmit: (result: any) => void) {
+    constructor(app: App,settings:FATSettings,onSubmit: (result: any) => void) {
         super(app);
         this.result = {
             title: "",
             project: ""
         }
         this.onSubmit = onSubmit;
-        this.folderList = folderList;
+        this.settings = settings;
     }
 
     onOpen() {
@@ -61,7 +62,7 @@ class CreateTaskModal extends Modal{
         .setName("Project")
         .addDropdown((dropdown) =>
             dropdown
-            .addOptions(this.folderList.getFoldersAsRecord())
+            //.addOptions(this.folderList.getFoldersAsRecord())
             .addOption("--Select Project--","--Select Project--")
             .onChange((value) => {
                 this.result.project = value
