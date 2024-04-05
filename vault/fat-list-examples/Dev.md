@@ -5,9 +5,6 @@ type: create_button
 ```
 
 
-
-# shizznet
-
 ## Not done
 
 ```fat
@@ -20,4 +17,4 @@ status: not Done
 ```fat
 rootPath: todo-home
 status: Done
-```
+```    

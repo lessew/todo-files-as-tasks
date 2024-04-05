@@ -4,20 +4,17 @@ import { CachedMetadata, TFile } from "obsidian";
 
 export class YAMLPropertyDAO implements PropertyDAO{
     
-
     persist(fileID: string, propertyName: string, val: string): void {
         const obsidianWrapper = ObsidianWrapper.getInstance();
         const tf:TFile  = obsidianWrapper.getTFile(fileID);
-        obsidianWrapper.obsidianApp.fileManager.processFrontMatter(tf,(frontmatter) => {
-                frontmatter[propertyName] = val;
-            })
+        obsidianWrapper.setMeta(tf,propertyName,val);
     }
     
     retrieve(fileID: string, propertyName: string): string {
         const obsidianWrapper = ObsidianWrapper.getInstance();
         const tf:TFile  = obsidianWrapper.getTFile(fileID);
         
-        let meta:CachedMetadata  = obsidianWrapper.obsidianApp.metadataCache.getFileCache(tf) as CachedMetadata;
+        let meta:CachedMetadata  = obsidianWrapper.getMeta(tf);
         if(meta && meta.frontmatter && meta.frontmatter[propertyName]){
             return meta.frontmatter[propertyName];
         }

@@ -1,6 +1,7 @@
 import { App, MarkdownView } from "obsidian";
 import { ObsidianWrapper } from "../obsidian/ObsidianWrapper";
 
+// TODO: use better symbols
 export class PropertyView{
     obsidianApp:App;
     statusNotSet:string = "◌";
@@ -13,6 +14,6 @@ export class PropertyView{
     }
 
     refreshUI():void{
-        ObsidianWrapper.getInstance().refreshUI();
+        ObsidianWrapper.getInstance().reloadUI();
     }
 }

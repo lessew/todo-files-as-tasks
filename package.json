@@ -9,6 +9,7 @@
 		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
 		"copy-to-brain": "cp vault/.obsidian/plugins/yatodo-app/* ../../../../Dropbox/Brain/.obsidian/plugins/yatodo-app/",
 		"version": "node version-bump.mjs && git add manifest.json versions.json",
+		"reset-test-vault": "cp -r vault/todo-home-base/* vault/todo-home/",
 		"test": "jest"
 	},
 	"keywords": [],

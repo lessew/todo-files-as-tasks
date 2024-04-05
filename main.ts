@@ -11,7 +11,8 @@ export default class FATPlugin extends Plugin {
 		await this.loadSettings();
 
 		this.registerMarkdownCodeBlockProcessor("fat", (source, el, ctx) => {
-			Main.run(source,el,this.settings,this.app);
+			let main = new Main(source,el,this.settings,this.app);
+			main.load();
 		});
 
 		// This adds a settings tab so the user can configure various aspects of the plugin
@@ -19,6 +20,9 @@ export default class FATPlugin extends Plugin {
 
 		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
 		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
+
+		
+        
 	}
 
 	onunload() {

@@ -5,15 +5,9 @@ import { ObsidianWrapper } from "../ObsidianWrapper";
 export class PathPropertyDAO implements PropertyDAO {
   
     persist(fileID:string,propertyName:string,val:string):void{
-     
         const wrapper = ObsidianWrapper.getInstance();
         const tf:TFile  = wrapper.getTFile(fileID);
-        try{
-            wrapper.obsidianApp.vault.rename(tf,val);
-        }
-        catch(e){
-            throw new Error("could not move file")
-        }
+        wrapper.moveFile(tf,val);
     }
 
     retrieve(fileID:string,propertyName:string):string{

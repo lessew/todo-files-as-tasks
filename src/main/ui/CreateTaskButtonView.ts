@@ -1,17 +1,16 @@
 import { App, Modal, Setting } from "obsidian";
 import { ObsidianWrapper } from "../obsidian/ObsidianWrapper";
-import { FolderList } from "../obsidian/FolderList";
-import { ObsidianFileDAO } from "../obsidian/ObsidianFileDAO";
-import { FileAsTask } from "../FileAsTask";
+import { FATSettings, FATSettingsHelper } from "../FileAsTaskSettings";
 
 
 export class CreateTaskButtonView{
     obsidianApp:App;
-    projects:FolderList;
+    projects:string[];
+    settings:FATSettings;
 
-    constructor(app:App,folderList:FolderList){
+    constructor(app:App,settings:FATSettings){
         this.obsidianApp = app;
-        this.projects = folderList;
+        this.settings = settings;
     }
 
     build(rootElement:HTMLElement):void{
@@ -20,30 +19,30 @@ export class CreateTaskButtonView{
     }
 
     handleEvent(event:Event){
-        const m:CreateTaskModal =  new CreateTaskModal(this.obsidianApp,this.projects,(result:any) => {
+        const m:CreateTaskModal =  new CreateTaskModal(this.obsidianApp,this.settings,(result:any) => {
             //FileAsTask.create(result.project,result.title);
            
-            ObsidianWrapper.getInstance().refreshUI();
+            ObsidianWrapper.getInstance().reloadUI();
         });
         m.open();
     }
 }
 
-
+// TODO: add properties and settings to dropdown
 class CreateTaskModal extends Modal{
     result:any;
-    folderList:FolderList;
+    settings:FATSettings;
 
     onSubmit: (result: string) => void;
 
-    constructor(app: App,folderList:FolderList,onSubmit: (result: any) => void) {
+    constructor(app: App,settings:FATSettings,onSubmit: (result: any) => void) {
         super(app);
         this.result = {
             title: "",
             project: ""
         }
         this.onSubmit = onSubmit;
-        this.folderList = folderList;
+        this.settings = settings;
     }
 
     onOpen() {
@@ -61,7 +60,7 @@ class CreateTaskModal extends Modal{
         .setName("Project")
         .addDropdown((dropdown) =>
             dropdown
-            .addOptions(this.folderList.getFoldersAsRecord())
+            .addOptions(FATSettingsHelper.allowedValuesToRecord(this.settings.project.allowedValues!))
             .addOption("--Select Project--","--Select Project--")
             .onChange((value) => {
                 this.result.project = value

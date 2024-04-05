@@ -7,6 +7,14 @@ A todo plugin that treats files as tasks. Create smart lists by filtering on YAM
 - Starred or unstarred
 - Label (any freetext value)
 
+# General usage and Limitations 
+
+- Use yaml codeblocks starting with 'fat' to configure your list
+- Each yaml codeblock starts with defining the rootpath from which the list should be created
+- From the rootpath, all .md files are read as tasks. Their parent folder is treated as project
+- Each .md file can have optional context, status, starred, label YAML fields which can be used to filter
+
+
 Usage examples:
 
 ## List all files as tasks in /todo-home/
@@ -57,7 +65,8 @@ status: Done
 ```
 
 
-# Limitations
+# Technical Details
 
-- All files are read
-- Untested: nested folders. Assumed is 1 level folder structure
+Obsidian developer policies(https://docs.obsidian.md/Developer+policies)  are followed as much as possible.
+Unit Tests as described here: https://publish.obsidian.md/hub/04+-+Guides%2C+Workflows%2C+%26+Courses/for+Plugin+Developers+to+Automate+Tests
+

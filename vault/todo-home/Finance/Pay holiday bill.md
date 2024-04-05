@@ -1,6 +1,6 @@
 ---
 Starred: ⭐
-Context: Read
-status: Deferred
+status: Done
+context: Deep
 starred: ⭐
 ---

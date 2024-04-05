@@ -1,16 +1,21 @@
-import { App,MarkdownView,TFile,normalizePath } from "obsidian";
+import { App,TFile,normalizePath, TFolder, CachedMetadata } from "obsidian";
+import { Main } from "../Main";
 
 
-// TODO make obsidianApp private and create proxy methods. To allow mock
 export class ObsidianWrapper{
     private static instance:ObsidianWrapper;
     obsidianApp:App;
     rootPath:string;
+    mains:Main[];
    
-    public static async init(app:App,rootPath:string){
-        ObsidianWrapper.instance = new ObsidianWrapper();
-        ObsidianWrapper.instance.obsidianApp = app;
+    public static async init(main:Main, app:App,rootPath:string){
+        if(typeof ObsidianWrapper.instance === "undefined"){
+            ObsidianWrapper.instance = new ObsidianWrapper();
+            ObsidianWrapper.instance.obsidianApp = app;
+            ObsidianWrapper.instance.mains = [];
+        }
         ObsidianWrapper.instance.rootPath = rootPath;
+        ObsidianWrapper.instance.mains.push(main);
     }
 
     public static getInstance():ObsidianWrapper{
@@ -21,14 +26,40 @@ export class ObsidianWrapper{
         return this.obsidianApp.vault.getAbstractFileByPath(path) as TFile;
     }
 
+    getTFolder(path:string):TFolder{
+        return this.obsidianApp.vault.getAbstractFileByPath(path) as TFolder;
+    }
+
+    getMeta(tf:TFile):CachedMetadata{
+        return this.obsidianApp.metadataCache.getFileCache(tf) as CachedMetadata;
+    }
+
+    setMeta(tf:TFile,propName:string,propValue:string):void{
+        this.obsidianApp.fileManager.processFrontMatter(tf,(frontmatter) => {
+            frontmatter[propName] = propValue;
+        })
+    }
+
+    createEmptyFile(path:string):void{
+        this.obsidianApp.vault.create(path,"");
+    }
+
+    moveFile(tf:TFile,path:string):void{
+        this.obsidianApp.vault.rename(tf,path);
+    }
+
     normalizePath(rp:string):string{
         return normalizePath(rp);
     }
 
-    refreshUI():void{
+    reloadUI():void{
         setTimeout(
-            () => this.obsidianApp.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true)
-        ,200)  
+            () => {
+                this.mains.forEach((main) =>{
+                    console.log("reloading a main");
+                    main.load();
+                });
+            }
+        ,150)  
     }
-
 }
