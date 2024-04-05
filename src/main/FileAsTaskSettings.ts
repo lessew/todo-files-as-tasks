@@ -13,15 +13,6 @@ type ObjectValues<T> = T[keyof T];
 export type FATProperty = ObjectValues<typeof FATPROPERTY>;
 
 export type FATSettings = Record<FATProperty,PropertySettings>;
-/*
-export class FATSettings {
-    [FATPROPERTY.title]:PropertySettings;
-    [FATPROPERTY.project]:PropertySettings;
-    [FATPROPERTY.context]:PropertySettings;
-    [FATPROPERTY.starred]:PropertySettings;
-    [FATPROPERTY.status]:PropertySettings;
-}
-*/
 
 export class FATSettingsHelper {
     static allowedValuesToRecord(allowedValues:string[]):Record<string,string>{

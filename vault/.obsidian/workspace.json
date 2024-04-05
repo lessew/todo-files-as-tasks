@@ -11,24 +11,15 @@
             "id": "a772daa7e5e7b941",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "cf2a188d6e4ca508",
-            "type": "leaf",
-            "state": {
               "type": "markdown",
               "state": {
-                "file": "fat-list-examples/All todos.md",
+                "file": "fat-list-examples/Tests.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -94,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "fat-list-examples/All todos.md",
+                "file": "fat-list-examples/Tests.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "fat-list-examples/All todos.md",
+                "file": "fat-list-examples/Tests.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -134,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "fat-list-examples/All todos.md"
+                "file": "fat-list-examples/Tests.md"
               }
             }
           }
@@ -155,43 +146,46 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "cf2a188d6e4ca508",
+  "active": "a772daa7e5e7b941",
   "lastOpenFiles": [
-    "fat-list-examples/Context.md",
-    "fat-list-examples/All todos.md",
-    "todo-home/Bugs/testnote.md",
-    "fat-list-examples/Create Todo.md",
+    "todo-home/todo-home-base/Finance/Taxes 2023/IRS hotline/Ask details re taxes 2023.md",
+    "todo-home/todo-home-base/Finance/Taxes 2023/IRS hotline",
+    "todo-home/todo-home-base/Finance/Taxes 2023/Get mortgage details 2024.md",
+    "todo-home/todo-home-base/Finance/Taxes 2023/Get income statement work.md",
+    "todo-home/todo-home-base/Groceries/Peppers.md",
+    "todo-home/todo-home-base/Groceries/Bread.md",
+    "todo-home/todo-home-base/Finance/Taxes 2023",
+    "todo-home/todo-home-base/Finance/Pay holiday bill.md",
+    "todo-home/todo-home-base/Finance/Finalize finance weekend NYC.md",
+    "todo-home/todo-home-base/Kids",
+    "todo-home/todo-home-base/Groceries",
+    "todo-home/todo-home-base/Finance",
+    "todo-home/todo-home-base",
+    "todo-home - Copy/Kids",
+    "todo-home - Copy/Groceries/Peppers.md",
+    "todo-home - Copy/Groceries/Bread.md",
+    "todo-home - Copy/Groceries",
+    "todo-home - Copy/Finance/Taxes 2023/IRS hotline/Ask details re taxes 2023.md",
+    "todo-home - Copy/Finance/Taxes 2023/IRS hotline",
+    "todo-home - Copy/Finance/Taxes 2023/Get mortgage details 2024.md",
+    "todo-home - Copy/Finance/Taxes 2023/Get income statement work.md",
+    "todo-home - Copy/Finance/Pay holiday bill.md",
+    "todo-home - Copy/Finance/Taxes 2023",
+    "todo-home - Copy/Finance/Finalize finance weekend NYC.md",
+    "fat-list-examples/All-todos-screenshot.png",
+    "fat-list-examples/Tests.md",
+    "fat-list-examples/Dev.md",
+    "Pasted image 20240405101007.png",
+    "todo-home/Groceries/Peppers.md",
+    "todo-home/Finance/Taxes 2023/Get mortgage details 2024.md",
+    "todo-home/Groceries/Milk.md",
+    "Pasted image 20240405100914.png",
     "fat-list-examples/Status.md",
-    "todo-home/Release/create label field.md",
-    "todo-home/Features/Velden context, status kunnen aanpassen in config.md",
-    "yatodo-examples/Context.md",
-    "yatodo-examples/All todos.md",
-    "todo-home/Features/delete task.md",
-    "todo-home/Release/propertyname wordt niet gebruikt; verwijderen.md",
-    "todo-home/Release/Readme.md.md",
-    "todo-home/Features/Test multiple level folder structures.md",
-    "todo-home/Bugs/archive task.md",
-    "yatodo-examples/Status.md",
-    "yatodo-examples/Starred and Unstarred.md",
-    "todo-home/Release/qqqqqqqqqqq1.md",
-    "todo-home/Release/group by context, project, status, starred.md",
-    "todo-home/Architecture and  Design/wes.md",
-    "todo-home/Architecture and  Design/Update Context and Status.md",
-    "todo-home/Architecture and  Design/ppllkkiiuuhbn.md",
-    "todo-home/Architecture and  Design/iiiii.md",
-    "todo-home/Architecture and  Design/Create new todo.md",
-    "todo-home/Bugs/Add field starred.md",
-    "todo-home/Bugs/Project does not show in suggester if it has no todos.md",
-    "todo-home/Bugs/qqqqq.md",
-    "vault/yatodo-examples",
-    "vault",
-    "todo-home/Release",
-    "todo-home/New folder",
-    "todo-home/Architecture and  Design",
-    "todo-home/design",
-    "todo-home/refactor",
-    "todo-home/Features",
-    "todo-home/Bugs",
-    "yatodo-examples"
+    "fat-list-examples/Starred and Unstarred.md",
+    "fat-list-examples/Projects.md",
+    "fat-list-examples/Done.md",
+    "fat-list-examples/Create Todo.md",
+    "fat-list-examples/Context.md",
+    "todo-home/Garden/Cut tree.md"
   ]
 }
