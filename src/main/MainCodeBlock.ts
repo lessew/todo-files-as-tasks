@@ -21,8 +21,12 @@ export class MainCodeBlock{
         this.app = app;
     }
 
-    load():void{
+    reload():void{
         this.el.innerHTML = "";
+        this.load();
+    }
+
+    load():void{
         const parser:YAMLParser = new YAMLParser(this.source);
         const rootPath:string = parser.parseRootPath();
 

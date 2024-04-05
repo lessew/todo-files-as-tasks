@@ -63,8 +63,7 @@ export class ObsidianWrapper{
         setTimeout(
             () => {
                 this.blocks.forEach((main) =>{
-                    //console.log("reloading a main");
-                    main.load();
+                    main.reload();
                 });
             }
         ,150)  
