@@ -1,7 +1,8 @@
-import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting, View, parseFrontMatterAliases } from 'obsidian';
+import { Plugin } from 'obsidian';
 import { DEFAULT_SETTINGS, FATSettings } from 'src/main/FileAsTaskSettings';
-import { Main } from 'src/main/Main';
+import { ObsidianWrapper } from 'src/main/obsidian/ObsidianWrapper';
 import {FATSettingTab} from "src/main/ui/FATSettingsTab"
+import { MainCodeBlock } from 'src/main/MainCodeBlock';
 
 
 export default class FATPlugin extends Plugin {
@@ -9,22 +10,17 @@ export default class FATPlugin extends Plugin {
 
 	async onload() {
 		await this.loadSettings();
-
+		ObsidianWrapper.init(this.app); 
 		this.registerMarkdownCodeBlockProcessor("fat", (source, el, ctx) => {
-			let main = new Main(source,el,this.settings,this.app);
-			main.load();
+			let block = new MainCodeBlock(source,el,this.settings,this.app);
+			block.load();
 		});
-
-		// This adds a settings tab so the user can configure various aspects of the plugin
 		this.addSettingTab(new FATSettingTab(this.app, this));
-
 		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
 		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
-
-		
-        
 	}
 
+	// TODO analyse if we need to unload anything
 	onunload() {
 
 	}
