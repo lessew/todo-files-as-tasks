@@ -14,21 +14,8 @@
               "type": "empty",
               "state": {}
             }
-          },
-          {
-            "id": "cf2a188d6e4ca508",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "fat-list-examples/All todos.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -94,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "fat-list-examples/All todos.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +97,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "fat-list-examples/All todos.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "fat-list-examples/All todos.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -155,43 +138,46 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "cf2a188d6e4ca508",
+  "active": "a772daa7e5e7b941",
   "lastOpenFiles": [
+    "fat-list-examples/Tests.md",
+    "todo-home/Release/Readme.md.md",
+    "todo-home/Release/create label field.md",
+    "todo-home/Release",
+    "todo-home/Features/Velden context, status kunnen aanpassen in config.md",
+    "todo-home/Features/group by context, project, status, starred.md",
+    "todo-home/Features/delete task.md",
+    "todo-home/Features/archive task.md",
+    "todo-home/Features",
+    "todo-home/Bugs/Test multiple level folder structures.md",
+    "todo-home/Bugs/propertyname wordt niet gebruikt; verwijderen.md",
+    "todo-home/Bugs",
+    "todo-home/Architecture and  Design/Kijken naar exception handling.md",
+    "todo-home/Architecture and  Design",
+    "fat-list-examples/Status.md",
+    "fat-list-examples/Starred and Unstarred.md",
+    "fat-list-examples/Projects.md",
+    "fat-list-examples/Done.md",
+    "fat-list-examples/Create Todo.md",
     "fat-list-examples/Context.md",
     "fat-list-examples/All todos.md",
-    "fat-list-examples/Create Todo.md",
-    "fat-list-examples/Status.md",
-    "todo-home/Release/create label field.md",
-    "todo-home/Features/Velden context, status kunnen aanpassen in config.md",
-    "yatodo-examples/Context.md",
-    "yatodo-examples/All todos.md",
-    "todo-home/Features/delete task.md",
-    "todo-home/Bugs/propertyname wordt niet gebruikt; verwijderen.md",
-    "todo-home/Release/Readme.md.md",
-    "todo-home/Bugs/Test multiple level folder structures.md",
-    "todo-home/Features/archive task.md",
-    "yatodo-examples/Status.md",
-    "yatodo-examples/Starred and Unstarred.md",
-    "todo-home/Release/qqqqqqqqqqq1.md",
-    "todo-home/Features/group by context, project, status, starred.md",
-    "todo-home/Architecture and  Design/wes.md",
-    "todo-home/Architecture and  Design/Update Context and Status.md",
-    "todo-home/Architecture and  Design/ppllkkiiuuhbn.md",
-    "todo-home/Architecture and  Design/iiiii.md",
-    "todo-home/Architecture and  Design/Create new todo.md",
-    "todo-home/Bugs/Add field starred.md",
-    "todo-home/Bugs/Project does not show in suggester if it has no todos.md",
-    "todo-home/Bugs/qqqqq.md",
-    "todo-home/Bugs/rootpath is not respected in yaml config when selecting project.md",
-    "vault/yatodo-examples",
-    "vault",
-    "todo-home/Release",
-    "todo-home/New folder",
-    "todo-home/Architecture and  Design",
-    "todo-home/design",
-    "todo-home/refactor",
-    "todo-home/Features",
-    "todo-home/Bugs",
-    "yatodo-examples"
+    "fat-list-examples/Dev.md",
+    "todo-home/todo-home-base/Finance/Taxes 2023/IRS hotline/Ask details re taxes 2023.md",
+    "todo-home/todo-home-base/Finance/Taxes 2023/IRS hotline",
+    "todo-home/todo-home-base/Finance/Taxes 2023/Get mortgage details 2024.md",
+    "todo-home/todo-home-base/Finance/Taxes 2023/Get income statement work.md",
+    "todo-home/todo-home-base/Groceries/Peppers.md",
+    "todo-home/todo-home-base/Groceries/Bread.md",
+    "todo-home/todo-home-base/Finance/Taxes 2023",
+    "todo-home/todo-home-base/Finance/Pay holiday bill.md",
+    "todo-home/todo-home-base/Finance/Finalize finance weekend NYC.md",
+    "todo-home/todo-home-base/Kids",
+    "todo-home/todo-home-base/Groceries",
+    "todo-home/todo-home-base/Finance",
+    "todo-home/todo-home-base",
+    "todo-home - Copy/Groceries/Peppers.md",
+    "fat-list-examples/All-todos-screenshot.png",
+    "Pasted image 20240405101007.png",
+    "Pasted image 20240405100914.png"
   ]
 }
