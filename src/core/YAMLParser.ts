@@ -2,6 +2,8 @@ import * as yaml from 'js-yaml'
 import { Filter, FilterOperator } from './Interfaces/Filter';
 import { FATSettings } from 'src/main/FileAsTaskSettings';
 
+// TODO change rootPath to a more non tech friendly name
+// TODO replace static const with types
 export class YAMLParser{
     source:string;
     yaml:unknown;

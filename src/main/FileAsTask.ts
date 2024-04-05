@@ -49,7 +49,9 @@ export class FileAsTask{
     }
 
     // TODO fix create method. default value properties are not saved, file is not created and no error message displayed
-    static async create(project:string,title:string,settings:FATSettings){
+    static async create(project:string,title:string,settings:FATSettings):Promise<void>{
+        // TODO: rootPath was removed in obsidianwrapper, find another way
+        /*
         let dao = new ObsidianFileDAO();
         const path = ObsidianWrapper.getInstance().rootPath + "/" + project + "/" + title + ".md";
         await dao.createMarkdownFile(path);
@@ -60,6 +62,7 @@ export class FileAsTask{
             let val = settings[propName as FATProperty].defaultValue;
             file.properties[propName].setValue(val);
         }
+        */
     }
 
 }

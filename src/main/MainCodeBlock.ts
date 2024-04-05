@@ -8,28 +8,17 @@ import { CreateTaskButtonView } from "./ui/CreateTaskButtonView";
 import { FileFilter } from "src/core/FileFilter";
 import { FATSettings } from "./FileAsTaskSettings";
 
-
-
-export class Main{
+export class MainCodeBlock{
     source:string;
     el:HTMLElement;
     settings:FATSettings;
     app:App;
-    wrapperIsInit:boolean;
 
     constructor(source:string,el:HTMLElement,settings:FATSettings,app:App){
         this.source = source;
         this.el = el;
         this.settings = settings;
         this.app = app;
-        this.wrapperIsInit = false;
-    }
-
-    initialiseWrapperOnce(rootPath:string):void{
-        if(!this.wrapperIsInit){
-            ObsidianWrapper.init(this,this.app,rootPath)
-            this.wrapperIsInit = true;
-        }
     }
 
     load():void{
@@ -37,8 +26,7 @@ export class Main{
         const parser:YAMLParser = new YAMLParser(this.source);
         const rootPath:string = parser.parseRootPath();
 
-        // TODO find a nicer way to prevent circular calls
-        this.initialiseWrapperOnce(rootPath);
+        ObsidianWrapper.getInstance().addMainCodeBlock(this);
 
         // load files and folders from obsidian / filesystem
         const folderList = new FolderList();

@@ -123,10 +123,6 @@ describe('yaml parser with negating filter', () => {
 
 });
 
-
-
- 
-
 describe('yaml parser: parse operator with whitespaces test', () => {
     let p = new YAMLParser(notdone);
     let result = p.parseOperator("not   done  ");
