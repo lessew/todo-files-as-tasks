@@ -1,6 +1,6 @@
 ## Checklist
 
-- Git pull? Folders and files reset?
+- Git pull? Folders and files reset? npm run reset-test-vault
 - Allowed values for context, starred, status reset?
 
 
