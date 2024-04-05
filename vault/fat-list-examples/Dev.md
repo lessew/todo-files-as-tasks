@@ -5,8 +5,6 @@ type: create_button
 ```
 
 
-# shizznet
-
 ## Not done
 
 ```fat
