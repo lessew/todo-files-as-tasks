@@ -1,11 +1,8 @@
 import * as yaml from 'js-yaml'
 import { Filter, FilterOperator } from './Interfaces/Filter';
 import { FATProperty, FATSettings } from 'src/main/FileAsTaskSettings';
-import { FATError,YAMLParseError,RootPathError, ActionParseError } from './Error';
+import { YAMLParseError,RootPathError, ActionParseError } from './Error';
 
-
-// TODO change rootPath to a more non tech friendly name
-// TODO replace static const with types
 export class YAMLParser{
     source:string;
     yaml:unknown;
