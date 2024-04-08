@@ -1,6 +1,7 @@
 
 ```fat
 rootPath: todo-home
+action: list
 type: create_button
 ```
 
@@ -8,7 +9,8 @@ type: create_button
 ## Not done
 
 ```fat
-rootPath: todo-homec
+rootPath: todo-home
+action: list 
 status: not Done
 ```
 
@@ -16,5 +18,6 @@ status: not Done
 
 ```fat
 rootPath: todo-home
+action: list
 status: Done
 ```    

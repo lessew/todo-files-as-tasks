@@ -30,19 +30,17 @@ export class MainCodeBlock{
     load():void{
         const parser:YAMLParser = new YAMLParser();
         
-        const yamlParseResult:(UserError | true) = parser.loadSource(this.source);
-        if(Error.isUserError(yamlParseResult)){
+        const yamlParseResult = parser.loadSource(this.source);
+        if(FATError.isError(yamlParseResult)){
             this.displayUserError(yamlParseResult);
             return;
         }
 
-        const rootPathParseResult:(UserError | true) = parser.validate();
-        if(Error.isUserError(rootPathParseResult)){
-            this.displayUserError(rootPathParseResult);
+        const rootPath = parser.parseRootPath();
+        if(FATError.isError(rootPath)){
+            this.displayUserError(rootPath);
             return;
         }
-
-        const rootPath:string = parser.parseRootPath();
 
         ObsidianWrapper.getInstance().addMainCodeBlock(this);
 
@@ -52,6 +50,11 @@ export class MainCodeBlock{
         this.settings.project.allowedValues = folderList.folders;
 
         const action = parser.parseAction();
+        if(FATError.isError(action)){
+            this.displayUserError(action);
+            return;
+        }
+
         if(action==YAMLParser.ACTION_LIST){
            this.displayActionList(parser,rootPath)
         }
@@ -60,7 +63,7 @@ export class MainCodeBlock{
         }
     }
 
-    displayUserError(error:UserError){
+    displayUserError(error:FATError){
         const msg = error.message;// + "\n" + this.source;
         this.el.createEl("div",{text:msg,cls:"color:red"});
     }
@@ -68,7 +71,13 @@ export class MainCodeBlock{
     displayActionList(parser:YAMLParser,rootPath:string):void{
         const fileList = new FileList();
         fileList.init(rootPath,this.settings);
+
         const filters = parser.parseFilters(this.settings);
+        if(FATError.isError(filters)){
+            this.displayUserError(filters);
+            return;
+        }
+
         const fileFilter = new FileFilter(fileList.files);
         const filteredFiles = fileFilter.bulkFilterBy(filters).get();
         const view = new TaskListView(filteredFiles,this.app);
