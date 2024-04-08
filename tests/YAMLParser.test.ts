@@ -25,7 +25,7 @@ action: list`;
 
 const loadSourceIncorrect = `
 rootPath: .
-action: list`;
+actionlist`;
 
 describe('YAMLParser load source', () => {
     test('load correctly formatted source', () => {
@@ -46,7 +46,7 @@ rootPath: todo-home
 action: list`;
 
 const rootPathIncorrect = `
-rootPath: ./@#$@#$
+rootPath:./@#$@#$
 action: list`;
 
 const rootPathTrailingSlash = `
@@ -57,12 +57,14 @@ status111: !@#`;
 describe('YAMLParser parse correctly formatted rootpath', () => {
     test('load correctly formatted source', () => {
         let p = new YAMLParser();
-        const result = p.loadSource(rootPathCorrect);
+        p.loadSource(rootPathCorrect);
+        const result = p.parseRootPath();
         expect(result).toBe("todo-home");
     });
     test('parse incorrectly formatted rootpath', () => {
         let p = new YAMLParser();
-        const result = p.loadSource(rootPathIncorrect);
+        p.loadSource(rootPathIncorrect);
+        const result = p.parseRootPath();
         expect(FATError.isError(result)).toBe(true);
     });
     test('parse incorrectly formatted rootpah - trailing slash not allowed', () => {
@@ -88,17 +90,20 @@ action: blurp`;
 describe('YAMLParser parse action', () => {
     test('load correctly formatted source - action list', () => {
         let p = new YAMLParser();
-        const result = p.loadSource(actionButtonCorrect);
+        p.loadSource(actionListCorrect);
+        const result = p.parseAction();
         expect(result).toBe(YAMLParser.ACTION_LIST);
     });
     test('load correctly formatted source - action button', () => {
         let p = new YAMLParser();
-        const result = p.loadSource(actionListCorrect);
+        p.loadSource(actionButtonCorrect);
+        const result = p.parseAction();
         expect(result).toBe(YAMLParser.ACTION_CREATE_BUTTON);
     });
     test('load incorrectly formatted source', () => {
         let p = new YAMLParser();
-        const result = p.loadSource(actionIncorrect);
+        p.loadSource(actionIncorrect);
+        const result = p.parseAction();
         expect(FATError.isError(result)).toBe(true);
     });
 });
@@ -114,7 +119,7 @@ rootPath: todo-home
 action: list
 status: notvalidstatus`;
 
-describe('YAMLParser parse action', () => {  
+describe('YAMLParser parse filters', () => {  
     let settings:FATSettings = Helper.getSettings(["done","inbox"]);
 
     test('load correctly formatted source - filter', () => {
@@ -126,7 +131,7 @@ describe('YAMLParser parse action', () => {
         expect(result[0].propertyValue).toBe("done");
         expect(result[0].operator).toBe(FilterOperator.include);
     });
-    test('load correctly formatted source - filter', () => {
+    test('load incorrectly formatted source - filter', () => {
         let p = new YAMLParser();
         p.loadSource(filtersIncorrect);
         let result = p.parseFilters(settings);
@@ -136,8 +141,7 @@ describe('YAMLParser parse action', () => {
 
 // test parseOperators
 const notdone = `
-rootPath: todo-home/
-context: desk
+rootPath: todo-home
 status: not done`;
 
 

@@ -7,6 +7,7 @@ import { FolderList } from "./obsidian/FolderList";
 import { CreateTaskButtonView } from "./ui/CreateTaskButtonView";
 import { FileFilter } from "src/core/FileFilter";
 import { FATSettings } from "./FileAsTaskSettings";
+import { UserError,Error } from "src/core/Error";
 
 export class MainCodeBlock{
     source:string;
@@ -27,7 +28,20 @@ export class MainCodeBlock{
     }
 
     load():void{
-        const parser:YAMLParser = new YAMLParser(this.source);
+        const parser:YAMLParser = new YAMLParser();
+        
+        const yamlParseResult:(UserError | true) = parser.loadSource(this.source);
+        if(Error.isUserError(yamlParseResult)){
+            this.displayUserError(yamlParseResult);
+            return;
+        }
+
+        const rootPathParseResult:(UserError | true) = parser.validate();
+        if(Error.isUserError(rootPathParseResult)){
+            this.displayUserError(rootPathParseResult);
+            return;
+        }
+
         const rootPath:string = parser.parseRootPath();
 
         ObsidianWrapper.getInstance().addMainCodeBlock(this);
@@ -46,11 +60,14 @@ export class MainCodeBlock{
         }
     }
 
+    displayUserError(error:UserError){
+        const msg = error.message;// + "\n" + this.source;
+        this.el.createEl("div",{text:msg,cls:"color:red"});
+    }
+
     displayActionList(parser:YAMLParser,rootPath:string):void{
-               
         const fileList = new FileList();
         fileList.init(rootPath,this.settings);
-
         const filters = parser.parseFilters(this.settings);
         const fileFilter = new FileFilter(fileList.files);
         const filteredFiles = fileFilter.bulkFilterBy(filters).get();

@@ -25,3 +25,7 @@ export class NoFilesFoundError extends FATError{
     type="NoFilesFound"
 }
 
+export class ActionParseError extends FATError{
+    type="ActionParseError"
+}
+

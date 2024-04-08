@@ -14,8 +14,8 @@
               "type": "markdown",
               "state": {
                 "file": "fat-list-examples/Dev.md",
-                "mode": "source",
-                "source": false
+                "mode": "preview",
+                "source": true
               }
             }
           }
@@ -148,6 +148,8 @@
   },
   "active": "a772daa7e5e7b941",
   "lastOpenFiles": [
+    "fat-list-examples/Tests.md",
+    "fat-list-examples/Dev.md",
     "todo-home/Groceries/Peppers.md",
     "todo-home/Groceries/Bread.md",
     "todo-home/Groceries",
@@ -170,8 +172,6 @@
     "todo-home-base/Finance/Pay holiday bill.md",
     "todo-home-base/Finance/Finalize finance weekend NYC.md",
     "todo-home-base/Finance",
-    "fat-list-examples/Tests.md",
-    "fat-list-examples/Dev.md",
     "fat-list-examples/All-todos-screenshot.png",
     "todo-home/Release/Readme.md.md",
     "todo-home/Release/create label field.md",

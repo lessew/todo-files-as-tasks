@@ -1,6 +1,6 @@
 import * as yaml from 'js-yaml'
 import { Filter, FilterOperator } from './Interfaces/Filter';
-import { FATSettings } from 'src/main/FileAsTaskSettings';
+import { FATProperty, FATSettings } from 'src/main/FileAsTaskSettings';
 import { FATError,YAMLParseError,RootPathError, ActionParseError } from './Error';
 
 
@@ -39,7 +39,7 @@ export class YAMLParser{
         if(this.source.indexOf(YAMLParser.ACTION_CREATE_BUTTON)>-1){
             return YAMLParser.ACTION_CREATE_BUTTON;
         }
-        else if(this.source.indexOf(YAMLParser.ACTION_CREATE_BUTTON) > -1){
+        else if(this.source.indexOf(YAMLParser.ACTION_LIST) > -1){
             return YAMLParser.ACTION_LIST;
         }
         else{
@@ -55,11 +55,14 @@ export class YAMLParser{
             if(propertyName in yaml){
                 const filterValue:string = yaml[propertyName];
                 let valop = this.parseOperator(filterValue);
-                result.push({
-                    propertyName:propertyName,
-                    propertyValue:valop.value,
-                    operator:valop.operator
-                })
+                const allowedValues = settings[propertyName as FATProperty].allowedValues;
+                if(typeof allowedValues === "undefined" || allowedValues.includes(valop.value)){
+                    result.push({
+                        propertyName:propertyName,
+                        propertyValue:valop.value,
+                        operator:valop.operator
+                    })
+                }
             }
         }
         return result;
