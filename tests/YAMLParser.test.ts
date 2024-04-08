@@ -1,6 +1,7 @@
 import { YAMLParser } from "../src/core/YAMLParser";
 import { FilterOperator } from "../src/core/Interfaces/Filter";
 import { FATSettings,FATPROPERTY } from "../src/main/FileAsTaskSettings";
+import { FATError } from "../src/core/Error";
 
 class Helper {
     static getSettings(statusAllowedValues:string[]):FATSettings{
@@ -17,82 +18,123 @@ class Helper {
     }
 }
 
-
-const correctlyFormatted = `
+// test loadsource
+const loadSourceCorrect = `
 rootPath: .
-context: desk
-status: inbox`;
+action: list`;
 
-const correctlyFormattedWithoutContext = `
+const loadSourceIncorrect = `
 rootPath: .
-status: inbox`;
+action: list`;
 
-const onlyRootPath = `
-rootPath: .`;
-
-
-describe('yaml parser correctly formatted', () => {
-    let p = new YAMLParser(correctlyFormatted);
-    
-    test('rootPath', () => {    
-        expect(p.parseRootPath()).toBe(".");
+describe('YAMLParser load source', () => {
+    test('load correctly formatted source', () => {
+        let p = new YAMLParser();
+        const result = p.loadSource(loadSourceCorrect);
+        expect(result).toBe(true);
     });
-
+    test('load incorrectly formatted source', () => {
+        let p = new YAMLParser();
+        const result = p.loadSource(loadSourceIncorrect);
+        expect(FATError.isError(result)).toBe(true);
+    });
 });
 
+// test parserootpath
+const rootPathCorrect = `
+rootPath: todo-home
+action: list`;
 
-const incorrectlyFormattedPath = `
-rootPath: !@#$
-context: desk
-status: inbox`;
+const rootPathIncorrect = `
+rootPath: ./@#$@#$
+action: list`;
 
-const nonvalidproperties = `
-rootPath: .
-context222: desk
-status111: !@#`;
-
-const trailingslashinrootpath = `
+const rootPathTrailingSlash = `
 rootPath: todo-home/
 context222: desk
 status111: !@#`;
 
-
-
-describe('yaml parser correctly formatted', () => {
-    let p = new YAMLParser(incorrectlyFormattedPath);
-    
-    test('rootPath', () => {    
-        expect(p.parseRootPath()).toBe(YAMLParser.DEFAULT_ROOT);
+describe('YAMLParser parse correctly formatted rootpath', () => {
+    test('load correctly formatted source', () => {
+        let p = new YAMLParser();
+        const result = p.loadSource(rootPathCorrect);
+        expect(result).toBe("todo-home");
+    });
+    test('parse incorrectly formatted rootpath', () => {
+        let p = new YAMLParser();
+        const result = p.loadSource(rootPathIncorrect);
+        expect(FATError.isError(result)).toBe(true);
+    });
+    test('parse incorrectly formatted rootpah - trailing slash not allowed', () => {
+        let p = new YAMLParser();
+        const result = p.loadSource(rootPathTrailingSlash);
+        expect(FATError.isError(result)).toBe(true);
     });
 });
 
-describe('yaml parser with path ending on slash (not allowed)', () => {
-    let p = new YAMLParser(trailingslashinrootpath);
+// test parseaction
+const actionListCorrect = `
+rootPath: todo-home
+action: list`;
 
-    test('rootPath', () => {    
-        expect(p.parseRootPath()).toBe(YAMLParser.DEFAULT_ROOT);
+const actionButtonCorrect = `
+rootPath: todo-home
+action: create_button`;
+
+const actionIncorrect = `
+rootPath: todo-home
+action: blurp`;
+
+describe('YAMLParser parse action', () => {
+    test('load correctly formatted source - action list', () => {
+        let p = new YAMLParser();
+        const result = p.loadSource(actionButtonCorrect);
+        expect(result).toBe(YAMLParser.ACTION_LIST);
+    });
+    test('load correctly formatted source - action button', () => {
+        let p = new YAMLParser();
+        const result = p.loadSource(actionListCorrect);
+        expect(result).toBe(YAMLParser.ACTION_CREATE_BUTTON);
+    });
+    test('load incorrectly formatted source', () => {
+        let p = new YAMLParser();
+        const result = p.loadSource(actionIncorrect);
+        expect(FATError.isError(result)).toBe(true);
     });
 });
 
+// test parseFilters
+const filtersCorrect = `
+rootPath: todo-home
+action: list
+status: done`;
 
-const errorvalue = `
-rootPath: todo-home/
-context: desk
-status: statusnotvalid`;
+const filtersIncorrect = `
+rootPath: todo-home
+action: list
+status: notvalidstatus`;
 
-describe('yaml parser with not valid value - should not have any effect and caught elsewhere', () => {
-    let p = new YAMLParser(errorvalue);
-    
+describe('YAMLParser parse action', () => {  
     let settings:FATSettings = Helper.getSettings(["done","inbox"]);
 
-    let result = p.parseFilters(settings);
-    test("testing filter", () => {    
-        expect(result.length).toBe(2);
+    test('load correctly formatted source - filter', () => {
+        let p = new YAMLParser();
+        p.loadSource(filtersCorrect);
+        let result = p.parseFilters(settings);
+        expect(result.length).toBe(1);
+        expect(result[0].propertyName).toBe("status");
+        expect(result[0].propertyValue).toBe("done");
+        expect(result[0].operator).toBe(FilterOperator.include);
+    });
+    test('load correctly formatted source - filter', () => {
+        let p = new YAMLParser();
+        p.loadSource(filtersIncorrect);
+        let result = p.parseFilters(settings);
+        expect(result.length).toBe(0);
     });
 });
 
-
-
+// test parseOperators
 const notdone = `
 rootPath: todo-home/
 context: desk
@@ -100,38 +142,31 @@ status: not done`;
 
 
 describe('yaml parser: parse operator test', () => {
-    let p = new YAMLParser(notdone);
-    let result = p.parseOperator("not done");
-    test("testing parseoperator", () => {
+    let settings:FATSettings = Helper.getSettings(["done","inbox"]);
+    test("testing parseoperator operator function", () => {
+        let p = new YAMLParser();
+        let result = p.parseOperator("not done");
         expect(result.operator).toBe("exclude");
         expect(result.value).toBe("done");
     })
-});FilterOperator
-
-
-describe('yaml parser with negating filter', () => {
-    let p = new YAMLParser(notdone);
-    let settings:FATSettings = Helper.getSettings(["done","inbox"]);
-   
-    let result = p.parseFilters(settings);
-    test("testing filter", () => {    
-        expect(result.length).toBe(2);
+    test("testing parseoperator within filter function", () => {
+        let p = new YAMLParser();
+        p.loadSource(notdone);
+        let result = p.parseFilters(settings);
+        expect(result.length).toBe(1);
         expect(result[0].propertyName).toBe("status");
         expect(result[0].propertyValue).toBe("done");
         expect(result[0].operator).toBe(FilterOperator.exclude);
-    });
-
-});
-
-describe('yaml parser: parse operator with whitespaces test', () => {
-    let p = new YAMLParser(notdone);
-    let result = p.parseOperator("not   done  ");
-    test("testing parseoperator", () => {
+    })
+    test("testing parseoperator with whitespaces (1)", () => {
+        let p = new YAMLParser();
+        let result = p.parseOperator("not   done  ");
         expect(result.operator).toBe("exclude");
         expect(result.value).toBe("done");
     })
-    let result2 = p.parseOperator("   done  ");
-    test("testing parseoperator", () => {
+    test("testing parseoperator with whitespaces (2)", () => {
+        let p = new YAMLParser();
+        let result2 = p.parseOperator("   done  ");
         expect(result2.operator).toBe("include");
         expect(result2.value).toBe("done");
     })

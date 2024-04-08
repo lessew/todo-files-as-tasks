@@ -1,44 +1,50 @@
 import * as yaml from 'js-yaml'
 import { Filter, FilterOperator } from './Interfaces/Filter';
 import { FATSettings } from 'src/main/FileAsTaskSettings';
+import { FATError,YAMLParseError,RootPathError, ActionParseError } from './Error';
+
 
 // TODO change rootPath to a more non tech friendly name
 // TODO replace static const with types
 export class YAMLParser{
     source:string;
     yaml:unknown;
-    static DEFAULT_ROOT = "./";
     static ACTION_LIST = "list";
     static ACTION_CREATE_BUTTON = "create_button";
     static EXCLUDE_TOKEN = "not ";
 
-    constructor(source:string){
+
+    loadSource(source:string):true | YAMLParseError{
         this.source = source;
         try{
             this.yaml = yaml.load(source);
+            return true;
         }
         catch(e){
-            this.yaml = {
-                rootPath : YAMLParser.DEFAULT_ROOT
-            }
+            return new YAMLParseError(`Error: not valid YAML: ${e.message}`);
         }
     }
 
-    parseRootPath():string{
+    parseRootPath():string | RootPathError{
         try{
             const rp:string = (this.yaml as{rootPath:string}).rootPath;
             return rp;
         }
         catch(e){
-            return YAMLParser.DEFAULT_ROOT; 
+            return new RootPathError("Could not parse rootpath: yaml variable not found")
         }
     }
 
-    parseAction():string{
+    parseAction():string | ActionParseError{
         if(this.source.indexOf(YAMLParser.ACTION_CREATE_BUTTON)>-1){
             return YAMLParser.ACTION_CREATE_BUTTON;
         }
-        return YAMLParser.ACTION_LIST;
+        else if(this.source.indexOf(YAMLParser.ACTION_CREATE_BUTTON) > -1){
+            return YAMLParser.ACTION_LIST;
+        }
+        else{
+            return new ActionParseError("Action not specified, add either 'list' or 'create_button'")
+        }
     }
    
     parseFilters(settings:FATSettings):Filter[]{
