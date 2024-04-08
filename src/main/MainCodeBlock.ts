@@ -7,7 +7,7 @@ import { FolderList } from "./obsidian/FolderList";
 import { CreateTaskButtonView } from "./ui/CreateTaskButtonView";
 import { FileFilter } from "src/core/FileFilter";
 import { FATSettings } from "./FileAsTaskSettings";
-import { UserError,Error } from "src/core/Error";
+import { FATError,YAMLParseError,RootPathError,NoFilesFoundError } from "src/core/Error";
 
 export class MainCodeBlock{
     source:string;

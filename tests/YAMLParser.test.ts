@@ -126,16 +126,21 @@ describe('YAMLParser parse filters', () => {
         let p = new YAMLParser();
         p.loadSource(filtersCorrect);
         let result = p.parseFilters(settings);
-        expect(result.length).toBe(1);
-        expect(result[0].propertyName).toBe("status");
-        expect(result[0].propertyValue).toBe("done");
-        expect(result[0].operator).toBe(FilterOperator.include);
+        if(!FATError.isError(result)){
+            expect(result.length).toBe(1);
+            expect(result[0].propertyName).toBe("status");
+            expect(result[0].propertyValue).toBe("done");
+            expect(result[0].operator).toBe(FilterOperator.include);
+        }
+        else{
+            expect(true).toBe(false);
+        }
     });
     test('load incorrectly formatted source - filter', () => {
         let p = new YAMLParser();
         p.loadSource(filtersIncorrect);
         let result = p.parseFilters(settings);
-        expect(result.length).toBe(0);
+        expect(FATError.isError(result)).toBe(true);
     });
 });
 
@@ -157,10 +162,15 @@ describe('yaml parser: parse operator test', () => {
         let p = new YAMLParser();
         p.loadSource(notdone);
         let result = p.parseFilters(settings);
-        expect(result.length).toBe(1);
-        expect(result[0].propertyName).toBe("status");
-        expect(result[0].propertyValue).toBe("done");
-        expect(result[0].operator).toBe(FilterOperator.exclude);
+        if(!FATError.isError(result)){
+            expect(result.length).toBe(1);
+            expect(result[0].propertyName).toBe("status");
+            expect(result[0].propertyValue).toBe("done");
+            expect(result[0].operator).toBe(FilterOperator.exclude);
+        }
+        else{
+            expect(false).toBe(true);
+        }
     })
     test("testing parseoperator with whitespaces (1)", () => {
         let p = new YAMLParser();

@@ -25,6 +25,10 @@ export class NoFilesFoundError extends FATError{
     type="NoFilesFound"
 }
 
+export class FilterNotAllowedError extends FATError{
+    type="FilterNotAllowed"
+}
+
 export class ActionParseError extends FATError{
     type="ActionParseError"
 }
