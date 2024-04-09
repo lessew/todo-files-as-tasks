@@ -63,17 +63,20 @@ export class TestView{
 
         const expectedPayHolidayBillFile = expectedFiles[1];
 
+        // rename title
         await (actualPayHolidayBillFile as File).properties["title"].setValue("newValue");
-        //setTimeout(() =>{
-            const fileID = "todo-home/Finance/newValue.md";
-            const file1 = wrapper.getTFile(fileID);
-            this.assert(file1.path,fileID,"check if basename / title rename works");
+        const fileID1 = "todo-home/Finance/newValue.md";
+        const file1 = wrapper.getTFile(fileID1);
+        this.assert(file1.path,fileID1,"check if basename / title rename works");
+        (actualPayHolidayBillFile as File).properties["title"].setValue(expectedPayHolidayBillFile.title);
 
-       //     setTimeout(() =>{
-                (actualPayHolidayBillFile as File).properties["title"].setValue(expectedPayHolidayBillFile.title);
-        //    },150)
-
-        //},150)
+        // rename project - 
+        // TODO issue detected: the properties do not get updated if the filepath is update. need to fix
+        await (actualPayHolidayBillFile as File).properties["project"].setValue("Groceries");
+        const fileID2 = "todo-home/Groceries/Pay holiday bill.md";
+        const file2 = wrapper.getTFile(fileID2);
+        this.assert(file2.path,fileID2,"check if project rename works");
+        (actualPayHolidayBillFile as File).properties["project"].setValue(expectedPayHolidayBillFile.project);
     }
 
     assertFolderList(actualFolderList:FolderList,expectedFolders:string[]):void{
