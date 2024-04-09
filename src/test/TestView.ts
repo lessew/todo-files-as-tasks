@@ -6,6 +6,7 @@ import { FolderList } from "src/main/obsidian/FolderList";
 import {FileList} from "src/main/obsidian/FileList";
 import { text } from "stream/consumers";
 import {File} from "../core/File";
+import { ObsidianWrapper } from "src/main/obsidian/ObsidianWrapper";
 
 export class TestView{
     obsidianApp:App;
@@ -17,7 +18,8 @@ export class TestView{
     }
 
     async main(){
-        const expectedFiles = this.getExpectedFiles();
+        const wrapper = ObsidianWrapper.getInstance();
+        const [bucketExpectedFiles,expectedFiles] = this.getExpectedFiles();
         const expectedFolders = this.getExpectedFolders();
 
         const source = this.getYAML();
@@ -40,14 +42,38 @@ export class TestView{
 
         this.assert(actualFileList.files.length,expectedFiles.length,"Number of found files correct?");
 
+        let actualPayHolidayBillFile:unknown = null;
         for(let i=0;i<actualFileList.files.length;i++){
             let thisFile = actualFileList.files[i];
-            this.assert(thisFile.fullPath.fileID,expectedFiles[i].path,`Checking file: ${thisFile.fullPath.fileID}`);
-            this.assert(thisFile.get("title"),expectedFiles[i].title,"Check title for this file");
-            this.assert(thisFile.get("status"),expectedFiles[i].yaml.status,"Check status for this file");
-            this.assert(thisFile.get("context"),expectedFiles[i].yaml.context,"Check context for this file");
-            this.assert(thisFile.get("starred"),expectedFiles[i].yaml.starred,"Check context for this file");
+            let expectedFileIndex = bucketExpectedFiles.get(thisFile.fullPath.fileID);
+            this.assertTrue((typeof expectedFileIndex!="undefined"),`Looking for file "${thisFile.fullPath.fileID}"`);
+            
+            if(thisFile.fullPath.fileID == "todo-home/Finance/Pay holiday bill.md"){
+                actualPayHolidayBillFile = thisFile;
+            }
+
+            let expectedFile = expectedFiles[expectedFileIndex as number];
+
+            this.assert(thisFile.fullPath.fileID,expectedFile.path,`Checking file: ${thisFile.fullPath.fileID}`);
+            this.assert(thisFile.get("title"),expectedFile.title,"Check title for this file");
+            this.assert(thisFile.get("status"),expectedFile.yaml.status,"Check status for this file");
+            this.assert(thisFile.get("context"),expectedFile.yaml.context,"Check context for this file");
+            this.assert(thisFile.get("starred"),expectedFile.yaml.starred,"Check context for this file");
         }
+
+        const expectedPayHolidayBillFile = expectedFiles[1];
+
+        (actualPayHolidayBillFile as File).properties["title"].setValue("newValue");
+        setTimeout(() =>{
+            const fileID = "todo-home/Finance/newValue.md";
+            const file1 = wrapper.getTFile(fileID);
+            this.assert(file1.path,fileID,"check if basename / title rename works");
+
+            setTimeout(() =>{
+                (actualPayHolidayBillFile as File).properties["title"].setValue(expectedPayHolidayBillFile.title);
+            },150)
+
+        },150)
     }
 
     assertFolderList(actualFolderList:FolderList,expectedFolders:string[]):void{
@@ -67,12 +93,24 @@ export class TestView{
         this.assertions.push(result);
     }
 
+    assertTrue(isTrue:boolean,message:string){
+        let result = "";
+        if(isTrue){
+            result = `True: ${message}`;
+        }
+        else{
+            result = `FALSE: ${message}`;
+        }
+        this.assertions.push(result);
+    }
+
     build(el:HTMLElement):void{
-        el.createEl("h1",{text:"Running tests..."});
-        this.assertions.forEach(assertion => {
-            el.createEl("div",{text:assertion,cls:"warning"});
-        })
-        // tbi
+        setTimeout(() =>{
+            el.createEl("h1",{text:"Running tests..."});
+            this.assertions.forEach(assertion => {
+                el.createEl("div",{text:assertion,cls:"warning"});
+            })
+        },1000)
     }
 
     getSettings():FATSettings{
@@ -98,8 +136,8 @@ export class TestView{
         } as FATSettings
         
     }
-    getExpectedFiles():{path:string,title:string,project:string,yaml:{context?:string,status?:string,starred?:string}}[]{
-        return [
+    getExpectedFiles():[Map<string,number>,{path:string,title:string,project:string,yaml:{context?:string,status?:string,starred?:string}}[]]{
+        const result = [
             {
                 path:"todo-home/Finance/Finalize finance weekend NYC.md",
                 title:"Finalize finance weekend NYC",
@@ -143,6 +181,14 @@ export class TestView{
                 yaml: {}
             }
         ];
+
+        let bucket:Map<string,number> = new Map<string,number>();
+        for(let i=0;i<result.length;i++){
+            const path = result[i].path;
+            bucket.set(path,i);
+        }
+
+        return [bucket,result];
     }
 
     getExpectedFolders():string[]{
