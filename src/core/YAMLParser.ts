@@ -8,8 +8,8 @@ export class YAMLParser{
     yaml:unknown;
     static ACTION_LIST = "list";
     static ACTION_CREATE_BUTTON = "create_button";
+    static ACTION_TEST = "test"
     static EXCLUDE_TOKEN = "not ";
-
 
     loadSource(source:string):true | YAMLParseError{
         this.source = source;
@@ -38,6 +38,9 @@ export class YAMLParser{
         }
         else if(this.source.indexOf(YAMLParser.ACTION_LIST) > -1){
             return YAMLParser.ACTION_LIST;
+        }
+        else if(this.source.indexOf(YAMLParser.ACTION_TEST) > -1){
+            return YAMLParser.ACTION_TEST;
         }
         else{
             return new ActionParseError("Action not specified, add either 'list' or 'create_button'")

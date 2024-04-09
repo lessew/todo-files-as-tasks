@@ -1,4 +1,4 @@
-import { App } from "obsidian";
+import { App, View } from "obsidian";
 import { YAMLParser } from "src/core/YAMLParser";
 import { ObsidianWrapper } from "./obsidian/ObsidianWrapper";
 import { TaskListView } from "./ui/TaskListView";
@@ -8,6 +8,7 @@ import { CreateTaskButtonView } from "./ui/CreateTaskButtonView";
 import { FileFilter } from "src/core/FileFilter";
 import { FATSettings } from "./FileAsTaskSettings";
 import { FATError,YAMLParseError,RootPathError,NoFilesFoundError } from "src/core/Error";
+import { TestView } from "src/test/TestView";
 
 export class MainCodeBlock{
     source:string;
@@ -61,6 +62,9 @@ export class MainCodeBlock{
         else if(action==YAMLParser.ACTION_CREATE_BUTTON){
            this.displayCreateTaskButton();
         }
+        else if(action==YAMLParser.ACTION_TEST){
+            this.displayTest();
+        }
     }
 
     displayUserError(error:FATError){
@@ -87,5 +91,11 @@ export class MainCodeBlock{
     displayCreateTaskButton():void{
         const view = new CreateTaskButtonView(this.app,this.settings);
         view.build(this.el);
+    }
+
+    displayTest():void{
+        const testView = new TestView(this.app);
+        testView.main();
+        testView.build(this.el);
     }
 }
