@@ -4,10 +4,10 @@ import { ObsidianWrapper } from "../ObsidianWrapper";
 
 export class PathPropertyDAO implements PropertyDAO {
   
-    persist(fileID:string,propertyName:string,val:string):void{
+    async persist(fileID:string,propertyName:string,val:string):Promise<void>{
         const wrapper = ObsidianWrapper.getInstance();
         const tf:TFile  = wrapper.getTFile(fileID);
-        wrapper.moveFile(tf,val);
+        await wrapper.moveFile(tf,val);
     }
 
     retrieve(fileID:string,propertyName:string):string{

@@ -19,9 +19,9 @@ export class BasenameProperty extends PathProperty{
         return this.value;
     }
 
-    setValue(val:string){
+    async setValue(val:string):Promise<void>{
         const newPath = this.getNewFullPathWithBasename(val);
-        this.dao.persist(this.fileID,this.name,newPath);
+        await this.dao.persist(this.fileID,this.name,newPath);
         this.value = val;
         this.fileID = newPath;
     }

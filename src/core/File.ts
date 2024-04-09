@@ -12,7 +12,8 @@ export class File {
     constructor(fullpath:string,propertyDAO:PropertyDAO){
         let fp = new PathProperty("fullpath",fullpath,propertyDAO,{defaultValue:""});
         
-        fp.setValue(fullpath);
+        //fp.setValue(fullpath);
+        fp.fileID = fullpath;
         this.fullPath = fp;
     }
 

@@ -52,10 +52,10 @@ export abstract class Property{
         }
     }
 
-    setValue(val:string){
+    async setValue(val:string):Promise<void>{
         if(this.validate(val)){
             this.value = val;
-            this.dao.persist(this.fileID,this.name,this.getValue());
+            await this.dao.persist(this.fileID,this.name,this.getValue());
         }
     }
 

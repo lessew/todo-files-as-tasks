@@ -1,4 +1,4 @@
 export interface PropertyDAO{
-    persist(fileID:string,propertyName:string,val:string):void;
+    persist(fileID:string,propertyName:string,val:string):Promise<void> | void;
     retrieve(fileID:string,propertyName:string):string;
 }

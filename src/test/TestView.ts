@@ -63,17 +63,17 @@ export class TestView{
 
         const expectedPayHolidayBillFile = expectedFiles[1];
 
-        (actualPayHolidayBillFile as File).properties["title"].setValue("newValue");
-        setTimeout(() =>{
+        await (actualPayHolidayBillFile as File).properties["title"].setValue("newValue");
+        //setTimeout(() =>{
             const fileID = "todo-home/Finance/newValue.md";
             const file1 = wrapper.getTFile(fileID);
             this.assert(file1.path,fileID,"check if basename / title rename works");
 
-            setTimeout(() =>{
+       //     setTimeout(() =>{
                 (actualPayHolidayBillFile as File).properties["title"].setValue(expectedPayHolidayBillFile.title);
-            },150)
+        //    },150)
 
-        },150)
+        //},150)
     }
 
     assertFolderList(actualFolderList:FolderList,expectedFolders:string[]):void{

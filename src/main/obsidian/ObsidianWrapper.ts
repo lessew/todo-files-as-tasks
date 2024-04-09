@@ -51,8 +51,9 @@ export class ObsidianWrapper{
         this.obsidianApp.vault.create(path,"");
     }
 
-    moveFile(tf:TFile,path:string):void{
-        this.obsidianApp.vault.rename(tf,path);
+    async moveFile(tf:TFile,path:string):Promise<void>{
+        //await this.obsidianApp.vault.rename(tf,path);
+        await this.obsidianApp.fileManager.renameFile(tf,path);
     }
 
     normalizePath(rp:string):string{

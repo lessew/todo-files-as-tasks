@@ -15,9 +15,9 @@ export class BooleanProperty extends WhitelistProperty {
         this.secondValue = settings.allowedValues![1];
     }
   
-    toggle():void{
+    async toggle():Promise<void>{
         const newValue = (this.getValue()==this.firstValue) ? this.secondValue : this.firstValue;
-        this.setValue(newValue);
+        await this.setValue(newValue);
     }
    
 }
