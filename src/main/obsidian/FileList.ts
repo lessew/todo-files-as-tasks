@@ -5,6 +5,7 @@ import { File } from "src/core/File";
 import { FileListDAO } from "src/core/Interfaces/FileListDAO";
 import { FATSettings } from "../FileAsTaskSettings";
 
+// TODO incorporate error handling used similar to yamlparser to output to user
 export class FileList implements FileListDAO{
     files:File[];
 
@@ -20,6 +21,7 @@ export class FileList implements FileListDAO{
             throw Error("RootPath is not a folder");
         }
         this.files = FileList.loadAllFilesAsTasks(tFiles,settings);
+        return;
     }
 
     static loadAllFilesAsTasks(tFiles:TFile[],settings:FATSettings):File[]{
