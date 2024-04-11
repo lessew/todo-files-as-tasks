@@ -1,45 +1,45 @@
 import { File } from "../../src/core/File";
 import { WhitelistProperty } from "../../src/core/Properties/WhitelistProperty";
 import { BooleanProperty } from "../../src/core/Properties/BooleanProperty";
-import { YAMLPropertyPerstistenceStrategy } from "./obsidian/PropertyPerstistenceStrategys/YAMLPropertyPerstistenceStrategy"
-import { PathPropertyPerstistenceStrategy } from "./obsidian/PropertyPerstistenceStrategys/PathPropertyPerstistenceStrategy";
+import { YAMLPropertyModel } from "./obsidian/PropertyModels/YAMLPropertyModel"
+import { PathPropertyModel } from "./obsidian/PropertyModels/PathPropertyModel";
 import { ToplevelFolderProperty } from "../../src/core/Properties/ToplevelFolderProperty";
 import { BasenameProperty } from "../../src/core/Properties/BasenameProperty";
-import { PropertyPerstistenceStrategy } from "../../src/core/Interfaces/PropertyPerstistenceStrategy";
+import { PropertyModel } from "../../src/core/Interfaces/PropertyModel";
 import { Property } from "../../src/core/Property";
 import { FATPROPERTY, FATProperty, FATSettings } from "./FileAsTaskSettings";
 
 export class FileAsTask{
 
     static load(fullPathOfTask:string,settings:FATSettings):File{
-        let pathDao:PropertyPerstistenceStrategy = new PathPropertyPerstistenceStrategy();
+        let pathDao:PropertyModel = new PathPropertyModel();
         let task = new File(fullPathOfTask,pathDao);
 
         let properties:Record<FATProperty, Property> = {
             [FATPROPERTY.title]:new BasenameProperty(
                 FATPROPERTY.title,
                 fullPathOfTask, 
-                new PathPropertyPerstistenceStrategy(),
+                new PathPropertyModel(),
                 settings[FATPROPERTY.title]),
             [FATPROPERTY.project]:new ToplevelFolderProperty(
                 FATPROPERTY.project,
                 fullPathOfTask,
-                new PathPropertyPerstistenceStrategy(),
+                new PathPropertyModel(),
                 settings[FATPROPERTY.project]),
             [FATPROPERTY.starred]:new BooleanProperty(
                 FATPROPERTY.starred,
                 fullPathOfTask,
-                new YAMLPropertyPerstistenceStrategy(),
+                new YAMLPropertyModel(),
                 settings[FATPROPERTY.starred]),
             [FATPROPERTY.status]:new WhitelistProperty(
                 FATPROPERTY.status,
                 fullPathOfTask,
-                new YAMLPropertyPerstistenceStrategy(),
+                new YAMLPropertyModel(),
                 settings[FATPROPERTY.status]),
             [FATPROPERTY.context]:new WhitelistProperty(
                 FATPROPERTY.context,
                 fullPathOfTask,
-                new YAMLPropertyPerstistenceStrategy(),
+                new YAMLPropertyModel(),
                 settings[FATPROPERTY.context])
         }
         task.properties = properties;

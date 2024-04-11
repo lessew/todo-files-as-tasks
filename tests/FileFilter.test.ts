@@ -2,7 +2,7 @@
 import { MockFile } from "./Mocks/MockFile";
 import { File } from "../src/core/File";
 import { WhitelistProperty } from "../src/core/Properties/WhitelistProperty";
-import { MockPropertyPerstistenceStrategy } from "./Mocks/MockPropertyPerstistenceStrategy";
+import { MockPropertyModel } from "./Mocks/MockPropertyModel";
 import {Filter, FilterOperator} from "../src/core/Interfaces/Filter";
 
 
@@ -14,11 +14,11 @@ class Helper {
             aFile.properties = {
                 "status": new WhitelistProperty("status",
                     obj.path,
-                    new MockPropertyPerstistenceStrategy(obj.status),
+                    new MockPropertyModel(obj.status),
                     {allowedValues:["Inbox","Done"],defaultValue:""}),
                 "context": new WhitelistProperty("context",
                     obj.path,
-                    new MockPropertyPerstistenceStrategy(obj.context),
+                    new MockPropertyModel(obj.context),
                     {allowedValues:["Desk","Phone"], defaultValue:""})
             }
             result.push(aFile);

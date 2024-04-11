@@ -1,7 +1,7 @@
 import { MockFile } from "../../tests/Mocks/MockFile";
 import { File } from "../../src/core/File";
 import { WhitelistProperty } from "../../src/core/Properties/WhitelistProperty";
-import { MockPropertyPerstistenceStrategy } from "../../tests/Mocks/MockPropertyPerstistenceStrategy";
+import { MockPropertyModel } from "../../tests/Mocks/MockPropertyModel";
 
 
 class Helper{
@@ -11,13 +11,13 @@ class Helper{
             "status": new WhitelistProperty(
                 "Status-not-used",
                 path,
-                new MockPropertyPerstistenceStrategy(status),
+                new MockPropertyModel(status),
                 {allowedValues:["Inbox","Done"],defaultValue:""}
             ),
             "context": new WhitelistProperty(
                 "Context-not-used",
                 path,
-                new MockPropertyPerstistenceStrategy(context),{allowedValues:["Desk","Read"],defaultValue:""}
+                new MockPropertyModel(context),{allowedValues:["Desk","Read"],defaultValue:""}
             )
         }
         return aFile;

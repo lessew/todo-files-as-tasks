@@ -1,8 +1,8 @@
 import { TFile } from "obsidian";
-import { PropertyPerstistenceStrategy } from "../../../core/Interfaces/PropertyPerstistenceStrategy";
+import { PropertyModel } from "../../../core/Interfaces/PropertyModel";
 import { ObsidianWrapper } from "../ObsidianWrapper";
 
-export class PathPropertyPerstistenceStrategy implements PropertyPerstistenceStrategy {
+export class PathPropertyModel implements PropertyModel {
   
     async persist(fileID:string,propertyName:string,val:string):Promise<void>{
         const wrapper = ObsidianWrapper.getInstance();

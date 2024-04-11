@@ -1,10 +1,10 @@
-import { PropertyPerstistenceStrategy } from "src/core/Interfaces/PropertyPerstistenceStrategy";
+import { PropertyModel } from "src/core/Interfaces/PropertyModel";
 import { PathProperty } from "./PathProperty";
 import { PropertySettings } from "../PropertySettings";
 
 export class BasenameProperty extends PathProperty{
     
-    constructor(name:string,fileID:string,dao:PropertyPerstistenceStrategy,propSettings:PropertySettings){
+    constructor(name:string,fileID:string,dao:PropertyModel,propSettings:PropertySettings){
         super(name,fileID,dao,propSettings);
     }
 

@@ -1,11 +1,11 @@
 
 import { BooleanProperty } from "../../src/core/Properties/BooleanProperty";
-import { PropertyPerstistenceStrategy } from "../../src/core/Interfaces/PropertyPerstistenceStrategy";
-import { MockPropertyPerstistenceStrategy } from "../../tests/Mocks/MockPropertyPerstistenceStrategy";
+import { PropertyModel } from "../../src/core/Interfaces/PropertyModel";
+import { MockPropertyModel } from "../../tests/Mocks/MockPropertyModel";
 
 class Helper{
   static getProperty(initialValue:string,options:string[]):BooleanProperty{
-    let dao:PropertyPerstistenceStrategy = new MockPropertyPerstistenceStrategy(initialValue);
+    let dao:PropertyModel = new MockPropertyModel(initialValue);
     let prop = new BooleanProperty("flagged","dummyfileid",dao,{allowedValues:options,defaultValue:""});
     return prop;
   }
@@ -23,7 +23,7 @@ describe('BooleanProperty test correct input', () => {
 
 describe('BooleanProperty test incorrect input:more than 2 values', () => {
   let options = ["true","false","athird"];
-  let dao:PropertyPerstistenceStrategy = new MockPropertyPerstistenceStrategy("true");
+  let dao:PropertyModel = new MockPropertyModel("true");
 
   test('incorrect property value should throw error', () => {
     try{

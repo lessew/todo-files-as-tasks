@@ -1,6 +1,6 @@
-import { PropertyPerstistenceStrategy } from "../../src/core/Interfaces/PropertyPerstistenceStrategy";
+import { PropertyModel } from "../../src/core/Interfaces/PropertyModel";
 
-export class MockPropertyPerstistenceStrategy implements PropertyPerstistenceStrategy{
+export class MockPropertyModel implements PropertyModel{
     mockedValue:string;
     propertyNameExists:boolean = true;
         

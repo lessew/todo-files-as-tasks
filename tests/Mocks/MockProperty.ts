@@ -1,11 +1,11 @@
 import { Property } from "../../src/core/Property";
-import { PropertyPerstistenceStrategy } from "../../src/core/Interfaces/PropertyPerstistenceStrategy";
+import { PropertyModel } from "../../src/core/Interfaces/PropertyModel";
 import { PropertySettings } from "src/core/PropertySettings";
 
 export class MockProperty extends Property{
     validatesTo:boolean = true;
 
-    constructor(name:string,fileID:string,dao:PropertyPerstistenceStrategy,setting:PropertySettings){
+    constructor(name:string,fileID:string,dao:PropertyModel,setting:PropertySettings){
         super(name,fileID,dao,setting);
     }
 

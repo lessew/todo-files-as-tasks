@@ -1,8 +1,8 @@
-import { PropertyPerstistenceStrategy } from "src/core/Interfaces/PropertyPerstistenceStrategy";
+import { PropertyModel } from "src/core/Interfaces/PropertyModel";
 import { ObsidianWrapper } from "../ObsidianWrapper";
 import { CachedMetadata, TFile } from "obsidian";
 
-export class YAMLPropertyPerstistenceStrategy implements PropertyPerstistenceStrategy{
+export class YAMLPropertyModel implements PropertyModel{
     
     persist(fileID: string, propertyName: string, val: string): void {
         const obsidianWrapper = ObsidianWrapper.getInstance();
