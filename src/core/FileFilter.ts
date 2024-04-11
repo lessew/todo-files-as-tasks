@@ -1,10 +1,10 @@
-import { File } from "./File";
+import { FileAsTask } from "../main/FileAsTask";
 import { Filter, FilterOperator } from "./Interfaces/Filter";
 
 export class FileFilter{
-    files:File[];
+    files:FileAsTask[];
 
-    constructor(files:File[]){
+    constructor(files:FileAsTask[]){
         this.files = files;
     }
 
@@ -30,7 +30,7 @@ export class FileFilter{
         return this;
     }
 
-    get():File[]{
+    get():FileAsTask[]{
         return this.files;
     }
 

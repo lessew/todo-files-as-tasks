@@ -52,10 +52,10 @@ export class YAMLParser{
 
         for(const propertyName in settings){            
             const yaml = this.yaml as any;
-            if(propertyName in yaml){
+            if(propertyName as FATProperty in yaml){
                 const filterValue:string = yaml[propertyName];
                 let valop = this.parseOperator(filterValue);
-                const allowedValues = settings[propertyName as FATProperty].allowedValues;
+                const allowedValues = settings[propertyName].allowedValues;
 
                 if(typeof allowedValues !== "undefined" && !allowedValues.includes(valop.value)){
                     return new FilterNotAllowedError(`${valop.value} is not set as an allowed value for ${propertyName}`)

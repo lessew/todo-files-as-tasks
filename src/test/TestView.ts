@@ -5,7 +5,7 @@ import { DEFAULT_SETTINGS, FATPROPERTY, FATSettings } from "src/main/FileAsTaskS
 import { FolderList } from "src/main/obsidian/FolderList";
 import {FileList} from "src/main/obsidian/FileList";
 import { text } from "stream/consumers";
-import {File} from "../core/File";
+import {File} from "../main/FileAsTask";
 import { ObsidianWrapper } from "src/main/obsidian/ObsidianWrapper";
 
 export class TestView{

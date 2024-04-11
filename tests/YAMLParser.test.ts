@@ -1,6 +1,6 @@
 import { YAMLParser } from "../src/core/YAMLParser";
 import { FilterOperator } from "../src/core/Interfaces/Filter";
-import { FATSettings,FATPROPERTY } from "../src/main/FileAsTaskSettings";
+import { FATSettings,FATPROPERTY } from "../src/core/FileAsTaskSettings";
 import { FATError } from "../src/core/Error";
 
 class Helper {

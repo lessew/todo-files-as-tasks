@@ -1,40 +1,43 @@
-import { PropertyModel } from "src/core/Interfaces/PropertyModel";
 import { PathProperty } from "./PathProperty";
 import { PropertySettings } from "../PropertySettings";
-export class ToplevelFolderProperty extends PathProperty{
+import { FileModel } from "../Interfaces/FileModel";
+export abstract class ToplevelFolderProperty extends PathProperty{  
+    private value:string;
+    settings:PropertySettings;
 
-    constructor(name:string,fileID:string,dao:PropertyModel,settings:PropertySettings){
-        super(name,fileID,dao,settings);
+    constructor(settings:PropertySettings,file:FileModel){
+        super(file);
+        this.value = this.getFolderName();
+        this.settings = settings;
     }
     
     validate(newValue:string){
         return (this.settings.allowedValues?.indexOf(newValue) != -1)
     }
     
-    getValue():string{        
-        if(typeof this.value === 'undefined'){
-            const folderName = this.getFolderName();
-            if(this.validate(folderName)){
-                this._loadedValueIsValid = true;
-            }
-            else{
-                console.log(`doest not validate: ${folderName}`)
-
-                this._loadedValueIsValid = false; // file is in folder that is not part of the allowed projects
-            }
-            
-            this.value = folderName; 
-        }
-        return this.value;
+    getFolderName():string{
+        return this.file.path.split("/").reverse()[1];
+    }
+        
+    getNewFullPathWithTopLevelFolder(newFoldername:string){
+        if(newFoldername==""){ // TODO throw error instead of doing nothing
+            return this.file.path;
+        } 
+        const currentPath = this.file.path;
+        const strSplit = currentPath.split("/");
+        const FOLDER_INDEX = (strSplit.length - 2);
+        strSplit[FOLDER_INDEX] = newFoldername;
+        const newFolderPath = strSplit.join("/");
+        return newFolderPath;
     }
 
-    
+    getValue():string{      
+        return this.value;  
+    }
+
     async setValue(val:string){
         const newPath = this.getNewFullPathWithTopLevelFolder(val);
-        await this.dao.persist(this.fileID,this.name,newPath);
-        
-        this.fileID = newPath;
-        this.value = val;
+        await this.file.setFullPath(newPath);
     }
 
 

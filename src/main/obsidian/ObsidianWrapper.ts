@@ -41,8 +41,8 @@ export class ObsidianWrapper{
         return this.obsidianApp.metadataCache.getFileCache(tf) as CachedMetadata;
     }
 
-    setMeta(tf:TFile,propName:string,propValue:string):void{
-        this.obsidianApp.fileManager.processFrontMatter(tf,(frontmatter) => {
+    async setMeta(tf:TFile,propName:string,propValue:string):Promise<void>{
+        await this.obsidianApp.fileManager.processFrontMatter(tf,(frontmatter) => {
             frontmatter[propName] = propValue;
         })
     }

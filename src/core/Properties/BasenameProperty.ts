@@ -1,15 +1,24 @@
-import { PropertyModel } from "src/core/Interfaces/PropertyModel";
 import { PathProperty } from "./PathProperty";
-import { PropertySettings } from "../PropertySettings";
+import { FileModel } from "../Interfaces/FileModel";
 
 export class BasenameProperty extends PathProperty{
-    
-    constructor(name:string,fileID:string,dao:PropertyModel,propSettings:PropertySettings){
-        super(name,fileID,dao,propSettings);
+
+    constructor(file:FileModel){
+        super(file);
     }
 
+    getNewFullPathWithBasename(basename:string){ 
+        return this.file.parent.path + basename + this.getFileExtension();
+    }
+
+    // TODO: run unit tests
     validate(newValue:string):boolean{
-        return super.validate(newValue);//not used
+        if(newValue.match(/[a-zA-Z_-]/g)){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     getValue():string{        
@@ -21,8 +30,6 @@ export class BasenameProperty extends PathProperty{
 
     async setValue(val:string):Promise<void>{
         const newPath = this.getNewFullPathWithBasename(val);
-        await this.dao.persist(this.fileID,this.name,newPath);
-        this.value = val;
-        this.fileID = newPath;
+        await this.file.setFullPath(newPath);
     }
 }

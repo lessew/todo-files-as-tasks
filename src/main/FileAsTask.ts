@@ -1,66 +1,32 @@
-import { File } from "../../src/core/File";
-import { WhitelistProperty } from "../../src/core/Properties/WhitelistProperty";
-import { BooleanProperty } from "../../src/core/Properties/BooleanProperty";
-import { YAMLPropertyModel } from "./obsidian/PropertyModels/YAMLPropertyModel"
-import { PathPropertyModel } from "./obsidian/PropertyModels/PathPropertyModel";
-import { ToplevelFolderProperty } from "../../src/core/Properties/ToplevelFolderProperty";
-import { BasenameProperty } from "../../src/core/Properties/BasenameProperty";
-import { PropertyModel } from "../../src/core/Interfaces/PropertyModel";
-import { Property } from "../../src/core/Property";
-import { FATPROPERTY, FATProperty, FATSettings } from "./FileAsTaskSettings";
+import { Property } from "../core/Property";
+import { FileModel } from "../core/Interfaces/FileModel";
+import { FATProperty, FATSettings } from "../core/FileAsTaskSettings";
+import { Starred, Status, Title, Context, Project } from "./FileAsTaskProperties";
 
-export class FileAsTask{
+export class FileAsTask {
+    file:FileModel;
 
-    static load(fullPathOfTask:string,settings:FATSettings):File{
-        let pathDao:PropertyModel = new PathPropertyModel();
-        let task = new File(fullPathOfTask,pathDao);
-
-        let properties:Record<FATProperty, Property> = {
-            [FATPROPERTY.title]:new BasenameProperty(
-                FATPROPERTY.title,
-                fullPathOfTask, 
-                new PathPropertyModel(),
-                settings[FATPROPERTY.title]),
-            [FATPROPERTY.project]:new ToplevelFolderProperty(
-                FATPROPERTY.project,
-                fullPathOfTask,
-                new PathPropertyModel(),
-                settings[FATPROPERTY.project]),
-            [FATPROPERTY.starred]:new BooleanProperty(
-                FATPROPERTY.starred,
-                fullPathOfTask,
-                new YAMLPropertyModel(),
-                settings[FATPROPERTY.starred]),
-            [FATPROPERTY.status]:new WhitelistProperty(
-                FATPROPERTY.status,
-                fullPathOfTask,
-                new YAMLPropertyModel(),
-                settings[FATPROPERTY.status]),
-            [FATPROPERTY.context]:new WhitelistProperty(
-                FATPROPERTY.context,
-                fullPathOfTask,
-                new YAMLPropertyModel(),
-                settings[FATPROPERTY.context])
-        }
-        task.properties = properties;
-        return task;
+    context:Context;
+    project:Project;
+    status:Status;
+    starred:Starred;
+    title:Title;
+    
+    constructor(file:FileModel,settings:FATSettings){
+        this.file = file;
+        this.context= new Context(settings.context,file);
+        this.project = new Project(settings.project,file);
+        this.status = new Status(settings.status,file);
+        this.starred = new Starred(settings.starred,file);
+        this.title = new Title(file);
     }
 
-    // TODO fix create method. default value properties are not saved, file is not created and no error message displayed
-    static async create(project:string,title:string,settings:FATSettings):Promise<void>{
-        // TODO: rootPath was removed in obsidianwrapper, find another way
-        /*
-        let dao = new ObsidianFileDAO();
-        const path = ObsidianWrapper.getInstance().rootPath + "/" + project + "/" + title + ".md";
-        await dao.createMarkdownFile(path);
-        let file:File = FileAsTask.load(path,settings);
-
-        //let property: keyof typeof setting;
-        for(let propName in settings){
-            let val = settings[propName as FATProperty].defaultValue;
-            file.properties[propName].setValue(val);
+    get(propName:FATProperty):string{
+        if(propName in this){
+            return (this[propName] as Property).getValue();
         }
-        */
+        else{
+            return "";
+        }
     }
-
 }

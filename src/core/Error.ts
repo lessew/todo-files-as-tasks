@@ -6,7 +6,7 @@ export abstract class FATError extends Error{
         this.message = message;
     }
 
-    static isError(result:Error | unknown):result is Error{
+    static isError(result:FATError | unknown):result is FATError{
       return result instanceof Error;
     }
     

@@ -22,10 +22,6 @@ export class FATSettingsHelper {
         }
         return result;
     }
-
-    //static allowedValuesToString(allowedValues:string[]):string{
-    //    return allowedValues.join(",");
-    //}
 }
 
 export const DEFAULT_SETTINGS: FATSettings = {

@@ -2,13 +2,15 @@ import { App, View } from "obsidian";
 import { YAMLParser } from "src/core/YAMLParser";
 import { ObsidianWrapper } from "./obsidian/ObsidianWrapper";
 import { TaskListView } from "./ui/TaskListView";
-import { FileList } from "./obsidian/FileList";
-import { FolderList } from "./obsidian/FolderList";
+import { FolderList } from "../core/FolderList";
 import { CreateTaskButtonView } from "./ui/CreateTaskButtonView";
 import { FileFilter } from "src/core/FileFilter";
-import { FATSettings } from "./FileAsTaskSettings";
+import { FATSettings } from "../core/FileAsTaskSettings";
 import { FATError,YAMLParseError,RootPathError,NoFilesFoundError } from "src/core/Error";
 import { TestView } from "src/test/TestView";
+import { ObsidianFolder } from "./obsidian/ObsidianFolder";
+import { FolderModel } from "src/core/Interfaces/FolderModel";
+import { FileList } from "src/core/FileList";
 
 export class MainCodeBlock{
     source:string;
@@ -32,6 +34,7 @@ export class MainCodeBlock{
         const parser:YAMLParser = new YAMLParser();
         
         const yamlParseResult = parser.loadSource(this.source);
+        
         if(FATError.isError(yamlParseResult)){
             this.displayUserError(yamlParseResult);
             return;
@@ -45,10 +48,11 @@ export class MainCodeBlock{
 
         ObsidianWrapper.getInstance().addMainCodeBlock(this);
 
-        // load files and folders from obsidian / filesystem
-        const folderList = new FolderList();
-        folderList.init(rootPath);
-        this.settings.project.allowedValues = folderList.folders;
+        const rootFolder = new ObsidianFolder(rootPath);
+        const folderList = FolderList.getFoldersAsStrings(rootFolder);
+        
+        //TODO: adjust allowedValues to name,id type
+        this.settings.project.allowedValues = folderList;
 
         const action = parser.parseAction();
         if(FATError.isError(action)){
@@ -57,7 +61,7 @@ export class MainCodeBlock{
         }
 
         if(action==YAMLParser.ACTION_LIST){
-           this.displayActionList(parser,rootPath)
+           this.displayActionList(parser,rootFolder)
         }
         else if(action==YAMLParser.ACTION_CREATE_BUTTON){
            this.displayCreateTaskButton();
@@ -69,12 +73,12 @@ export class MainCodeBlock{
 
     displayUserError(error:FATError){
         const msg = error.message;// + "\n" + this.source;
-        this.el.createEl("div",{text:msg,cls:"color:red"});
+        this.el.createEl("div",{text:msg});
     }
 
-    displayActionList(parser:YAMLParser,rootPath:string):void{
-        const fileList = new FileList();
-        fileList.init(rootPath,this.settings);
+    displayActionList(parser:YAMLParser,rootFolder:FolderModel):void{
+       
+        const tasks = FileList.getFilesAsTask(rootFolder,this.settings);
 
         const filters = parser.parseFilters(this.settings);
         if(FATError.isError(filters)){
@@ -82,7 +86,7 @@ export class MainCodeBlock{
             return;
         }
 
-        const fileFilter = new FileFilter(fileList.files);
+        const fileFilter = new FileFilter(tasks);
         const filteredFiles = fileFilter.bulkFilterBy(filters).get();
         const view = new TaskListView(filteredFiles,this.app);
         view.build(this.el);

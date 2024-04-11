@@ -1,6 +1,6 @@
 import { App, Modal, Setting } from "obsidian";
 import { ObsidianWrapper } from "../obsidian/ObsidianWrapper";
-import { FATSettings, FATSettingsHelper } from "../FileAsTaskSettings";
+import { FATSettings, FATSettingsHelper } from "../../core/FileAsTaskSettings";
 
 
 export class CreateTaskButtonView{

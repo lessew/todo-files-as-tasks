@@ -1,12 +1,12 @@
-import { PropertyModel } from "src/core/Interfaces/PropertyModel";
 import { Property } from "../Property";
-import { PropertySettings } from "../PropertySettings";
+import { FileModel } from "../Interfaces/FileModel";
 
 export class PathProperty extends Property{
+    
     regExp:RegExp = /^[a-zA-Z\/\.]+$/;
-  
-    constructor(name:string,fileID:string,dao:PropertyModel,propSettings:PropertySettings){
-        super(name,fileID,dao,propSettings);
+
+    constructor(file:FileModel){
+        super(file)
     }
 
     validate(newVal:string):boolean{
@@ -15,11 +15,11 @@ export class PathProperty extends Property{
     }
 
     getHref():string{
-        return this.fileID;
+        return this.file.path;
     }
 
     getFileExtension():string{
-        const s = this.fileID.split("/").reverse()[0].split(".");
+        const s = this.file.path.split("/").reverse()[0].split(".");
         if(s.length>1){
             return "." + s.reverse()[0];
         }
@@ -28,43 +28,23 @@ export class PathProperty extends Property{
         }
     }
 
-    getFilename():string{
-        return this.fileID.split("/").reverse()[0];
-    };
-    
-    getFolderName():string{
-        return this.fileID.split("/").reverse()[1];
-    }
-    
-    getFolderPath():string{
-        return this.fileID.substring(0,(this.fileID.length - this.getFilename().length))
-    }
-
     getBasename():string{
-        return this.getFilename().split(".")[0];
+        return this.file.path.split("/").reverse()[0].split(".")[0];
     }
 
     isMarkdownFile(): boolean {
         return (this.getFileExtension() === ".md");
     }
 
-    getNewFullPathWithBasename(basename:string){ 
-        return this.getFolderPath() + basename + this.getFileExtension();
+    getValue(): string {
+        return this.file.path;
     }
 
-    
-    getNewFullPathWithTopLevelFolder(newFoldername:string){
-        if(newFoldername==""){
-            return this.fileID;
-        } 
-        const currentPath = this.fileID;
-        const strSplit = currentPath.split("/");
-        const FOLDER_INDEX = (strSplit.length - 2);
-        strSplit[FOLDER_INDEX] = newFoldername;
-        const newFolderPath = strSplit.join("/");
-        return newFolderPath;
+    async setValue(val: string): Promise<void> {
+        if(this.validate(val)){
+           await this.file.setFullPath(val);
+        } // TODO throw error if not validate
     }
-
 
 }
     
