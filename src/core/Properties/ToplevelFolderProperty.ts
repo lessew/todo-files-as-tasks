@@ -1,9 +1,9 @@
-import { PropertyDAO } from "src/core/Interfaces/PropertyDAO";
+import { PropertyPerstistenceStrategy } from "src/core/Interfaces/PropertyPerstistenceStrategy";
 import { PathProperty } from "./PathProperty";
 import { PropertySettings } from "../PropertySettings";
 export class ToplevelFolderProperty extends PathProperty{
 
-    constructor(name:string,fileID:string,dao:PropertyDAO,settings:PropertySettings){
+    constructor(name:string,fileID:string,dao:PropertyPerstistenceStrategy,settings:PropertySettings){
         super(name,fileID,dao,settings);
     }
     

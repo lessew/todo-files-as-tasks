@@ -1,10 +1,10 @@
 import { Property } from "../Property";
-import { PropertyDAO } from "../Interfaces/PropertyDAO";
+import { PropertyPerstistenceStrategy } from "../Interfaces/PropertyPerstistenceStrategy";
 import { PropertySettings } from "../PropertySettings";
 
 export class FreeTextProperty extends Property{
     
-    constructor(name:string,fileID:string,dao:PropertyDAO,settings:PropertySettings){
+    constructor(name:string,fileID:string,dao:PropertyPerstistenceStrategy,settings:PropertySettings){
         super(name,fileID,dao,settings);
     }
     

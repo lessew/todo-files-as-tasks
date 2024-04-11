@@ -1,5 +1,5 @@
 import { PathProperty } from "./Properties/PathProperty";
-import { PropertyDAO } from "./Interfaces/PropertyDAO";
+import { PropertyPerstistenceStrategy } from "./Interfaces/PropertyPerstistenceStrategy";
 import { Property } from "./Property";
 
 // TODO move errors into external class
@@ -9,8 +9,8 @@ export class File {
     static ERR_PROPERTY_INVALID = "ERROR: invalid property";
     static ERR_PROPERTY_NO_VALUE = "ERROR: no value set for property"
    
-    constructor(fullpath:string,propertyDAO:PropertyDAO){
-        let fp = new PathProperty("fullpath",fullpath,propertyDAO,{defaultValue:""});
+    constructor(fullpath:string,PropertyPerstistenceStrategy:PropertyPerstistenceStrategy){
+        let fp = new PathProperty("fullpath",fullpath,PropertyPerstistenceStrategy,{defaultValue:""});
         
         //fp.setValue(fullpath);
         fp.fileID = fullpath;

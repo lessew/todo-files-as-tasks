@@ -1,11 +1,11 @@
-import { PropertyDAO } from "src/core/Interfaces/PropertyDAO";
+import { PropertyPerstistenceStrategy } from "src/core/Interfaces/PropertyPerstistenceStrategy";
 import { Property } from "../Property";
 import { PropertySettings } from "../PropertySettings";
 
 export class PathProperty extends Property{
     regExp:RegExp = /^[a-zA-Z\/\.]+$/;
   
-    constructor(name:string,fileID:string,dao:PropertyDAO,propSettings:PropertySettings){
+    constructor(name:string,fileID:string,dao:PropertyPerstistenceStrategy,propSettings:PropertySettings){
         super(name,fileID,dao,propSettings);
     }
 

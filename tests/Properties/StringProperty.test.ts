@@ -1,10 +1,10 @@
 import { FreeTextProperty } from "../../src/core/Properties/FreeTextProperty";
-import { PropertyDAO } from "../../src/core/Interfaces/PropertyDAO";
-import { MockPropertyDAO } from "../../tests/Mocks/MockPropertyDAO";
+import { PropertyPerstistenceStrategy } from "../../src/core/Interfaces/PropertyPerstistenceStrategy";
+import { MockPropertyPerstistenceStrategy } from "../../tests/Mocks/MockPropertyPerstistenceStrategy";
 
 class Helper{
     static getFreeTextProperty(propName:string,propValue:string):FreeTextProperty{
-        let dao:PropertyDAO = new MockPropertyDAO(propValue);
+        let dao:PropertyPerstistenceStrategy = new MockPropertyPerstistenceStrategy(propValue);
         let sp = new FreeTextProperty(propName,"dummyfileid",dao,{defaultValue:""});
 
         return sp;

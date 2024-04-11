@@ -1,17 +1,17 @@
-import { PropertyDAO } from "./Interfaces/PropertyDAO";
+import { PropertyPerstistenceStrategy } from "./Interfaces/PropertyPerstistenceStrategy";
 import { PropertySettings } from "./PropertySettings";
 
 export abstract class Property{
     name:string;
     fileID:string;
-    dao:PropertyDAO;
+    dao:PropertyPerstistenceStrategy;
     _loadedValueIsValid:boolean;
     settings:PropertySettings;
     protected value:string;
 
     static INVALID_VALUE:string ="-invalid_value-";
 
-    constructor(name:string,fileID:string,dao:PropertyDAO,settings:PropertySettings){
+    constructor(name:string,fileID:string,dao:PropertyPerstistenceStrategy,settings:PropertySettings){
         this.name = name;
         this.dao = dao;
         this.fileID = fileID;

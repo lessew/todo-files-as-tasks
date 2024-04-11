@@ -1,10 +1,10 @@
-import { PropertyDAO } from "../../src/core/Interfaces/PropertyDAO";
-import { MockPropertyDAO } from "../../tests/Mocks/MockPropertyDAO";
+import { PropertyPerstistenceStrategy } from "../../src/core/Interfaces/PropertyPerstistenceStrategy";
+import { MockPropertyPerstistenceStrategy } from "../../tests/Mocks/MockPropertyPerstistenceStrategy";
 import { BasenameProperty } from "../../src/core/Properties/BasenameProperty";
 
 class Helper{
     static getBasenameProperty(propName:string,path:string):BasenameProperty{
-        let dao:PropertyDAO = new MockPropertyDAO(path);
+        let dao:PropertyPerstistenceStrategy = new MockPropertyPerstistenceStrategy(path);
         let prop = new BasenameProperty(propName,path,dao,{defaultValue:""}); 
         return prop;
     }

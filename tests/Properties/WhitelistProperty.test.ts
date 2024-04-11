@@ -1,11 +1,11 @@
 import { WhitelistProperty } from "../../src/core/Properties/WhitelistProperty";
-import { PropertyDAO } from "../../src/core/Interfaces/PropertyDAO";
-import { MockPropertyDAO } from "../Mocks/MockPropertyDAO";
+import { PropertyPerstistenceStrategy } from "../../src/core/Interfaces/PropertyPerstistenceStrategy";
+import { MockPropertyPerstistenceStrategy } from "../Mocks/MockPropertyPerstistenceStrategy";
 
 
 class Helper{
     static getWhitelistProperty(propName:string,propValue:string,options:string[]):WhitelistProperty{
-        let dao:PropertyDAO = new MockPropertyDAO(propValue);
+        let dao:PropertyPerstistenceStrategy = new MockPropertyPerstistenceStrategy(propValue);
         let sp = new WhitelistProperty(propName,"dummyfileid",dao,{allowedValues:options,defaultValue:""});
         return sp;
     }

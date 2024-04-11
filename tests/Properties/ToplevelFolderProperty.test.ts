@@ -1,10 +1,10 @@
-import { PropertyDAO } from "../../src/core/Interfaces/PropertyDAO";
-import { MockPropertyDAO } from "../Mocks/MockPropertyDAO";
+import { PropertyPerstistenceStrategy } from "../../src/core/Interfaces/PropertyPerstistenceStrategy";
+import { MockPropertyPerstistenceStrategy } from "../Mocks/MockPropertyPerstistenceStrategy";
 import { ToplevelFolderProperty } from "../../src/core/Properties/ToplevelFolderProperty";
 
 class Helper{
     static getTopLevelFolderProperty(propName:string,path:string,allowedFolders:string[]):ToplevelFolderProperty{
-        let dao:PropertyDAO = new MockPropertyDAO(path);
+        let dao:PropertyPerstistenceStrategy = new MockPropertyPerstistenceStrategy(path);
         let prop = new ToplevelFolderProperty(propName,path,dao,{allowedValues:allowedFolders,defaultValue:""}); 
         return prop;
     }

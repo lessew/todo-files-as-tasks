@@ -1,10 +1,10 @@
 import { PathProperty } from "../../src/core/Properties/PathProperty";
-import { PropertyDAO } from "../../src/core/Interfaces/PropertyDAO";
-import { MockPropertyDAO } from "../../tests/Mocks/MockPropertyDAO";
+import { PropertyPerstistenceStrategy } from "../../src/core/Interfaces/PropertyPerstistenceStrategy";
+import { MockPropertyPerstistenceStrategy } from "../../tests/Mocks/MockPropertyPerstistenceStrategy";
 
 class Helper{
     static getPathProperty(propName:string,path:string):PathProperty{
-        let dao:PropertyDAO = new MockPropertyDAO(path);
+        let dao:PropertyPerstistenceStrategy = new MockPropertyPerstistenceStrategy(path);
         let prop = new PathProperty(propName,path,dao,{defaultValue:""}); // the prop value is also the id of the file
 
         return prop;

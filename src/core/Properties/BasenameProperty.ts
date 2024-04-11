@@ -1,10 +1,10 @@
-import { PropertyDAO } from "src/core/Interfaces/PropertyDAO";
+import { PropertyPerstistenceStrategy } from "src/core/Interfaces/PropertyPerstistenceStrategy";
 import { PathProperty } from "./PathProperty";
 import { PropertySettings } from "../PropertySettings";
 
 export class BasenameProperty extends PathProperty{
     
-    constructor(name:string,fileID:string,dao:PropertyDAO,propSettings:PropertySettings){
+    constructor(name:string,fileID:string,dao:PropertyPerstistenceStrategy,propSettings:PropertySettings){
         super(name,fileID,dao,propSettings);
     }
 

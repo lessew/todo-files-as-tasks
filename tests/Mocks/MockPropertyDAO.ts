@@ -1,6 +1,6 @@
-import { PropertyDAO } from "../../src/core/Interfaces/PropertyDAO";
+import { PropertyPerstistenceStrategy } from "../../src/core/Interfaces/PropertyPerstistenceStrategy";
 
-export class MockPropertyDAO implements PropertyDAO{
+export class MockPropertyPerstistenceStrategy implements PropertyPerstistenceStrategy{
     mockedValue:string;
     propertyNameExists:boolean = true;
         

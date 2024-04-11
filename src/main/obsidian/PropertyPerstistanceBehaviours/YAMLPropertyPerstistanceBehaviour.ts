@@ -1,8 +1,8 @@
-import { PropertyDAO } from "src/core/Interfaces/PropertyDAO";
+import { PropertyPerstistenceStrategy } from "src/core/Interfaces/PropertyPerstistenceStrategy";
 import { ObsidianWrapper } from "../ObsidianWrapper";
 import { CachedMetadata, TFile } from "obsidian";
 
-export class YAMLPropertyDAO implements PropertyDAO{
+export class YAMLPropertyPerstistenceStrategy implements PropertyPerstistenceStrategy{
     
     persist(fileID: string, propertyName: string, val: string): void {
         const obsidianWrapper = ObsidianWrapper.getInstance();

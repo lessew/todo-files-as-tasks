@@ -1,18 +1,18 @@
 import { MockProperty } from "../Mocks/MockProperty";
-import { PropertyDAO } from "../../src/core/Interfaces/PropertyDAO";
-import { MockPropertyDAO } from "../Mocks/MockPropertyDAO";
+import { PropertyPerstistenceStrategy } from "../../src/core/Interfaces/PropertyPerstistenceStrategy";
+import { MockPropertyPerstistenceStrategy } from "../Mocks/MockPropertyPerstistenceStrategy";
 import { PropertySettings } from "src/core/PropertySettings";
 
 
 class Helper{
     static getMockProperty(propName:string,propValue:string):MockProperty{
-        let dao:PropertyDAO = new MockPropertyDAO(propValue);
+        let dao:PropertyPerstistenceStrategy = new MockPropertyPerstistenceStrategy(propValue);
         let sp = new MockProperty(propName,"dummyfileid",dao, {defaultValue:""} as PropertySettings);
         return sp;
     }
     
     static getPropertyWithNonExistingDAO():MockProperty{
-        let dao:MockPropertyDAO = new MockPropertyDAO("-");
+        let dao:MockPropertyPerstistenceStrategy = new MockPropertyPerstistenceStrategy("-");
         dao.setPropertyNameToNotExist();
         let prop = new MockProperty("dummy","dummyfileid",dao,{defaultValue:""} as PropertySettings);
         return prop;
