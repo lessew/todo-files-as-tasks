@@ -29,9 +29,9 @@ export class ToplevelFolderProperty extends PathProperty{
     }
 
     
-    setValue(val:string){
+    async setValue(val:string){
         const newPath = this.getNewFullPathWithTopLevelFolder(val);
-        this.dao.persist(this.fileID,this.name,newPath);
+        await this.dao.persist(this.fileID,this.name,newPath);
         
         this.fileID = newPath;
         this.value = val;
