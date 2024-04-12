@@ -20,7 +20,7 @@ export class ObsidianFile implements FileModel{
         this.parent = new ObsidianFolder(this.file.parent!.path);
     }
 
-    async setFullPath(newPath: string): Promise<void> {
+    async move(newPath: string): Promise<void> {
         const wrapper = ObsidianWrapper.getInstance();
         await wrapper.moveFile(this.file,newPath);
     }

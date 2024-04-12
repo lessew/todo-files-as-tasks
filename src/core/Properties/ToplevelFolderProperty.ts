@@ -37,7 +37,7 @@ export abstract class ToplevelFolderProperty extends PathProperty{
 
     async setValue(val:string){
         const newPath = this.getNewFullPathWithTopLevelFolder(val);
-        await this.file.setFullPath(newPath);
+        await this.file.move(newPath);
     }
 
 

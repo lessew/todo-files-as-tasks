@@ -30,6 +30,6 @@ export class BasenameProperty extends PathProperty{
 
     async setValue(val:string):Promise<void>{
         const newPath = this.getNewFullPathWithBasename(val);
-        await this.file.setFullPath(newPath);
+        await this.file.move(newPath);
     }
 }

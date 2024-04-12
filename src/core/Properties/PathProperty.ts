@@ -42,7 +42,7 @@ export class PathProperty extends Property{
 
     async setValue(val: string): Promise<void> {
         if(this.validate(val)){
-           await this.file.setFullPath(val);
+           await this.file.move(val);
         } // TODO throw error if not validate
     }
 
