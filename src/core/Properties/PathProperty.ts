@@ -1,50 +1,22 @@
-import { Property } from "../Property";
 import { FileModel } from "../Interfaces/FileModel";
+import { Property } from "../Property";
+import { PathStrategy } from "../PropertyStrategies/PathStrategy";
 
 export class PathProperty extends Property{
     
-    regExp:RegExp = /^[a-zA-Z\/\.]+$/;
+    strategy:PathStrategy;
 
-    constructor(file:FileModel){
-        super(file)
-    }
-
-    validate(newVal:string):boolean{
-        const match = this.regExp.test(newVal);
-        return match;
-    }
-
-    getHref():string{
-        return this.file.path;
-    }
-
-    getFileExtension():string{
-        const s = this.file.path.split("/").reverse()[0].split(".");
-        if(s.length>1){
-            return "." + s.reverse()[0];
-        }
-        else{
-            return "";
-        }
-    }
-
-    getBasename():string{
-        return this.file.path.split("/").reverse()[0].split(".")[0];
-    }
-
-    isMarkdownFile(): boolean {
-        return (this.getFileExtension() === ".md");
+    constructor(strat:PathStrategy,file:FileModel){
+        super(file);
+        this.strategy = strat;
     }
 
     getValue(): string {
-        return this.file.path;
+        return this.strategy.getValue(file.path);
     }
 
-    async setValue(val: string): Promise<void> {
-        if(this.validate(val)){
-           await this.file.move(val);
-        } // TODO throw error if not validate
+    setValue(val: string): Promise<void> {
+        throw new Error("Method not implemented.");
     }
 
 }
-    

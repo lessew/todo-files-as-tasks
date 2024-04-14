@@ -1,4 +1,5 @@
 import { FileModel } from "./Interfaces/FileModel";
+import { PropertyStrategy } from "./Interfaces/PropertyStrategy";
 
 
 export abstract class Property{
@@ -8,5 +9,5 @@ export abstract class Property{
     }
     abstract getValue():string;
     abstract setValue(val:string):Promise<void>;
-    abstract validate(newValue:string):boolean;
 }
+
