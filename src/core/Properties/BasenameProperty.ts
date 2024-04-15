@@ -11,9 +11,9 @@ export class BaseNameProperty implements Property{
         this.file = file;
     }
     
-    setValue(val: string): void {
+    async setValue(val: string): Promise<void> {
         const newValue = this.getNewFullPathWithBasename(this.file.path,val);
-        this.file.move(newValue);
+        await this.file.move(newValue);
     }
 
     getValue(): string {

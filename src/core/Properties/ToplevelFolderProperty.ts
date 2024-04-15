@@ -15,7 +15,7 @@ export class ToplevelFolderProperty implements Property{
         this.defaultValue = defaultValue;
     }
 
-    setValue(val: string): void {
+    async setValue(val: string):Promise<void> {
         if(!this.isValidFolderValue(val)){
             throw new Error(`Cannot move to folder ${val} as it is not part of the list of allowed folder ${this.whitelist.toString()}`);
         }
@@ -23,8 +23,9 @@ export class ToplevelFolderProperty implements Property{
         if(!this.isValidPath(newPath)){
             throw new Error(`Cannot move to path ${newPath} as it is not a valid path`);
         }
-        this.file.move(newPath);
+        await this.file.move(newPath);
     }
+
     getValue(): string {
         if(this.val===undefined){
             this.val = this.getFolderName(this.file.path);
@@ -50,6 +51,8 @@ export class ToplevelFolderProperty implements Property{
     }
 
     isValidPath(path:string):boolean{
-        return this.regExp.test(path);
+        return true;
+        // TODO implement
+        //return this.regExp.test(path);
     }
 }

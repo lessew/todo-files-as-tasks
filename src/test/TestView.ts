@@ -66,14 +66,14 @@ export class TestView{
         }
 
         const expectedPayHolidayBillFile = expectedFiles[1];
-/*
-        // rename title
-        await (actualPayHolidayBillFile as FileAsTask).set("title","newValue");
+
+        await (actualPayHolidayBillFile as FileAsTask).set(PROPERTYNAMES.title,"newValue");
         const fileID1 = "todo-home/Finance/newValue.md";
         const file1 = wrapper.getTFile(fileID1);
         assert(file1.path,fileID1,"check if basename / title rename works");
-        (actualPayHolidayBillFile as FileAsTask).set("title",expectedPayHolidayBillFile.title);
+        (actualPayHolidayBillFile as FileAsTask).set(PROPERTYNAMES.title,expectedPayHolidayBillFile.title);
 
+        
         // rename project - 
         // TODO issue detected: the properties do not get updated if the filepath is update. need to fix
         await (actualPayHolidayBillFile as FileAsTask).set("project","Groceries");
@@ -81,7 +81,7 @@ export class TestView{
         const file2 = wrapper.getTFile(fileID2);
         assert(file2.path,fileID2,"check if project rename works");
         (actualPayHolidayBillFile as FileAsTask).set("project",expectedPayHolidayBillFile.project);
-        */
+        
     }
 
 
