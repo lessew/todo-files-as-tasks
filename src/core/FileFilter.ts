@@ -1,4 +1,4 @@
-import { FileAsTask } from "../main/FileAsTask";
+import { FileAsTask } from "../main/FileAsTaskFactory";
 import { Filter, FilterOperator } from "./Interfaces/Filter";
 
 export class FileFilter{

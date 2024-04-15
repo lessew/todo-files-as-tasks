@@ -5,7 +5,7 @@ import { TaskListView } from "./ui/TaskListView";
 import { FolderList } from "../core/FolderList";
 import { CreateTaskButtonView } from "./ui/CreateTaskButtonView";
 import { FileFilter } from "src/core/FileFilter";
-import { FATSettings } from "../core/FileAsTaskSettings";
+import { Settings } from "../core/FileAsTaskSettings";
 import { FATError,YAMLParseError,RootPathError,NoFilesFoundError } from "src/core/Error";
 import { TestView } from "src/test/TestView";
 import { ObsidianFolder } from "./obsidian/ObsidianFolder";
@@ -15,10 +15,10 @@ import { FileList } from "src/core/FileList";
 export class MainCodeBlock{
     source:string;
     el:HTMLElement;
-    settings:FATSettings;
+    settings:Settings;
     app:App;
 
-    constructor(source:string,el:HTMLElement,settings:FATSettings,app:App){
+    constructor(source:string,el:HTMLElement,settings:Settings,app:App){
         this.source = source;
         this.el = el;
         this.settings = settings;
@@ -49,10 +49,9 @@ export class MainCodeBlock{
         ObsidianWrapper.getInstance().addMainCodeBlock(this);
 
         const rootFolder = new ObsidianFolder(rootPath);
-        const folderList = FolderList.getFoldersAsStrings(rootFolder);
+        const folderList = FolderList.getFoldersAsWhitelist(rootFolder);
         
-        //TODO: adjust allowedValues to name,id type
-        this.settings.project.allowedValues = folderList;
+        this.settings.project.whitelist = folderList;
 
         const action = parser.parseAction();
         if(FATError.isError(action)){
@@ -78,7 +77,7 @@ export class MainCodeBlock{
 
     displayActionList(parser:YAMLParser,rootFolder:FolderModel):void{
        
-        const tasks = FileList.getFilesAsTask(rootFolder,this.settings);
+        const tasks = FileList.getFilesAsTasks(rootFolder,this.settings);
 
         const filters = parser.parseFilters(this.settings);
         if(FATError.isError(filters)){

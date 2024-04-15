@@ -1,8 +1,27 @@
-import { MockPropertyModel } from "./MockPropertyModel";
-import { File } from "../../src/main/FileAsTask";
+import { FolderModel } from "src/core/Interfaces/FolderModel";
+import { FileModel } from "../../src/core/Interfaces/FileModel";
 
-export class MockFile extends File{
+export class MockFileModel implements FileModel{
+    name: string;
+    path: string;
+    parent: FolderModel;
+
+    /*
     constructor(path:string){
-        super(path,new MockPropertyModel(path));
+        this.path = path;
+    }
+    */
+
+    move(newPath: string): void | Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+    getYAMLProperty(name: string): string {
+        throw new Error("Method not implemented.");
+    }
+    setYAMLProperty(name: string, value: string): void | Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+    createMarkdownFile(path: string): void {
+        throw new Error("Method not implemented.");
     }
 }

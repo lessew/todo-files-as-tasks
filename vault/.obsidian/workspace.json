@@ -18,6 +18,18 @@
                 "source": true
               }
             }
+          },
+          {
+            "id": "cc9121d66e223be1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "todo-home/Finance/Taxes 2023/Get income statement work.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ]
       }
@@ -150,22 +162,23 @@
   "lastOpenFiles": [
     "fat-list-examples/Tests.md",
     "fat-list-examples/devtest.md",
+    "todo-home/Finance/Taxes 2023/Get income statement work.md",
+    "todo-home/Finance/Pay holiday bill.md",
     "fat-list-examples/Dev.md",
-    "todo-home/Finance/Pay holiday bill.md",
-    "todo-home/Finance/Pay holiday bill.md",
-    "todo-home/Finance/Pay holiday bill.md",
-    "todo-home/Finance/Pay holiday bill.md",
-    "todo-home/Finance/Pay holiday bill.md",
-    "todo-home/Finance/Pay holiday bill.md",
-    "todo-home/Finance/Pay holiday bill.md",
-    "todo-home/Finance/Pay holiday bill.md",
+    "todo-home/Finance/newValue.md",
+    "todo-home/Finance/newValue.md",
+    "todo-home/Finance/newValue.md",
+    "todo-home/Finance/newValue.md",
+    "todo-home/Finance/newValue.md",
+    "todo-home/Finance/newValue.md",
+    "todo-home/Finance/newValue.md",
+    "todo-home/Finance/newValue.md",
     "todo-home/Finance/Taxes 2023/IRS hotline/Ask details re taxes 2023.md",
     "todo-home/Finance/Taxes 2023/Get mortgage details 2024.md",
     "todo-home/Finance/Taxes 2023/IRS hotline/newValue.md",
     "todo-home/Finance/Taxes 2023/newValue.md",
-    "todo-home/Finance/Pay holiday bill.md",
-    "todo-home/Finance/Taxes 2023/Get income statement work.md",
-    "todo-home/Finance/Pay holiday bill.md",
+    "todo-home/Finance/newValue.md",
+    "todo-home/Finance/newValue.md",
     "todo-home/Groceries/Peppers.md",
     "todo-home/Groceries/Bread.md",
     "todo-home/Groceries",
@@ -178,7 +191,6 @@
     "todo-home-base/Groceries/Peppers.md",
     "todo-home-base/Groceries/Bread.md",
     "todo-home-base/Groceries",
-    "todo-home-base/Finance/Taxes 2023/IRS hotline/Ask details re taxes 2023.md",
     "todo-home-base/Finance/Taxes 2023/IRS hotline",
     "todo-home-base/Finance/Taxes 2023",
     "todo-home-base/Finance",

@@ -1,12 +1,12 @@
 import { Plugin } from 'obsidian';
-import { DEFAULT_SETTINGS, FATSettings } from 'src/main/FileAsTaskSettings';
+import { DEFAULT_SETTINGS, Settings } from 'src/core/FileAsTaskSettings';
 import { ObsidianWrapper } from 'src/main/obsidian/ObsidianWrapper';
 import {FATSettingTab} from "src/main/ui/FATSettingsTab"
 import { MainCodeBlock } from 'src/main/MainCodeBlock';
 
 
 export default class FATPlugin extends Plugin {
-	settings: FATSettings;
+	settings: Settings;
 
 	async onload() {
 		await this.loadSettings();

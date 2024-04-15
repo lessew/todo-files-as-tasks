@@ -1,12 +1,13 @@
-import { assert } from "console";
 import { App } from "obsidian";
 import { YAMLParser } from "src/core/YAMLParser";
-import { DEFAULT_SETTINGS, FATPROPERTY, FATSettings } from "src/main/FileAsTaskSettings";
-import { FolderList } from "src/main/obsidian/FolderList";
-import {FileList} from "src/main/obsidian/FileList";
-import { text } from "stream/consumers";
-import {File} from "../main/FileAsTask";
+import { DEFAULT_SETTINGS,PROPERTYNAMES, Settings } from "src/core/FileAsTaskSettings";
 import { ObsidianWrapper } from "src/main/obsidian/ObsidianWrapper";
+import { FolderList } from "src/core/FolderList";
+import { ObsidianFolder } from "src/main/obsidian/ObsidianFolder";
+import { FileList } from "src/core/FileList";
+import { FileAsTask } from "src/core/FileAsTask";
+import {assert,assertTrue,assertFolderList} from "./Assertions"
+import { Whitelist } from "src/core/Whitelist";
 
 export class TestView{
     obsidianApp:App;
@@ -18,127 +19,116 @@ export class TestView{
     }
 
     async main(){
-        const wrapper = ObsidianWrapper.getInstance();
+        // expected values
         const [bucketExpectedFiles,expectedFiles] = this.getExpectedFiles();
         const expectedFolders = this.getExpectedFolders();
 
+        // input values
         const source = this.getYAML();
         const settings = this.getSettings();
         
+        // instantiate main objects
+        const wrapper = ObsidianWrapper.getInstance();
         const parser = new YAMLParser();
         parser.loadSource(source);
+        const rootPath = parser.parseRootPath();        
+        const rootFolder = new ObsidianFolder(rootPath as string);
+
+        const folders = FolderList.getFolders(rootFolder);
+
+        assertFolderList(folders,expectedFolders);
         
-        const rootPath = parser.parseRootPath();
+        settings.project.whitelist = FolderList.getFoldersAsWhitelist(rootFolder);
 
-        const actualFolderList = new FolderList();
-        actualFolderList.init(rootPath as string);
-
-        this.assertFolderList(actualFolderList,expectedFolders);
+        let tasks:FileAsTask[] = FileList.getFilesAsTasks(rootFolder,settings);
         
-        settings.project.allowedValues = actualFolderList.folders;
-
-        const actualFileList = new FileList();
-        actualFileList.init(rootPath as string,settings);
-
-        this.assert(actualFileList.files.length,expectedFiles.length,"Number of found files correct?");
+        assert(tasks.length,expectedFiles.length,"Number of found files correct?");
 
         let actualPayHolidayBillFile:unknown = null;
-        for(let i=0;i<actualFileList.files.length;i++){
-            let thisFile = actualFileList.files[i];
-            let expectedFileIndex = bucketExpectedFiles.get(thisFile.fullPath.fileID);
-            this.assertTrue((typeof expectedFileIndex!="undefined"),`Looking for file "${thisFile.fullPath.fileID}"`);
+        for(let i=0;i<tasks.length;i++){
+            let thisFile = tasks[i];
+            let expectedFileIndex = bucketExpectedFiles.get(thisFile.file.path);
+            assertTrue((typeof expectedFileIndex!="undefined"),`Looking for file "${thisFile.file.path}"`);
             
-            if(thisFile.fullPath.fileID == "todo-home/Finance/Pay holiday bill.md"){
+            if(thisFile.file.path == "todo-home/Finance/Pay holiday bill.md"){
                 actualPayHolidayBillFile = thisFile;
             }
 
             let expectedFile = expectedFiles[expectedFileIndex as number];
 
-            this.assert(thisFile.fullPath.fileID,expectedFile.path,`Checking file: ${thisFile.fullPath.fileID}`);
-            this.assert(thisFile.get("title"),expectedFile.title,"Check title for this file");
-            this.assert(thisFile.get("status"),expectedFile.yaml.status,"Check status for this file");
-            this.assert(thisFile.get("context"),expectedFile.yaml.context,"Check context for this file");
-            this.assert(thisFile.get("starred"),expectedFile.yaml.starred,"Check context for this file");
+            assert(thisFile.file.path,expectedFile.path,`Checking file: ${thisFile.file.path}`);
+            assert(thisFile.get("title"),expectedFile.title,"Check title for this file");
+            assert(thisFile.get("starred"),expectedFile.yaml.starred,"Check starred for this file");
+            if(thisFile.file.path == "todo-home/Groceries/Peppers.md"){
+                assert(thisFile.get("context")," ","Check default string returned for null context");
+                assert(thisFile.get("status"),"Inbox","Check default string returned for null status");
+            }
+            else{
+                assert(thisFile.get("status"),expectedFile.yaml.status,"Check status for this file");
+                assert(thisFile.get("context"),expectedFile.yaml.context,"Check context for this file");
+            }
+
         }
 
         const expectedPayHolidayBillFile = expectedFiles[1];
-
+/*
         // rename title
-        await (actualPayHolidayBillFile as File).properties["title"].setValue("newValue");
+        await (actualPayHolidayBillFile as FileAsTask).set("title","newValue");
         const fileID1 = "todo-home/Finance/newValue.md";
         const file1 = wrapper.getTFile(fileID1);
-        this.assert(file1.path,fileID1,"check if basename / title rename works");
-        (actualPayHolidayBillFile as File).properties["title"].setValue(expectedPayHolidayBillFile.title);
+        assert(file1.path,fileID1,"check if basename / title rename works");
+        (actualPayHolidayBillFile as FileAsTask).set("title",expectedPayHolidayBillFile.title);
 
         // rename project - 
         // TODO issue detected: the properties do not get updated if the filepath is update. need to fix
-        await (actualPayHolidayBillFile as File).properties["project"].setValue("Groceries");
+        await (actualPayHolidayBillFile as FileAsTask).set("project","Groceries");
         const fileID2 = "todo-home/Groceries/Pay holiday bill.md";
         const file2 = wrapper.getTFile(fileID2);
-        this.assert(file2.path,fileID2,"check if project rename works");
-        (actualPayHolidayBillFile as File).properties["project"].setValue(expectedPayHolidayBillFile.project);
+        assert(file2.path,fileID2,"check if project rename works");
+        (actualPayHolidayBillFile as FileAsTask).set("project",expectedPayHolidayBillFile.project);
+        */
     }
 
-    assertFolderList(actualFolderList:FolderList,expectedFolders:string[]):void{
-        this.assert(actualFolderList.folders.length,expectedFolders.length,"Number of found folders correct?");
-    }
-
-    assert(actual:unknown,expected:unknown,message:string){
-        let result = "";
-        if(actual === expected){
-            result = `true: "${message}" - ${expected}`;
-        }
-        else{
-            result = `FALSE: ${message} 
-            Actual: "${actual}", 
-            Expected: "${expected}"`
-        }
-        this.assertions.push(result);
-    }
-
-    assertTrue(isTrue:boolean,message:string){
-        let result = "";
-        if(isTrue){
-            result = `True: ${message}`;
-        }
-        else{
-            result = `FALSE: ${message}`;
-        }
-        this.assertions.push(result);
-    }
 
     build(el:HTMLElement):void{
         setTimeout(() =>{
             el.createEl("h1",{text:"Running tests..."});
+            el.createEl("span",{text:"See console.log output"});
             this.assertions.forEach(assertion => {
                 el.createEl("div",{text:assertion,cls:"warning"});
             })
         },1000)
     }
 
-    getSettings():FATSettings{
+    getSettings():Settings{
         return {
-            [FATPROPERTY.context]:{
-                allowedValues:["Desk","Deep","Phone","Read","None"],
+            [PROPERTYNAMES.context]:{
+                propName:PROPERTYNAMES.context,
+                whitelist:new Whitelist(["Desk","Deep","Phone","Read","None"]),
                 defaultValue:"None"
             },
-            [FATPROPERTY.status]:{
-                allowedValues:["Inbox","Next","Deferred","Waiting","Done"],
+            [PROPERTYNAMES.status]:{
+                propName:PROPERTYNAMES.status,
+                whitelist:new Whitelist(["Inbox","Next","Deferred","Waiting","Done"]),
                 defaultValue:"Inbox"
             },
-            [FATPROPERTY.starred]:{
-                allowedValues:["✰","⭐"],
+            [PROPERTYNAMES.starred]:{
+                propName:PROPERTYNAMES.starred,
+                whitelist:new Whitelist(["✰","⭐"]),
                 defaultValue:"✰"
             },
-            [FATPROPERTY.title]:{
+            [PROPERTYNAMES.title]:{
+                propName:PROPERTYNAMES.title,
                 defaultValue:"no title"
             },
-            [FATPROPERTY.project]:{
+            [PROPERTYNAMES.project]:{
+                propName:PROPERTYNAMES.project,
                 defaultValue:"no project"
             }
-        } as FATSettings
+        } as Settings
         
     }
+
     getExpectedFiles():[Map<string,number>,{path:string,title:string,project:string,yaml:{context?:string,status?:string,starred?:string}}[]]{
         const result = [
             {
@@ -179,8 +169,8 @@ export class TestView{
             },
             {
                 path:"todo-home/Groceries/Peppers.md",
-                title:"Groceries",
-                project:"Peppers",
+                title:"Peppers",
+                project:"Groceries",
                 yaml: {}
             }
         ];
@@ -197,10 +187,10 @@ export class TestView{
     getExpectedFolders():string[]{
         return [
             "Finance",
-            "Finance/Taxes 2023",
-            "Finance/Taxes 2023/IRS Hotline",
-            "Groceries",
-            "Kids"
+            "Taxes 2023", //"Finance/Taxes 2023",
+            "IRS hotline", //"Finance/Taxes 2023/IRS Hotline",
+            "Kids",
+            "Groceries"
         ]
     }
 

@@ -1,7 +1,7 @@
 import { MockProperty } from "../Mocks/MockProperty";
 import { PropertyModel } from "../../src/core/Interfaces/PropertyModel";
 import { MockPropertyModel } from "../Mocks/MockPropertyModel";
-import { PropertySettings } from "src/core/PropertySettings";
+import { PropertySettings } from "src/core/Interfaces/PropertySettings";
 
 
 class Helper{

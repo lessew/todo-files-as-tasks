@@ -1,14 +1,14 @@
 import { App, Modal, Setting } from "obsidian";
 import { ObsidianWrapper } from "../obsidian/ObsidianWrapper";
-import { FATSettings, FATSettingsHelper } from "../../core/FileAsTaskSettings";
+import { Settings } from "../../core/FileAsTaskSettings";
 
 
 export class CreateTaskButtonView{
     obsidianApp:App;
     projects:string[];
-    settings:FATSettings;
+    settings:Settings;
 
-    constructor(app:App,settings:FATSettings){
+    constructor(app:App,settings:Settings){
         this.obsidianApp = app;
         this.settings = settings;
     }
@@ -31,11 +31,11 @@ export class CreateTaskButtonView{
 // TODO: add properties and settings to dropdown
 class CreateTaskModal extends Modal{
     result:any;
-    settings:FATSettings;
+    settings:Settings;
 
     onSubmit: (result: string) => void;
 
-    constructor(app: App,settings:FATSettings,onSubmit: (result: any) => void) {
+    constructor(app: App,settings:Settings,onSubmit: (result: any) => void) {
         super(app);
         this.result = {
             title: "",
@@ -60,7 +60,7 @@ class CreateTaskModal extends Modal{
         .setName("Project")
         .addDropdown((dropdown) =>
             dropdown
-            .addOptions(FATSettingsHelper.allowedValuesToRecord(this.settings.project.allowedValues!))
+            //.addOptions(FATSettingsHelper.allowedValuesToRecord(this.settings.project.allowedValues!))
             .addOption("--Select Project--","--Select Project--")
             .onChange((value) => {
                 this.result.project = value

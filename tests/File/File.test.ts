@@ -1,5 +1,5 @@
 import { MockFile } from "../../tests/Mocks/MockFile";
-import { File } from "../../src/main/FileAsTask";
+import { File } from "../../src/main/FileAsTaskFactory";
 import { WhitelistProperty } from "../../src/core/Properties/WhitelistProperty";
 import { MockPropertyModel } from "../../tests/Mocks/MockPropertyModel";
 

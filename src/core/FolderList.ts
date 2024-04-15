@@ -1,13 +1,14 @@
 import { FolderModel } from "./Interfaces/FolderModel";
 import { isFileModel, isFolderModel } from "./Interfaces/Resource";
+import { Whitelist } from "./Whitelist";
 
 export class FolderList{
    
-    static getFoldersAsStrings(rootFolder:FolderModel):string[]{
+    static getFolderNamesAsStrings(rootFolder:FolderModel):string[]{
         const folders = FolderList.getFolders(rootFolder);
         let result:string[] = [];
         folders.forEach(f => {
-            result.push(f.path);
+            result.push(f.name);
         })
         return result;
     }
@@ -25,5 +26,11 @@ export class FolderList{
             }
         })
         return result; 
+    }
+
+    static getFoldersAsWhitelist(rootFolder:FolderModel):Whitelist{
+        const folders = FolderList.getFolderNamesAsStrings(rootFolder);
+        let wl = new Whitelist(folders);
+        return wl;
     }
 }

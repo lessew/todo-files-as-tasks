@@ -1,6 +1,6 @@
  import { FileFilter } from "../src/core/FileFilter";
 import { MockFile } from "./Mocks/MockFile";
-import { File } from "../src/main/FileAsTask";
+import { File } from "../src/main/FileAsTaskFactory";
 import { WhitelistProperty } from "../src/core/Properties/WhitelistProperty";
 import { MockPropertyModel } from "./Mocks/MockPropertyModel";
 import {Filter, FilterOperator} from "../src/core/Interfaces/Filter";

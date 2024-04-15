@@ -1,6 +1,6 @@
 import { FreeTextProperty } from "../../src/core/Properties/FreeTextProperty";
 import { PropertyModel } from "../../src/core/Interfaces/PropertyModel";
-import { MockPropertyModel } from "../../tests/Mocks/MockPropertyModel";
+import { MockPropertyModel } from "../Mocks/MockPropertyModel";
 
 class Helper{
     static getFreeTextProperty(propName:string,propValue:string):FreeTextProperty{

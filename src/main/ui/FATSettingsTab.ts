@@ -1,6 +1,6 @@
 import FATPlugin from "main";
 import { App, PluginSettingTab, Setting } from "obsidian";
-import { FATPROPERTY} from "../../core/FileAsTaskSettings";
+import { PROPERTYNAMES} from "../../core/FileAsTaskSettings";
 
 
 export class FATSettingTab extends PluginSettingTab {
@@ -26,9 +26,9 @@ export class FATSettingTab extends PluginSettingTab {
         .setDesc('All allowed values for "context", comma seperated')
         .addText(text => text
             .setPlaceholder('Enter values')
-            .setValue(this.plugin.settings[FATPROPERTY.context].allowedValues!.join(","))
+            .setValue(this.plugin.settings[PROPERTYNAMES.context].whitelist!.joinByComma())
             .onChange(async (value) => {
-                this.plugin.settings[FATPROPERTY.context].allowedValues = value.trim().split(",");
+                this.plugin.settings[PROPERTYNAMES.context].whitelist!.setByStringSeperatedByComma(value);;
                 await this.plugin.saveSettings();
             }));
     }
@@ -39,9 +39,9 @@ export class FATSettingTab extends PluginSettingTab {
         .setDesc('All allowed values for "status", comma seperated')
         .addText(text => text
             .setPlaceholder('Enter values')
-            .setValue(this.plugin.settings[FATPROPERTY.status].allowedValues!.join(","))
+            .setValue(this.plugin.settings[PROPERTYNAMES.status].whitelist!.joinByComma())
             .onChange(async (value) => {
-                this.plugin.settings[FATPROPERTY.status].allowedValues = value.trim().split(",");
+                this.plugin.settings[PROPERTYNAMES.status].whitelist!.setByStringSeperatedByComma(value);
                 await this.plugin.saveSettings();
             }));
     }
@@ -51,9 +51,9 @@ export class FATSettingTab extends PluginSettingTab {
         .setDesc('All allowed values for "context", comma seperated')
         .addText(text => text
             .setPlaceholder('Enter values')
-            .setValue(this.plugin.settings[FATPROPERTY.starred].allowedValues!.join(","))
+            .setValue(this.plugin.settings[PROPERTYNAMES.starred].whitelist!.joinByComma())
             .onChange(async (value) => {
-                this.plugin.settings[FATPROPERTY.starred].allowedValues = value.trim().split(",");
+                this.plugin.settings[PROPERTYNAMES.starred].whitelist!.setByStringSeperatedByComma(value);
                 await this.plugin.saveSettings();
             }));
     }

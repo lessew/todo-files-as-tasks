@@ -1,6 +1,6 @@
 import { Property } from "../../src/core/Property";
 import { PropertyModel } from "../../src/core/Interfaces/PropertyModel";
-import { PropertySettings } from "src/core/PropertySettings";
+import { PropertySettings } from "src/core/Interfaces/PropertySettings";
 
 export class MockProperty extends Property{
     validatesTo:boolean = true;
