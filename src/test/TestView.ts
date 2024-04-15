@@ -58,16 +58,11 @@ export class TestView{
 
             assert(thisFile.file.path,expectedFile.path,`Checking file: ${thisFile.file.path}`);
             assert(thisFile.get("title"),expectedFile.title,"Check title for this file");
+           
+            assert(thisFile.get("status"),expectedFile.yaml.status,"Check status for this file");
+            assert(thisFile.get("context"),expectedFile.yaml.context,"Check context for this file");
             assert(thisFile.get("starred"),expectedFile.yaml.starred,"Check starred for this file");
-            if(thisFile.file.path == "todo-home/Groceries/Peppers.md"){
-                assert(thisFile.get("context")," ","Check default string returned for null context");
-                assert(thisFile.get("status"),"Inbox","Check default string returned for null status");
-            }
-            else{
-                assert(thisFile.get("status"),expectedFile.yaml.status,"Check status for this file");
-                assert(thisFile.get("context"),expectedFile.yaml.context,"Check context for this file");
-            }
-
+            
         }
 
         const expectedPayHolidayBillFile = expectedFiles[1];
@@ -171,7 +166,7 @@ export class TestView{
                 path:"todo-home/Groceries/Peppers.md",
                 title:"Peppers",
                 project:"Groceries",
-                yaml: {}
+                yaml: {context:"None",status:"Inbox",starred:"✰"}
             }
         ];
 

@@ -6,7 +6,7 @@ export interface FileModel{
     //parent:FolderModel;
 
     move(newPath:string):Promise<void> | void;
-    getYAMLProperty(name:string):string;
+    getYAMLProperty(name:string):string | null;
     setYAMLProperty(name:string,value:string):Promise<void> | void;
 
     createMarkdownFile(path:string):void;

@@ -34,7 +34,7 @@ export class BooleanYAMLProperty implements Property{
     getValue(): string {
        if(this.val===undefined){
             const val = this.file.getYAMLProperty(this.yamlPropName);
-            if(val===undefined){
+            if(val===null){
                 this.val = this.defaultValue;
             }
             else{

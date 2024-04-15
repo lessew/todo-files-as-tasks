@@ -23,14 +23,14 @@ export class ObsidianFile implements FileModel{
         await wrapper.moveFile(this.file,newPath);
     }
 
-    getYAMLProperty(name: string): string {
+    getYAMLProperty(name: string): string | null {
 
         const meta:CachedMetadata = ObsidianWrapper.getInstance().getMeta(this.file);
         if(meta && meta.frontmatter && meta.frontmatter[name]){
             return meta.frontmatter[name];
         }
         else{
-            return "";
+            return null;
         }    
     }
     async setYAMLProperty(name: string, value: string):Promise<void> {

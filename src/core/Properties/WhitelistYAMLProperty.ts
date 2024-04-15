@@ -30,7 +30,7 @@ export class WhitelistYAMLProperty implements Property{
     getValue(): string {
         if(this.val===undefined){
             const val = this.file.getYAMLProperty(this.yamlPropname);
-            if(val===undefined){
+            if(val===null){
                 this.val = this.defaultValue;
             }
             else{
