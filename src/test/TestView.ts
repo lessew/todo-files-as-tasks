@@ -25,47 +25,15 @@ export class TestView{
     }
 
     async main(){
+        this.testVaultHasExpectedFiles();
+    }
+
+    async main2(){
 
         this.testVaultHasExpectedFiles();
 
-        // expected values
-        const [bucketExpectedFiles,expectedFiles] = this.getExpectedFiles();
-        const expectedFolders = this.getExpectedFolders();
+            
 
-        // input values
-        const source = this.getYAML();
-        const settings = this.getSettings();
-        
-        // instantiate main objects
-
-        this.logger.log("Setting up wrapper, parser");
-        const wrapper = ObsidianWrapper.getInstance();
-        const parser = new YAMLParser();
-        this.logger.log("Parsing source.")
-        try{
-            parser.loadSource(source);
-            this.logger.success("Parsing succeeded");
-        }
-        catch(e){
-            this.logger.error("Parsing source threw error");
-        }
-        this.logger.log("Parsing rootPath")
-        try{    
-            const rootPath = parser.parseRootPath();      
-            this.logger.success("Parsing rootpath succeeded")  
-        }
-        catch(e){
-            this.logger.error("Parsing rootpah threw error")
-        }
-        
-        const rootFolder = new ObsidianFolder(rootPath as string);
-
-        const folders = FolderList.getFolders(rootFolder);
-
-        
-        settings.project.whitelist = FolderList.getFoldersAsWhitelist(rootFolder);
-
-        let tasks:FileAsTask[] = FileList.getFilesAsTasks(rootFolder,settings);
         
         assert(tasks.length,expectedFiles.length,"Number of found files correct?");
 

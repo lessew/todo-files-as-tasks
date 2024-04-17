@@ -99,6 +99,6 @@ export class MainCodeBlock{
     displayTest(el:HTMLElement):void{
         const testView = new TestView(this.app,el);
         testView.main();
-        testView.build(this.el);
+        //testView.build(this.el);
     }
 }

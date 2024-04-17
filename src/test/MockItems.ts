@@ -32,7 +32,7 @@ const expectedFiles = [
     {
         path: "todo-home/Finance/Taxes 2023/IRS hotline/Ask details re taxes 2023.md",
         title:"Ask details re taxes 2023",
-        project:"IRS Hotline",
+        project:"IRS hotline",
         yaml: { context: "None",status: "Waiting",starred: "⭐"}
     },
     {
@@ -96,7 +96,9 @@ export function getYamlListAllFiles():string{
     return yaml;
 }
 
-export function getExpectedFiles():{path:string,title:string,project:string,yaml:{context?:string,status?:string,starred?:string}}[]{
+export type ExpectedFileType = {path:string,title:string,project:string,yaml:{context?:string,status?:string,starred?:string}};
+
+export function getExpectedFiles():ExpectedFileType[]{
     return expectedFiles;
 }
 
