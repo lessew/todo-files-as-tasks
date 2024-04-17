@@ -31,6 +31,13 @@ export class VaultHasExpectedFilesTest{
         this.arrange();
         this.act();
         this.assert();
+        if(this.result!=false){
+            this.result = true;
+        }
+        else{
+            this.logger.error("ERROR some tests did not run successfully, aborting")
+        }
+
         return this;
     }
 
@@ -49,18 +56,24 @@ export class VaultHasExpectedFilesTest{
        
     }
 
+    assert(){
+        this.logger.headingSub("Asserting");
+        this.assertFolderList()
+        this.assertFileList();
+    }
+
     actLoadYAML(){
         this.parser = new YAMLParser();
         const isLoaded = this.parser.loadSource(this.yaml);
         if(FATError.isError(isLoaded)){
             this.logger.error("Parsing YAML failed");
-            this.result = false;
+            this.setFailure();
             return;
         }
        const root = this.parser.parseRootPath();
         if(FATError.isError(root)){
             this.logger.error("Parsing root failed")
-            this.result = false;
+            this.setFailure();
             return;
         }
         this.rootPath = root;
@@ -80,11 +93,6 @@ export class VaultHasExpectedFilesTest{
         this.logger.success("Successfully loaded tasks")
     }
 
-    assert(){
-        this.logger.headingSub("Asserting");
-        this.assertFolderList()
-        this.assertFileList();
-    }
 
     assertFolderList(){
         const expectedFolders = getExpectedFolders();
@@ -94,14 +102,14 @@ export class VaultHasExpectedFilesTest{
         }
         else{
             this.logger.error(`Found ${actualFolders.size()} folders but expected ${expectedFolders.length}`)
-            this.result = false;
+            this.setFailure();
             return;
         }
 
         for(let i=0;i<expectedFolders.length;i++){
             if(!actualFolders.contains(expectedFolders[i])){
                 this.logger.error(`${expectedFolders[i]} does not seem to exists as folder`)
-                this.result = false;
+                this.setFailure();
                 return;
             }
             else{
@@ -114,7 +122,7 @@ export class VaultHasExpectedFilesTest{
         const expectedFiles = getExpectedFiles();
         if(this.tasks.length != expectedFiles.length){
             this.logger.error(`Expected ${expectedFiles.length} files but found ${this.tasks.length}`);
-            this.result = false;
+            this.setFailure();
             return;
         }
         else{
@@ -148,12 +156,20 @@ export class VaultHasExpectedFilesTest{
 
     assertSinglePropertyValue(propName:string,aTask:FileAsTask,expectedValue:string){
         if(aTask.get(propName) != expectedValue){
-            this.result = false;
+            this.setFailure();
             this.logger.error(`Looked in property ${propName} for value ${expectedValue} but found ${aTask.get(propName)} in file ${aTask.file.path}`)
         }
         else{
             this.logger.success(`Found value ${expectedValue} in ${propName}`);
         }
+    }
+
+    setFailure():void{
+        this.result = false;
+    }
+
+    isSuccess():boolean{
+        return (this.result === true);
     }
 
 }

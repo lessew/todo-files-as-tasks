@@ -10,6 +10,7 @@ import {assert,assertTrue,assertFolderList} from "./Assertions"
 import { Whitelist } from "src/core/Whitelist";
 import { Logger } from "./Logger";
 import { VaultHasExpectedFilesTest } from "./tests/VaultHasExpectedFilesTest";
+import { TaskOperationsTest } from "./tests/TaskOperationsTest";
 
 export class TestView{
     obsidianApp:App;
@@ -25,7 +26,9 @@ export class TestView{
     }
 
     async main(){
-        this.testVaultHasExpectedFiles();
+        if(this.testVaultHasExpectedFiles()){
+            this.testTaskOperations();
+        }
     }
 
     async main2(){
@@ -77,8 +80,13 @@ export class TestView{
         
     }
 
-    testVaultHasExpectedFiles():void{
+    testVaultHasExpectedFiles():boolean{
         const test = new VaultHasExpectedFilesTest(this.logger).test();
+        return test.isSuccess();
+    }
+
+    testTaskOperations():void{
+        const test = new TaskOperationsTest(this.logger).test();
     }
 
     build(el:HTMLElement):void{

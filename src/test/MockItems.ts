@@ -102,6 +102,10 @@ export function getExpectedFiles():ExpectedFileType[]{
     return expectedFiles;
 }
 
+export function getExpectedHolidayBillFile():ExpectedFileType{
+    return expectedFiles[1];
+}
+
 export function getExpectedFolders():string[]{
     return expectedFolders;
 }
