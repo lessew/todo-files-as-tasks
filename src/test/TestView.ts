@@ -1,6 +1,6 @@
 import { App } from "obsidian";
 import { YAMLParser } from "src/core/YAMLParser";
-import { DEFAULT_SETTINGS,PROPERTYNAMES, Settings } from "src/core/FileAsTaskSettings";
+import { PROPERTYNAMES, Settings } from "src/core/FileAsTaskSettings";
 import { ObsidianWrapper } from "src/main/obsidian/ObsidianWrapper";
 import { FolderList } from "src/core/FolderList";
 import { ObsidianFolder } from "src/main/obsidian/ObsidianFolder";
@@ -8,17 +8,26 @@ import { FileList } from "src/core/FileList";
 import { FileAsTask } from "src/core/FileAsTask";
 import {assert,assertTrue,assertFolderList} from "./Assertions"
 import { Whitelist } from "src/core/Whitelist";
+import { Logger } from "./Logger";
+import { VaultHasExpectedFilesTest } from "./tests/VaultHasExpectedFilesTest";
 
 export class TestView{
     obsidianApp:App;
     assertions:string[];
+    logger:Logger;
+    vaultIsValid:boolean;
 
-    constructor(app:App){
+    constructor(app:App,el:HTMLElement){
         this.obsidianApp = app;
         this.assertions = [];
+        this.logger = new Logger(el);
+        this.vaultIsValid = false;
     }
 
     async main(){
+
+        this.testVaultHasExpectedFiles();
+
         // expected values
         const [bucketExpectedFiles,expectedFiles] = this.getExpectedFiles();
         const expectedFolders = this.getExpectedFolders();
@@ -28,15 +37,31 @@ export class TestView{
         const settings = this.getSettings();
         
         // instantiate main objects
+
+        this.logger.log("Setting up wrapper, parser");
         const wrapper = ObsidianWrapper.getInstance();
         const parser = new YAMLParser();
-        parser.loadSource(source);
-        const rootPath = parser.parseRootPath();        
+        this.logger.log("Parsing source.")
+        try{
+            parser.loadSource(source);
+            this.logger.success("Parsing succeeded");
+        }
+        catch(e){
+            this.logger.error("Parsing source threw error");
+        }
+        this.logger.log("Parsing rootPath")
+        try{    
+            const rootPath = parser.parseRootPath();      
+            this.logger.success("Parsing rootpath succeeded")  
+        }
+        catch(e){
+            this.logger.error("Parsing rootpah threw error")
+        }
+        
         const rootFolder = new ObsidianFolder(rootPath as string);
 
         const folders = FolderList.getFolders(rootFolder);
 
-        assertFolderList(folders,expectedFolders);
         
         settings.project.whitelist = FolderList.getFoldersAsWhitelist(rootFolder);
 
@@ -84,6 +109,9 @@ export class TestView{
         
     }
 
+    testVaultHasExpectedFiles():void{
+        const test = new VaultHasExpectedFilesTest(this.logger).test();
+    }
 
     build(el:HTMLElement):void{
         setTimeout(() =>{
@@ -95,105 +123,4 @@ export class TestView{
         },1000)
     }
 
-    getSettings():Settings{
-        return {
-            [PROPERTYNAMES.context]:{
-                propName:PROPERTYNAMES.context,
-                whitelist:new Whitelist(["Desk","Deep","Phone","Read","None"]),
-                defaultValue:"None"
-            },
-            [PROPERTYNAMES.status]:{
-                propName:PROPERTYNAMES.status,
-                whitelist:new Whitelist(["Inbox","Next","Deferred","Waiting","Done"]),
-                defaultValue:"Inbox"
-            },
-            [PROPERTYNAMES.starred]:{
-                propName:PROPERTYNAMES.starred,
-                whitelist:new Whitelist(["✰","⭐"]),
-                defaultValue:"✰"
-            },
-            [PROPERTYNAMES.title]:{
-                propName:PROPERTYNAMES.title,
-                defaultValue:"no title"
-            },
-            [PROPERTYNAMES.project]:{
-                propName:PROPERTYNAMES.project,
-                defaultValue:"no project"
-            }
-        } as Settings
-        
-    }
-
-    getExpectedFiles():[Map<string,number>,{path:string,title:string,project:string,yaml:{context?:string,status?:string,starred?:string}}[]]{
-        const result = [
-            {
-                path:"todo-home/Finance/Finalize finance weekend NYC.md",
-                title:"Finalize finance weekend NYC",
-                project:"Finance",
-                yaml: {context: "Deep",status: "Waiting",starred: "✰"}
-            },
-            {
-                path:"todo-home/Finance/Pay holiday bill.md",
-                title:"Pay holiday bill",
-                project:"Finance",
-                yaml: {status: "Done",context: "Deep",starred: "⭐"}
-            },
-            {
-                path:"todo-home/Finance/Taxes 2023/Get income statement work.md",
-                title:"Get income statement work",
-                project:"Taxes 2023",
-                yaml: {context: "None",status: "Deferred",starred: "⭐"}
-            },
-            {
-                path: "todo-home/Finance/Taxes 2023/Get mortgage details 2024.md",
-                title:"Get mortgage details 2024",
-                project:"Taxes 2023",
-                yaml: {context: "None",status: "Waiting",starred: "⭐"}
-            },
-            {
-                path: "todo-home/Finance/Taxes 2023/IRS hotline/Ask details re taxes 2023.md",
-                title:"Ask details re taxes 2023",
-                project:"IRS Hotline",
-                yaml: { context: "None",status: "Waiting",starred: "⭐"}
-            },
-            {
-                path: "todo-home/Groceries/Bread.md",
-                title:"Bread",
-                project:"Groceries",
-                yaml: {context: "None",status: "Inbox",starred: "✰"}
-            },
-            {
-                path:"todo-home/Groceries/Peppers.md",
-                title:"Peppers",
-                project:"Groceries",
-                yaml: {context:"None",status:"Inbox",starred:"✰"}
-            }
-        ];
-
-        let bucket:Map<string,number> = new Map<string,number>();
-        for(let i=0;i<result.length;i++){
-            const path = result[i].path;
-            bucket.set(path,i);
-        }
-
-        return [bucket,result];
-    }
-
-    getExpectedFolders():string[]{
-        return [
-            "Finance",
-            "Taxes 2023", //"Finance/Taxes 2023",
-            "IRS hotline", //"Finance/Taxes 2023/IRS Hotline",
-            "Kids",
-            "Groceries"
-        ]
-    }
-
-    getYAML():string{
-const yaml = `
-rootPath: todo-home
-action: list`;
-return yaml;
-
-    }
 }

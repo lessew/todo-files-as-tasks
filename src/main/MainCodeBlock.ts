@@ -66,7 +66,7 @@ export class MainCodeBlock{
            this.displayCreateTaskButton();
         }
         else if(action==YAMLParser.ACTION_TEST){
-            this.displayTest();
+            this.displayTest(this.el);
         }
     }
 
@@ -96,8 +96,8 @@ export class MainCodeBlock{
         view.build(this.el);
     }
 
-    displayTest():void{
-        const testView = new TestView(this.app);
+    displayTest(el:HTMLElement):void{
+        const testView = new TestView(this.app,el);
         testView.main();
         testView.build(this.el);
     }
