@@ -24,7 +24,6 @@ export class ObsidianFile implements FileModel{
     }
 
     getYAMLProperty(name: string): string | null {
-
         const meta:CachedMetadata = ObsidianWrapper.getInstance().getMeta(this.file);
         if(meta && meta.frontmatter && meta.frontmatter[name]){
             return meta.frontmatter[name];

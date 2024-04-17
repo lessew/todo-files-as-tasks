@@ -1,13 +1,13 @@
 import { App, MarkdownView, SuggestModal } from "obsidian";
-import { BooleanProperty } from "src/core/Properties/BooleanProperty";
+import { BooleanYAMLProperty } from "src/core/Properties/BooleanYAMLProperty";
 import { SuggestWhitelistModal } from "../Modals/SuggetWhitelistModal";
 import { ObsidianWrapper } from "src/main/obsidian/ObsidianWrapper";
 import { PropertyView } from "../PropertyView";
 
 export class BooleanPropertyView extends PropertyView{
-    prop:BooleanProperty;
+    prop:BooleanYAMLProperty;
     
-    constructor(prop:BooleanProperty, app:App){
+    constructor(prop:BooleanYAMLProperty, app:App){
         super(app);
         this.prop = prop;
     }

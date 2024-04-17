@@ -42,7 +42,7 @@ export class ObsidianWrapper{
     }
 
     async setMeta(tf:TFile,propName:string,propValue:string):Promise<void>{
-        await this.obsidianApp.fileManager.processFrontMatter(tf,(frontmatter) => {
+        await this.obsidianApp.fileManager.processFrontMatter(tf,async (frontmatter) => {
             frontmatter[propName] = propValue;
         })
     }

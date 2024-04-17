@@ -1,4 +1,3 @@
-import { assert } from "console";
 import { Logger } from "../Logger";
 import { FileAsTask } from "src/core/FileAsTask";
 import { ExpectedFileType, getExpectedHolidayBillFile, getSettings } from "../MockItems";
@@ -7,6 +6,7 @@ import { FileModel } from "src/core/Interfaces/FileModel";
 import { ObsidianFile } from "src/main/obsidian/ObsidianFile";
 import { FileAsTaskFactory } from "src/main/FileAsTaskFactory";
 import { ObsidianWrapper } from "src/main/obsidian/ObsidianWrapper";
+import { CachedMetadata } from "obsidian";
 
 export class TaskOperationsTest{
     logger:Logger
@@ -78,8 +78,44 @@ export class TaskOperationsTest{
         }
     }
 
-    actAssertYAMLPropertiesChange(){
-        
+    async actAssertYAMLPropertiesChange(){
+        if(this.isRunning()){
+            this.logger.headingSub("Test: changing yaml properties")
+            await this.actualHolidayBillTask.set("context","Desk");
+            await this.actualHolidayBillTask.set("status","Inbox");
+            await this.actualHolidayBillTask.set("starred","✰");
+
+            setTimeout(() => {
+                const file = ObsidianWrapper.getInstance().getTFile(this.expectedHolidayBillTask.path);
+                const meta = ObsidianWrapper.getInstance().getMeta(file);
+    
+                this.assertSingleYAMLProperty(meta,"starred","✰");
+                this.assertSingleYAMLProperty(meta,"status","Inbox");
+                this.assertSingleYAMLProperty(meta,"context","Desk");
+    
+                // tear down
+                this.actualHolidayBillTask.set("context",this.expectedHolidayBillTask.yaml.context!);
+                this.actualHolidayBillTask.set("status",this.expectedHolidayBillTask.yaml.status!);
+                this.actualHolidayBillTask.set("starred",this.expectedHolidayBillTask.yaml.starred!);
+            },300)
+           
+        }
+    }
+
+    assertSingleYAMLProperty(meta:CachedMetadata,name:string,expectedValue:string):void{
+        try{
+            const actualvalue = meta.frontmatter![name];
+            if(actualvalue==expectedValue){
+                this.logger.success(`Found ${actualvalue} in ${name}`)
+            }
+            else{
+                this.logger.error(`Did not find '${expectedValue}' but found '${actualvalue}' instead`)
+            }
+        }
+        catch(e){
+            this.logger.error(`Trying to access the YAML looking for ${name} threw an exception`);
+            console.error(e);
+        }
     }
 
 
