@@ -11,7 +11,7 @@ class Helper {
         return {
             [PROPERTYNAMES.status]: {
                 propName: PROPERTYNAMES.status,
-                allowedValues: wl,
+                whitelist: wl,
                 defaultValue: ""
             },
             [PROPERTYNAMES.title]: {propName: PROPERTYNAMES.title,defaultValue: ""},
@@ -142,9 +142,11 @@ describe('YAMLParser parse filters', () => {
     });
     test('load incorrectly formatted source - filter', () => {
         let p = new YAMLParser();
+        let settings = Helper.getSettings(["Done","Inbox"]);
+
         p.loadSource(filtersIncorrect);
         let result = p.parseFilters(settings);
-        
+        console.log(result);
         expect(FATError.isError(result)).toBe(true);
     });
 });
