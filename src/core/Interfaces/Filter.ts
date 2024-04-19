@@ -1,4 +1,4 @@
-import {  } from "../FileAsTaskSettings"
+import { PropertySettings } from "../FileAsTaskSettings"
 
 export enum FilterOperator {
     include="include",
@@ -6,7 +6,7 @@ export enum FilterOperator {
 }
 
 export type Filter = {
-    propertyName:string,
+    propertySettings:PropertySettings,
     propertyValue:string,
     operator:FilterOperator
 }

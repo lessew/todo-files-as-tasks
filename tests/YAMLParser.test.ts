@@ -1,20 +1,24 @@
 import { YAMLParser } from "../src/core/YAMLParser";
 import { FilterOperator } from "../src/core/Interfaces/Filter";
-import { FATSettings,FATPROPERTY } from "../src/core/FileAsTaskSettings";
 import { FATError } from "../src/core/Error";
+import { PROPERTYNAMES, Settings } from "../src/core/FileAsTaskSettings";
+import { Whitelist } from "../src/core/Whitelist";
 
 class Helper {
-    static getSettings(statusAllowedValues:string[]):FATSettings{
+    static getSettings(statusAllowedValues:string[]):Settings{
+        let wl = new Whitelist(statusAllowedValues);
+
         return {
-            [FATPROPERTY.status]: {
-                allowedValues: statusAllowedValues,
+            [PROPERTYNAMES.status]: {
+                propName: PROPERTYNAMES.status,
+                allowedValues: wl,
                 defaultValue: ""
             },
-            [FATPROPERTY.title]: {defaultValue: ""},
-            [FATPROPERTY.project]: {defaultValue: ""},
-            [FATPROPERTY.context]: {defaultValue: ""},
-            [FATPROPERTY.starred]: {defaultValue: ""}
-        }
+            [PROPERTYNAMES.title]: {propName: PROPERTYNAMES.title,defaultValue: ""},
+            [PROPERTYNAMES.project]: {propName: PROPERTYNAMES.project,defaultValue: ""},
+            [PROPERTYNAMES.context]: {propName: PROPERTYNAMES.context,defaultValue: ""},
+            [PROPERTYNAMES.starred]: {propName: PROPERTYNAMES.starred,defaultValue: ""}
+        } as Settings
     }
 }
 
@@ -120,7 +124,7 @@ action: list
 status: notvalidstatus`;
 
 describe('YAMLParser parse filters', () => {  
-    let settings:FATSettings = Helper.getSettings(["done","inbox"]);
+    let settings:Settings = Helper.getSettings(["done","inbox"]);
 
     test('load correctly formatted source - filter', () => {
         let p = new YAMLParser();
@@ -128,7 +132,7 @@ describe('YAMLParser parse filters', () => {
         let result = p.parseFilters(settings);
         if(!FATError.isError(result)){
             expect(result.length).toBe(1);
-            expect(result[0].propertyName).toBe("status");
+            expect(result[0].propertySettings.propName).toBe("status");
             expect(result[0].propertyValue).toBe("done");
             expect(result[0].operator).toBe(FilterOperator.include);
         }
@@ -140,6 +144,7 @@ describe('YAMLParser parse filters', () => {
         let p = new YAMLParser();
         p.loadSource(filtersIncorrect);
         let result = p.parseFilters(settings);
+        
         expect(FATError.isError(result)).toBe(true);
     });
 });
@@ -151,7 +156,7 @@ status: not done`;
 
 
 describe('yaml parser: parse operator test', () => {
-    let settings:FATSettings = Helper.getSettings(["done","inbox"]);
+    let settings:Settings = Helper.getSettings(["done","inbox"]);
     test("testing parseoperator operator function", () => {
         let p = new YAMLParser();
         let result = p.parseOperator("not done");
@@ -164,7 +169,7 @@ describe('yaml parser: parse operator test', () => {
         let result = p.parseFilters(settings);
         if(!FATError.isError(result)){
             expect(result.length).toBe(1);
-            expect(result[0].propertyName).toBe("status");
+            expect(result[0].propertySettings.propName).toBe("status");
             expect(result[0].propertyValue).toBe("done");
             expect(result[0].operator).toBe(FilterOperator.exclude);
         }

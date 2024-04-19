@@ -1,12 +1,13 @@
 
 export class Whitelist {
     private values:string[];
+
     constructor(vals:string[]){
         this.values = vals;
     }
 
     contains(name:string):boolean{
-        return this.values.contains(name);
+        return this.values.includes(name);
     }
 
     toRecord():Record<string,string>{

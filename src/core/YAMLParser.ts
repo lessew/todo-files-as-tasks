@@ -1,7 +1,7 @@
 import * as yaml from 'js-yaml'
 import { Filter, FilterOperator } from './Interfaces/Filter';
 import { YAMLParseError,RootPathError, ActionParseError, FilterNotAllowedError } from './Error';
-import { Settings } from './FileAsTaskSettings';
+import { PropertySettings, PropertyType, Settings } from './FileAsTaskSettings';
 import { Property } from './Interfaces/Property';
 
 export class YAMLParser{
@@ -51,23 +51,24 @@ export class YAMLParser{
     parseFilters(settings:Settings):Filter[] | FilterNotAllowedError{
         let result:Filter[] = [];
 
-        for(const propertyName in settings){            
+        for(const settingsKey in settings){            
             const yaml = this.yaml as any;
-            if(propertyName as Property in yaml){
-                const filterValue:string = yaml[propertyName];
+            if(settingsKey in yaml){
+                const filterValue:string = yaml[settingsKey];
                 let valop = this.parseOperator(filterValue);
-                const allowedValues = settings[propertyName].allowedValues;
+                const allowedValues = settings[settingsKey as PropertyType].whitelist;
 
-                if(typeof allowedValues !== "undefined" && !allowedValues.includes(valop.value)){
-                    return new FilterNotAllowedError(`${valop.value} is not set as an allowed value for ${propertyName}`)
+                if(typeof allowedValues !== "undefined" && !allowedValues.contains(valop.value)){
+                    return new FilterNotAllowedError(`${valop.value} is not set as an allowed value for ${settingsKey}`)
                 }
 
-                if(typeof allowedValues === "undefined" || allowedValues.includes(valop.value)){
-                    result.push({
-                        propertyName:propertyName,
+                if(typeof allowedValues === "undefined" || allowedValues.contains(valop.value)){
+                    let r = {
+                        propertySettings:settings[settingsKey as PropertyType],
                         propertyValue:valop.value,
                         operator:valop.operator
-                    })
+                    }
+                    result.push(r)
                 }
             }
         }
