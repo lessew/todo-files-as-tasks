@@ -1,4 +1,4 @@
-import { FATProperty } from "../FileAsTaskSettings"
+import {  } from "../FileAsTaskSettings"
 
 export enum FilterOperator {
     include="include",
@@ -6,7 +6,7 @@ export enum FilterOperator {
 }
 
 export type Filter = {
-    propertyName:FATProperty,
+    propertyName:string,
     propertyValue:string,
     operator:FilterOperator
 }

@@ -1,4 +1,4 @@
-import { MockFileModel } from "../../tests/Mocks/MockFile";
+import { MockFileModel } from "../Mocks/MockFileModel";
 import { BaseNameProperty } from "../../src/core/Properties/BasenameProperty";
 
 class Helper{

@@ -1,27 +1,19 @@
  import { FileFilter } from "../src/core/FileFilter";
-import { MockFile } from "./Mocks/MockFile";
-import { File } from "../src/main/FileAsTaskFactory";
-import { WhitelistProperty } from "../src/core/Properties/WhitelistProperty";
-import { MockPropertyModel } from "./Mocks/MockPropertyModel";
 import {Filter, FilterOperator} from "../src/core/Interfaces/Filter";
+import { FileAsTask } from "../src/core/FileAsTask";
+import { MockFileAsTask } from "./Mocks/MockFileAsTask";
 
 
 class Helper {
-    static getFiles(testerFiles:any[]):File[]{
-        let result:File[] = [];
-        testerFiles.forEach((obj => {
-            let aFile:File = new MockFile(obj.path);
-            aFile.properties = {
-                "status": new WhitelistProperty("status",
-                    obj.path,
-                    new MockPropertyModel(obj.status),
-                    {allowedValues:["Inbox","Done"],defaultValue:""}),
-                "context": new WhitelistProperty("context",
-                    obj.path,
-                    new MockPropertyModel(obj.context),
-                    {allowedValues:["Desk","Phone"], defaultValue:""})
-            }
-            result.push(aFile);
+    static getFiles(testerFiles:any[]):FileAsTask[]{
+        let result: FileAsTask[] = [];
+        testerFiles.forEach((afile => {
+            let mockfat = new MockFileAsTask({
+                status: afile.status,
+                context:afile.context
+            })
+            result.push(mockfat);
+
         }));
         return result;
     }

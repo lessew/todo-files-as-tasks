@@ -1,4 +1,4 @@
-import { MockFileModel } from "../../tests/Mocks/MockFile";
+import { MockFileModel } from "../Mocks/MockFileModel";
 import { ToplevelFolderProperty } from "../../src/core/Properties/ToplevelFolderProperty";
 
 class Helper{
