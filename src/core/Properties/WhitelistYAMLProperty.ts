@@ -23,7 +23,7 @@ export class WhitelistYAMLProperty implements Property{
             this.file.setYAMLProperty(this.yamlPropname,val);
         }
         else{
-            throw new Error(`Cannot set value to '${val}' as it is not part of the allowed value list ${this.whitelist.toString()}`)
+            console.error(`Cannot set value to '${val}' as it is not part of the allowed value list ${this.whitelist.toString()}`)
         }
     }
     
