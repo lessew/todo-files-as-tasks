@@ -1,8 +1,7 @@
 import * as yaml from 'js-yaml'
-import { Filter, FilterOperator } from './Interfaces/Filter';
+import { Filter, FilterOperator } from './Filter';
 import { YAMLParseError,RootPathError, ActionParseError, FilterNotAllowedError } from './Error';
-import { PropertySettings, PropertyType, Settings } from './FileAsTaskSettings';
-import { Property } from './Interfaces/Property';
+import { Settings } from './FileAsTaskSettings';
 
 export class YAMLParser{
     source:string;
@@ -56,7 +55,7 @@ export class YAMLParser{
             if(settingsKey in yaml){
                 const filterValue:string = yaml[settingsKey];
                 let valop = this.parseOperator(filterValue);
-                const whitelist = settings[settingsKey as PropertyType].whitelist;
+                const whitelist = settings[settingsKey].whitelist;
                 console.log(whitelist)
                 if(typeof whitelist !== "undefined" && !whitelist.contains(valop.value)){
                     return new FilterNotAllowedError(`${valop.value} is not set as an allowed value for ${settingsKey}`)
@@ -64,7 +63,7 @@ export class YAMLParser{
 
                 if(typeof whitelist === "undefined" || whitelist.contains(valop.value)){
                     let r:Filter = {
-                        propertySettings:settings[settingsKey as PropertyType],
+                        propertySettings:settings[settingsKey],
                         propertyValue:valop.value,
                         operator:valop.operator
                     }

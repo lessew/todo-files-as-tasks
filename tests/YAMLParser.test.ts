@@ -1,7 +1,7 @@
 import { YAMLParser } from "../src/core/YAMLParser";
-import { FilterOperator } from "../src/core/Interfaces/Filter";
+import { FilterOperator } from "../src/core/Filter";
 import { FATError } from "../src/core/Error";
-import { PROPERTYNAMES, Settings } from "../src/core/FileAsTaskSettings";
+import { DEFAULT_PROPERTYNAMES, Settings } from "../src/core/FileAsTaskSettings";
 import { Whitelist } from "../src/core/Whitelist";
 
 class Helper {
@@ -9,15 +9,15 @@ class Helper {
         let wl = new Whitelist(statusAllowedValues);
 
         return {
-            [PROPERTYNAMES.status]: {
-                propName: PROPERTYNAMES.status,
+            [DEFAULT_PROPERTYNAMES.status]: {
+                propName: DEFAULT_PROPERTYNAMES.status,
                 whitelist: wl,
                 defaultValue: ""
             },
-            [PROPERTYNAMES.title]: {propName: PROPERTYNAMES.title,defaultValue: ""},
-            [PROPERTYNAMES.project]: {propName: PROPERTYNAMES.project,defaultValue: ""},
-            [PROPERTYNAMES.context]: {propName: PROPERTYNAMES.context,defaultValue: ""},
-            [PROPERTYNAMES.starred]: {propName: PROPERTYNAMES.starred,defaultValue: ""}
+            [DEFAULT_PROPERTYNAMES.title]: {propName: DEFAULT_PROPERTYNAMES.title,defaultValue: ""},
+            [DEFAULT_PROPERTYNAMES.project]: {propName: DEFAULT_PROPERTYNAMES.project,defaultValue: ""},
+            [DEFAULT_PROPERTYNAMES.context]: {propName: DEFAULT_PROPERTYNAMES.context,defaultValue: ""},
+            [DEFAULT_PROPERTYNAMES.starred]: {propName: DEFAULT_PROPERTYNAMES.starred,defaultValue: ""}
         } as Settings
     }
 }

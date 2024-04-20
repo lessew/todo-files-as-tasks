@@ -1,5 +1,5 @@
  import { FileFilter } from "../src/core/FileFilter";
-import {Filter, FilterOperator} from "../src/core/Interfaces/Filter";
+import {Filter, FilterOperator} from "../src/core/Filter";
 import { FileAsTask } from "../src/core/FileAsTask";
 import { MockFileAsTask } from "./Mocks/MockFileAsTask";
 

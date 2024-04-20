@@ -1,5 +1,5 @@
 import { FileAsTask } from "./FileAsTask";
-import { Filter, FilterOperator } from "./Interfaces/Filter";
+import { Filter, FilterOperator } from "./Filter";
 
 export class FileFilter{
     files:FileAsTask[];

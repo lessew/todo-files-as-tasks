@@ -1,5 +1,5 @@
 import { ObsidianWrapper } from "./ObsidianWrapper";
-import { FileModel } from "src/core/Interfaces/FileModel";
+import { FileModel } from "src/core/Interfaces/File";
 import { CachedMetadata, TFile } from "obsidian";
 
 

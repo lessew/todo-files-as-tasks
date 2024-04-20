@@ -1,5 +1,5 @@
-import { FileModel } from "./Interfaces/FileModel";
-import { Property } from "./Interfaces/Property";
+import { FileModel } from "./File";
+import { Property } from "./Property";
 
 export class FileAsTask{
     file:FileModel;
