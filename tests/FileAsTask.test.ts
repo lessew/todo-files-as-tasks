@@ -32,10 +32,7 @@ describe('FileAsTask: test', () => {
     });
     test("setters",async () => {
         await fat.set("context","Read")
-        setTimeout(() =>{
-            expect(fat.get("context")).toBe("Read")
-
-        },200)
+        expect(fat.get("context")).toBe("Read")
     })
     test("setters with invalid value should not change the value",() =>{
         try{

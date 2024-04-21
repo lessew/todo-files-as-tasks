@@ -1,6 +1,6 @@
 import * as yaml from 'js-yaml'
 import { Filter, FilterOperator } from './Filter';
-import { YAMLParseError,RootPathError, ActionParseError, FilterNotAllowedError } from './Error';
+import { FATError } from './Error';
 import { Settings } from './FileAsTaskSettings';
 
 export class YAMLParser{
@@ -11,28 +11,28 @@ export class YAMLParser{
     static ACTION_TEST = "test"
     static EXCLUDE_TOKEN = "not ";
 
-    loadSource(source:string):true | YAMLParseError{
+    loadSource(source:string):true | FATError{
         this.source = source;
         try{
             this.yaml = yaml.load(source);
             return true;
         }
         catch(e){
-            return new YAMLParseError(`Error: not valid YAML: ${e.message}`);
+            return new FATError(`Error: not valid YAML: ${e.message}`);
         }
     }
 
-    parseRootPath():string | RootPathError{
+    parseRootPath():string | FATError{
         try{
             const rp:string = (this.yaml as{rootPath:string}).rootPath;
             return rp;
         }
         catch(e){
-            return new RootPathError("Could not parse rootpath: yaml variable not found")
+            return new FATError("Could not parse rootpath: yaml variable not found")
         }
     }
 
-    parseAction():string | ActionParseError{
+    parseAction():string | FATError{
         if(this.source.indexOf(YAMLParser.ACTION_CREATE_BUTTON)>-1){
             return YAMLParser.ACTION_CREATE_BUTTON;
         }
@@ -43,11 +43,11 @@ export class YAMLParser{
             return YAMLParser.ACTION_TEST;
         }
         else{
-            return new ActionParseError("Action not specified, add either 'list' or 'create_button'")
+            return new FATError("Action not specified, add either 'list' or 'create_button'")
         }
     }
    
-    parseFilters(settings:Settings):Filter[] | FilterNotAllowedError{
+    parseFilters(settings:Settings):Filter[] | FATError{
         let result:Filter[] = [];
 
         for(const settingsKey in settings){            
@@ -58,7 +58,7 @@ export class YAMLParser{
                 const whitelist = settings[settingsKey].whitelist;
                 console.log(whitelist)
                 if(typeof whitelist !== "undefined" && !whitelist.contains(valop.value)){
-                    return new FilterNotAllowedError(`${valop.value} is not set as an allowed value for ${settingsKey}`)
+                    return new FATError(`${valop.value} is not set as an allowed value for ${settingsKey}`)
                 }
 
                 if(typeof whitelist === "undefined" || whitelist.contains(valop.value)){

@@ -1,13 +1,13 @@
-import { FileModel, FolderModel } from "../../src/core/FileModel";
+import { FileModel } from "src/core/FileModel";
 
-export class MockFileModel implements FileModel{
+export class MockFileModel extends FileModel{
     name: string;
     path: string;
-    parent: FolderModel;
     yaml:any;
 
     
     constructor(path:string,yaml:any){
+        super();
         this.path = path;
         this.yaml = yaml;
     }

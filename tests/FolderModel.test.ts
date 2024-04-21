@@ -17,7 +17,6 @@ describe('Foldermodel test', () => {
 });
 
 // test getFilesAsTasks
-
 describe('Foldermodel test', () => {
     let fm = Helper.getFolderModel();
 
@@ -27,7 +26,6 @@ describe('Foldermodel test', () => {
 });
 
 // test getFolders
-
 describe('Foldermodel getFolders', () => {
     let fm = Helper.getFolderModel();
 

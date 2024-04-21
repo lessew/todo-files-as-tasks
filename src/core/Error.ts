@@ -1,5 +1,5 @@
 
-export abstract class FATError extends Error{
+export class FATError extends Error{
     message:string;
     constructor(message:string){
         super(message);
@@ -9,27 +9,6 @@ export abstract class FATError extends Error{
     static isError(result:FATError | unknown):result is FATError{
       return result instanceof Error;
     }
-    
-    abstract type:string;
 }
 
-export class RootPathError extends FATError{
-    type="RootPathError"
-}
-
-export class YAMLParseError extends FATError{
-    type="YAMLError"
-}
-
-export class NoFilesFoundError extends FATError{
-    type="NoFilesFound"
-}
-
-export class FilterNotAllowedError extends FATError{
-    type="FilterNotAllowed"
-}
-
-export class ActionParseError extends FATError{
-    type="ActionParseError"
-}
 
