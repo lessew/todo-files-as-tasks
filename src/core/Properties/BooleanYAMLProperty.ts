@@ -9,6 +9,7 @@ export class BooleanYAMLProperty implements Property{
 
     firstValue:string;
     secondValue:string;
+    whitelist:Whitelist;
 
     defaultValue: string;
     
@@ -20,6 +21,7 @@ export class BooleanYAMLProperty implements Property{
             throw new Error(`Defaultvalue is not a valid value ${defaultValue}, ${whitelist.toString()}`);
         }
 
+        this.whitelist = whitelist;
         this.yamlPropName = propName;
         this.defaultValue = defaultValue;
         this.firstValue = whitelist.toArray()[0];
@@ -28,8 +30,12 @@ export class BooleanYAMLProperty implements Property{
     }
 
     setValue(val: string): void {
-        this.file.setYAMLProperty(this.yamlPropName,val);
-
+        if(this.whitelist.contains(val)){
+            this.file.setYAMLProperty(this.yamlPropName,val);
+        }
+        else{
+            console.error(`Can't adjust to value '${val}' as it is not part of ${this.whitelist.toString()}`)
+        }
     }
     getValue(): string {
        if(this.val===undefined){

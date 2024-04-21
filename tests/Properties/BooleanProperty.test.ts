@@ -14,29 +14,41 @@ class Helper{
   }
 }
 
-describe('BooleanProperty test correct input', () => {
+describe('BooleanProperty test correct value', () => {
   let prop = Helper.getBooleanProperty();
 
   test('correct property value', () => {
       expect(prop.getValue()).toBe("false");
   });
+});
+
+  
+describe('BooleanProperty test correct value set', () => {
+  let prop = Helper.getBooleanProperty();
+  prop.setValue("true");
+
   test("setter",()=>{
-      prop.setValue("true")
       expect(prop.getValue()).toBe("true")
     })
+});
+
+describe('BooleanProperty test incorrectly used getter', () => {
+  let prop = Helper.getBooleanProperty();
+  prop.setValue("invalid");
+
     test("setter to invalid value",()=>{
-      prop.setValue("invalid")
-      expect(prop.getValue()).toBe("true")
+      expect(prop.getValue()).toBe("false")
     }) 
 });
 
 
+
 describe('BooleanProperty test toggle', () => {
   let prop = Helper.getBooleanProperty();
+  let newval = prop.getNewToggleValue(prop.getValue());
 
   test('toggle once', () => {
-    let newval = prop.getNewToggleValue(prop.getValue());
-    expect(newval).toBe("false");
+    expect(newval).toBe("true");
   }); 
 });
 
