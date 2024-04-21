@@ -1,7 +1,7 @@
 import { FileModel } from "src/core/File";
 import { BooleanYAMLProperty } from "../../src/core/Properties/BooleanYAMLProperty";
 import { Whitelist } from "../../src/core/Whitelist";
-import { MockFileModel } from "../../tests/Mocks/MockFileModel";
+import { MockFileModel } from "../Mocks/MockFileModel";
 
 
 class Helper{
