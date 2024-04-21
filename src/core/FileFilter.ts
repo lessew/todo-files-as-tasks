@@ -10,7 +10,7 @@ export class FileFilter{
 
     filterBy(filter:Filter):FileFilter{
         let filtered = this.files.filter((aFile) => {
-            const propertyValue:string = aFile.get(filter.propertySettings.propName);
+            const propertyValue:string = aFile.get(filter.propertyName);
 
             if(filter.operator==FilterOperator.exclude){
                 return (propertyValue != filter.propertyValue)

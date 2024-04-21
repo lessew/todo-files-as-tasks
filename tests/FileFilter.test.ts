@@ -48,19 +48,22 @@ let files = Helper.getFiles(testerFiles)
 
 describe('Filter By (single)', () => {
     let builder = new FileFilter(files);
-    let propSettings = new PropertySettings("status","default",new Whitelist(["Inbox","Done"]));
+    let filter = new Filter("status","Inbox",FilterOperator.include);
+    filter.setWhitelist(new Whitelist(["Inbox","Done"]));
+
+    //let propSettings = new PropertySettings("status","default",new Whitelist(["Inbox","Done"]));
     test('Test filtering by status (whitelistproperty)', () => {   
-        builder.filterBy(new Filter(propSettings,"Inbox",FilterOperator.include));
+        builder.filterBy(filter);
         expect(builder.files.length).toBe(2);
     });
 });
 
 describe('Filter By (single) - invalid status value', () => {
     let builder = new FileFilter(files);
-    let propSettings = new PropertySettings("status","default",new Whitelist(["Inbox","Done"]));
+    let filter = new Filter("status","invalid",FilterOperator.include);
+    filter.setWhitelist(new Whitelist(["Inbox","Done"]));
 
     test('Test filtering by status - file with invalid value as its not part of the whitelist', () => {
-        let filter = new Filter(propSettings,"invalid",FilterOperator.include)   
         builder.filterBy(filter);
         expect(builder.files.length).toBe(0);
     });
@@ -69,11 +72,11 @@ describe('Filter By (single) - invalid status value', () => {
 
 describe('BulkFilterBy', () => {
     let builder = new FileFilter(files);
-    let statusSettings = new PropertySettings("status","default",new Whitelist(["Inbox","Done"]));
-    let contextSettings = new PropertySettings("context","default",new Whitelist(["Desk","Phone"]));
+    let statusFilter = new Filter("status","Inbox",FilterOperator.include);
+    statusFilter.setWhitelist(new Whitelist(["Inbox","Done"]));
+    let contextFilter = new Filter("context","Desk",FilterOperator.include);
+    contextFilter.setWhitelist(new Whitelist(["Desk","Phone"]));
 
-    let statusFilter = new Filter(statusSettings,"Inbox",FilterOperator.include);
-    let contextFilter = new Filter(contextSettings,"Desk",FilterOperator.include);
     test('Test filtering by status (whitelistproperty)', () => {   
         let filters:Filter[] = [statusFilter,contextFilter]
         builder.bulkFilterBy(filters);
@@ -84,8 +87,8 @@ describe('BulkFilterBy', () => {
 
 describe('Filter By not (single)', () => {
     let builder = new FileFilter(files);
-    let contextSettings = new PropertySettings("context","default",new Whitelist(["Desk","Phone"]));
-    let contextFilter = new Filter(contextSettings,"Phone",FilterOperator.exclude);
+    let contextFilter = new Filter("context","Phone",FilterOperator.exclude);
+    contextFilter.setWhitelist(new Whitelist(["Desk","Phone"]))
 
     test('Test filtering by status (whitelistproperty)', () => {   
         builder.filterBy(contextFilter);

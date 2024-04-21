@@ -1,4 +1,4 @@
-import { PropertySettings } from "./Property";
+import { Whitelist } from "./Whitelist";
 
 export enum FilterOperator {
     include="include",
@@ -6,13 +6,26 @@ export enum FilterOperator {
 }
 
 export class Filter {
-    propertySettings:PropertySettings;
+    propertyName:string;
+    whitelist?:Whitelist;
     propertyValue:string;
     operator:FilterOperator;
 
-    constructor(settings:PropertySettings,val:string,op:FilterOperator){
-        this.propertySettings = settings;
-        this.propertyValue = val;
+    constructor(propertyName:string,propertyValue:string,op:FilterOperator){
+        this.propertyName = propertyName;
+        this.propertyValue = propertyValue;
         this.operator = op;
+        return this;
     }
+
+    setWhitelist(wl:Whitelist):Filter{
+        this.whitelist = wl;
+        return this;
+    }
+/*
+    setWhitelist(vals:string[]):Filter{
+        this.whitelist = new Whitelist(vals);
+        return this;
+    }
+    */
 }
