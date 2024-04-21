@@ -47,8 +47,8 @@ export abstract class FolderModel{
         */
     }
 
-    getFoldersAsWhitelist(rootFolder:FolderModel):Whitelist{
-        return new Whitelist([]);
+    getFoldersAsArray(rootFolder:FolderModel):string[]{
+        return [];
         /*
         const folders = FolderList.getFolderNamesAsStrings(rootFolder);
         let wl = new Whitelist(folders);
