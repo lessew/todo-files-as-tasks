@@ -3,12 +3,13 @@ import { BaseNameProperty } from "../../src/core/Properties/BasenameProperty";
 
 class Helper{
     static getBasenameProperty():BaseNameProperty{
-        const mockfile = new MockFileModel();
+
+        const mockfile = new MockFileModel("/path/to/workproject/this.md",{});
         return new BaseNameProperty(mockfile);
     }
 }
 
-describe('pathstrategy:getBasename', () => {
+describe('basenameproperty:getBasename', () => {
     let prop = Helper.getBasenameProperty();
 
     test('correct values', () => {
@@ -25,9 +26,8 @@ describe('pathstrategy:getBasename', () => {
     })
 }); 
 
-describe('pathstrategy:getNewFullPathWithBasename', () => {
+describe('basenameproperty:getNewFullPathWithBasename', () => {
     let prop = Helper.getBasenameProperty();
-
 
     test('correct values', () => {
         expect(prop.getNewFullPathWithBasename("/path/to/workproject/this.md","that"))
@@ -36,5 +36,15 @@ describe('pathstrategy:getNewFullPathWithBasename', () => {
         .toBe("/path/to/workproject/that")
         expect(prop.getNewFullPathWithBasename("this","that"))
         .toBe("that")
+    });  
+}); 
+
+
+describe('basenameproperty:getValue', () => {
+    const mockfile = new MockFileModel("/path/to/workproject/this.md",{});
+    let prop = new BaseNameProperty(mockfile);
+
+    test('correct values', () => {
+       expect(prop.getValue()).toBe("this");
     });  
 }); 
