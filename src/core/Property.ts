@@ -1,4 +1,4 @@
-import { FileModel } from "./File";
+import { FileModel } from "./FileModel";
 import { Whitelist } from "./Whitelist";
 
 export class PropertySettings {

@@ -1,18 +1,19 @@
 import { TFile, TFolder } from "obsidian";
-import { FolderModel } from "src/core/Interfaces/FolderModel";
-import { Resource } from "src/core/Interfaces/Resource";
 import { ObsidianWrapper } from "./ObsidianWrapper";
 import { ObsidianFile } from "./ObsidianFile";
+import { FolderModel } from "src/core/FolderModel";
+import { FileModel } from "src/core/FileModel";
 
-export class ObsidianFolder implements FolderModel{
+export class ObsidianFolder extends FolderModel{
     name: string;
     path: string;
     extension:string;
-    children: Resource[];
+    children: (FolderModel | FileModel)[];
     
     folder:TFolder;
 
     constructor(path:string){
+        super();
         this.path = path;
         this.children = [];
         const wrapper = ObsidianWrapper.getInstance();

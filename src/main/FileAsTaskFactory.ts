@@ -1,5 +1,5 @@
 import { DEFAULT_PROPERTYNAMES, Settings } from "src/core/FileAsTaskSettings";
-import { FileModel } from "../core/File";
+import { FileModel } from "../core/FileModel";
 import { FileAsTask } from "src/core/FileAsTask";
 import { BaseNameProperty } from "src/core/Properties/BasenameProperty";
 import { ToplevelFolderProperty } from "src/core/Properties/ToplevelFolderProperty";

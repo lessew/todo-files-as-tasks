@@ -1,4 +1,4 @@
-import { FileModel } from "./File";
+import { FileModel } from "./FileModel";
 import { Property } from "./Property";
 
 export class FileAsTask{

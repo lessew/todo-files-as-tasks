@@ -2,15 +2,12 @@ import { App, View } from "obsidian";
 import { YAMLParser } from "src/core/YAMLParser";
 import { ObsidianWrapper } from "./obsidian/ObsidianWrapper";
 import { TaskListView } from "./ui/TaskListView";
-import { FolderList } from "../core/FolderList";
 import { CreateTaskButtonView } from "./ui/CreateTaskButtonView";
 import { FileFilter } from "src/core/FileFilter";
 import { Settings } from "../core/FileAsTaskSettings";
 import { FATError,YAMLParseError,RootPathError,NoFilesFoundError } from "src/core/Error";
 import { TestView } from "src/test/TestView";
 import { ObsidianFolder } from "./obsidian/ObsidianFolder";
-import { FolderModel } from "src/core/Interfaces/FolderModel";
-import { FileList } from "src/core/FileList";
 
 export class MainCodeBlock{
     source:string;
