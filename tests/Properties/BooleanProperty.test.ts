@@ -42,7 +42,6 @@ describe('BooleanProperty test incorrectly used getter', () => {
 });
 
 
-
 describe('BooleanProperty test toggle', () => {
   let prop = Helper.getBooleanProperty();
   let newval = prop.getNewToggleValue(prop.getValue());

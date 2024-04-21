@@ -1,10 +1,12 @@
 import { MockFileModel } from "../Mocks/MockFileModel";
 import { ToplevelFolderProperty } from "../../src/core/Properties/ToplevelFolderProperty";
+import { Whitelist } from "../../src/core/Whitelist";
 
 class Helper{
     static getToplevelFolderProperty():ToplevelFolderProperty{
-        const mockfile = new MockFileModel();
-        return new ToplevelFolderProperty(mockfile);
+        let wl = new Whitelist(["this","that"]);
+        const mockfile = new MockFileModel("path",{});
+        return new ToplevelFolderProperty("no-value",wl,mockfile);
     }
 }
 
@@ -35,6 +37,3 @@ describe('toplevelfolderproperty:getNewFullPathWithTopLevelFolder', () => {
         .toBe("/path/to/newproject/.md")
     })
 }); 
-
-// TODO: include tests for whitelist
-

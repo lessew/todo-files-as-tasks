@@ -33,8 +33,11 @@ export class WhitelistYAMLProperty implements Property{
             if(val===null){
                 this.val = this.defaultValue;
             }
-            else{
+            else if(this.validate(val)){
                 this.val = val;
+            }
+            else{
+                this.val = this.defaultValue;
             }
         }
         return this.val;

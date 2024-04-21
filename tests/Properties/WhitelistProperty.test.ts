@@ -1,18 +1,35 @@
-import { WhitelistProperty } from "../../src/core/Properties/WhitelistProperty";
-import { PropertyModel } from "../../src/core/Interfaces/PropertyModel";
-import { MockPropertyModel } from "../Mocks/MockPropertyModel";
+import { WhitelistYAMLProperty } from "../../src/core/Properties/WhitelistYAMLProperty";
+import { Whitelist } from "../../src/core/Whitelist";
+import { MockFileModel } from "../../tests/Mocks/MockFileModel";
 
 
 class Helper{
-    static getWhitelistProperty(propName:string,propValue:string,options:string[]):WhitelistProperty{
-        let dao:PropertyModel = new MockPropertyModel(propValue);
-        let sp = new WhitelistProperty(propName,"dummyfileid",dao,{allowedValues:options,defaultValue:""});
+    static getWhitelistProperty(contextValue:string,options:string[]):WhitelistYAMLProperty{
+        let wl = new Whitelist(options);
+        let file = new MockFileModel("/path",{context:contextValue});
+        let sp = new WhitelistYAMLProperty("context",options[0],wl,file);
         return sp;
     }
 }
 
+describe('whitelistproperty test: getValue() function', () => {
+    const sp = Helper.getWhitelistProperty("next",["next","waiting for"]);
+    test('testing getValue', () => {
+        expect(sp.getValue()).toBe("next");
+    })
+});
+
+describe('whitelistproperty test: getValue() function with incorrect input to revert to default', () => {
+    const sp = Helper.getWhitelistProperty("invalid",["next","waiting for"]);
+    test('testing getValue', () => {
+        expect(sp.getValue()).toBe("next");
+    })
+});
+
+
+
 describe('whitelistproperty test: validate function', () => {
-    const sp = Helper.getWhitelistProperty("context","next",["next","waiting for"]);
+    const sp = Helper.getWhitelistProperty("next",["next","waiting for"]);
     test('testing validate function with correct input', () => {
         expect(sp.validate("next")).toBe(true);
     })
@@ -22,22 +39,4 @@ describe('whitelistproperty test: validate function', () => {
     test('testing validate function with incorrect input', () => {
         expect(sp.validate("next222")).toBe(false);
     })
-});
-
-
-describe('whitelistproperty isValidValue is set correctly', () => {
-    const prop = Helper.getWhitelistProperty("context","next",["next","waiting for"]);
-    prop.initializeValue();
-
-    test('testing validate function with correct input', () => {
-        expect(prop.loadedValueIsValid()).toBe(true);
-    })
-
-    const prop2 = Helper.getWhitelistProperty("context","invalid",["next","waiting for"]);
-    prop2.initializeValue();
-
-    test('testing validate function with correct input', () => {
-        expect(prop2.loadedValueIsValid()).toBe(false);
-    })
-
 });
