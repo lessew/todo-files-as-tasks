@@ -1,12 +1,10 @@
-import { FileAsTaskFactory } from "src/main/FileAsTaskFactory";
 import { FileAsTask } from "./FileAsTask";
 import { Settings } from "./Settings";
 import { FileModel } from "./FileModel";
-import { Whitelist } from "./Whitelist";
 
 export abstract class FolderModel{
     name:string;
-    extension:string;
+    //extension:string;
     path:string;
     children:(FileModel | FolderModel)[];
 
@@ -14,7 +12,20 @@ export abstract class FolderModel{
 
     }
 
-
+    getFiles():FileModel[]{
+        let result:FileModel[] = [];
+        this.children.forEach(child => {
+            if(FolderModel.isFolderModel(child)){
+                result = [...result,...child.getFiles()];
+            }
+            else if(FileModel.isFileModel(child)){
+                result.push(child);
+            }
+        });
+        return result;
+    }
+    
+/*
     getFilesAsTasks(settings:Settings):FileAsTask[]{
         let result:FileAsTask[] = [];
         this.children.forEach(child => {
@@ -28,7 +39,7 @@ export abstract class FolderModel{
         })
         return result;
     }
-
+*/
     getFolders(rootFolder:FolderModel):FolderModel[]{
         return [];
         /*
