@@ -7,7 +7,7 @@ import { FileAsTask } from "../src/core/FileAsTask";
 
 class Helper{
     //static getFile(path:string,status:string,context:string):FileAsTask{
-    static getFile(path:string):FileAsTask{
+    static getFileAsTask(path:string):FileAsTask{
         let aFile:FileModel = new MockFileModel(path,{
             status:"Inbox",
             context:"Desk"
@@ -24,15 +24,18 @@ class Helper{
 }
 
 describe('FileAsTask: test', () => {
-    let fat = Helper.getFile("/path/to/file");
+    let fat = Helper.getFileAsTask("/path/to/file");
 
     test('getters', () => {    
         expect(fat.get("context")).toBe("Desk");
         expect(fat.get("status")).toBe("Inbox");
     });
-    test("setters",async () => {
-        await fat.set("context","Read")
-        expect(fat.get("context")).toBe("Read")
+    test("setters", done => {
+        fat.set("context","Read");
+        setTimeout(() => {
+            expect(fat.get("context")).toBe("Read")
+            done();
+        },50);
     })
     test("setters with invalid value should not change the value",() =>{
         try{

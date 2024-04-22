@@ -1,4 +1,4 @@
-import { FileModel } from "src/core/FileModel";
+import { FileModel } from "../../src/core/FileModel";
 
 export class MockFileModel extends FileModel{
     name: string;
@@ -19,8 +19,8 @@ export class MockFileModel extends FileModel{
     getYAMLProperty(name: string): string {
         return this.yaml[name];
     }
-    setYAMLProperty(name: string, value: string): void | Promise<void> {
-        this.yaml[name] = value;
+    async setYAMLProperty(name: string, value: string): Promise<void> {
+        await (this.yaml[name] = value);
     }
 
     createMarkdownFile(path: string): void {
