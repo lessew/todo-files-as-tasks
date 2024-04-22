@@ -23,6 +23,30 @@ export const DEFAULT_PROPERTYNAMES = {
 
 export type Settings = Record<string,PropertySettings>;
 
+/*
+export class FATSettings {
+    private propertySettings:Map<string,PropertySettings>;
+    
+    addPropertySetting(propName:string,defaultValue:string,whitelist:string[]):void{
+        let wl = new Whitelist(whitelist);
+        let propSettings = new PropertySettings(propName,defaultValue,wl);
+        this.propertySettings.set(propName,propSettings);
+    }
+
+    //getAsArray():PropertySettings[]{
+     //   return this.propertySettings.values;
+    //}
+
+    //addPropertySetting(propName:string,setting:PropertySettings):void{
+    //    this.propertySettings.set(propName,setting);
+    //}
+
+    //addSettings(settings:Map<string,PropertySettings>):void{
+    //    this.propertySettings = settings;
+    //}
+}
+*/
+
 export const DEFAULT_SETTINGS: Settings = {
     [DEFAULT_PROPERTYNAMES.context]:
         new PropertySettings(

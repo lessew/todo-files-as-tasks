@@ -1,11 +1,12 @@
-import { DEFAULT_PROPERTYNAMES, Settings } from "src/core/Settings";
-import { FileModel } from "../core/FileModel";
-import { FileAsTask } from "src/core/FileAsTask";
-import { BaseNameProperty } from "src/core/Properties/BasenameProperty";
-import { ToplevelFolderProperty } from "src/core/Properties/ToplevelFolderProperty";
-import { WhitelistYAMLProperty } from "src/core/Properties/WhitelistYAMLProperty";
-import { Property } from "src/core/Property";
-import { BooleanYAMLProperty } from "src/core/Properties/BooleanYAMLProperty";
+import { FileAsTask } from "./FileAsTask";
+import { FileModel } from "./FileModel";
+import { BaseNameProperty } from "./Properties/BasenameProperty";
+import { BooleanYAMLProperty } from "./Properties/BooleanYAMLProperty";
+import { ToplevelFolderProperty } from "./Properties/ToplevelFolderProperty";
+import { WhitelistYAMLProperty } from "./Properties/WhitelistYAMLProperty";
+import { Property } from "./Property";
+import { DEFAULT_PROPERTYNAMES, Settings } from "./Settings";
+
 
 export class FileAsTaskFactory {
       
