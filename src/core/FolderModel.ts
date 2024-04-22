@@ -1,6 +1,6 @@
 import { FileAsTaskFactory } from "src/main/FileAsTaskFactory";
 import { FileAsTask } from "./FileAsTask";
-import { Settings } from "./FileAsTaskSettings";
+import { Settings } from "./Settings";
 import { FileModel } from "./FileModel";
 import { Whitelist } from "./Whitelist";
 

@@ -1,6 +1,6 @@
 import { App, Modal, Setting } from "obsidian";
 import { ObsidianWrapper } from "../obsidian/ObsidianWrapper";
-import { Settings } from "../../core/FileAsTaskSettings";
+import { Settings } from "../../core/Settings";
 
 
 export class CreateTaskButtonView{

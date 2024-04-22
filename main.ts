@@ -1,5 +1,5 @@
 import { Plugin } from 'obsidian';
-import { DEFAULT_SETTINGS, Settings } from 'src/core/FileAsTaskSettings';
+import { DEFAULT_SETTINGS, Settings } from 'src/core/Settings';
 import { ObsidianWrapper } from 'src/main/obsidian/ObsidianWrapper';
 import {FATSettingTab} from "src/main/ui/FATSettingsTab"
 import { MainCodeBlock } from 'src/main/MainCodeBlock';

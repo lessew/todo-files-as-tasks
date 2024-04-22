@@ -1,7 +1,7 @@
 import { assert } from "console";
 import { Logger } from "../Logger";
 import { getExpectedFiles, getExpectedFolders, getSettings, getYamlListAllFiles,ExpectedFileType } from "../MockItems";
-import { Settings } from "src/core/FileAsTaskSettings";
+import { Settings } from "src/core/Settings";
 import { YAMLParser } from "src/core/YAMLParser";
 import { FATError } from "src/core/Error";
 import { FolderList } from "src/core/FolderList";

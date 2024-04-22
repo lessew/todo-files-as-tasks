@@ -18,7 +18,7 @@ export class WhitelistYAMLProperty implements Property{
         this.defaultValue = defaultValue;
     }
 
-    setValue(val: string): void {
+    async setValue(val: string): Promise<void> {
         if(this.validate(val)){
             this.file.setYAMLProperty(this.yamlPropname,val);
         }

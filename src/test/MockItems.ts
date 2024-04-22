@@ -1,4 +1,4 @@
-import { PROPERTYNAMES, Settings } from "src/core/FileAsTaskSettings";
+import { PROPERTYNAMES, Settings } from "src/core/Settings";
 import { Whitelist } from "src/core/Whitelist";
 
 /**

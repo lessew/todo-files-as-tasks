@@ -1,7 +1,7 @@
 import * as yaml from 'js-yaml'
 import { Filter, FilterOperator } from './Filter';
 import { FATError } from './Error';
-import { Settings } from './FileAsTaskSettings';
+import { Settings } from './Settings';
 
 export class YAMLParser{
     source:string;

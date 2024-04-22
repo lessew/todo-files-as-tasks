@@ -1,7 +1,7 @@
 import { YAMLParser } from "../src/core/YAMLParser";
 import { FilterOperator } from "../src/core/Filter";
 import { FATError } from "../src/core/Error";
-import { DEFAULT_PROPERTYNAMES, Settings } from "../src/core/FileAsTaskSettings";
+import { DEFAULT_PROPERTYNAMES, Settings } from "../src/core/Settings";
 import { Whitelist } from "../src/core/Whitelist";
 
 class Helper {
@@ -132,7 +132,7 @@ describe('YAMLParser parse filters', () => {
         let result = p.parseFilters(settings);
         if(!FATError.isError(result)){
             expect(result.length).toBe(1);
-            expect(result[0].propertySettings.propName).toBe("status");
+            expect(result[0].propertyName).toBe("status");
             expect(result[0].propertyValue).toBe("done");
             expect(result[0].operator).toBe(FilterOperator.include);
         }
@@ -171,7 +171,7 @@ describe('yaml parser: parse operator test', () => {
         let result = p.parseFilters(settings);
         if(!FATError.isError(result)){
             expect(result.length).toBe(1);
-            expect(result[0].propertySettings.propName).toBe("status");
+            expect(result[0].propertyName).toBe("status");
             expect(result[0].propertyValue).toBe("done");
             expect(result[0].operator).toBe(FilterOperator.exclude);
         }

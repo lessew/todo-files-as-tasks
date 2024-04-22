@@ -1,4 +1,3 @@
-import { FileModel } from "src/core/File";
 import { BooleanYAMLProperty } from "../../src/core/Properties/BooleanYAMLProperty";
 import { Whitelist } from "../../src/core/Whitelist";
 import { MockFileModel } from "../Mocks/MockFileModel";

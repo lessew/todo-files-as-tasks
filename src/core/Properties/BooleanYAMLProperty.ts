@@ -29,7 +29,7 @@ export class BooleanYAMLProperty implements Property{
         this.file = file;
     }
 
-    setValue(val: string): void {
+    async setValue(val: string): Promise<void> {
         if(this.whitelist.contains(val)){
             this.file.setYAMLProperty(this.yamlPropName,val);
         }

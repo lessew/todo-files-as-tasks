@@ -1,6 +1,6 @@
 import FATPlugin from "main";
 import { App, PluginSettingTab, Setting } from "obsidian";
-import { PROPERTYNAMES} from "../../core/FileAsTaskSettings";
+import { PROPERTYNAMES} from "../../core/Settings";
 
 
 export class FATSettingTab extends PluginSettingTab {

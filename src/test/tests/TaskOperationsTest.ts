@@ -1,7 +1,7 @@
 import { Logger } from "../Logger";
 import { FileAsTask } from "src/core/FileAsTask";
 import { ExpectedFileType, getExpectedHolidayBillFile, getSettings } from "../MockItems";
-import { PROPERTYNAMES, Settings } from "src/core/FileAsTaskSettings";
+import { PROPERTYNAMES, Settings } from "src/core/Settings";
 import { FileModel } from "src/core/Interfaces/File";
 import { ObsidianFile } from "src/main/obsidian/ObsidianFile";
 import { FileAsTaskFactory } from "src/main/FileAsTaskFactory";

@@ -1,4 +1,4 @@
-import { DEFAULT_PROPERTYNAMES, Settings } from "src/core/FileAsTaskSettings";
+import { DEFAULT_PROPERTYNAMES, Settings } from "src/core/Settings";
 import { FileModel } from "../core/FileModel";
 import { FileAsTask } from "src/core/FileAsTask";
 import { BaseNameProperty } from "src/core/Properties/BasenameProperty";

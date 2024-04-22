@@ -4,7 +4,7 @@ import { ObsidianWrapper } from "./obsidian/ObsidianWrapper";
 import { TaskListView } from "./ui/TaskListView";
 import { CreateTaskButtonView } from "./ui/CreateTaskButtonView";
 import { FileFilter } from "src/core/FileFilter";
-import { Settings } from "../core/FileAsTaskSettings";
+import { Settings } from "../core/Settings";
 import { FATError,YAMLParseError,RootPathError,NoFilesFoundError } from "src/core/Error";
 import { TestView } from "src/test/TestView";
 import { ObsidianFolder } from "./obsidian/ObsidianFolder";
@@ -82,6 +82,14 @@ export class MainCodeBlock{
             return;
         }
 
+        /*
+        const fileAsTaskCollection = new FileAsTaskCollection(rootFolder);
+        fileAsTaskCollection.bulkFilterBy(filters);
+        fileAsTaskCollection.groupBy('project');
+        fileAsTaskCollection.sortBy('context','ASC');
+        view = new TaskListView(fileAsTaskCollection);
+        view.build(this.el);
+*/
         const fileFilter = new FileFilter(tasks);
         const filteredFiles = fileFilter.bulkFilterBy(filters).get();
         const view = new TaskListView(filteredFiles,this.app);
