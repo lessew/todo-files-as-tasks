@@ -4,7 +4,7 @@ import { BasenameProperty } from "src/core/Properties/BasenameProperty";
 import { BasenamePropertyView } from "./Propertyviews/BasenamePropertyView";
 import { WhitelistPropertyView } from "./Propertyviews/WhitelistPropertyView";
 import { WhitelistProperty } from "src/core/Properties/WhitelistProperty";
-import { ToplevelFolderProperty } from "src/core/Properties/ToplevelFolderProperty";
+import { ToplevelFolderProperty } from "src/core/Properties/ToplevelFolder/ToplevelFolderProperty";
 import { ToplevelFolderPropertyView } from "./Propertyviews/ToplevelFolderPropertyView";
 import { BooleanProperty } from "src/core/Properties/BooleanProperty";
 import { BooleanPropertyView } from "./Propertyviews/BooleanPropertyView";

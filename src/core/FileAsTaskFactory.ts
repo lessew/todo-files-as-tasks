@@ -1,9 +1,9 @@
 import { FileAsTask } from "./FileAsTask";
 import { FileModel } from "./FileModel";
-import { BaseNameProperty } from "./Properties/BasenameProperty";
-import { BooleanYAMLProperty } from "./Properties/BooleanYAMLProperty";
-import { ToplevelFolderProperty } from "./Properties/ToplevelFolderProperty";
-import { WhitelistYAMLProperty } from "./Properties/WhitelistYAMLProperty";
+import { BaseNameProperty } from "./Properties/Basename/BasenameProperty";
+import { BooleanYAMLProperty } from "./Properties/BooleanYAML/BooleanYAMLProperty";
+import { ToplevelFolderProperty } from "./Properties/ToplevelFolder/ToplevelFolderProperty";
+import { WhitelistYAMLProperty } from "./Properties/WhitelistYAML/WhitelistYAMLProperty";
 import { Property } from "./Property";
 import { DEFAULT_PROPERTYNAMES, Settings } from "./Settings";
 
@@ -11,22 +11,17 @@ import { DEFAULT_PROPERTYNAMES, Settings } from "./Settings";
 export class FileAsTaskFactory {
       
     static loadFileAsTask(file:FileModel,settings:Settings):FileAsTask{
-        if(settings.context.whitelist===undefined 
-            || settings.project.whitelist===undefined 
-            || settings.status.whitelist===undefined
-            || settings.starred.whitelist===undefined
-        ){
-            console.error(`settings not set correctly, aborting`);           
-            throw new Error(`settings not set correctly, aborting ${settings.starred.whitelist?.size()}`)  
-        }
         
+               
         let properties = {
             [DEFAULT_PROPERTYNAMES.title]: new BaseNameProperty(file),
             [DEFAULT_PROPERTYNAMES.project]: new ToplevelFolderProperty(settings.project.defaultValue,settings.project.whitelist!,file),
-            [DEFAULT_PROPERTYNAMES.context]: new WhitelistYAMLProperty(DEFAULT_PROPERTYNAMES.context,settings.context.defaultValue,settings.context.whitelist!,file),
-            [DEFAULT_PROPERTYNAMES.status]:new WhitelistYAMLProperty(DEFAULT_PROPERTYNAMES.status,settings.status.defaultValue,settings.status.whitelist!,file),
-            [DEFAULT_PROPERTYNAMES.starred]:new BooleanYAMLProperty(DEFAULT_PROPERTYNAMES.starred,settings.starred.defaultValue,settings.starred.whitelist!,file)
-        } ;
+       } ;
+        settings.forEach(prop => {
+            properties[prop.]
+        });
+
+        let properties = settings.toProperties(file);
         let f = new FileAsTask(file,properties as Record<string,Property>);
         return f;
     }

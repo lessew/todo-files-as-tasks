@@ -1,5 +1,5 @@
 import { MockFileModel } from "../tests/Mocks/MockFileModel";
-import { WhitelistYAMLProperty } from "../src/core/Properties/WhitelistYAMLProperty";
+import { WhitelistYAMLProperty } from "../src/core/Properties/WhitelistYAML/WhitelistYAMLProperty";
 import { FileModel } from "../src/core/FileModel";
 import { Whitelist } from "../src/core/Whitelist";
 import { FileAsTask } from "../src/core/FileAsTask";

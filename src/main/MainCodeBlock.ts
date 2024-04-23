@@ -83,6 +83,7 @@ export class MainCodeBlock{
         }
 
         /*
+        const FileAsTaskProtoType = new FileAsTaskPrototype(settings);
         const fileAsTaskCollection = new FileAsTaskCollection(rootFolder,settings);
         fileAsTaskCollection.bulkFilterBy(filters);
         fileAsTaskCollection.groupBy('project');

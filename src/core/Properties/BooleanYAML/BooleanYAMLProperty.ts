@@ -1,6 +1,6 @@
-import { FileModel } from "../FileModel";
-import { Property } from "../Property";
-import { Whitelist } from "../Whitelist";
+import { FileModel } from "../../FileModel";
+import { Property } from "../../Property";
+import { Whitelist } from "../../Whitelist";
 
 export class BooleanYAMLProperty implements Property{
     file: FileModel;

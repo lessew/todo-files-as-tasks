@@ -1,6 +1,6 @@
-import { BooleanYAMLProperty } from "../../src/core/Properties/BooleanYAMLProperty";
-import { Whitelist } from "../../src/core/Whitelist";
-import { MockFileModel } from "../Mocks/MockFileModel";
+import { BooleanYAMLProperty } from "../../../src/core/Properties/BooleanYAML/BooleanYAMLProperty";
+import { Whitelist } from "../../../src/core/Whitelist";
+import { MockFileModel } from "../../Mocks/MockFileModel";
 
 
 class Helper{

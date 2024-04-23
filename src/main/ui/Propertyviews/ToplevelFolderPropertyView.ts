@@ -1,5 +1,5 @@
 import { App, MarkdownView, SuggestModal } from "obsidian";
-import { ToplevelFolderProperty } from "src/core/Properties/ToplevelFolderProperty";
+import { ToplevelFolderProperty } from "src/core/Properties/ToplevelFolder/ToplevelFolderProperty";
 import { SuggestWhitelistModal } from "../Modals/SuggetWhitelistModal";
 import { WhitelistPropertyView } from "./WhitelistPropertyView";
 

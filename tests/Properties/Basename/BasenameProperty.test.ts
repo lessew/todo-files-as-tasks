@@ -1,11 +1,10 @@
-import { MockFileModel } from "../Mocks/MockFileModel";
-import { BaseNameProperty } from "../../src/core/Properties/BasenameProperty";
+import { MockFileModel } from "../../Mocks/MockFileModel";
+import { BaseNameProperty } from "../../../src/core/Properties/Basename/BasenameProperty";
 
 class Helper{
     static getBasenameProperty():BaseNameProperty{
-
         const mockfile = new MockFileModel("/path/to/workproject/this.md",{});
-        return new BaseNameProperty(mockfile);
+        return new BaseNameProperty("title","default",mockfile);
     }
 }
 
@@ -42,7 +41,7 @@ describe('basenameproperty:getNewFullPathWithBasename', () => {
 
 describe('basenameproperty:getValue', () => {
     const mockfile = new MockFileModel("/path/to/workproject/this.md",{});
-    let prop = new BaseNameProperty(mockfile);
+    let prop = new BaseNameProperty("title","default",mockfile);
 
     test('correct values', () => {
        expect(prop.getValue()).toBe("this");

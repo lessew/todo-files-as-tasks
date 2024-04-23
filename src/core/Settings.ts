@@ -1,74 +1,47 @@
+import { FileModel } from "./FileModel";
+import { Property } from "./Property";
 import { Whitelist } from "./Whitelist";
 
-export class PropertySettings {
-    propName:string;
-    whitelist?:Whitelist;
+export interface PropertySettings {
+    propName:string,
     defaultValue:string;
-
-    constructor(prop:string,def:string,whitelist?:Whitelist){
-        this.propName = prop;
-        this.defaultValue = def;
-        this.whitelist = whitelist;
-    }
+    adaptToProperty(file:FileModel):Property;
 }
 
 
-export const DEFAULT_PROPERTYNAMES = {
-    context:"context",
-    status:"status",
-    project:"project",
-    title:"title",
-    starred:"starred"
-} as const;
 
-export type Settings = Record<string,PropertySettings>;
 
-/*
-export class FATSettings {
+export class Settings {
     private propertySettings:Map<string,PropertySettings>;
     
-    addPropertySetting(propName:string,defaultValue:string,whitelist:string[]):void{
-        let wl = new Whitelist(whitelist);
-        let propSettings = new PropertySettings(propName,defaultValue,wl);
-        this.propertySettings.set(propName,propSettings);
+    constructor(){
+        this.propertySettings = new Map<string,PropertySettings>();
     }
 
-    //getAsArray():PropertySettings[]{
-     //   return this.propertySettings.values;
-    //}
+    add(s:PropertySettings):Settings{
+        this.propertySettings.set(s.propName,s);
+        return this;
+    }
+/*
+    getPropertySettings(key:string):PropertySettings | undefined{
+        return this.propertySettings.get(key);
+    }
 
-    //addPropertySetting(propName:string,setting:PropertySettings):void{
-    //    this.propertySettings.set(propName,setting);
-    //}
+    getAllPropertySettings():Map<string,PropertySettings>{
+        return this.propertySettings;
+    }
 
-    //addSettings(settings:Map<string,PropertySettings>):void{
-    //    this.propertySettings = settings;
-    //}
-}
+    getAsArray():PropertySettings[]{
+        return [...this.propertySettings.values()]
+    }
 */
-
-export const DEFAULT_SETTINGS: Settings = {
-    [DEFAULT_PROPERTYNAMES.context]:
-        new PropertySettings(
-            DEFAULT_PROPERTYNAMES.context,
-            "None",
-            new Whitelist(["Desk","Deep","Phone","Read","None"])),
-    [DEFAULT_PROPERTYNAMES.status]:
-        new PropertySettings(
-            DEFAULT_PROPERTYNAMES.status,
-            "Inbox",
-            new Whitelist(["Inbox","Next","Deferred","Waiting","Done"])),
-    [DEFAULT_PROPERTYNAMES.starred]:
-        new PropertySettings(
-            DEFAULT_PROPERTYNAMES.starred,
-            "✰",
-            new Whitelist(["✰","⭐"])),
-    [DEFAULT_PROPERTYNAMES.title]:
-        new PropertySettings(
-            DEFAULT_PROPERTYNAMES.title,
-            "no title"),
-    [DEFAULT_PROPERTYNAMES.project]:
-        new PropertySettings(
-            DEFAULT_PROPERTYNAMES.project,
-            "no project")
 }
+
+export const DEFAULT_SETTINGS:Settings = new Settings()
+    .add(new BasenamePropertySettings("title"))
+    .add(new ToplevelFolderPropertySettings("project"))
+    .add(new BooleanYAMLPropertySettings("starred","✰", new Whitelist(["✰","⭐"])))
+    .add(new WhitelistYAMLPropertySettings("context","None", new Whitelist(["Desk","Deep","Phone","Read","None"])))
+    .add(new WhitelistYAMLPropertySettings("status","Inbox", new Whitelist(["Inbox","Next","Deferred","Waiting","Done"])));
+
+
