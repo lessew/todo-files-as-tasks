@@ -4,6 +4,7 @@ import { Whitelist } from "../../Whitelist";
 
 export class ToplevelFolderProperty implements Property{
     file: FileModel;
+    propName: string;
     private val:string;
     whitelist:Whitelist
     regExp:RegExp = /^[a-zA-Z\/\.]+$/;
