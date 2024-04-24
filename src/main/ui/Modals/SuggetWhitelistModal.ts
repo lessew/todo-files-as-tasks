@@ -1,5 +1,5 @@
 import { App, MarkdownView, SuggestModal } from "obsidian";
-import { Property } from "src/core/Property";
+import { Property } from "src/core/Interfaces/Property";
 
 export class SuggestWhitelistModal extends SuggestModal<string>{
 

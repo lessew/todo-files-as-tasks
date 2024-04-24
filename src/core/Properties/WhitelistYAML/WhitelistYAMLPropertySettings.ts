@@ -1,6 +1,6 @@
+import { PropertySettings } from "src/core/Interfaces/PropertySettings";
 import { FileModel } from "../../FileModel";
-import { Property } from "../../Property";
-import { PropertySettings } from "../../Settings";
+import { Property } from "../../Interfaces/Property";
 import { Whitelist } from "../../Whitelist";
 import { WhitelistYAMLProperty } from "./WhitelistYAMLProperty";
 

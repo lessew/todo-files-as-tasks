@@ -3,7 +3,7 @@ import { BaseNameProperty } from "src/core/Properties/BasenameProperty";
 import { BooleanYAMLProperty } from "src/core/Properties/BooleanYAMLProperty";
 import { ToplevelFolderProperty } from "src/core/Properties/ToplevelFolder/ToplevelFolderProperty";
 import { WhitelistYAMLProperty } from "src/core/Properties/WhitelistYAMLProperty";
-import { Property } from "src/core/Property";
+import { Property } from "src/core/Interfaces/Property";
 import { PropertySettings } from "src/core/Settings";
 import { Whitelist } from "src/core/Whitelist";
 

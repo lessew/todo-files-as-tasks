@@ -1,6 +1,6 @@
 import { FileAsTask } from "src/core/FileAsTask";
 import { FileModel } from "src/core/FileModel";
-import { Property } from "src/core/Property";
+import { Property } from "src/core/Interfaces/Property";
 import { Settings } from "src/core/Settings";
 
 export class FileAsTaskPrototype{

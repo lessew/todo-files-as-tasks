@@ -4,7 +4,7 @@ import { BaseNameProperty } from "./Properties/Basename/BasenameProperty";
 import { BooleanYAMLProperty } from "./Properties/BooleanYAML/BooleanYAMLProperty";
 import { ToplevelFolderProperty } from "./Properties/ToplevelFolder/ToplevelFolderProperty";
 import { WhitelistYAMLProperty } from "./Properties/WhitelistYAML/WhitelistYAMLProperty";
-import { Property } from "./Property";
+import { Property } from "./Interfaces/Property";
 import { DEFAULT_PROPERTYNAMES, Settings } from "./Settings";
 
 

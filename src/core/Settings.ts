@@ -1,14 +1,10 @@
 import { FileModel } from "./FileModel";
-import { Property } from "./Property";
+import { BasenamePropertySettings } from "./Properties/Basename/BasenamePropertySettings";
+import { BooleanYAMLPropertySettings } from "./Properties/BooleanYAML/BooleanYAMLPropertySettings";
+import { ToplevelFolderPropertySettings } from "./Properties/ToplevelFolder/ToplevelFolderPropertySettings";
+import { WhitelistYAMLPropertySettings } from "./Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
 import { Whitelist } from "./Whitelist";
-
-export interface PropertySettings {
-    propName:string,
-    defaultValue:string;
-    adaptToProperty(file:FileModel):Property;
-}
-
-
+import { PropertySettings } from "./Interfaces/PropertySettings";
 
 
 export class Settings {
@@ -21,6 +17,14 @@ export class Settings {
     add(s:PropertySettings):Settings{
         this.propertySettings.set(s.propName,s);
         return this;
+    }
+
+    get(name:string):PropertySettings{
+        let s = this.propertySettings.get(name);
+        if(s==undefined){
+            throw Error(`Setting does not exist ${name}`)
+        }
+        return s;
     }
 /*
     getPropertySettings(key:string):PropertySettings | undefined{

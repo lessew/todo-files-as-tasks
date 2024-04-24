@@ -1,4 +1,4 @@
-import { Property } from "../../src/core/Property";
+import { Property } from "../../src/core/Interfaces/Property";
 import { PropertyModel } from "../../src/core/Interfaces/PropertyModel";
 import { PropertySettings } from "src/core/Interfaces/PropertySettings";
 

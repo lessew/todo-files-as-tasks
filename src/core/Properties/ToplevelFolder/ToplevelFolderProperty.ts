@@ -1,5 +1,5 @@
 import { FileModel } from "../../FileModel";
-import { Property } from "../../Property";
+import { Property } from "../../Interfaces/Property";
 import { Whitelist } from "../../Whitelist";
 
 export class ToplevelFolderProperty implements Property{
