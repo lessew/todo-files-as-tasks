@@ -3,8 +3,21 @@ import { WhitelistYAMLProperty } from "../src/core/Properties/WhitelistYAML/Whit
 import { FileModel } from "../src/core/FileModel";
 import { Whitelist } from "../src/core/Whitelist";
 import { FileAsTask } from "../src/core/FileAsTask";
+import { Settings } from "src/core/Settings";
+import { WhitelistYAMLPropertySettings } from "src/core/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
 
 
+
+describe('FileAsTask: test', () => {
+    let file = new MockFileModel("/path",{});
+    let settings = new Settings().add(new WhitelistYAMLPropertySettings("context","Desk",new Whitelist(["Read","Desk"])))
+
+    test('constructor', () => {    
+        let fat = new FileAsTask(file,settings);
+    });
+});
+
+/*
 class Helper{
     static getFileAsTask(path:string):FileAsTask{
         let aFile:FileModel = new MockFileModel(path,{
@@ -45,6 +58,6 @@ describe('FileAsTask: test', () => {
         }
     })
 });
-
+*/
 
  

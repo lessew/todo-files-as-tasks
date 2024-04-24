@@ -5,6 +5,7 @@ import { ToplevelFolderPropertySettings } from "./Properties/ToplevelFolder/Topl
 import { WhitelistYAMLPropertySettings } from "./Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
 import { Whitelist } from "./Whitelist";
 import { PropertySettings } from "./Interfaces/PropertySettings";
+import { Property } from "./Interfaces/Property";
 
 
 export class Settings {
@@ -26,6 +27,15 @@ export class Settings {
         }
         return s;
     }
+
+    getProperties(file:FileModel):Record<string,Property>{
+        let result:Record<string,Property> = {};
+        this.propertySettings.forEach((aProp)=>{
+            result[aProp.propName] = aProp.adaptToProperty(file);
+        })
+        return result;
+    }
+
 /*
     getPropertySettings(key:string):PropertySettings | undefined{
         return this.propertySettings.get(key);

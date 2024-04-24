@@ -1,5 +1,8 @@
+import { Whitelist } from "../src/core/Whitelist";
 import { BasenamePropertySettings } from "../src/core/Properties/Basename/BasenamePropertySettings";
 import { Settings } from "../src/core/Settings";
+import { WhitelistYAMLPropertySettings } from "../src/core/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
+import { MockFileModel } from "./Mocks/MockFileModel";
 
 describe('Settings: create object)', () => {
     let settings = new Settings();
@@ -18,3 +21,18 @@ describe('Settings: create object)', () => {
         }
     });
 });
+
+describe('Settings: get properties', () => {
+    let settings = new Settings()
+    .add(new WhitelistYAMLPropertySettings("status","Inbox",new Whitelist(["Inbox","Done"])))
+    .add(new WhitelistYAMLPropertySettings("context","Read",new Whitelist(["Read","Desk"])));
+
+    let file = new MockFileModel("/path/to/file",{status:"Done",context:"Desk"});
+
+    test('Test get properties', () => {   
+      let properties = settings.getProperties(file);
+        expect(properties["status"].getValue()).toBe("Done");
+        expect(properties["context"].getValue()).toBe("Desk");
+    });
+});
+
