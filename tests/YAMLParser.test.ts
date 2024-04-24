@@ -1,24 +1,16 @@
 import { YAMLParser } from "../src/core/YAMLParser";
 import { FilterOperator } from "../src/core/Filter";
 import { FATError } from "../src/core/Error";
-import { DEFAULT_PROPERTYNAMES, Settings } from "../src/core/Settings";
+import { Settings } from "../src/core/Settings";
 import { Whitelist } from "../src/core/Whitelist";
+import { WhitelistYAMLPropertySettings } from "../src/core/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
 
 class Helper {
     static getSettings(statusAllowedValues:string[]):Settings{
         let wl = new Whitelist(statusAllowedValues);
-
-        return {
-            [DEFAULT_PROPERTYNAMES.status]: {
-                propName: DEFAULT_PROPERTYNAMES.status,
-                whitelist: wl,
-                defaultValue: ""
-            },
-            [DEFAULT_PROPERTYNAMES.title]: {propName: DEFAULT_PROPERTYNAMES.title,defaultValue: ""},
-            [DEFAULT_PROPERTYNAMES.project]: {propName: DEFAULT_PROPERTYNAMES.project,defaultValue: ""},
-            [DEFAULT_PROPERTYNAMES.context]: {propName: DEFAULT_PROPERTYNAMES.context,defaultValue: ""},
-            [DEFAULT_PROPERTYNAMES.starred]: {propName: DEFAULT_PROPERTYNAMES.starred,defaultValue: ""}
-        } as Settings
+        let settings = new Settings();
+        settings.add(new WhitelistYAMLPropertySettings("status",statusAllowedValues[0],new Whitelist(statusAllowedValues)));
+        return settings;
     }
 }
 
@@ -142,11 +134,13 @@ describe('YAMLParser parse filters', () => {
     });
     test('load incorrectly formatted source - filter', () => {
         let p = new YAMLParser();
-        let settings = Helper.getSettings(["Done","Inbox"]);
+        let wl = new Whitelist(["Done","Inbox"]);
+        let settings = new Settings();
+        settings.add(new WhitelistYAMLPropertySettings("status","Done",wl));
 
         p.loadSource(filtersIncorrect);
-        let result = p.parseFilters(settings);
-        console.log(result);
+        let result = p.parseFilters(settings) as FATError;
+        console.error(result);
         expect(FATError.isError(result)).toBe(true);
     });
 });

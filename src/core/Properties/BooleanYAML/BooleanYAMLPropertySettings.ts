@@ -1,5 +1,5 @@
 import { PropertySettings } from "src/core/Interfaces/PropertySettings";
-import { FileModel } from "../../FileModel";
+import { FileModel } from "../../Interfaces/FileModel";
 import { Property } from "../../Interfaces/Property";
 import { Whitelist } from "../../Whitelist";
 import { BooleanYAMLProperty } from "./BooleanYAMLProperty";

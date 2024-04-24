@@ -1,8 +1,7 @@
 import { FileAsTask } from "./FileAsTask";
-import { FileAsTaskFactory } from "./FileAsTaskFactory";
-import { FileModel } from "./FileModel";
+import { FileModel } from "./Interfaces/FileModel";
 import { Filter } from "./Filter";
-import { FolderModel } from "./FolderModel";
+import { FolderModel } from "./Interfaces/FolderModel";
 import { Settings } from "./Settings";
 
 
@@ -24,7 +23,7 @@ export class FileAsTaskCollection{
         let fats:FileAsTask[] = [];
 
         files.forEach(aFile => {
-            let fat:FileAsTask = FileAsTaskFactory.loadFileAsTask(aFile,this.settings);
+            let fat:FileAsTask = new FileAsTask(aFile,this.settings);
             fats.push(fat);
         })
         this.filesAsTask = fats;

@@ -2,7 +2,6 @@
 import {Filter, FilterOperator} from "../src/core/Filter";
 import { FileAsTask } from "../src/core/FileAsTask";
 import { MockFileAsTask } from "./Mocks/MockFileAsTask";
-import { PropertySettings } from "../src/core/PropertySettings";
 import { Whitelist } from "../src/core/Whitelist";
 
 

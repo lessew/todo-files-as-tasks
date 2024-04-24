@@ -2,6 +2,7 @@ import * as yaml from 'js-yaml'
 import { Filter, FilterOperator } from './Filter';
 import { FATError } from './Error';
 import { Settings } from './Settings';
+import { PropertySettings } from './Interfaces/PropertySettings';
 
 export class YAMLParser{
     source:string;
@@ -50,28 +51,28 @@ export class YAMLParser{
     parseFilters(settings:Settings):Filter[] | FATError{
         let result:Filter[] = [];
 
-        for(const settingsKey in settings){            
-            const yaml = this.yaml as any;
-            if(settingsKey in yaml){
-                const filterValue:string = yaml[settingsKey];
-                let valop = this.parseOperator(filterValue);
-                const whitelist = settings[settingsKey].whitelist;
-                console.log(whitelist)
-                if(typeof whitelist !== "undefined" && !whitelist.contains(valop.value)){
-                    return new FATError(`${valop.value} is not set as an allowed value for ${settingsKey}`)
-                }
+        let map = settings.getAsMap();
+        console.log(map.size)
 
-                if(typeof whitelist === "undefined" || whitelist.contains(valop.value)){
-                    let r:Filter = {
-                        propertySettings:settings[settingsKey],
-                        propertyValue:valop.value,
-                        operator:valop.operator
-                    }
+        map.forEach((aPropSetting: PropertySettings, key: string) => {
+            const yaml = this.yaml as any;
+            if(aPropSetting.propName in yaml){
+                const filterValue:string = yaml[aPropSetting.propName];
+                let valop = this.parseOperator(filterValue);
+                const whitelist = aPropSetting.whitelist;
+                if(whitelist === undefined || whitelist.contains(valop.value)){
+                    let r:Filter = new Filter(aPropSetting.propName,valop.value,valop.operator);
+                    //console.log("here")
                     result.push(r)
+                    //console.log(result)
+                }
+                else{
+                    console.log("error returning")
+                    return new FATError(`${valop.value} is not set as an allowed value for ${aPropSetting.propName}`)
                 }
             }
-        }
-        return result;
+        });        
+        return result;   
     }
 
     parseOperator(val:string):{operator:FilterOperator,value:string}{

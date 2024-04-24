@@ -1,5 +1,5 @@
-import { FileModel } from "src/core/FileModel";
-import { FolderModel } from "../../src/core/FolderModel";
+import { FileModel } from "src/core/Interfaces/FileModel";
+import { FolderModel } from "../../src/core/Interfaces/FolderModel";
 import { MockFileModel } from "./MockFileModel";
 
 export class MockFolderModel extends FolderModel{

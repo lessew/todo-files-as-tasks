@@ -1,9 +1,10 @@
 import { MockFolderModel } from "./Mocks/MockFolderModel";
-import { FolderModel } from "../src/core/FolderModel";
+import { FolderModel } from "../src/core/Interfaces/FolderModel";
 import { MockFileModel } from "./Mocks/MockFileModel";
 import { FileAsTaskCollection } from "../src/core/FileAsTaskCollection";
-import { PropertySettings, Settings } from "../src/core/Settings";
+import { Settings } from "../src/core/Settings";
 import { Whitelist } from "../src/core/Whitelist";
+import { WhitelistYAMLPropertySettings } from "src/core/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
 
 
 const file1 = new MockFileModel("path/to/this",{
@@ -37,10 +38,10 @@ class Helper{
 
 describe('FileAsTaskCollection: create object)', () => {
     let rootFolder = Helper.getRootFolder();
-    let settings:Settings = {
-        "status":new PropertySettings("status","Inbox",new Whitelist(["Inbox","Done"])),
-        "context":new PropertySettings("context","Desk",new Whitelist(["Desk","Phone"]))
-    }
+    let settings:Settings = new Settings()
+    .add(new WhitelistYAMLPropertySettings("status","Inbox",new Whitelist(["Inbox","Done"])))
+    .add(new WhitelistYAMLPropertySettings("context","Desk",new Whitelist(["Desk","Phone"])));
+    
 
     let fatc = new FileAsTaskCollection(rootFolder,settings);
 
@@ -52,24 +53,3 @@ describe('FileAsTaskCollection: create object)', () => {
         expect(fatc.get().length).toBe(4);
     });
 });
-
-/*
-describe('FileAsTaskCollection: filter)', () => {
-    let rootFolder = Helper.getRootFolder();
-    let settings:Settings = {
-        "status":new PropertySettings("status","Inbox",new Whitelist(["Inbox","Done"])),
-        "context":new PropertySettings("context","Desk",new Whitelist(["Desk","Phone"]))
-    }
-    let fatc = new FileAsTaskCollection(rootFolder,settings);
-    let filter = new Filter("status","Done",FilterOperator.include);
-
-
-    //let propSettings = new PropertySettings("status","default",new Whitelist(["Inbox","Done"]));
-    test('Test filter (single)', () => {   
-        fatc.filter(filter);
-        const r = fatc.get();
-        expect(r.length).toBe(1);
-        //expect(fatc.filter(f).children.length).toBe(4);
-    });
-});
-*/

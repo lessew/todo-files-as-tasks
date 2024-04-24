@@ -1,7 +1,7 @@
 import { TFile, TFolder } from "obsidian";
 import { ObsidianWrapper } from "./ObsidianWrapper";
 import { ObsidianFile } from "./ObsidianFile";
-import { FolderModel } from "src/core/FolderModel";
+import { FolderModel } from "src/core/Interfaces/FolderModel";
 import { FileModel } from "src/core/FileModel";
 
 export class ObsidianFolder extends FolderModel{

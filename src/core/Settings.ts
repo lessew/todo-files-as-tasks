@@ -1,4 +1,4 @@
-import { FileModel } from "./FileModel";
+import { FileModel } from "./Interfaces/FileModel";
 import { BasenamePropertySettings } from "./Properties/Basename/BasenamePropertySettings";
 import { BooleanYAMLPropertySettings } from "./Properties/BooleanYAML/BooleanYAMLPropertySettings";
 import { ToplevelFolderPropertySettings } from "./Properties/ToplevelFolder/ToplevelFolderPropertySettings";
@@ -28,6 +28,10 @@ export class Settings {
         return s;
     }
 
+    getAsMap():Map<string,PropertySettings>{
+        return this.propertySettings;
+    }
+
     getProperties(file:FileModel):Record<string,Property>{
         let result:Record<string,Property> = {};
         this.propertySettings.forEach((aProp)=>{
@@ -35,20 +39,6 @@ export class Settings {
         })
         return result;
     }
-
-/*
-    getPropertySettings(key:string):PropertySettings | undefined{
-        return this.propertySettings.get(key);
-    }
-
-    getAllPropertySettings():Map<string,PropertySettings>{
-        return this.propertySettings;
-    }
-
-    getAsArray():PropertySettings[]{
-        return [...this.propertySettings.values()]
-    }
-*/
 }
 
 export const DEFAULT_SETTINGS:Settings = new Settings()

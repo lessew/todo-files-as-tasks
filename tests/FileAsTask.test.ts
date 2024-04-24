@@ -1,10 +1,8 @@
 import { MockFileModel } from "../tests/Mocks/MockFileModel";
-import { WhitelistYAMLProperty } from "../src/core/Properties/WhitelistYAML/WhitelistYAMLProperty";
-import { FileModel } from "../src/core/FileModel";
 import { Whitelist } from "../src/core/Whitelist";
 import { FileAsTask } from "../src/core/FileAsTask";
-import { Settings } from "src/core/Settings";
-import { WhitelistYAMLPropertySettings } from "src/core/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
+import { Settings } from "../src/core/Settings";
+import { WhitelistYAMLPropertySettings } from "../src/core/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
 
 
 
@@ -16,6 +14,8 @@ describe('FileAsTask: test', () => {
         let fat = new FileAsTask(file,settings);
     });
 });
+
+// TODO add getter and setter test
 
 /*
 class Helper{

@@ -1,8 +1,8 @@
-import { FileModel } from "src/core/FileModel";
 import { Property } from "src/core/Interfaces/Property";
 import { Whitelist } from "src/core/Whitelist";
 import { ToplevelFolderProperty } from "./ToplevelFolderProperty";
 import { PropertySettings } from "src/core/Interfaces/PropertySettings";
+import { FileModel } from "src/core/Interfaces/FileModel";
 
 export class ToplevelFolderPropertySettings implements PropertySettings {
     propName: string;

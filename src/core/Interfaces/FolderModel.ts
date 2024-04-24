@@ -1,5 +1,3 @@
-import { FileAsTask } from "./FileAsTask";
-import { Settings } from "./Settings";
 import { FileModel } from "./FileModel";
 
 export abstract class FolderModel{

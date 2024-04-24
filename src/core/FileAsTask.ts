@@ -1,4 +1,4 @@
-import { FileModel } from "./FileModel";
+import { FileModel } from "./Interfaces/FileModel";
 import { Property } from "./Interfaces/Property";
 import { Settings } from "./Settings";
 
@@ -10,7 +10,6 @@ export class FileAsTask{
         this.file = file;
         this.properties = settings.getProperties(file);
     }
-
 
     get(propName:string):string{
         return this.properties[propName].getValue();

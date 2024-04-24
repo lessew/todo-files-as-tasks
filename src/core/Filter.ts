@@ -22,10 +22,4 @@ export class Filter {
         this.whitelist = wl;
         return this;
     }
-/*
-    setWhitelist(vals:string[]):Filter{
-        this.whitelist = new Whitelist(vals);
-        return this;
-    }
-    */
 }
