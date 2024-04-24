@@ -8,6 +8,7 @@ describe('whitelistyamlpropertysettings: constructor', () => {
         let prop = new WhitelistYAMLPropertySettings("status","Inbox",new Whitelist(["Inbox","Done"]));
         expect(prop.propName).toBe("status")
     });  
+    // TODO this test is unreliable and gives false positives
     test('propname empty', () =>{
         try{
             let prop = new WhitelistYAMLPropertySettings("","Inbox",new Whitelist(["Inbox","Done"]));
