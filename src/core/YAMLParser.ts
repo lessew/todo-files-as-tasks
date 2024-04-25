@@ -50,29 +50,26 @@ export class YAMLParser{
    
     parseFilters(settings:Settings):Filter[] | FATError{
         let result:Filter[] = [];
+        let fail:FATError;
 
         let map = settings.getAsMap();
-        console.log(map.size)
-
-        map.forEach((aPropSetting: PropertySettings, key: string) => {
+        for(let key of Array.from( map.keys()) ) {
+            let aPropSetting = map.get(key)!;
             const yaml = this.yaml as any;
             if(aPropSetting.propName in yaml){
                 const filterValue:string = yaml[aPropSetting.propName];
                 let valop = this.parseOperator(filterValue);
                 const whitelist = aPropSetting.whitelist;
-                if(whitelist === undefined || whitelist.contains(valop.value)){
+                if((whitelist === undefined || whitelist.contains(valop.value))){
                     let r:Filter = new Filter(aPropSetting.propName,valop.value,valop.operator);
-                    //console.log("here")
-                    result.push(r)
-                    //console.log(result)
+                    result.push(r);
                 }
                 else{
-                    console.log("error returning")
                     return new FATError(`${valop.value} is not set as an allowed value for ${aPropSetting.propName}`)
                 }
             }
-        });        
-        return result;   
+        };        
+        return result;
     }
 
     parseOperator(val:string):{operator:FilterOperator,value:string}{

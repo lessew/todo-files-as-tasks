@@ -139,7 +139,7 @@ describe('YAMLParser parse filters', () => {
         settings.add(new WhitelistYAMLPropertySettings("status","Done",wl));
 
         p.loadSource(filtersIncorrect);
-        let result = p.parseFilters(settings) as FATError;
+        let result = p.parseFilters(settings);
         console.error(result);
         expect(FATError.isError(result)).toBe(true);
     });
