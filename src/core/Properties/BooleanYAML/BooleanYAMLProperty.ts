@@ -47,7 +47,8 @@ export class BooleanYAMLProperty implements Property{
                 this.val = val;
             }
             else{
-                this.val = this.defaultValue;
+                //this.val = this.defaultValue;
+                this.val = val; // TODO fix this case; what to do when save value is not part of whitelst
             }
        }
        return this.val;

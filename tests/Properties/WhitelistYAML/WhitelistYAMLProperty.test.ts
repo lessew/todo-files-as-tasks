@@ -22,7 +22,7 @@ describe('whitelistproperty test: getValue() function', () => {
 describe('whitelistproperty test: getValue() function with incorrect input to revert to default', () => {
     const sp = Helper.getWhitelistProperty("invalid",["next","waiting for"]);
     test('testing getValue', () => {
-        expect(sp.getValue()).toBe("next");
+        expect(sp.getValue()).toBe("invalid");
     })
 });
 

@@ -35,7 +35,8 @@ export class WhitelistYAMLProperty implements Property{
                 this.val = val;
             }
             else{
-                this.val = this.defaultValue;
+                //this.val = this.defaultValue;
+                this.val = val; // TODO decide how to handle this case: saved value is not part of the whitelist
             }
         }
         return this.val;

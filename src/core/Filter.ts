@@ -7,7 +7,7 @@ export enum FilterOperator {
 
 export class Filter {
     propertyName:string;
-    whitelist?:Whitelist;
+    //whitelist?:Whitelist;
     propertyValue:string;
     operator:FilterOperator;
 
@@ -18,8 +18,10 @@ export class Filter {
         return this;
     }
 
+    /*
     setWhitelist(wl:Whitelist):Filter{
         this.whitelist = wl;
         return this;
     }
+    */
 }

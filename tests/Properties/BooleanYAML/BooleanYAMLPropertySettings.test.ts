@@ -39,7 +39,7 @@ describe('BooleanYAMLPropertySettings: adapt to property: input not part of whit
     let prop = propSettings.adaptToProperty(file);
 
     test('test if value is loaded correctly', () => {
-       expect(prop.getValue()).toBe("true");
+       expect(prop.getValue()).toBe("invalid");
     });  
 });
 

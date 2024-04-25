@@ -40,6 +40,6 @@ describe('toplevelfolderpropertysettings: wrong input', () => {
     let prop = propSettings.adaptToProperty(file);
 
     test('test if value is loaded correctly', () => {
-       expect(prop.getValue()).toBe("Inbox");
+       expect(prop.getValue()).toBe("Done22");
     });  
 });
