@@ -6,58 +6,31 @@ import { WhitelistYAMLPropertySettings } from "../src/core/Properties/WhitelistY
 
 
 
-describe('FileAsTask: test', () => {
-    let file = new MockFileModel("/path",{});
+describe('FileAsTask: constructor and getter', () => {
+    let file = new MockFileModel("/path",{context:"Read"});
     let settings = new Settings().add(new WhitelistYAMLPropertySettings("context","Desk",new Whitelist(["Read","Desk"])))
 
-    test('constructor', () => {    
+    test('constructor and getter', () => {    
         let fat = new FileAsTask(file,settings);
+        let context = fat.get("context");
+        expect(context).toBe("Read");
     });
+
 });
 
-// TODO add getter and setter test
 
-/*
-class Helper{
-    static getFileAsTask(path:string):FileAsTask{
-        let aFile:FileModel = new MockFileModel(path,{
-            status:"Inbox",
-            context:"Desk"
-        });
+describe('FileAsTask: setter', () => {
+    let file = new MockFileModel("/path",{context:"Read"});
+    let settings = new Settings().add(new WhitelistYAMLPropertySettings("context","Desk",new Whitelist(["Read","Desk"])))
 
-        let properties = {
-            status: new WhitelistYAMLProperty("status","Inbox",new Whitelist(["Inbox","Done"]), aFile),
-            context: new WhitelistYAMLProperty("context","Desk", new Whitelist(["Desk","Read"]),aFile)
-        }
-
-        const fileAsTask = new FileAsTask(aFile,properties);
-        return fileAsTask;
-    }
-}
-
-describe('FileAsTask: test', () => {
-    let fat = Helper.getFileAsTask("/path/to/file");
-
-    test('getters', () => {    
-        expect(fat.get("context")).toBe("Desk");
-        expect(fat.get("status")).toBe("Inbox");
+    test('constructor and getter', async () => {    
+        let fat = new FileAsTask(file,settings);
+        await fat.set("context","Desk");
+        expect(file.yaml.context).toBe("Desk");
     });
-    test("setters", async () => {
-        await expect(fat.set("context","Read")).resolves.toBe(undefined);
-        // TODO fix race condition, make this work async with fat.get(..)
-        expect(fat.properties['context'].file.getYAMLProperty("context")).toBe('Read')
-        //expect(fat.get("context")).toBe("Read")
-    })
-    test("setters with invalid value should not change the value",() =>{
-        try{
-            fat.set("context","error");
-            expect(true).toBe(false);
-        }
-        catch(e){
-            expect(fat.get("context")).toBe("Desk")
-        }
-    })
+
 });
-*/
+
+
 
  
