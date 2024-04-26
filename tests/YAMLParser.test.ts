@@ -140,7 +140,6 @@ describe('YAMLParser parse filters', () => {
 
         p.loadSource(filtersIncorrect);
         let result = p.parseFilters(settings);
-        console.error(result);
         expect(FATError.isError(result)).toBe(true);
     });
 });

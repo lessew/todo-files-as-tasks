@@ -41,7 +41,7 @@ describe('basenameproperty:getNewFullPathWithBasename', () => {
 
 describe('basenameproperty:getValue', () => {
     const mockfile = new MockFileModel("/path/to/workproject/this.md",{});
-    let prop = new BaseNameProperty("title","default",mockfile);
+    let prop = new BasenameProperty("title","default",mockfile);
 
     test('correct values', () => {
        expect(prop.getValue()).toBe("this");

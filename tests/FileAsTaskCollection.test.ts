@@ -4,7 +4,7 @@ import { MockFileModel } from "./Mocks/MockFileModel";
 import { FileAsTaskCollection } from "../src/core/FileAsTaskCollection";
 import { Settings } from "../src/core/Settings";
 import { Whitelist } from "../src/core/Whitelist";
-import { WhitelistYAMLPropertySettings } from "src/core/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
+import { WhitelistYAMLPropertySettings } from "../src/core/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
 
 
 const file1 = new MockFileModel("path/to/this",{
