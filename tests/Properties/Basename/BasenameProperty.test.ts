@@ -1,10 +1,10 @@
 import { MockFileModel } from "../../Mocks/MockFileModel";
-import { BaseNameProperty } from "../../../src/core/Properties/Basename/BasenameProperty";
+import { BasenameProperty } from "../../../src/core/Properties/Basename/BasenameProperty";
 
 class Helper{
-    static getBasenameProperty():BaseNameProperty{
+    static getBasenameProperty():BasenameProperty{
         const mockfile = new MockFileModel("/path/to/workproject/this.md",{});
-        return new BaseNameProperty("title","default",mockfile);
+        return new BasenameProperty("title","default",mockfile);
     }
 }
 

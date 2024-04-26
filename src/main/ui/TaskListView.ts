@@ -1,22 +1,22 @@
 import { App } from "obsidian";
-import { File } from "src/core/File";
-import { BasenameProperty } from "src/core/Properties/BasenameProperty";
 import { BasenamePropertyView } from "./Propertyviews/BasenamePropertyView";
 import { WhitelistPropertyView } from "./Propertyviews/WhitelistPropertyView";
-import { WhitelistProperty } from "src/core/Properties/WhitelistProperty";
 import { ToplevelFolderProperty } from "src/core/Properties/ToplevelFolder/ToplevelFolderProperty";
 import { ToplevelFolderPropertyView } from "./Propertyviews/ToplevelFolderPropertyView";
-import { BooleanProperty } from "src/core/Properties/BooleanProperty";
 import { BooleanPropertyView } from "./Propertyviews/BooleanPropertyView";
 import { LinkView } from "./Propertyviews/LinkView";
+import { FileAsTaskCollection } from "src/core/FileAsTaskCollection";
+import { FileAsTask } from "src/core/FileAsTask";
 
 export class TaskListView {
-    taskList:File[];
+    taskList:FileAsTask[];
     obsidianApp:App;
+    fileAsTaskCollection:FileAsTaskCollection;
 
-    constructor(tl:File[],app:App){
+    constructor(fatc:FileAsTaskCollection,app:App){
         this.obsidianApp = app;
-        this.taskList = tl;
+        this.fileAsTaskCollection = fatc;
+        this.taskList = fatc.get();
     }
 
     build(rootElement:HTMLElement):HTMLElement{
@@ -44,7 +44,7 @@ export class TaskListView {
 
     private createRows(tableElementToAttachRowTo:HTMLTableElement){
         for(let i=0;i<this.taskList.length;i++){
-            const thisTask:File = this.taskList[i];
+            const thisTask:FileAsTask = this.taskList[i];
             let row:HTMLTableRowElement = tableElementToAttachRowTo.createEl("tr");
             let tdTitleLink:HTMLTableCellElement = row.createEl("td", {});
             this.createEditTitleHTML(thisTask,tdTitleLink);

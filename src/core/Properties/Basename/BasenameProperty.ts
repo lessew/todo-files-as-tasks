@@ -1,7 +1,7 @@
 import { FileModel } from "../../Interfaces/FileModel";
 import { Property } from "../../Interfaces/Property";
 
-export class BaseNameProperty implements Property{
+export class BasenameProperty implements Property{
     file: FileModel;
     propName:string;
     private val:string;

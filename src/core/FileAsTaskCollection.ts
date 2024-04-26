@@ -1,8 +1,9 @@
 import { FileAsTask } from "./FileAsTask";
 import { FileModel } from "./Interfaces/FileModel";
-import { Filter } from "./Filter";
+import { Filter, FilterOperator } from "./Filter";
 import { FolderModel } from "./Interfaces/FolderModel";
 import { Settings } from "./Settings";
+import { FileFilter } from "./FileFilter";
 
 
 
@@ -33,8 +34,26 @@ export class FileAsTaskCollection{
         return this.rootFolder;
     }
 
-    filter(f:Filter):void{
-        this.filesAsTask = [];
+    filterBy(filter:Filter):FileAsTaskCollection{
+        let filtered = this.filesAsTask.filter((aFile) => {
+            const propertyValue:string = aFile.get(filter.propertyName);
+
+            if(filter.operator==FilterOperator.exclude){
+                return (propertyValue != filter.propertyValue)
+            }
+            else if(filter.operator==FilterOperator.include){
+                return (propertyValue == filter.propertyValue)
+            }
+        })
+        this.filesAsTask = filtered;
+        return this;
+    }
+
+    bulkFilterBy(list:Filter[]):FileAsTaskCollection{
+        list.forEach(filterBy => {
+            this.filterBy(filterBy);
+        });
+        return this;
     }
 
     get():FileAsTask[]{

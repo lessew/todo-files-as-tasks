@@ -5,14 +5,23 @@ import { MockFolderModel } from "./Mocks/MockFolderModel";
 
 class Helper{
     static getFolderModel():FolderModel{        
-        const file1 = new MockFileModel("root/file1.md",{});
-        const file2 = new MockFileModel("root/file2.md",{});
-        const file3 = new MockFileModel("root/sub/file3.md",{});
-        const file4 = new MockFileModel("root/sub/file4.md",{});
-        const folder1 = new MockFolderModel("root/sub/",[file3,file4])
-        const folder2 = new MockFolderModel('root/',[file1,file2,folder1])
-        let testerFiles = [file1,file2,file3,file4];
-        return folder2;
+        const root = new MockFolderModel('root/',
+        [
+            new MockFileModel("root/file1.md",{}),
+            new MockFileModel("root/file2.md",{}),
+            new MockFolderModel("root/sub/",
+            [
+                new MockFileModel("root/sub/file3.md",{}),
+                new MockFileModel("root/sub/file4.md",{}),
+                new MockFolderModel("root/sub/second/",
+                [
+                    new MockFileModel("root/sub/file5.md",{}),
+                    new MockFileModel("root/sub/file6.md",{}),
+                ])
+            ])
+        ])
+      
+        return root;
     }
 }
 
@@ -21,7 +30,7 @@ describe('Foldermodel getfiles', () => {
     let files = fm.getFiles();
 
     test('Test length of files array ', () => {   
-        expect(files.length).toBe(4)
+        expect(files.length).toBe(6)
     });
 });
 
@@ -31,10 +40,11 @@ describe('Foldermodel getFolders', () => {
     let fm = Helper.getFolderModel();
 
     test('Test ', () => {   
-        expect(true).toBe(false)
+        let folders = fm.getFolders();
+        expect(folders.length).toBe(2)
     });
 });
-
+/*
 // test getFoldersAsArray
 
 describe('Foldermodel getFoldersAsArray', () => {
@@ -54,3 +64,4 @@ describe('Foldermodel isFolderModel', () => {
         expect(true).toBe(false)
     });
 });
+*/

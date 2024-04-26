@@ -1,13 +1,14 @@
-import { App, View } from "obsidian";
+import { App } from "obsidian";
 import { YAMLParser } from "src/core/YAMLParser";
 import { ObsidianWrapper } from "./obsidian/ObsidianWrapper";
 import { TaskListView } from "./ui/TaskListView";
 import { CreateTaskButtonView } from "./ui/CreateTaskButtonView";
-import { FileFilter } from "src/core/FileFilter";
 import { Settings } from "../core/Settings";
-import { FATError,YAMLParseError,RootPathError,NoFilesFoundError } from "src/core/Error";
+import { FATError } from "src/core/Error";
 import { TestView } from "src/test/TestView";
 import { ObsidianFolder } from "./obsidian/ObsidianFolder";
+import { FolderModel } from "src/core/Interfaces/FolderModel";
+import { FileAsTaskCollection } from "src/core/FileAsTaskCollection";
 
 export class MainCodeBlock{
     source:string;
@@ -46,7 +47,7 @@ export class MainCodeBlock{
         ObsidianWrapper.getInstance().addMainCodeBlock(this);
 
         const rootFolder = new ObsidianFolder(rootPath);
-        const folderList = FolderList.getFoldersAsWhitelist(rootFolder);
+        const folderList = rootFolder.getFolders();
         
         this.settings.project.whitelist = folderList;
 
@@ -74,27 +75,19 @@ export class MainCodeBlock{
 
     displayActionList(parser:YAMLParser,rootFolder:FolderModel):void{
        
-        const tasks = FileList.getFilesAsTasks(rootFolder,this.settings);
-
         const filters = parser.parseFilters(this.settings);
         if(FATError.isError(filters)){
             this.displayUserError(filters);
             return;
         }
 
-        /*
-        const FileAsTaskProtoType = new FileAsTaskPrototype(settings);
-        const fileAsTaskCollection = new FileAsTaskCollection(rootFolder,settings);
+        const fileAsTaskCollection = new FileAsTaskCollection(rootFolder,this.settings);
         fileAsTaskCollection.bulkFilterBy(filters);
-        fileAsTaskCollection.groupBy('project');
-        fileAsTaskCollection.sortBy('context','ASC');
-        view = new TaskListView(fileAsTaskCollection);
+        //fileAsTaskCollection.groupBy('project');
+        //fileAsTaskCollection.sortBy('context','ASC');
+        view = new TaskListView(fileAsTaskCollection,this.app);
         view.build(this.el);
-*/
-        const fileFilter = new FileFilter(tasks);
-        const filteredFiles = fileFilter.bulkFilterBy(filters).get();
-        const view = new TaskListView(filteredFiles,this.app);
-        view.build(this.el);
+
     }
 
     displayCreateTaskButton():void{

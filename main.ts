@@ -5,7 +5,7 @@ import {FATSettingTab} from "src/main/ui/FATSettingsTab"
 import { MainCodeBlock } from 'src/main/MainCodeBlock';
 
 
-export default class FATPlugin extends Plugin {
+export default class FileAsTaskPlugin extends Plugin {
 	settings: Settings;
 
 	async onload() {
@@ -26,6 +26,7 @@ export default class FATPlugin extends Plugin {
 	}
 
 	async loadSettings() {
+		// TODO add method to settings to load and store deep copies
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
 	}
 
