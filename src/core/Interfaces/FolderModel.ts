@@ -35,8 +35,17 @@ export abstract class FolderModel{
             }
         })
         return result; 
-        
     }
+
+    getFolderPaths():string[]{
+        let result:string[] = [];
+        let folders = this.getFolders().forEach(f => {
+            result.push(f.path)
+        })
+        return result;
+    }
+
+
 
     static isFolderModel(r:FileModel | FolderModel): r is FolderModel{
         return 'children' in r;

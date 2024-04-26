@@ -15,8 +15,8 @@ class Helper{
                 new MockFileModel("root/sub/file4.md",{}),
                 new MockFolderModel("root/sub/second/",
                 [
-                    new MockFileModel("root/sub/file5.md",{}),
-                    new MockFileModel("root/sub/file6.md",{}),
+                    new MockFileModel("root/sub/second/file5.md",{}),
+                    new MockFileModel("root/sub/second/file6.md",{}),
                 ])
             ])
         ])
@@ -44,6 +44,19 @@ describe('Foldermodel getFolders', () => {
         expect(folders.length).toBe(2)
     });
 });
+
+
+// test getFolders
+describe('Foldermodel getFolderPaths', () => {
+    let fm = Helper.getFolderModel();
+
+    test('Test ', () => {   
+        let folders = fm.getFolderPaths();
+        expect(folders.includes("root/sub/second/")).toBe(true)
+        expect(folders.includes("root/sub/")).toBe(true)
+    });
+});
+
 /*
 // test getFoldersAsArray
 
