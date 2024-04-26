@@ -48,7 +48,7 @@ export class MainCodeBlock{
         ObsidianWrapper.getInstance().addMainCodeBlock(this);
 
         const rootFolder = new ObsidianFolder(rootPath);
-        
+
         this.settings.get("project").whitelist = new Whitelist(rootFolder.getFolderPaths());
 
         const action = parser.parseAction();

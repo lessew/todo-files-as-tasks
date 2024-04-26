@@ -1,7 +1,7 @@
 import { Property } from "src/core/Interfaces/Property";
 import { Whitelist } from "src/core/Whitelist";
 import { ToplevelFolderProperty } from "./ToplevelFolderProperty";
-import { PropertySettings } from "src/core/Interfaces/PropertySettings";
+import { PropertySettings, PropertyType } from "src/core/Interfaces/PropertySettings";
 import { FileModel } from "src/core/Interfaces/FileModel";
 
 export class ToplevelFolderPropertySettings implements PropertySettings {
@@ -19,6 +19,7 @@ export class ToplevelFolderPropertySettings implements PropertySettings {
     setProjects(wl:Whitelist){
         this.whitelist = wl;
     }
+    
     setDefaultValue(v:string){
         this.defaultValue = v;
     }
@@ -32,5 +33,10 @@ export class ToplevelFolderPropertySettings implements PropertySettings {
         }
         let prop = new ToplevelFolderProperty(this.defaultValue,this.whitelist,file);
         return prop;
+    }
+
+    
+    getType():PropertyType{
+        return "toplevelfolder"
     }
 }

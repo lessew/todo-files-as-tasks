@@ -3,6 +3,7 @@ import { DEFAULT_SETTINGS, Settings } from 'src/core/Settings';
 import { ObsidianWrapper } from 'src/main/obsidian/ObsidianWrapper';
 import {FATSettingTab} from "src/main/ui/FATSettingsTab"
 import { MainCodeBlock } from 'src/main/MainCodeBlock';
+import { SettingsModel } from 'src/main/ui/SettingsModel';
 
 
 export default class FileAsTaskPlugin extends Plugin {
@@ -27,11 +28,14 @@ export default class FileAsTaskPlugin extends Plugin {
 
 	async loadSettings() {
 		// TODO add method to settings to load and store deep copies
-		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+		//this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+		let savedSettings = await this.loadData();
+		SettingsModel.loadDeepCopy(savedSettings);
+		
 	}
 
 	async saveSettings() {
-		await this.saveData(this.settings);
+		await this.saveData(SettingsModel.deepCopy(this.settings));
 	}
 }
 

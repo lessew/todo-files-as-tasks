@@ -4,11 +4,11 @@ import { getExpectedFiles, getExpectedFolders, getSettings, getYamlListAllFiles,
 import { Settings } from "src/core/Settings";
 import { YAMLParser } from "src/core/YAMLParser";
 import { FATError } from "src/core/Error";
-import { FolderList } from "src/core/FolderList";
 import { ObsidianFolder } from "src/main/obsidian/ObsidianFolder";
 import { FolderModel } from "src/core/Interfaces/FolderModel";
-import { FileList } from "src/core/FileList";
 import { FileAsTask } from "src/core/FileAsTask";
+import { Whitelist } from "src/core/Whitelist";
+import { FileAsTaskCollection } from "src/core/FileAsTaskCollection";
 
 export class VaultHasExpectedFilesTest{
     logger:Logger;
@@ -19,7 +19,7 @@ export class VaultHasExpectedFilesTest{
     rootFolder:FolderModel;
     folders:FolderModel[];
     result:boolean;
-    tasks:FileAsTask[];
+    fileAsTaskCollection:FileAsTaskCollection;
 
     constructor(logger:Logger){
         this.logger = logger;
@@ -52,8 +52,7 @@ export class VaultHasExpectedFilesTest{
         this.logger.headingSub("Acting")
         this.actLoadYAML();
         this.actLoadFolders();
-        this.actLoadFiles();
-       
+        this.actLoadFileCollection();
     }
 
     assert(){
@@ -82,26 +81,28 @@ export class VaultHasExpectedFilesTest{
 
     actLoadFolders(){
         this.rootFolder = new ObsidianFolder(this.rootPath);
-        const folders = FolderList.getFolders(this.rootFolder);
-        this.folders = folders;
-        this.settings.project.whitelist = FolderList.getFoldersAsWhitelist(this.rootFolder);
+        this.folders = this.rootFolder.getFolders();
+        const folderpaths = this.rootFolder.getFolderPaths();
+
+        this.settings.get("project").whitelist = new Whitelist(folderpaths);
         this.logger.success("Successfully loaded folders")
     }
 
-    actLoadFiles(){
-        this.tasks = FileList.getFilesAsTasks(this.rootFolder,this.settings);
-        this.logger.success("Successfully loaded tasks")
+    actLoadFileCollection(){
+        let fc = new FileAsTaskCollection(this.rootFolder,this.settings);
+        this.fileAsTaskCollection = fc;
+        this.logger.success("Successfully loaded fileastaskcollection")
     }
-
+   
 
     assertFolderList(){
         const expectedFolders = getExpectedFolders();
-        const actualFolders = FolderList.getFoldersAsWhitelist(this.rootFolder);
-        if(expectedFolders.length == actualFolders.size()){
+        const actualFolders = this.rootFolder.getFolderPaths();
+        if(expectedFolders.length == actualFolders.length){
             this.logger.success("Right amount of folders found")
         }
         else{
-            this.logger.error(`Found ${actualFolders.size()} folders but expected ${expectedFolders.length}`)
+            this.logger.error(`Found ${actualFolders.length} folders but expected ${expectedFolders.length}`)
             this.setFailure();
             return;
         }
@@ -120,17 +121,18 @@ export class VaultHasExpectedFilesTest{
 
     assertFileList(){
         const expectedFiles = getExpectedFiles();
-        if(this.tasks.length != expectedFiles.length){
-            this.logger.error(`Expected ${expectedFiles.length} files but found ${this.tasks.length}`);
+        const tasks = this.fileAsTaskCollection.get();
+        if(tasks.length != expectedFiles.length){
+            this.logger.error(`Expected ${expectedFiles.length} files but found ${tasks.length}`);
             this.setFailure();
             return;
         }
         else{
-            this.logger.success(`Right amount of files found: ${this.tasks.length}`)
+            this.logger.success(`Right amount of files found: ${tasks.length}`)
         }
         for(let i=0;i<expectedFiles.length;i++){
             const expectedNeedle = expectedFiles[i];
-            const foundNeedle = this.tasks.find((aTask) => {
+            const foundNeedle = tasks.find((aTask) => {
                 return aTask.file.path == expectedNeedle.path;
             })
             this.logger.headingSubSub(`Testing file ${expectedNeedle.title}`);

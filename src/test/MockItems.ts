@@ -1,4 +1,4 @@
-import { PROPERTYNAMES, Settings } from "src/core/Settings";
+import { DEFAULT_SETTINGS, Settings } from "src/core/Settings";
 import { Whitelist } from "src/core/Whitelist";
 
 /**
@@ -62,31 +62,7 @@ rootPath: todo-home
 action: list`;
     
 
-const settings = {
-        [PROPERTYNAMES.context]:{
-            propName:PROPERTYNAMES.context,
-            whitelist:new Whitelist(["Desk","Deep","Phone","Read","None"]),
-            defaultValue:"None"
-        },
-        [PROPERTYNAMES.status]:{
-            propName:PROPERTYNAMES.status,
-            whitelist:new Whitelist(["Inbox","Next","Deferred","Waiting","Done"]),
-            defaultValue:"Inbox"
-        },
-        [PROPERTYNAMES.starred]:{
-            propName:PROPERTYNAMES.starred,
-            whitelist:new Whitelist(["✰","⭐"]),
-            defaultValue:"✰"
-        },
-        [PROPERTYNAMES.title]:{
-            propName:PROPERTYNAMES.title,
-            defaultValue:"no title"
-        },
-        [PROPERTYNAMES.project]:{
-            propName:PROPERTYNAMES.project,
-            defaultValue:"no project"
-        }
-    } as Settings;
+const settings = DEFAULT_SETTINGS;
     
 
 export function getSettings():Settings{

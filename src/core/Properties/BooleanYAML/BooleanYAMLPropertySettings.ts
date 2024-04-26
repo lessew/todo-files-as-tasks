@@ -1,4 +1,4 @@
-import { PropertySettings } from "src/core/Interfaces/PropertySettings";
+import { PropertySettings, PropertyType } from "src/core/Interfaces/PropertySettings";
 import { FileModel } from "../../Interfaces/FileModel";
 import { Property } from "../../Interfaces/Property";
 import { Whitelist } from "../../Whitelist";
@@ -21,5 +21,9 @@ export class BooleanYAMLPropertySettings implements PropertySettings{
     adaptToProperty(file: FileModel): Property {
         let prop = new BooleanYAMLProperty(this.propName,this.defaultValue,this.whitelist,file);
         return prop;
+    }
+
+    getType():PropertyType{
+        return "booleanYAML"
     }
 }

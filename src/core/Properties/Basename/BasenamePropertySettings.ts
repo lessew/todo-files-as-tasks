@@ -1,4 +1,4 @@
-import { PropertySettings } from "src/core/Interfaces/PropertySettings";
+import { PropertySettings, PropertyType } from "src/core/Interfaces/PropertySettings";
 import { FileModel } from "../../Interfaces/FileModel";
 import { Property } from "../../Interfaces/Property";
 import { BasenameProperty } from "./BasenameProperty";
@@ -19,5 +19,9 @@ export class BasenamePropertySettings implements PropertySettings{
     adaptToProperty(file: FileModel): Property {
         let prop = new BasenameProperty(this.propName,this.defaultValue,file)
         return prop;
+    }
+
+    getType():PropertyType{
+        return "basename"
     }
 }

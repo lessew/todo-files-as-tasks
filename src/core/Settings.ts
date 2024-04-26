@@ -39,6 +39,10 @@ export class Settings {
         })
         return result;
     }
+
+    static loadFromJSON(json:any):Settings{
+        return new Settings();
+    }
 }
 
 export const DEFAULT_SETTINGS:Settings = new Settings()
