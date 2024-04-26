@@ -6,7 +6,7 @@ import { PropertyType } from "./Interfaces/PropertySettings";
 import { Settings } from "./Settings";
 import { Whitelist } from "./Whitelist";
 
-type savedFormat = {
+export type SettingsSavedFormatType = {
     properties: {
         propName:string,
         defaultValue:string,
@@ -17,7 +17,7 @@ type savedFormat = {
 
 export class SettingsModel{
     
-    static loadDeepCopy(input:savedFormat):Settings{
+    static loadDeepCopy(input:SettingsSavedFormatType):Settings{
         let settings = new Settings();
 
         input.properties.forEach((aprop) => {
@@ -25,7 +25,12 @@ export class SettingsModel{
                 settings.add(new BasenamePropertySettings(aprop.propName));
             }
             else if(aprop.type=="toplevelfolder"){
-                settings.add(new ToplevelFolderPropertySettings(aprop.propName));
+                settings.add(
+                    new ToplevelFolderPropertySettings(aprop.propName)
+                    .setProjects(new Whitelist(aprop.whitelist!))
+                    .setDefaultValue(aprop.defaultValue)
+                );
+                
             }
             else if(aprop.type=="booleanYAML"){
                 settings.add(new BooleanYAMLPropertySettings(aprop.propName,aprop.defaultValue,new Whitelist(aprop.whitelist!)));
@@ -37,9 +42,9 @@ export class SettingsModel{
         return settings;
     }
 
-    static deepCopy(settings:Settings):savedFormat{
+    static deepCopy(settings:Settings):SettingsSavedFormatType{
         let map = settings.getAsMap();
-        let result:savedFormat = {
+        let result:SettingsSavedFormatType = {
             properties:[]
         }
         map.forEach(value => {
