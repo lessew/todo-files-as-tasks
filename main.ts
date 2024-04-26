@@ -3,7 +3,7 @@ import { DEFAULT_SETTINGS, Settings } from 'src/core/Settings';
 import { ObsidianWrapper } from 'src/main/obsidian/ObsidianWrapper';
 import {FATSettingTab} from "src/main/ui/FATSettingsTab"
 import { MainCodeBlock } from 'src/main/MainCodeBlock';
-import { SettingsModel } from 'src/main/ui/SettingsModel';
+import { SettingsModel } from 'src/core/SettingsModel';
 
 
 export default class FileAsTaskPlugin extends Plugin {

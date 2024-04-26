@@ -16,12 +16,14 @@ export class ToplevelFolderPropertySettings implements PropertySettings {
         this.propName = n;
     }
 
-    setProjects(wl:Whitelist){
+    setProjects(wl:Whitelist):ToplevelFolderPropertySettings{
         this.whitelist = wl;
+        return this;
     }
     
-    setDefaultValue(v:string){
+    setDefaultValue(v:string):ToplevelFolderPropertySettings{
         this.defaultValue = v;
+        return this;
     }
 
     adaptToProperty(file: FileModel): Property {
