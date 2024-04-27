@@ -30,8 +30,7 @@ export default class FileAsTaskPlugin extends Plugin {
 		// TODO add method to settings to load and store deep copies
 		//this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
 		let savedSettings = await this.loadData();
-		SettingsModel.loadDeepCopy(savedSettings);
-		
+		this.settings = SettingsModel.loadDeepCopy(savedSettings);
 	}
 
 	async saveSettings() {

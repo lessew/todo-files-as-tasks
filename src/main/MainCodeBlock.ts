@@ -10,6 +10,7 @@ import { ObsidianFolder } from "./obsidian/ObsidianFolder";
 import { FolderModel } from "src/core/Interfaces/FolderModel";
 import { FileAsTaskCollection } from "src/core/FileAsTaskCollection";
 import { Whitelist } from "src/core/Whitelist";
+import { ToplevelFolderPropertySettings } from "src/core/Properties/ToplevelFolder/ToplevelFolderPropertySettings";
 
 export class MainCodeBlock{
     source:string;
@@ -48,9 +49,7 @@ export class MainCodeBlock{
         ObsidianWrapper.getInstance().addMainCodeBlock(this);
 
         const rootFolder = new ObsidianFolder(rootPath);
-
-        this.settings.get("project").whitelist = new Whitelist(rootFolder.getFolderPaths());
-
+        
         const action = parser.parseAction();
         if(FATError.isError(action)){
             this.displayUserError(action);
@@ -80,14 +79,12 @@ export class MainCodeBlock{
             this.displayUserError(filters);
             return;
         }
-
         const fileAsTaskCollection = new FileAsTaskCollection(rootFolder,this.settings);
         fileAsTaskCollection.bulkFilterBy(filters);
         //fileAsTaskCollection.groupBy('project');
         //fileAsTaskCollection.sortBy('context','ASC');
         let view = new TaskListView(fileAsTaskCollection,this.app);
         view.build(this.el);
-
     }
 
     displayCreateTaskButton():void{

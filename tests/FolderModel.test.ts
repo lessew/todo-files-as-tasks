@@ -52,8 +52,8 @@ describe('Foldermodel getFolderPaths', () => {
 
     test('Test ', () => {   
         let folders = fm.getFolderPaths();
-        expect(folders.includes("root/sub/second/")).toBe(true)
-        expect(folders.includes("root/sub/")).toBe(true)
+        expect(folders.includes("sub/second/")).toBe(true)
+        expect(folders.includes("sub/")).toBe(true)
     });
 });
 

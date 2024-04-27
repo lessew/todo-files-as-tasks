@@ -1,4 +1,3 @@
-import { assert } from "console";
 import { Logger } from "../Logger";
 import { getExpectedFiles, getExpectedFolders, getSettings, getYamlListAllFiles,ExpectedFileType } from "../MockItems";
 import { Settings } from "src/core/Settings";
@@ -9,6 +8,7 @@ import { FolderModel } from "src/core/Interfaces/FolderModel";
 import { FileAsTask } from "src/core/FileAsTask";
 import { Whitelist } from "src/core/Whitelist";
 import { FileAsTaskCollection } from "src/core/FileAsTaskCollection";
+import { ToplevelFolderPropertySettings } from "src/core/Properties/ToplevelFolder/ToplevelFolderPropertySettings";
 
 export class VaultHasExpectedFilesTest{
     logger:Logger;
@@ -81,6 +81,13 @@ export class VaultHasExpectedFilesTest{
 
     actLoadFolders(){
         this.rootFolder = new ObsidianFolder(this.rootPath);
+        let folders = this.rootFolder.getFolderPaths();
+        let whitelist = new Whitelist(folders);
+        (this.settings.get("project") as ToplevelFolderPropertySettings).setProjects(whitelist);
+        (this.settings.get("project") as ToplevelFolderPropertySettings).setDefaultValue(folders[0]);
+
+
+        this.rootFolder = new ObsidianFolder(this.rootPath);
         this.folders = this.rootFolder.getFolders();
         const folderpaths = this.rootFolder.getFolderPaths();
 
@@ -109,7 +116,8 @@ export class VaultHasExpectedFilesTest{
 
         for(let i=0;i<expectedFolders.length;i++){
             if(!actualFolders.contains(expectedFolders[i])){
-                this.logger.error(`${expectedFolders[i]} does not seem to exists as folder`)
+                this.logger.error(`${expectedFolders[i]} does not seem to exists as folder`);
+                this.logger.error(`Folder found are: ${actualFolders.join(",")}`);
                 this.setFailure();
                 return;
             }

@@ -1,0 +1,27 @@
+{
+    "properties" : [
+        {
+            "propName":"title",
+            "defaultValue":"",
+            "type":"basename"
+        },
+        {
+            "propName":"starred",
+            "defaultValue":"false",
+            "whitelist":["true","false"],
+            "type":"booleanYAML"
+        },
+        {
+            "propName":"project",
+            "defaultValue":"home",
+            "whitelist":["home","work"],
+            "type":"toplevelfolder"
+        },
+        {
+            "propName":"context",
+            "defaultValue":"desk",
+            "whitelist":["phone","desk"],
+            "type":"whitelistYAML"
+        }
+    ]
+}

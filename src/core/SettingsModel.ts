@@ -3,7 +3,7 @@ import { ToplevelFolderPropertySettings } from "./Properties/ToplevelFolder/Topl
 import { BooleanYAMLPropertySettings } from "./Properties/BooleanYAML/BooleanYAMLPropertySettings";
 import { WhitelistYAMLPropertySettings } from "./Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
 import { PropertyType } from "./Interfaces/PropertySettings";
-import { Settings } from "./Settings";
+import { DEFAULT_SETTINGS, Settings } from "./Settings";
 import { Whitelist } from "./Whitelist";
 
 export type SettingsSavedFormatType = {
@@ -15,9 +15,18 @@ export type SettingsSavedFormatType = {
     }[]
 }
 
+function isValidSettingsType(input:SettingsSavedFormatType | any):input is SettingsSavedFormatType{
+    return input!=undefined && input !=null && "properties" in input;
+}
+
 export class SettingsModel{
     
-    static loadDeepCopy(input:SettingsSavedFormatType):Settings{
+    static loadDeepCopy(input:SettingsSavedFormatType | any):Settings{
+
+        if(!isValidSettingsType(input)){
+            return DEFAULT_SETTINGS;
+        }
+       
         let settings = new Settings();
 
         input.properties.forEach((aprop) => {

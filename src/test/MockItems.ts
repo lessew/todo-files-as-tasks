@@ -51,8 +51,8 @@ const expectedFiles = [
 
 const expectedFolders = [
     "Finance",
-    "Taxes 2023", //"Finance/Taxes 2023",
-    "IRS hotline", //"Finance/Taxes 2023/IRS Hotline",
+    "Finance/Taxes 2023",
+    "Finance/Taxes 2023/IRS Hotline",
     "Kids",
     "Groceries"
 ]

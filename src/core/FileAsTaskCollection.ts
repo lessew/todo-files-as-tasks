@@ -3,7 +3,6 @@ import { FileModel } from "./Interfaces/FileModel";
 import { Filter, FilterOperator } from "./Filter";
 import { FolderModel } from "./Interfaces/FolderModel";
 import { Settings } from "./Settings";
-import { FileFilter } from "./FileFilter";
 
 
 
