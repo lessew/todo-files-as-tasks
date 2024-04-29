@@ -1,5 +1,5 @@
 ---
-context: Phone
+context: None
 status: Inbox
 starred: ✰
 ---

@@ -1,5 +1,5 @@
 ---
-context: Deep
-status: Waiting
-starred: ✰
+context: None
+status: Deferred
+starred: ⭐
 ---

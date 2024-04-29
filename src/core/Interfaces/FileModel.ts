@@ -3,6 +3,7 @@ import { FolderModel } from "./FolderModel";
 export abstract class FileModel{
     name:string;
     path:string;
+    root:string;
 
     abstract move(newPath:string):Promise<void> | void;
     abstract getYAMLProperty(name:string):string | null;

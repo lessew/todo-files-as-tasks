@@ -1,5 +1,5 @@
 ---
-status: Waiting
+status: Done
 context: Deep
 starred: ⭐
 ---
