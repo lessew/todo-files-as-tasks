@@ -37,7 +37,7 @@ const context = await esbuild.context({
 	logLevel: "info",
 	sourcemap: prod ? false : "inline",
 	treeShaking: true,
-	outfile: "vault/.obsidian/plugins/yatodo-app/main.js",
+	outfile: "vault/.obsidian/plugins/files-as-tasks/main.js",
 });
 
 if (prod) {

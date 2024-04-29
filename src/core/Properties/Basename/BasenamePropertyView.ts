@@ -44,7 +44,7 @@ class UpdateBasenameModal extends Modal{
     
     onOpen() {
         let { contentEl } = this;
-        contentEl.createEl("h1", { text: "Title" });
+        contentEl.createEl("h1", { text: "Task title (and filename)" });
 
     new Setting(contentEl)
       .setName("Name")
