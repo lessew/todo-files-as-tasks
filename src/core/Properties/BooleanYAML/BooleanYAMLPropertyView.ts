@@ -28,7 +28,7 @@ export class BooleanYAMLPropertyView extends PropertyView{
         }
         */
 
-        let a:HTMLElement = rootElement.createEl("span",{text:text,title:hover});
+        let a:HTMLElement = rootElement.createEl("span",{cls:"file-as-task",text:text,title:hover});
         a.addEventListener("click",this); // executes handleEvent
     }
 

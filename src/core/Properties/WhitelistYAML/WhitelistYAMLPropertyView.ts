@@ -32,7 +32,7 @@ export class WhitelistYAMLPropertyView extends PropertyView{
             text = this.prop.getValue();
         }
         */
-        let a:HTMLElement = rootElement.createEl("span",{text:text,title:hover});
+        let a:HTMLElement = rootElement.createEl("span",{cls:"file-as-task",text:text,title:hover});
         a.addEventListener("click",this); // executes handleEvent
     }
 

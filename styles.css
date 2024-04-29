@@ -6,6 +6,10 @@ table.yatodo th{
     background-color: coral;
 }
 
+td .file-as-task{
+    cursor:pointer;
+}
+
 a.yatodo-edit{
     text-decoration: none;
     color:blue
@@ -14,3 +18,5 @@ a.yatodo-edit{
 .file-as-task .setting-item-control input{
     width:-webkit-fill-available;
 }
+
+

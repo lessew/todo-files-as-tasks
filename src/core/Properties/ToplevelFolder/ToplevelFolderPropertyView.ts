@@ -16,7 +16,7 @@ export class ToplevelFolderPropertyView extends PropertyView{
     }
     build(rootElement:HTMLElement):void{
         const text = this.prop.getValue();
-        let a:HTMLElement = rootElement.createEl("span",{text:text});
+        let a:HTMLElement = rootElement.createEl("span",{text:text,cls:"file-as-task"});
         a.addEventListener("click",this); // executes handleEvent
     }
 

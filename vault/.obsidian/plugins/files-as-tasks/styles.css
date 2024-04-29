@@ -1,18 +1,13 @@
-/*
-
-This CSS file will be included with your plugin, and
-available in the app when your plugin is enabled.
-
-If your plugin does not need CSS, delete this file.
-
-*/
-
 table.yatodo{
     background-color:beige;
 }
 
 table.yatodo th{
     background-color: coral;
+}
+
+td .file-as-task{
+    cursor:pointer;
 }
 
 a.yatodo-edit{
@@ -23,3 +18,5 @@ a.yatodo-edit{
 .file-as-task .setting-item-control input{
     width:-webkit-fill-available;
 }
+
+
