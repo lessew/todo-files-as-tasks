@@ -1,13 +1,15 @@
-import { FileModel } from "../../src/core/FileModel";
+import { FileModel } from "../../src/core/Interfaces/FileModel";
 
 export class MockFileModel extends FileModel{
     name: string;
     path: string;
+    root:string;
     yaml:any;
 
     
-    constructor(path:string,yaml:any){
+    constructor(root:string,path:string,yaml:any){
         super();
+        this.root = root;
         this.path = path;
         this.yaml = yaml;
     }

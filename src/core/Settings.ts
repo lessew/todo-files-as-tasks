@@ -1,50 +1,55 @@
+import { FileModel } from "./Interfaces/FileModel";
+import { BasenamePropertySettings } from "./Properties/Basename/BasenamePropertySettings";
+import { BooleanYAMLPropertySettings } from "./Properties/BooleanYAML/BooleanYAMLPropertySettings";
+import { ToplevelFolderPropertySettings } from "./Properties/ToplevelFolder/ToplevelFolderPropertySettings";
+import { WhitelistYAMLPropertySettings } from "./Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
 import { Whitelist } from "./Whitelist";
+import { PropertySettings } from "./Interfaces/PropertySettings";
+import { Property } from "./Interfaces/Property";
 
-export class PropertySettings {
-    propName:string;
-    whitelist?:Whitelist;
-    defaultValue:string;
 
-    constructor(prop:string,def:string,whitelist?:Whitelist){
-        this.propName = prop;
-        this.defaultValue = def;
-        this.whitelist = whitelist;
+export class Settings {
+    private propertySettings:Map<string,PropertySettings>;
+    
+    constructor(){
+        this.propertySettings = new Map<string,PropertySettings>();
+    }
+
+    add(s:PropertySettings):Settings{
+        this.propertySettings.set(s.propName,s);
+        return this;
+    }
+
+    get(name:string):PropertySettings{
+        let s = this.propertySettings.get(name);
+        if(s==undefined){
+            throw Error(`Setting does not exist ${name}`)
+        }
+        return s;
+    }
+
+    getAsMap():Map<string,PropertySettings>{
+        return this.propertySettings;
+    }
+
+    getProperties(file:FileModel):Record<string,Property>{
+        let result:Record<string,Property> = {};
+        this.propertySettings.forEach((aProp)=>{
+            result[aProp.propName] = aProp.adaptToProperty(file);
+        })
+        return result;
+    }
+
+    static loadFromJSON(json:any):Settings{
+        return new Settings();
     }
 }
 
+export const DEFAULT_SETTINGS:Settings = new Settings()
+    .add(new BasenamePropertySettings("title"))
+    .add(new ToplevelFolderPropertySettings("project"))
+    .add(new BooleanYAMLPropertySettings("starred","✰", new Whitelist(["✰","⭐"])))
+    .add(new WhitelistYAMLPropertySettings("context","None", new Whitelist(["Desk","Deep","Phone","Read","None"])))
+    .add(new WhitelistYAMLPropertySettings("status","Inbox", new Whitelist(["Inbox","Next","Deferred","Waiting","Done"])));
 
-export const DEFAULT_PROPERTYNAMES = {
-    context:"context",
-    status:"status",
-    project:"project",
-    title:"title",
-    starred:"starred"
-} as const;
 
-export type Settings = Record<string,PropertySettings>;
-
-export const DEFAULT_SETTINGS: Settings = {
-    [DEFAULT_PROPERTYNAMES.context]:
-        new PropertySettings(
-            DEFAULT_PROPERTYNAMES.context,
-            "None",
-            new Whitelist(["Desk","Deep","Phone","Read","None"])),
-    [DEFAULT_PROPERTYNAMES.status]:
-        new PropertySettings(
-            DEFAULT_PROPERTYNAMES.status,
-            "Inbox",
-            new Whitelist(["Inbox","Next","Deferred","Waiting","Done"])),
-    [DEFAULT_PROPERTYNAMES.starred]:
-        new PropertySettings(
-            DEFAULT_PROPERTYNAMES.starred,
-            "✰",
-            new Whitelist(["✰","⭐"])),
-    [DEFAULT_PROPERTYNAMES.title]:
-        new PropertySettings(
-            DEFAULT_PROPERTYNAMES.title,
-            "no title"),
-    [DEFAULT_PROPERTYNAMES.project]:
-        new PropertySettings(
-            DEFAULT_PROPERTYNAMES.project,
-            "no project")
-}

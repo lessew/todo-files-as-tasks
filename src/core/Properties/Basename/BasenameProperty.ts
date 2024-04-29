@@ -1,13 +1,16 @@
-import { FileModel } from "../FileModel";
-import { Property } from "../Property";
+import { FileModel } from "../../Interfaces/FileModel";
+import { Property } from "../../Interfaces/Property";
 
-export class BaseNameProperty implements Property{
+export class BasenameProperty implements Property{
     file: FileModel;
+    propName:string;
     private val:string;
-    defaultValue:"no-title-provided";
+    defaultValue:string;
     regExp:RegExp = /^[a-zA-Z\/\.]+$/;
 
-    constructor(file:FileModel){
+    constructor(propName:string,defaultValue:string,file:FileModel){
+        this.propName = propName;
+        this.defaultValue = defaultValue;
         this.file = file;
     }
     

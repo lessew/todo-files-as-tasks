@@ -1,6 +1,7 @@
 import FATPlugin from "main";
 import { App, PluginSettingTab, Setting } from "obsidian";
-import { PROPERTYNAMES} from "../../core/Settings";
+import { PropertySettings } from "src/core/Interfaces/PropertySettings";
+import { WhitelistYAMLPropertySettings } from "src/core/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
 
 
 export class FATSettingTab extends PluginSettingTab {
@@ -21,39 +22,47 @@ export class FATSettingTab extends PluginSettingTab {
 	}
 
     setContextValues(containerEl:HTMLElement):void{
+        let propSettings = this.plugin.settings.get("context");
+        let values = propSettings.whitelist!.joinByComma();
+        
         new Setting(containerEl)
         .setName('Context values')
         .setDesc('All allowed values for "context", comma seperated')
         .addText(text => text
             .setPlaceholder('Enter values')
-            .setValue(this.plugin.settings[PROPERTYNAMES.context].whitelist!.joinByComma())
-            .onChange(async (value) => {
-                this.plugin.settings[PROPERTYNAMES.context].whitelist!.setByStringSeperatedByComma(value);;
+            .setValue(values)
+            .onChange(async (value: string) => {
+                propSettings.whitelist!.setByStringSeperatedByComma(value);
                 await this.plugin.saveSettings();
             }));
     }
 
     setStatusValues(containerEl:HTMLElement):void{
+        let propSettings = this.plugin.settings.get("status");
+
         new Setting(containerEl)
         .setName('Status values')
         .setDesc('All allowed values for "status", comma seperated')
         .addText(text => text
             .setPlaceholder('Enter values')
-            .setValue(this.plugin.settings[PROPERTYNAMES.status].whitelist!.joinByComma())
+            .setValue(propSettings.whitelist!.joinByComma())
             .onChange(async (value) => {
-                this.plugin.settings[PROPERTYNAMES.status].whitelist!.setByStringSeperatedByComma(value);
+                propSettings.whitelist!.setByStringSeperatedByComma(value);
                 await this.plugin.saveSettings();
             }));
     }
+
     setStarredValues(containerEl:HTMLElement):void{
+        let propSettings = this.plugin.settings.get("status");
+
         new Setting(containerEl)
         .setName('Starred values')
         .setDesc('All allowed values for "context", comma seperated')
         .addText(text => text
             .setPlaceholder('Enter values')
-            .setValue(this.plugin.settings[PROPERTYNAMES.starred].whitelist!.joinByComma())
+            .setValue(propSettings.whitelist!.joinByComma())
             .onChange(async (value) => {
-                this.plugin.settings[PROPERTYNAMES.starred].whitelist!.setByStringSeperatedByComma(value);
+                propSettings.whitelist!.setByStringSeperatedByComma(value);
                 await this.plugin.saveSettings();
             }));
     }

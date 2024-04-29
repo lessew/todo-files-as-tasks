@@ -1,10 +1,9 @@
-import { App, MarkdownView, SuggestModal } from "obsidian";
-import { BooleanYAMLProperty } from "src/core/Properties/BooleanYAMLProperty";
-import { SuggestWhitelistModal } from "../Modals/SuggetWhitelistModal";
-import { ObsidianWrapper } from "src/main/obsidian/ObsidianWrapper";
-import { PropertyView } from "../PropertyView";
+import { App } from "obsidian";
 
-export class BooleanPropertyView extends PropertyView{
+import { PropertyView } from "../PropertyView";
+import { BooleanYAMLProperty } from "src/core/Properties/BooleanYAML/BooleanYAMLProperty";
+
+export class BooleanYAMLPropertyView extends PropertyView{
     prop:BooleanYAMLProperty;
     
     constructor(prop:BooleanYAMLProperty, app:App){
@@ -13,8 +12,9 @@ export class BooleanPropertyView extends PropertyView{
     }
 
     build(rootElement:HTMLElement):void{
-        let text = "";
+        let text = this.prop.getValue();
         let hover = "";
+        /*
         this.prop.initializeValue();
         if(!this.prop.loadedValueIsValid()){
             text = this.statusInvalid;
@@ -27,6 +27,7 @@ export class BooleanPropertyView extends PropertyView{
         else{
             text = this.prop.getValue();
         }
+        */
 
         let a:HTMLElement = rootElement.createEl("span",{text:text,title:hover});
         a.addEventListener("click",this); // executes handleEvent

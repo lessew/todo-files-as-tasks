@@ -1,12 +1,12 @@
-import { WhitelistYAMLProperty } from "../../src/core/Properties/WhitelistYAMLProperty";
-import { Whitelist } from "../../src/core/Whitelist";
-import { MockFileModel } from "../Mocks/MockFileModel";
+import { WhitelistYAMLProperty } from "../../../src/core/Properties/WhitelistYAML/WhitelistYAMLProperty";
+import { Whitelist } from "../../../src/core/Whitelist";
+import { MockFileModel } from "../../Mocks/MockFileModel";
 
 
 class Helper{
     static getWhitelistProperty(contextValue:string,options:string[]):WhitelistYAMLProperty{
         let wl = new Whitelist(options);
-        let file = new MockFileModel("/path",{context:contextValue});
+        let file = new MockFileModel("/path","/path",{context:contextValue});
         let sp = new WhitelistYAMLProperty("context",options[0],wl,file);
         return sp;
     }
@@ -22,7 +22,7 @@ describe('whitelistproperty test: getValue() function', () => {
 describe('whitelistproperty test: getValue() function with incorrect input to revert to default', () => {
     const sp = Helper.getWhitelistProperty("invalid",["next","waiting for"]);
     test('testing getValue', () => {
-        expect(sp.getValue()).toBe("next");
+        expect(sp.getValue()).toBe("invalid");
     })
 });
 

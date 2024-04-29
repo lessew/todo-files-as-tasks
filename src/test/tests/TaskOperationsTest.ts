@@ -1,12 +1,11 @@
 import { Logger } from "../Logger";
 import { FileAsTask } from "src/core/FileAsTask";
 import { ExpectedFileType, getExpectedHolidayBillFile, getSettings } from "../MockItems";
-import { PROPERTYNAMES, Settings } from "src/core/Settings";
-import { FileModel } from "src/core/Interfaces/File";
+import { DEFAULT_SETTINGS, Settings } from "src/core/Settings";
 import { ObsidianFile } from "src/main/obsidian/ObsidianFile";
-import { FileAsTaskFactory } from "src/main/FileAsTaskFactory";
 import { ObsidianWrapper } from "src/main/obsidian/ObsidianWrapper";
 import { CachedMetadata } from "obsidian";
+import { FileModel } from "src/core/Interfaces/FileModel";
 
 export class TaskOperationsTest{
     logger:Logger
@@ -36,14 +35,14 @@ export class TaskOperationsTest{
         this.logger.headingSub("Arranging")
         this.expectedHolidayBillTask = getExpectedHolidayBillFile();
         this.settings = getSettings();
-        this.actualHolidayBillFileModel = new ObsidianFile(this.expectedHolidayBillTask.path);
-        this.actualHolidayBillTask = FileAsTaskFactory.loadFileAsTask(this.actualHolidayBillFileModel,this.settings);
+        this.actualHolidayBillFileModel = new ObsidianFile(this.expectedHolidayBillTask.path,this.expectedHolidayBillTask.path);
+        this.actualHolidayBillTask = new FileAsTask(this.actualHolidayBillFileModel,this.settings);
         this.logger.success("Loaded objects")
     }
 
     async actAssertTitleChange():Promise<void>{    
         this.logger.headingSub("Test: changing title")
-        await (this.actualHolidayBillTask).set(PROPERTYNAMES.title,"newValue");
+        await (this.actualHolidayBillTask).set("title","newValue");
         const fileID1 = "todo-home/Finance/newValue.md";
         const file1 = ObsidianWrapper.getInstance().getTFile(fileID1);
 
@@ -56,7 +55,7 @@ export class TaskOperationsTest{
         }
 
         // teardown
-        await this.actualHolidayBillTask.set(PROPERTYNAMES.title,this.expectedHolidayBillTask.title);
+        await this.actualHolidayBillTask.set("title",this.expectedHolidayBillTask.title);
     }
 
     async actAssertProjectChange():Promise<void>{
@@ -74,7 +73,7 @@ export class TaskOperationsTest{
                 this.logger.error(`Could not move file to ${fileID}.`)
                 this.setFailure();
             }
-            await this.actualHolidayBillTask.set(PROPERTYNAMES.project,this.expectedHolidayBillTask.project);
+            await this.actualHolidayBillTask.set("project",this.expectedHolidayBillTask.project);
         }
     }
 
@@ -118,7 +117,6 @@ export class TaskOperationsTest{
         }
     }
 
-
     setFailure():void{
         this.result = false;
     }
@@ -130,10 +128,4 @@ export class TaskOperationsTest{
     isSuccess():boolean{
         return (this.result === true);
     }
-
-
-
-
-
-
 }

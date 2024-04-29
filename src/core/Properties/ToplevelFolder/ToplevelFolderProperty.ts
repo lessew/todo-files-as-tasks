@@ -1,9 +1,10 @@
-import { FileModel } from "../FileModel";
-import { Property } from "../Property";
-import { Whitelist } from "../Whitelist";
+import { FileModel } from "../../Interfaces/FileModel";
+import { Property } from "../../Interfaces/Property";
+import { Whitelist } from "../../Whitelist";
 
 export class ToplevelFolderProperty implements Property{
     file: FileModel;
+    propName: string;
     private val:string;
     whitelist:Whitelist
     regExp:RegExp = /^[a-zA-Z\/\.]+$/;

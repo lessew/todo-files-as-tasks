@@ -2,6 +2,7 @@ import * as yaml from 'js-yaml'
 import { Filter, FilterOperator } from './Filter';
 import { FATError } from './Error';
 import { Settings } from './Settings';
+import { PropertySettings } from './Interfaces/PropertySettings';
 
 export class YAMLParser{
     source:string;
@@ -49,28 +50,25 @@ export class YAMLParser{
    
     parseFilters(settings:Settings):Filter[] | FATError{
         let result:Filter[] = [];
+        let fail:FATError;
 
-        for(const settingsKey in settings){            
+        let map = settings.getAsMap();
+        for(let key of Array.from( map.keys()) ) {
+            let aPropSetting = map.get(key)!;
             const yaml = this.yaml as any;
-            if(settingsKey in yaml){
-                const filterValue:string = yaml[settingsKey];
+            if(aPropSetting.propName in yaml){
+                const filterValue:string = yaml[aPropSetting.propName];
                 let valop = this.parseOperator(filterValue);
-                const whitelist = settings[settingsKey].whitelist;
-                console.log(whitelist)
-                if(typeof whitelist !== "undefined" && !whitelist.contains(valop.value)){
-                    return new FATError(`${valop.value} is not set as an allowed value for ${settingsKey}`)
+                const whitelist = aPropSetting.whitelist;
+                if((whitelist === undefined || whitelist.contains(valop.value))){
+                    let r:Filter = new Filter(aPropSetting.propName,valop.value,valop.operator);
+                    result.push(r);
                 }
-
-                if(typeof whitelist === "undefined" || whitelist.contains(valop.value)){
-                    let r:Filter = {
-                        propertySettings:settings[settingsKey],
-                        propertyValue:valop.value,
-                        operator:valop.operator
-                    }
-                    result.push(r)
+                else{
+                    return new FATError(`${valop.value} is not set as an allowed value for ${aPropSetting.propName}`)
                 }
             }
-        }
+        };        
         return result;
     }
 

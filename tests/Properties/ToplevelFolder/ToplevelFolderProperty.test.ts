@@ -1,11 +1,11 @@
-import { MockFileModel } from "../Mocks/MockFileModel";
-import { ToplevelFolderProperty } from "../../src/core/Properties/ToplevelFolderProperty";
-import { Whitelist } from "../../src/core/Whitelist";
+import { MockFileModel } from "../../Mocks/MockFileModel";
+import { ToplevelFolderProperty } from "../../../src/core/Properties/ToplevelFolder/ToplevelFolderProperty";
+import { Whitelist } from "../../../src/core/Whitelist";
 
 class Helper{
     static getToplevelFolderProperty():ToplevelFolderProperty{
         let wl = new Whitelist(["this","that"]);
-        const mockfile = new MockFileModel("path",{});
+        const mockfile = new MockFileModel("","path",{});
         return new ToplevelFolderProperty("no-value",wl,mockfile);
     }
 }

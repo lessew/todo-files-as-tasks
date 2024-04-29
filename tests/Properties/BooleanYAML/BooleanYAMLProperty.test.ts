@@ -1,6 +1,7 @@
-import { BooleanYAMLProperty } from "../../src/core/Properties/BooleanYAMLProperty";
-import { Whitelist } from "../../src/core/Whitelist";
-import { MockFileModel } from "../Mocks/MockFileModel";
+import { BooleanYAMLPropertySettings } from "../../../src/core/Properties/BooleanYAML/BooleanYAMLPropertySettings";
+import { BooleanYAMLProperty } from "../../../src/core/Properties/BooleanYAML/BooleanYAMLProperty";
+import { Whitelist } from "../../../src/core/Whitelist";
+import { MockFileModel } from "../../Mocks/MockFileModel";
 
 
 class Helper{
@@ -9,7 +10,7 @@ class Helper{
         "starred",
         "true",
       new Whitelist(["true","false"]),
-      new MockFileModel("path",{starred:"false"}));
+      new MockFileModel("path","path",{starred:"false"}));
   }
 }
 
@@ -50,3 +51,14 @@ describe('BooleanProperty test toggle', () => {
   }); 
 });
 
+
+describe('BooleanYAMLPropertySettings: wrong input', () => {
+  let propSettings = new BooleanYAMLPropertySettings("status","Inbox",new Whitelist(["Inbox","Done"]));
+
+  const file = new MockFileModel("/test/","/test/home/fixroof.md",{status:"Done22"});
+  let prop = propSettings.adaptToProperty(file);
+
+  test('test if value is loaded correctly', () => {
+     expect(prop.getValue()).toBe("Done22");
+  });  
+});

@@ -1,5 +1,6 @@
 import { App, MarkdownView, SuggestModal } from "obsidian";
-import { Property } from "src/core/Property";
+import { Property } from "src/core/Interfaces/Property";
+import { Whitelist } from "src/core/Whitelist";
 
 export class SuggestWhitelistModal extends SuggestModal<string>{
 
@@ -7,11 +8,11 @@ export class SuggestWhitelistModal extends SuggestModal<string>{
     validValues:string[];
     onSubmit: (result:string) => void;
 
-    constructor(prop:Property, onSubmit: (result:string) => void, app: App) {
+    constructor(prop:Property, whitelist:Whitelist, onSubmit: (result:string) => void, app: App) {
         super(app);
         this.prop = prop;
         this.onSubmit = onSubmit;
-        this.validValues = this.prop.settings.allowedValues!;
+        this.validValues = whitelist.toArray();
     }
         
     getSuggestions(query: string): string[] | Promise<string[]> {

@@ -1,56 +1,83 @@
-import { FolderModel } from "../src/core/FolderModel";
+import { FolderModel } from "../src/core/Interfaces/FolderModel";
+import { MockFileModel } from "./Mocks/MockFileModel";
 import { MockFolderModel } from "./Mocks/MockFolderModel";
 
+
 class Helper{
-    static getFolderModel():FolderModel{
-        let fm = new MockFolderModel();
-        return fm;
+    static getFolderModel():FolderModel{        
+        const root = new MockFolderModel('root','root',
+        [
+            new MockFileModel('root',"root/file1.md",{}),
+            new MockFileModel('root',"root/file2.md",{}),
+            new MockFolderModel('root',"root/sub/",
+            [
+                new MockFileModel('root',"root/sub/file3.md",{}),
+                new MockFileModel('root',"root/sub/file4.md",{}),
+                new MockFolderModel('root',"root/sub/second/",
+                [
+                    new MockFileModel('root',"root/sub/second/file5.md",{}),
+                    new MockFileModel('root',"root/sub/second/file6.md",{}),
+                ])
+            ])
+        ])
+      
+        return root;
     }
 }
 
-describe('Foldermodel test', () => {
+describe('Foldermodel getfiles', () => {
     let fm = Helper.getFolderModel();
+    let files = fm.getFiles();
 
-    test('Test ', () => {   
-        expect(true).toBe(false)
+    test('Test length of files array ', () => {   
+        expect(files.length).toBe(6)
     });
 });
 
-// test getFilesAsTasks
-describe('Foldermodel test', () => {
-    let fm = Helper.getFolderModel();
-
-    test('Test ', () => {   
-        expect(true).toBe(false)
-    });
-});
 
 // test getFolders
 describe('Foldermodel getFolders', () => {
     let fm = Helper.getFolderModel();
 
     test('Test ', () => {   
-        expect(true).toBe(false)
+        let folders = fm.getFolders();
+        expect(folders.length).toBe(2)
     });
 });
 
-// test getFoldersAsWhitelist
+// test getpathfromroot
+describe('Foldermodel getpathfromroot', () => {
+    let fm = new MockFolderModel("root","root/sub/subsub/this.md",[]);
 
-describe('Foldermodel getFoldersAsWhitelist', () => {
+    test('Test ', () => {   
+        let path = fm.getPathFromRoot();
+        expect(path).toBe("sub/subsub/this.md")
+    });
+});
+
+// test getFolders
+describe('Foldermodel getFolderPaths', () => {
     let fm = Helper.getFolderModel();
 
     test('Test ', () => {   
-        expect(true).toBe(false)
+        let folders = fm.getFolderPaths();
+        expect(folders.includes("sub/second/")).toBe(true)
+        expect(folders.includes("sub/")).toBe(true)
     });
 });
+
 
 // test isFolderModel
-
-
 describe('Foldermodel isFolderModel', () => {
-    let fm = Helper.getFolderModel();
+    let fm = new MockFolderModel("/","/",[]);
+    let notfm = new MockFileModel("/","/",{});
 
-    test('Test ', () => {   
-        expect(true).toBe(false)
+    test('Test isfoldermodel: true', () => {   
+        expect(FolderModel.isFolderModel(fm)).toBe(true)
     });
+
+    test('Test isfoldermodel: false', () => {   
+        expect(FolderModel.isFolderModel(notfm)).toBe(false)
+    });
+
 });

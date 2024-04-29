@@ -34,7 +34,13 @@ export class ObsidianWrapper{
     }
 
     getTFolder(path:string):TFolder{
-        return this.obsidianApp.vault.getAbstractFileByPath(path) as TFolder;
+        let folder = this.obsidianApp.vault.getAbstractFileByPath(path);
+        if(folder instanceof TFolder){
+            return folder;
+        }
+        else{
+            throw new Error(`Path '${path}' is not recognized as a folder`)
+        }
     }
 
     getMeta(tf:TFile):CachedMetadata{

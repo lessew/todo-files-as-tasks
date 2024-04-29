@@ -1,10 +1,10 @@
-import { FileModel } from "../FileModel";
-import { Property } from "../Property";
-import { Whitelist } from "../Whitelist";
+import { FileModel } from "../../Interfaces/FileModel";
+import { Property } from "../../Interfaces/Property";
+import { Whitelist } from "../../Whitelist";
 
 export class BooleanYAMLProperty implements Property{
     file: FileModel;
-    yamlPropName:string;
+    propName:string;
     private val:string;
 
     firstValue:string;
@@ -22,7 +22,7 @@ export class BooleanYAMLProperty implements Property{
         }
 
         this.whitelist = whitelist;
-        this.yamlPropName = propName;
+        this.propName = propName;
         this.defaultValue = defaultValue;
         this.firstValue = whitelist.toArray()[0];
         this.secondValue = whitelist.toArray()[1];
@@ -31,23 +31,31 @@ export class BooleanYAMLProperty implements Property{
 
     async setValue(val: string): Promise<void> {
         if(this.whitelist.contains(val)){
-            this.file.setYAMLProperty(this.yamlPropName,val);
+            this.file.setYAMLProperty(this.propName,val);
         }
         else{
-            console.error(`Can't adjust to value '${val}' as it is not part of ${this.whitelist.toString()}`)
+            //console.log(`Can't adjust to value '${val}' as it is not part of ${this.whitelist.toString()}`)
         }
     }
     getValue(): string {
        if(this.val===undefined){
-            const val = this.file.getYAMLProperty(this.yamlPropName);
+            const val = this.file.getYAMLProperty(this.propName);
             if(val===null){
                 this.val = this.defaultValue;
             }
-            else{
+            else if(this.validate(val)){
                 this.val = val;
+            }
+            else{
+                //this.val = this.defaultValue;
+                this.val = val; // TODO fix this case; what to do when save value is not part of whitelst
             }
        }
        return this.val;
+    }
+
+    validate(newVal:string):boolean{
+        return this.whitelist.contains(newVal);
     }
 
     getNewToggleValue(currentValue:string):string{
@@ -60,5 +68,11 @@ export class BooleanYAMLProperty implements Property{
         else{
             return this.defaultValue;
         }
+    }
+
+    toggle():void{
+        let curval = this.getValue();
+        let newval = this.getNewToggleValue(curval);
+        this.setValue(newval);
     }
 }

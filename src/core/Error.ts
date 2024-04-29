@@ -7,7 +7,7 @@ export class FATError extends Error{
     }
 
     static isError(result:FATError | unknown):result is FATError{
-      return result instanceof Error;
+      return (result instanceof FATError);
     }
 }
 

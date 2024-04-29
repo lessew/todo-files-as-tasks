@@ -1,7 +1,6 @@
 import { App, Modal,Setting } from "obsidian";
-import { BasenameProperty } from "src/core/Properties/BasenameProperty";
-import { ObsidianWrapper } from "src/main/obsidian/ObsidianWrapper";
 import { PropertyView } from "../PropertyView";
+import { BasenameProperty } from "src/core/Properties/Basename/BasenameProperty";
 
 export class BasenamePropertyView extends PropertyView{
     prop:BasenameProperty;

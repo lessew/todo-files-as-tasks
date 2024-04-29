@@ -1,4 +1,4 @@
-import { PROPERTYNAMES, Settings } from "src/core/Settings";
+import { DEFAULT_SETTINGS, Settings } from "src/core/Settings";
 import { Whitelist } from "src/core/Whitelist";
 
 /**
@@ -30,9 +30,9 @@ const expectedFiles = [
         yaml: {context: "None",status: "Waiting",starred: "⭐"}
     },
     {
-        path: "todo-home/Finance/Taxes 2023/IRS hotline/Ask details re taxes 2023.md",
+        path: "todo-home/Finance/Taxes 2023/IRS Hotline/Ask details re taxes 2023.md",
         title:"Ask details re taxes 2023",
-        project:"IRS hotline",
+        project:"IRS Hotline",
         yaml: { context: "None",status: "Waiting",starred: "⭐"}
     },
     {
@@ -51,8 +51,8 @@ const expectedFiles = [
 
 const expectedFolders = [
     "Finance",
-    "Taxes 2023", //"Finance/Taxes 2023",
-    "IRS hotline", //"Finance/Taxes 2023/IRS Hotline",
+    "Finance/Taxes 2023",
+    "Finance/Taxes 2023/IRS Hotline",
     "Kids",
     "Groceries"
 ]
@@ -62,31 +62,7 @@ rootPath: todo-home
 action: list`;
     
 
-const settings = {
-        [PROPERTYNAMES.context]:{
-            propName:PROPERTYNAMES.context,
-            whitelist:new Whitelist(["Desk","Deep","Phone","Read","None"]),
-            defaultValue:"None"
-        },
-        [PROPERTYNAMES.status]:{
-            propName:PROPERTYNAMES.status,
-            whitelist:new Whitelist(["Inbox","Next","Deferred","Waiting","Done"]),
-            defaultValue:"Inbox"
-        },
-        [PROPERTYNAMES.starred]:{
-            propName:PROPERTYNAMES.starred,
-            whitelist:new Whitelist(["✰","⭐"]),
-            defaultValue:"✰"
-        },
-        [PROPERTYNAMES.title]:{
-            propName:PROPERTYNAMES.title,
-            defaultValue:"no title"
-        },
-        [PROPERTYNAMES.project]:{
-            propName:PROPERTYNAMES.project,
-            defaultValue:"no project"
-        }
-    } as Settings;
+const settings = DEFAULT_SETTINGS;
     
 
 export function getSettings():Settings{
