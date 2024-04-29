@@ -1,15 +1,15 @@
 import { App } from "obsidian";
-import { BasenamePropertyView } from "./Propertyviews/BasenamePropertyView";
-import { WhitelistYAMLPropertyView } from "./Propertyviews/WhitelistYAMLPropertyView";
+import { BasenamePropertyView } from "../../core/Properties/Basename/BasenamePropertyView";
+import { WhitelistYAMLPropertyView } from "../../core/Properties/WhitelistYAML/WhitelistYAMLPropertyView";
 import { ToplevelFolderProperty } from "src/core/Properties/ToplevelFolder/ToplevelFolderProperty";
-import { ToplevelFolderPropertyView } from "./Propertyviews/ToplevelFolderPropertyView";
-import { BooleanYAMLPropertyView } from "./Propertyviews/BooleanYAMLPropertyView";
-import { LinkView } from "./Propertyviews/LinkView";
+import { ToplevelFolderPropertyView } from "../../core/Properties/ToplevelFolder/ToplevelFolderPropertyView";
+import { BooleanYAMLPropertyView } from "../../core/Properties/BooleanYAML/BooleanYAMLPropertyView";
 import { FileAsTaskCollection } from "src/core/FileAsTaskCollection";
 import { FileAsTask } from "src/core/FileAsTask";
 import { BasenameProperty } from "src/core/Properties/Basename/BasenameProperty";
 import { WhitelistYAMLProperty } from "src/core/Properties/WhitelistYAML/WhitelistYAMLProperty";
 import { BooleanYAMLProperty } from "src/core/Properties/BooleanYAML/BooleanYAMLProperty";
+import { LinkView } from "./LinkView";
 
 export class TaskListView {
     taskList:FileAsTask[];
@@ -77,7 +77,7 @@ export class TaskListView {
 
     private createLinkHTML(task:FileAsTask,el:HTMLElement):void{
         let prop = task.getProperty("title") as BasenameProperty;
-        const lv = new LinkView(this.obsidianApp);
+        const lv = new LinkView();
         lv.build(el,"link",prop.file.path);
     }
    
@@ -100,7 +100,7 @@ export class TaskListView {
     }
 
     private createStarredHTML(task:FileAsTask,el:HTMLElement):void{
-        const ss = new BooleanYAMLPropertyView(task.getProperty("starred") as BooleanYAMLProperty,this.obsidianApp);
+        const ss = new BooleanYAMLPropertyView(task.getProperty("starred") as BooleanYAMLProperty);
         ss.build(el);
     }
 

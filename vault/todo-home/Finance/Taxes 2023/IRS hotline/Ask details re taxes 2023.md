@@ -1,5 +1,5 @@
 ---
 context: None
 status: Waiting
-starred: ⭐
+starred: "false"
 ---

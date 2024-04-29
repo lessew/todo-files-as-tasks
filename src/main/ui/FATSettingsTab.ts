@@ -1,7 +1,5 @@
 import FATPlugin from "main";
 import { App, PluginSettingTab, Setting } from "obsidian";
-import { PropertySettings } from "src/core/Interfaces/PropertySettings";
-import { WhitelistYAMLPropertySettings } from "src/core/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
 
 
 export class FATSettingTab extends PluginSettingTab {
@@ -53,7 +51,7 @@ export class FATSettingTab extends PluginSettingTab {
     }
 
     setStarredValues(containerEl:HTMLElement):void{
-        let propSettings = this.plugin.settings.get("status");
+        let propSettings = this.plugin.settings.get("starred");
 
         new Setting(containerEl)
         .setName('Starred values')

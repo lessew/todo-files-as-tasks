@@ -1,13 +1,12 @@
-import { App } from "obsidian";
-
-import { PropertyView } from "../PropertyView";
+import { PropertyView } from "src/core/Interfaces/PropertyView";
 import { BooleanYAMLProperty } from "src/core/Properties/BooleanYAML/BooleanYAMLProperty";
+import { ObsidianWrapper } from "src/main/obsidian/ObsidianWrapper";
 
 export class BooleanYAMLPropertyView extends PropertyView{
     prop:BooleanYAMLProperty;
     
-    constructor(prop:BooleanYAMLProperty, app:App){
-        super(app);
+    constructor(prop:BooleanYAMLProperty){
+        super();
         this.prop = prop;
     }
 
@@ -36,5 +35,9 @@ export class BooleanYAMLPropertyView extends PropertyView{
     handleEvent(event:Event){
         this.prop.toggle();
         this.refreshUI();
+    }
+
+    refreshUI():void{
+        ObsidianWrapper.getInstance().reloadUI();
     }
 }

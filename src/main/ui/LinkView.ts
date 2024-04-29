@@ -1,4 +1,4 @@
-import { PropertyView } from "../PropertyView";
+import { PropertyView } from "src/core/Interfaces/PropertyView";
 
 export class LinkView extends PropertyView{
 

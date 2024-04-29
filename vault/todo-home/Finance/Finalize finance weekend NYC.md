@@ -1,5 +1,5 @@
 ---
 context: Deep
-status: Waiting
-starred: ✰
+status: Done
+starred: "true"
 ---

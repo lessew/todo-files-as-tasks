@@ -1,5 +1,5 @@
 ---
 context: None
 status: Deferred
-starred: ⭐
+starred: "false"
 ---

@@ -1,5 +1,5 @@
 ---
 context: None
 status: Inbox
-starred: ✰
+starred: "false"
 ---
