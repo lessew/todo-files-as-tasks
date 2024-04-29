@@ -26,6 +26,7 @@ export class FATSettingTab extends PluginSettingTab {
         new Setting(containerEl)
         .setName('Context values')
         .setDesc('All allowed values for "context", comma seperated')
+        .setClass("file-as-task")
         .addText(text => text
             .setPlaceholder('Enter values')
             .setValue(values)
@@ -41,6 +42,7 @@ export class FATSettingTab extends PluginSettingTab {
         new Setting(containerEl)
         .setName('Status values')
         .setDesc('All allowed values for "status", comma seperated')
+        .setClass("file-as-task")
         .addText(text => text
             .setPlaceholder('Enter values')
             .setValue(propSettings.whitelist!.joinByComma())
@@ -55,6 +57,7 @@ export class FATSettingTab extends PluginSettingTab {
 
         new Setting(containerEl)
         .setName('Starred values')
+        .setClass("file-as-task")
         .setDesc('All allowed values for "context", comma seperated')
         .addText(text => text
             .setPlaceholder('Enter values')
