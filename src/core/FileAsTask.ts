@@ -4,11 +4,18 @@ import { Settings } from "./Settings";
 
 export class FileAsTask{
     file:FileModel;
+
+    // TODO make this private
     properties:Record<string,Property>;
     
     constructor(file:FileModel,settings:Settings){
         this.file = file;
         this.properties = settings.getProperties(file);
+    }
+
+    // TODO refactor to use this method instead of properties property
+    getProperty(propName:string):Property{
+        return this.properties[propName];
     }
 
     get(propName:string):string{

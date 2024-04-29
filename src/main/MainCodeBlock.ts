@@ -9,8 +9,6 @@ import { TestView } from "src/test/TestView";
 import { ObsidianFolder } from "./obsidian/ObsidianFolder";
 import { FolderModel } from "src/core/Interfaces/FolderModel";
 import { FileAsTaskCollection } from "src/core/FileAsTaskCollection";
-import { Whitelist } from "src/core/Whitelist";
-import { ToplevelFolderPropertySettings } from "src/core/Properties/ToplevelFolder/ToplevelFolderPropertySettings";
 
 export class MainCodeBlock{
     source:string;
@@ -73,7 +71,6 @@ export class MainCodeBlock{
     }
 
     displayActionList(parser:YAMLParser,rootFolder:FolderModel):void{
-       
         const filters = parser.parseFilters(this.settings);
         if(FATError.isError(filters)){
             this.displayUserError(filters);

@@ -69,4 +69,10 @@ export class BooleanYAMLProperty implements Property{
             return this.defaultValue;
         }
     }
+
+    toggle():void{
+        let curval = this.getValue();
+        let newval = this.getNewToggleValue(curval);
+        this.setValue(newval);
+    }
 }

@@ -7,7 +7,6 @@ export class ObsidianFile implements FileModel{
     name: string;
     path: string;
     root:string;
-
     file:TFile;
 
     constructor(root:string,path:string){
