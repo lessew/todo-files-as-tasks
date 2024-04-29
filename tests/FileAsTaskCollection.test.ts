@@ -1,10 +1,10 @@
 import { MockFolderModel } from "./Mocks/MockFolderModel";
-import { FolderModel } from "../src/core/Interfaces/FolderModel";
 import { MockFileModel } from "./Mocks/MockFileModel";
 import { FileAsTaskCollection } from "../src/core/FileAsTaskCollection";
 import { Settings } from "../src/core/Settings";
 import { Whitelist } from "../src/core/Whitelist";
 import { WhitelistYAMLPropertySettings } from "../src/core/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
+import { Filter, FilterOperator } from "../src/core/Filter";
 
 
 const file1 = new MockFileModel("path/to/this",{
@@ -29,20 +29,13 @@ const file4 = new MockFileModel("path/to/this",{
 
 let testerFiles = [file1,file2,file3,file4];
 
-class Helper{
-    static getRootFolder():FolderModel{
-        let fm = new MockFolderModel("path/to/this",testerFiles);
-        return fm;
-    }
-}
 
 describe('FileAsTaskCollection: create object)', () => {
-    let rootFolder = Helper.getRootFolder();
+    let rootFolder = new MockFolderModel("path/to/this",testerFiles);
     let settings:Settings = new Settings()
     .add(new WhitelistYAMLPropertySettings("status","Inbox",new Whitelist(["Inbox","Done"])))
     .add(new WhitelistYAMLPropertySettings("context","Desk",new Whitelist(["Desk","Phone"])));
     
-
     let fatc = new FileAsTaskCollection(rootFolder,settings);
 
     test('Test rootfolder exists and has children', () => {   
@@ -53,3 +46,75 @@ describe('FileAsTaskCollection: create object)', () => {
         expect(fatc.get().length).toBe(4);
     });
 });
+
+
+
+describe('FileAsTaskCollection: Filter By (single)', () => {
+    let rootFolder = new MockFolderModel("path/to/this",testerFiles);
+    let settings:Settings = new Settings()
+    .add(new WhitelistYAMLPropertySettings("status","Inbox",new Whitelist(["Inbox","Done"])))
+    .add(new WhitelistYAMLPropertySettings("context","Desk",new Whitelist(["Desk","Phone"])));
+    
+    let fatc = new FileAsTaskCollection(rootFolder,settings);
+
+    let filter = new Filter("status","Inbox",FilterOperator.include);
+
+    test('Test filtering', () => {   
+        fatc.filterBy(filter);
+        expect(fatc.get().length).toBe(2);
+    });
+});
+
+describe('Filter By (single) - invalid status value', () => {
+    let rootFolder = new MockFolderModel("path/to/this",testerFiles);
+    let settings:Settings = new Settings()
+    .add(new WhitelistYAMLPropertySettings("status","Inbox",new Whitelist(["Inbox","Done"])))
+    .add(new WhitelistYAMLPropertySettings("context","Desk",new Whitelist(["Desk","Phone"])));
+    
+    let fatc = new FileAsTaskCollection(rootFolder,settings);
+
+    let filter = new Filter("status","invalid-status",FilterOperator.include);
+
+    test('Test filtering by status - file with invalid value as its not part of the whitelist', () => {
+        fatc.filterBy(filter);
+        expect(fatc.get().length).toBe(0);
+    });
+});
+ 
+
+describe('BulkFilterBy', () => {
+    let rootFolder = new MockFolderModel("path/to/this",testerFiles);
+    let settings:Settings = new Settings()
+    .add(new WhitelistYAMLPropertySettings("status","Inbox",new Whitelist(["Inbox","Done"])))
+    .add(new WhitelistYAMLPropertySettings("context","Desk",new Whitelist(["Desk","Phone"])));
+    
+    let fatc = new FileAsTaskCollection(rootFolder,settings);
+
+    let statusFilter = new Filter("status","Inbox",FilterOperator.include);
+    let contextFilter = new Filter("context","Phone",FilterOperator.include);
+
+    test('Test filtering by status (whitelistproperty)', () => {   
+        fatc.bulkFilterBy([statusFilter,contextFilter]);
+        expect(fatc.get().length).toBe(1);
+    });
+});
+
+
+describe('Filter By not (single)', () => {
+    let rootFolder = new MockFolderModel("path/to/this",testerFiles);
+    let settings:Settings = new Settings()
+    .add(new WhitelistYAMLPropertySettings("status","Inbox",new Whitelist(["Inbox","Done"])))
+    .add(new WhitelistYAMLPropertySettings("context","Desk",new Whitelist(["Desk","Phone"])));
+    
+    let fatc = new FileAsTaskCollection(rootFolder,settings);
+
+    let filter = new Filter("status","Done",FilterOperator.exclude);
+
+    test('Test filtering by status (whitelistproperty)', () => {   
+        fatc.filterBy(filter);
+        expect(fatc.get().length).toBe(3);
+    });
+});
+
+
+
