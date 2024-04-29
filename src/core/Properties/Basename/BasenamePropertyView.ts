@@ -19,7 +19,7 @@ export class BasenamePropertyView extends PropertyView{
     }
 
     handleEvent(event:Event){
-        const m:UpdateBasenameModal =  new UpdateBasenameModal(this.obsidianApp,(result) => {
+        const m:UpdateBasenameModal =  new UpdateBasenameModal(this.obsidianApp,this.prop.getValue(),(result) => {
             this.prop.setValue(result);
             this.refreshUI();
         });
@@ -34,9 +34,11 @@ export class BasenamePropertyView extends PropertyView{
 class UpdateBasenameModal extends Modal{
     result: string;
     onSubmit: (result: string) => void;
+    value:string;
 
-    constructor(app: App, onSubmit: (result: string) => void) {
+    constructor(app: App, value:string,onSubmit: (result: string) => void) {
         super(app);
+        this.value = value;
         this.onSubmit = onSubmit;
     }
     
@@ -46,10 +48,15 @@ class UpdateBasenameModal extends Modal{
 
     new Setting(contentEl)
       .setName("Name")
-      .addText((text) =>
-        text.onChange((value) => {
-          this.result = value
-        }));
+      .setClass("file-as-task")
+      .addText((text) => {
+          text.setValue(this.value);
+          text.onChange((value) => {
+            this.result = value
+          });
+        })
+  
+      
 
     new Setting(contentEl)
       .addButton((btn) =>

@@ -19,3 +19,7 @@ a.yatodo-edit{
     text-decoration: none;
     color:blue
 }
+
+.file-as-task .setting-item-control input{
+    width:-webkit-fill-available;
+}
