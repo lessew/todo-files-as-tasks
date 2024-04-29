@@ -48,7 +48,7 @@ export class MainCodeBlock{
 
         ObsidianWrapper.getInstance().addMainCodeBlock(this);
 
-        const rootFolder = new ObsidianFolder(rootPath);
+        const rootFolder = new ObsidianFolder(rootPath,rootPath);
         
         const action = parser.parseAction();
         if(FATError.isError(action)){

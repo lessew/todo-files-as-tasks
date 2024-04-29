@@ -51,7 +51,11 @@ export abstract class FolderModel{
     }
 
     getPathFromRoot():string{
-        return this.path.substring(this.root.length);
+        let pfr = this.path.substring(this.root.length);
+        if(pfr.charAt(0)=="/"){
+            pfr = pfr.substring(1);
+        }
+        return pfr;
     }
 
     static isFolderModel(r:FileModel | FolderModel): r is FolderModel{

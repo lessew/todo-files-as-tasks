@@ -80,14 +80,14 @@ export class VaultHasExpectedFilesTest{
     }
 
     actLoadFolders(){
-        this.rootFolder = new ObsidianFolder(this.rootPath);
+        this.rootFolder = new ObsidianFolder(this.rootPath,this.rootPath);
         let folders = this.rootFolder.getFolderPaths();
         let whitelist = new Whitelist(folders);
         (this.settings.get("project") as ToplevelFolderPropertySettings).setProjects(whitelist);
         (this.settings.get("project") as ToplevelFolderPropertySettings).setDefaultValue(folders[0]);
 
 
-        this.rootFolder = new ObsidianFolder(this.rootPath);
+        this.rootFolder = new ObsidianFolder(this.rootPath,this.rootPath);
         this.folders = this.rootFolder.getFolders();
         const folderpaths = this.rootFolder.getFolderPaths();
 

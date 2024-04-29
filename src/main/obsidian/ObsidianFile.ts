@@ -7,7 +7,6 @@ export class ObsidianFile implements FileModel{
     name: string;
     path: string;
     root:string;
-    //parent: FolderModel;
 
     file:TFile;
 
@@ -17,7 +16,6 @@ export class ObsidianFile implements FileModel{
         const wrapper = ObsidianWrapper.getInstance();
         this.file = wrapper.getTFile(path);
         this.name = this.file.name;
-        //this.parent = new ObsidianFolder(this.file.parent!.path);
     }
 
     async move(newPath: string): Promise<void> {

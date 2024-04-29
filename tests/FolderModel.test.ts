@@ -5,18 +5,18 @@ import { MockFolderModel } from "./Mocks/MockFolderModel";
 
 class Helper{
     static getFolderModel():FolderModel{        
-        const root = new MockFolderModel('root/','root/',
+        const root = new MockFolderModel('root','root',
         [
-            new MockFileModel('root/',"root/file1.md",{}),
-            new MockFileModel('root/',"root/file2.md",{}),
-            new MockFolderModel('root/',"root/sub/",
+            new MockFileModel('root',"root/file1.md",{}),
+            new MockFileModel('root',"root/file2.md",{}),
+            new MockFolderModel('root',"root/sub/",
             [
-                new MockFileModel('root/',"root/sub/file3.md",{}),
-                new MockFileModel('root/',"root/sub/file4.md",{}),
-                new MockFolderModel('root/',"root/sub/second/",
+                new MockFileModel('root',"root/sub/file3.md",{}),
+                new MockFileModel('root',"root/sub/file4.md",{}),
+                new MockFolderModel('root',"root/sub/second/",
                 [
-                    new MockFileModel('root/',"root/sub/second/file5.md",{}),
-                    new MockFileModel('root/',"root/sub/second/file6.md",{}),
+                    new MockFileModel('root',"root/sub/second/file5.md",{}),
+                    new MockFileModel('root',"root/sub/second/file6.md",{}),
                 ])
             ])
         ])
@@ -47,7 +47,7 @@ describe('Foldermodel getFolders', () => {
 
 // test getpathfromroot
 describe('Foldermodel getpathfromroot', () => {
-    let fm = new MockFolderModel("root/","root/sub/subsub/this.md",[]);
+    let fm = new MockFolderModel("root","root/sub/subsub/this.md",[]);
 
     test('Test ', () => {   
         let path = fm.getPathFromRoot();
