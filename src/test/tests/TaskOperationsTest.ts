@@ -35,7 +35,7 @@ export class TaskOperationsTest{
         this.logger.headingSub("Arranging")
         this.expectedHolidayBillTask = getExpectedHolidayBillFile();
         this.settings = getSettings();
-        this.actualHolidayBillFileModel = new ObsidianFile(this.expectedHolidayBillTask.path);
+        this.actualHolidayBillFileModel = new ObsidianFile(this.expectedHolidayBillTask.path,this.expectedHolidayBillTask.path);
         this.actualHolidayBillTask = new FileAsTask(this.actualHolidayBillFileModel,this.settings);
         this.logger.success("Loaded objects")
     }
@@ -117,7 +117,6 @@ export class TaskOperationsTest{
         }
     }
 
-
     setFailure():void{
         this.result = false;
     }
@@ -129,10 +128,4 @@ export class TaskOperationsTest{
     isSuccess():boolean{
         return (this.result === true);
     }
-
-
-
-
-
-
 }

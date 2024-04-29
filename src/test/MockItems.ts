@@ -30,9 +30,9 @@ const expectedFiles = [
         yaml: {context: "None",status: "Waiting",starred: "⭐"}
     },
     {
-        path: "todo-home/Finance/Taxes 2023/IRS hotline/Ask details re taxes 2023.md",
+        path: "todo-home/Finance/Taxes 2023/IRS Hotline/Ask details re taxes 2023.md",
         title:"Ask details re taxes 2023",
-        project:"IRS hotline",
+        project:"IRS Hotline",
         yaml: { context: "None",status: "Waiting",starred: "⭐"}
     },
     {
