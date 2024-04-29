@@ -23,7 +23,7 @@ describe('BooleanYAMLPropertySettings: constructor', () => {
 describe('BooleanYAMLPropertySettings: adapt to property', () => {
     let propSettings = new BooleanYAMLPropertySettings("starred","true",new Whitelist(["false","true"]));
 
-    const file = new MockFileModel("/test/home/fixroof.md",{starred:"false"});
+    const file = new MockFileModel("/test/","/test/home/fixroof.md",{starred:"false"});
     let prop = propSettings.adaptToProperty(file);
 
     test('test if value is loaded correctly', () => {
@@ -35,7 +35,7 @@ describe('BooleanYAMLPropertySettings: adapt to property', () => {
 describe('BooleanYAMLPropertySettings: adapt to property: input not part of whitelist', () => {
     let propSettings = new BooleanYAMLPropertySettings("starred","true",new Whitelist(["false","true"]));
 
-    const file = new MockFileModel("/test/home/fixroof.md",{starred:"invalid"});
+    const file = new MockFileModel("/test/","/test/home/fixroof.md",{starred:"invalid"});
     let prop = propSettings.adaptToProperty(file);
 
     test('test if value is loaded correctly', () => {

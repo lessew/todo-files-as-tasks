@@ -3,7 +3,7 @@ import { BasenameProperty } from "../../../src/core/Properties/Basename/Basename
 
 class Helper{
     static getBasenameProperty():BasenameProperty{
-        const mockfile = new MockFileModel("/path/to/workproject/this.md",{});
+        const mockfile = new MockFileModel("path","/path/to/workproject/this.md",{});
         return new BasenameProperty("title","default",mockfile);
     }
 }
@@ -40,7 +40,7 @@ describe('basenameproperty:getNewFullPathWithBasename', () => {
 
 
 describe('basenameproperty:getValue', () => {
-    const mockfile = new MockFileModel("/path/to/workproject/this.md",{});
+    const mockfile = new MockFileModel("/test/","/path/to/workproject/this.md",{});
     let prop = new BasenameProperty("title","default",mockfile);
 
     test('correct values', () => {

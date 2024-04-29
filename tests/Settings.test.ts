@@ -27,7 +27,7 @@ describe('Settings: get properties', () => {
     .add(new WhitelistYAMLPropertySettings("status","Inbox",new Whitelist(["Inbox","Done"])))
     .add(new WhitelistYAMLPropertySettings("context","Read",new Whitelist(["Read","Desk"])));
 
-    let file = new MockFileModel("/path/to/file",{status:"Done",context:"Desk"});
+    let file = new MockFileModel("path","/path/to/file",{status:"Done",context:"Desk"});
 
     test('Test get properties', () => {   
       let properties = settings.getProperties(file);

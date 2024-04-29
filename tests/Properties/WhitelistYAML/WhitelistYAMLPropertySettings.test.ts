@@ -24,7 +24,7 @@ describe('whitelistyamlpropertysettings: constructor', () => {
 describe('toplevelfolderpropertysettings: adapt to property', () => {
     let propSettings = new WhitelistYAMLPropertySettings("status","Inbox",new Whitelist(["Inbox","Done"]));
 
-    const file = new MockFileModel("/test/home/fixroof.md",{status:"Done"});
+    const file = new MockFileModel("/test/","/test/home/fixroof.md",{status:"Done"});
     let prop = propSettings.adaptToProperty(file);
 
     test('test if value is loaded correctly', () => {
@@ -36,7 +36,7 @@ describe('toplevelfolderpropertysettings: adapt to property', () => {
 describe('toplevelfolderpropertysettings: wrong input', () => {
     let propSettings = new WhitelistYAMLPropertySettings("status","Inbox",new Whitelist(["Inbox","Done"]));
 
-    const file = new MockFileModel("/test/home/fixroof.md",{status:"Done22"});
+    const file = new MockFileModel("/test/","/test/home/fixroof.md",{status:"Done22"});
     let prop = propSettings.adaptToProperty(file);
 
     test('test if value is loaded correctly', () => {

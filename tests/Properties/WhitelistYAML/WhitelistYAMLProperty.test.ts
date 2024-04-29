@@ -6,7 +6,7 @@ import { MockFileModel } from "../../Mocks/MockFileModel";
 class Helper{
     static getWhitelistProperty(contextValue:string,options:string[]):WhitelistYAMLProperty{
         let wl = new Whitelist(options);
-        let file = new MockFileModel("/path",{context:contextValue});
+        let file = new MockFileModel("/path","/path",{context:contextValue});
         let sp = new WhitelistYAMLProperty("context",options[0],wl,file);
         return sp;
     }

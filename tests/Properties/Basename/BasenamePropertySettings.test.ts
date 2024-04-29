@@ -22,7 +22,7 @@ describe('basenamepropertysettings: constructor', () => {
 
 describe('basenamepropertysettings: adapt to property', () => {
     let propSettings = new BasenamePropertySettings("title");
-    const file = new MockFileModel("/test/to/homeimprovement.md",{});
+    const file = new MockFileModel("/test","/test/to/homeimprovement.md",{});
     let prop = propSettings.adaptToProperty(file);
 
     test('test if value is loaded correctly', () => {

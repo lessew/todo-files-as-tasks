@@ -24,7 +24,7 @@ describe('toplevelfolderpropertysettings: adapt to property', () => {
     propSettings.setDefaultValue("home");
     propSettings.setProjects(new Whitelist(["home","work"]));
 
-    const file = new MockFileModel("/test/home/fixroof.md",{});
+    const file = new MockFileModel("/test/","/test/home/fixroof.md",{});
     let prop = propSettings.adaptToProperty(file);
 
     test('test if value is loaded correctly', () => {
@@ -36,7 +36,7 @@ describe('toplevelfolderpropertysettings: adapt to property with wrong input - d
     let propSettings = new ToplevelFolderPropertySettings("title");
     propSettings.setProjects(new Whitelist(["home","work"]));
 
-    const file = new MockFileModel("/test/home/fixroof.md",{});
+    const file = new MockFileModel("/test/","/test/home/fixroof.md",{});
 
     test('test if error is thrown correctly', () => {
         expect(() => {
@@ -51,7 +51,7 @@ describe('toplevelfolderpropertysettings: adapt to property with wrong input - w
     let propSettings = new ToplevelFolderPropertySettings("title");
     propSettings.setDefaultValue("home");
 
-    const file = new MockFileModel("/test/home/fixroof.md",{});
+    const file = new MockFileModel("/test/","/test/home/fixroof.md",{});
 
     test('test if error is thrown correctly', () => {
         expect(() => {

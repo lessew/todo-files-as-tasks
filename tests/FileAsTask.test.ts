@@ -7,7 +7,7 @@ import { WhitelistYAMLPropertySettings } from "../src/core/Properties/WhitelistY
 
 
 describe('FileAsTask: constructor and getter', () => {
-    let file = new MockFileModel("/path",{context:"Read"});
+    let file = new MockFileModel("/path","/path",{context:"Read"});
     let settings = new Settings().add(new WhitelistYAMLPropertySettings("context","Desk",new Whitelist(["Read","Desk"])))
 
     test('constructor and getter', () => {    
@@ -20,7 +20,7 @@ describe('FileAsTask: constructor and getter', () => {
 
 
 describe('FileAsTask: setter', () => {
-    let file = new MockFileModel("/path",{context:"Read"});
+    let file = new MockFileModel("/path","/path",{context:"Read"});
     let settings = new Settings().add(new WhitelistYAMLPropertySettings("context","Desk",new Whitelist(["Read","Desk"])))
 
     test('constructor and getter', async () => {    
