@@ -3,6 +3,7 @@ import { FileModel } from "./FileModel";
 export abstract class FolderModel{
     name:string;
     path:string;
+    root:string;
     children:(FileModel | FolderModel)[];
 
     constructor(){ // use constructor in obsidianfolder class to load 
@@ -40,12 +41,18 @@ export abstract class FolderModel{
     getFolderPaths():string[]{
         let result:string[] = [];
         let folders = this.getFolders().forEach(f => {
-            result.push(f.path)
+            result.push(f.getPathFromRoot())
         })
         return result;
     }
 
+    getFullPath():string{
+        return this.path;
+    }
 
+    getPathFromRoot():string{
+        return this.path.substring(this.root.length);
+    }
 
     static isFolderModel(r:FileModel | FolderModel): r is FolderModel{
         return 'children' in r;

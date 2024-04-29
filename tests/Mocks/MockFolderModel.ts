@@ -4,11 +4,13 @@ import { MockFileModel } from "./MockFileModel";
 
 export class MockFolderModel extends FolderModel{
     path:string;
+    root:string;
     children:(FileModel | FolderModel)[];
     
-    constructor(path:string,children:(MockFileModel | MockFolderModel)[]){
+    constructor(root:string,path:string,children:(MockFileModel | MockFolderModel)[]){
         super();
         this.path = path;
+        this.root = root;
         this.children = children;
     }
 }
