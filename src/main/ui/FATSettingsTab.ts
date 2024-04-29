@@ -13,7 +13,7 @@ export class FATSettingTab extends PluginSettingTab {
 	display(): void {
 		const {containerEl} = this;
 		containerEl.empty();
-        containerEl.createEl("h1",{text:"Yatodo App"})
+        containerEl.createEl("h1",{text:"Files As Tasks: Treat each file as a single task"})
         this.setContextValues(containerEl);
         this.setStatusValues(containerEl);
         this.setStarredValues(containerEl);
