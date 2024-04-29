@@ -34,7 +34,7 @@ export class BooleanYAMLProperty implements Property{
             this.file.setYAMLProperty(this.propName,val);
         }
         else{
-            console.error(`Can't adjust to value '${val}' as it is not part of ${this.whitelist.toString()}`)
+            //console.log(`Can't adjust to value '${val}' as it is not part of ${this.whitelist.toString()}`)
         }
     }
     getValue(): string {
