@@ -10,6 +10,7 @@
 		"copy-to-brain": "cp vault/.obsidian/plugins/yatodo-app/* ../../../../Dropbox/Brain/.obsidian/plugins/yatodo-app/",
 		"version": "node version-bump.mjs && git add manifest.json versions.json",
 		"reset-test-vault": "cp -r vault/todo-home-base/* vault/todo-home/",
+		"reset-settings": "cp src/test/deploy/data-backup.json vault/.obsidian/plugins/yatodo-app/data.json",
 		"test": "jest"
 	},
 	"keywords": [],

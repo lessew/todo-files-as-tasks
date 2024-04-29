@@ -7,26 +7,24 @@
         },
         {
             "propName":"starred",
-            "defaultValue":"false",
-            "whitelist":["true","false"],
+            "defaultValue":"✰",
+            "whitelist":["✰","⭐"],
             "type":"booleanYAML"
         },
         {
             "propName":"project",
-            "defaultValue":"home",
-            "whitelist":["home","work"],
             "type":"toplevelfolder"
         },
         {
             "propName":"context",
-            "defaultValue":"desk",
-            "whitelist":["phone","desk"],
+            "defaultValue":"None",
+            "whitelist":["Desk","Deep","Phone","Read","None"],
             "type":"whitelistYAML"
         },
         {
             "propName":"status",
-            "defaultValue":"desk",
-            "whitelist":["Inbox","Done","Waiting","Deferred"],
+            "defaultValue":"Inbox",
+            "whitelist":["Inbox","Next","Deferred","Waiting","Done"],
             "type":"whitelistYAML"
         }
     ]
