@@ -60,7 +60,7 @@ class CreateTaskModal extends Modal{
         .setName("Project")
         .addDropdown((dropdown) =>
             dropdown
-            //.addOptions(FATSettingsHelper.allowedValuesToRecord(this.settings.project.allowedValues!))
+            .addOptions(this.settings.get("project").whitelist!.toRecord())
             .addOption("--Select Project--","--Select Project--")
             .onChange((value) => {
                 this.result.project = value

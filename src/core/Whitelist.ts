@@ -11,7 +11,11 @@ export class Whitelist {
     }
 
     toRecord():Record<string,string>{
-        return {}
+        let result:any = {};
+        this.values.forEach((val) =>{
+            result[val] = val;
+        })
+        return result as Record<string,string>;
     }
 
     toString():string{

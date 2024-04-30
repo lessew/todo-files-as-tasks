@@ -10,3 +10,14 @@ describe('Whitelist test', () => {
         expect(wl.contains("not")).toBe(false);
     });
 });
+
+
+describe('Whitelist toRecord', () => {
+    let wl = new Whitelist(["this","that"]);
+
+    test('Test ', () => {   
+        let r = wl.toRecord();
+        expect(r["this"]).toBe("this");
+        expect(r["that"]).toBe("that");
+    });
+});
