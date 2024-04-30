@@ -1,7 +1,6 @@
 import { FileModel } from "../../Interfaces/FileModel";
 import { Property } from "../../Interfaces/Property";
 import { Whitelist } from "../../Whitelist";
-import { BasenameProperty } from "../Basename/BasenameProperty";
 
 export class ToplevelFolderProperty implements Property{
     file: FileModel;
@@ -36,13 +35,20 @@ export class ToplevelFolderProperty implements Property{
         return this.val;
     }
 
-    getFolderPath(root:string,path:string):string{
-       const noroot = path.substring(root.length);
-       let filename = this.getFilename(path);
-       if(filename.charAt(0)=="/"){
-        filename = filename.substring(1);
+     getFolderPath(root:string,path:string):string{ // => "path","path/to/workproject/this.md"
+       let noroot = path.substring(root.length); // => /to/workproject/this.md
+       let filename = this.getFilename(path); // => this.md
+       noroot = noroot.replace(filename,""); // /to/workproject/
+       if(noroot.charAt(0)=="/"){
+            noroot = noroot.substring(1); // => to/workproject/
+       } 
+       if(noroot.endsWith("/")){
+            noroot = noroot.substring(0,noroot.length-1); // => to/workproject
+       } 
+       if(noroot==""){
+            noroot = "./";
        }
-       return noroot.replace(filename,"");
+       return noroot; // => to/workproject
     }
 
     getFilename(path:string):string{
@@ -52,9 +58,11 @@ export class ToplevelFolderProperty implements Property{
         return path.split("/").reverse()[0];
     }
 
-    getNewFullPathWithTopLevelFolder(root:string,path:string,newFoldername:string){       
-        const filename = this.getFilename(this.file.path);
-        const result = root + "/" + newFoldername + "/" + filename;
+    getNewFullPathWithTopLevelFolder(root:string,path:string,newFoldername:string){
+        // => "path","path/to/workproject/this.md","to/newproject"  
+        const filename = this.getFilename(this.file.path); // => this.md
+        const oldpath = this.getFolderPath(root,path); // => to/workproject
+        const result = path.replace(oldpath,newFoldername); // => path/to/newproject/this.md
         return result;
     }
 

@@ -17,15 +17,13 @@ describe('toplevelfolderproperty:getFolderPath', () => {
     test('correct values', () => {
         expect(prop.getFolderPath("path","path/to/workproject/this.md")).toBe("to/workproject")
         expect(prop.getFolderPath("path","path/to/workproject/this")).toBe("to/workproject")
-        expect(prop.getFolderPath("","this")).toBe(undefined)
-        expect(prop.getFolderPath("","/this")).toBe("")
-
+        expect(prop.getFolderPath("","this")).toBe("./")
+        expect(prop.getFolderPath("","/this")).toBe("./")
     });  
 }); 
 
 describe('toplevelfolderproperty:getNewFullPathWithTopLevelFolder', () => {
     let prop = Helper.getToplevelFolderProperty();
-
     test('correct values', () => {
         expect(prop.getNewFullPathWithTopLevelFolder("path","path/to/workproject/this.md","to/newproject"))
         .toBe("path/to/newproject/this.md")
@@ -35,10 +33,9 @@ describe('toplevelfolderproperty:getNewFullPathWithTopLevelFolder', () => {
     });  
     test('incorrect values', () =>{
         expect(prop.getNewFullPathWithTopLevelFolder("path","path/to/workproject/.md","newproject"))
-        .toBe("path/to/newproject/.md")
+        .toBe("path/newproject/.md")
     })
 }); 
-
 
 
 describe('toplevelfolderproperty:setValue', () => {
