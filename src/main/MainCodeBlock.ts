@@ -16,6 +16,7 @@ export class MainCodeBlock{
     el:HTMLElement;
     settings:Settings;
     app:App;
+    root:string;
 
     constructor(source:string,el:HTMLElement,settings:Settings,app:App){
         this.source = source;
@@ -44,6 +45,7 @@ export class MainCodeBlock{
             this.displayUserError(rootPath);
             return;
         }
+        this.root = rootPath;
 
         ObsidianWrapper.getInstance().addMainCodeBlock(this);
 
@@ -88,7 +90,7 @@ export class MainCodeBlock{
     }
 
     displayCreateTaskButton():void{
-        const view = new CreateTaskButtonView(this.app,this.settings);
+        const view = new CreateTaskButtonView(this.root,this.app,this.settings);
         view.build(this.el);
     }
 

@@ -36,8 +36,8 @@ export class ObsidianFile implements FileModel{
         await obsidianWrapper.setMeta(this.file,name,value);
     }
 
-    async createMarkdownFile(path: string): Promise<void> {
+    static async createMarkdownFile(root:string, path: string): Promise<void> {
         const wrapper = ObsidianWrapper.getInstance();
-        wrapper.createEmptyFile(path);
+        await wrapper.createEmptyFile(root + "/" + path);        
     }
 }

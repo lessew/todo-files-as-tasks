@@ -1,16 +1,25 @@
 import { App, Modal, Setting } from "obsidian";
 import { ObsidianWrapper } from "../obsidian/ObsidianWrapper";
 import { Settings } from "../../core/Settings";
+import { BasenamePropertySettings } from "src/core/Properties/Basename/BasenamePropertySettings";
+import { PropertySettings } from "src/core/Interfaces/PropertySettings";
+import { stringify } from "querystring";
+import { ToplevelFolderProperty } from "src/core/Properties/ToplevelFolder/ToplevelFolderProperty";
+import { ToplevelFolderPropertySettings } from "src/core/Properties/ToplevelFolder/ToplevelFolderPropertySettings";
+import { BooleanYAMLPropertySettings } from "src/core/Properties/BooleanYAML/BooleanYAMLPropertySettings";
+import { WhitelistYAMLPropertySettings } from "src/core/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
+import { createFileAsTask } from "../obsidian/CreateFileAsTask";
 
 
 export class CreateTaskButtonView{
     obsidianApp:App;
-    projects:string[];
     settings:Settings;
+    root:string
 
-    constructor(app:App,settings:Settings){
+    constructor(root:string,app:App,settings:Settings){
         this.obsidianApp = app;
         this.settings = settings;
+        this.root = root;
     }
 
     build(rootElement:HTMLElement):void{
@@ -19,9 +28,9 @@ export class CreateTaskButtonView{
     }
 
     handleEvent(event:Event){
-        const m:CreateTaskModal =  new CreateTaskModal(this.obsidianApp,this.settings,(result:any) => {
+        const m:CreateTaskModal =  new CreateTaskModal(this.obsidianApp,this.settings,async (result:Record<string,string>) => {
             //FileAsTask.create(result.project,result.title);
-           
+           await createFileAsTask(this.root,result,this.settings);
             ObsidianWrapper.getInstance().reloadUI();
         });
         m.open();
@@ -30,17 +39,21 @@ export class CreateTaskButtonView{
 
 // TODO: add properties and settings to dropdown
 class CreateTaskModal extends Modal{
-    result:any;
+    result:Record<string,string>;
     settings:Settings;
+    root:string;
 
-    onSubmit: (result: string) => void;
+    onSubmit: (result: Record<string,string>) => void;
 
-    constructor(app: App,settings:Settings,onSubmit: (result: any) => void) {
+    constructor(app: App,settings:Settings,onSubmit: (result: Record<string,string>) => void) {
         super(app);
-        this.result = {
-            title: "",
-            project: ""
-        }
+        let result:Record<string,string> = {};
+        let map:Map<string,PropertySettings>=settings.getAsMap();
+        map.forEach((value,key) =>{
+            result[key] = "";
+        })
+        this.result = result;
+
         this.onSubmit = onSubmit;
         this.settings = settings;
     }
@@ -49,25 +62,25 @@ class CreateTaskModal extends Modal{
         let { contentEl } = this;
         contentEl.createEl("h1", { text: "New Task" });
 
-        new Setting(contentEl)
-        .setName("Name")
-        .addText((text) =>
-            text.onChange((value) => {
-            this.result.title = value
-            }));
+        let map:Map<string,PropertySettings> = this.settings.getAsMap();
 
-       new Setting(contentEl)
-        .setName("Project")
-        .addDropdown((dropdown) =>
-            dropdown
-            .addOptions(this.settings.get("project").whitelist!.toRecord())
-            .addOption("--Select Project--","--Select Project--")
-            .onChange((value) => {
-                this.result.project = value
-            })
-            .setValue("--Select Project--")
-        );
-        
+        map.forEach((value,key) =>{
+            let t = value.getType();
+            if(t=="basename"){
+                this.baseNameSetting(value as BasenamePropertySettings,contentEl);
+            }
+            else if(t=="toplevelfolder"){
+                this.topLevelFolderSetting(value as ToplevelFolderPropertySettings,contentEl);
+            }
+            else if(t=="booleanYAML"){
+                this.booleanYAMLSetting(value as BooleanYAMLPropertySettings,contentEl);
+            }
+            else if(t=="whitelistYAML"){
+                this.whitelistYAMLSetting(value as WhitelistYAMLPropertySettings,contentEl);
+            }
+        })
+
+       
         new Setting(contentEl)
         .addButton((btn) =>
             btn
@@ -82,5 +95,58 @@ class CreateTaskModal extends Modal{
     onClose() {
         let { contentEl } = this;
         contentEl.empty();
+    }
+
+    baseNameSetting(propSetting:BasenamePropertySettings,contentEl:HTMLElement):void{
+        new Setting(contentEl)
+        .setName(propSetting.propName)
+        .addText((text) =>
+            text.onChange((value) => {
+                this.result[propSetting.propName] = value
+            }));
+    }
+
+    topLevelFolderSetting(propSetting:ToplevelFolderPropertySettings,contentEl:HTMLElement):void{
+        new Setting(contentEl)
+            .setName(propSetting.propName)
+            .addDropdown((dropdown) =>
+                dropdown
+                .addOptions(propSetting.whitelist.toRecord())
+                .onChange((value) => {
+                    this.result[propSetting.propName] = value;
+                })
+                .setValue(propSetting.defaultValue)
+            );
+            this.result[propSetting.propName] = propSetting.defaultValue;
+    }
+
+    booleanYAMLSetting(propSetting:BooleanYAMLPropertySettings,contentEl:HTMLElement):void{
+        new Setting(contentEl)
+            .setName(propSetting.propName)
+            .addDropdown((dropdown) =>
+                dropdown
+                .addOptions(propSetting.whitelist.toRecord())
+                .onChange((value) => {
+                    this.result[propSetting.propName] = value;
+                })
+                .setValue(propSetting.defaultValue)
+            );
+            this.result[propSetting.propName] = propSetting.defaultValue;
+
+    }
+
+    whitelistYAMLSetting(propSetting:WhitelistYAMLPropertySettings,contentEl:HTMLElement):void{
+        new Setting(contentEl)
+            .setName(propSetting.propName)
+            .addDropdown((dropdown) =>
+                dropdown
+                .addOptions(propSetting.whitelist.toRecord())
+                .onChange((value) => {
+                    this.result[propSetting.propName] = value;
+                })
+                .setValue(propSetting.defaultValue)
+            );
+            this.result[propSetting.propName] = propSetting.defaultValue;
+
     }
 }

@@ -30,7 +30,13 @@ export class ObsidianWrapper{
     }
 
     getTFile(path:string):TFile{
-        return this.obsidianApp.vault.getAbstractFileByPath(path) as TFile;
+        let file = this.obsidianApp.vault.getAbstractFileByPath(path);
+        if(file==null){
+            throw new Error(`File not found on disk: ${path}`);
+        }
+        else{
+            return file as TFile;
+        }
     }
 
     getTFolder(path:string):TFolder{
@@ -53,8 +59,8 @@ export class ObsidianWrapper{
         })
     }
 
-    createEmptyFile(path:string):void{
-        this.obsidianApp.vault.create(path,"");
+    async createEmptyFile(path:string):Promise<TFile>{
+        return this.obsidianApp.vault.create(path,"");
     }
 
     async moveFile(tf:TFile,path:string):Promise<void>{
@@ -73,6 +79,6 @@ export class ObsidianWrapper{
                     main.reload();
                 });
             }
-        ,150)  
+        ,350)  
     }
 }
