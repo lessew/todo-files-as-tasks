@@ -12,6 +12,7 @@ import { FileAsTaskCollection } from "src/core/FileAsTaskCollection";
 import { Whitelist } from "src/core/Whitelist";
 
 // TODO fix memory leak at update()
+// TODO debug special cases (/ " etc in title on update)
 export class MainCodeBlock{
     source:string;
     el:HTMLElement;
