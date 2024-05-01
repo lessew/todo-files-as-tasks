@@ -45,6 +45,7 @@ export class Settings {
     }
 }
 
+// TODO add errands to context defaults
 export const DEFAULT_SETTINGS:Settings = new Settings()
     .add(new BasenamePropertySettings("title"))
     .add(new ToplevelFolderPropertySettings("project"))
