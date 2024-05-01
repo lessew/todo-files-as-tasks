@@ -1,4 +1,3 @@
-import { Whitelist } from "./Whitelist";
 
 export enum FilterOperator {
     include="include",
@@ -7,7 +6,6 @@ export enum FilterOperator {
 
 export class Filter {
     propertyName:string;
-    //whitelist?:Whitelist;
     propertyValue:string;
     operator:FilterOperator;
 
@@ -17,11 +15,4 @@ export class Filter {
         this.operator = op;
         return this;
     }
-
-    /*
-    setWhitelist(wl:Whitelist):Filter{
-        this.whitelist = wl;
-        return this;
-    }
-    */
 }
