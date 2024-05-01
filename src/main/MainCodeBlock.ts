@@ -11,6 +11,7 @@ import { FolderModel } from "src/core/Interfaces/FolderModel";
 import { FileAsTaskCollection } from "src/core/FileAsTaskCollection";
 import { Whitelist } from "src/core/Whitelist";
 
+// TODO fix memory leak at update()
 export class MainCodeBlock{
     source:string;
     el:HTMLElement;
