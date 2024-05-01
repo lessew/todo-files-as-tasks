@@ -14,6 +14,9 @@ export class FATSettingTab extends PluginSettingTab {
 		const {containerEl} = this;
 		containerEl.empty();
         containerEl.createEl("h1",{text:"Files As Tasks: Treat each file as a single task"})
+        
+        // TODO use iterator, add custom fields
+        
         this.setContextValues(containerEl);
         this.setStatusValues(containerEl);
         this.setStarredValues(containerEl);

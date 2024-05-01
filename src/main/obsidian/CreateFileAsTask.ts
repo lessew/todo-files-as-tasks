@@ -7,8 +7,7 @@ import { BooleanYAMLProperty } from "src/core/Properties/BooleanYAML/BooleanYAML
 import { WhitelistYAMLProperty } from "src/core/Properties/WhitelistYAML/WhitelistYAMLProperty";
 
 export async function createFileAsTask(root:string, data:Record<string,string>,settings:Settings){
-    let project = settings.get("project") as ToplevelFolderPropertySettings;
-    let title = settings.get("title") as BasenamePropertySettings;
+    // TODO do not hardcode this. 
     let path = data["project"] + "/" + data["title"] + ".md";
     await ObsidianFile.createMarkdownFile(root,path);
 

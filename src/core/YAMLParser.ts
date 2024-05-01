@@ -2,7 +2,6 @@ import * as yaml from 'js-yaml'
 import { Filter, FilterOperator } from './Filter';
 import { FATError } from './Error';
 import { Settings } from './Settings';
-import { PropertySettings } from './Interfaces/PropertySettings';
 
 export class YAMLParser{
     source:string;

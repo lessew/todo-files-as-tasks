@@ -7,7 +7,7 @@ import { MainCodeBlock } from "../MainCodeBlock";
 ** - the obsidian app (for file mutation) 
 ** - File-As-Tasks codeblocks (for refreshing)
 */ 
-export class ObsidianWrapper{
+export class ObsidianWrapper{ // TODO rename to facade
     private static instance:ObsidianWrapper;
     obsidianApp:App;
     rootPath:string;
