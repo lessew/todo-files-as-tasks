@@ -1,3 +1,4 @@
+export {}
 // TODO test craetion of task
 
 describe('Create file as task, write to disk', () => {
