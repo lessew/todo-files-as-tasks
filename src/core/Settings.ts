@@ -40,10 +40,6 @@ export class Settings {
         })
         return result;
     }
-
-    static loadFromJSON(json:any):Settings{
-        return new Settings();
-    }
 }
 
 // TODO add errands to context defaults
