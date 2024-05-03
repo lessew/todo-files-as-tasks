@@ -87,7 +87,7 @@ export class MainCodeBlock{
         fileAsTaskCollection.bulkFilterBy(filters);
         //fileAsTaskCollection.groupBy('project');
         //fileAsTaskCollection.sortBy('context','ASC');
-        let view = new TaskListView(fileAsTaskCollection,this.app);
+        let view = new TaskListView(fileAsTaskCollection,this.settings,this.app);
         view.build(this.el);
     }
 

@@ -24,6 +24,10 @@ export class FileAsTask{
         return this.properties[propName];
     }
 
+    getProperties():Record<string,Property>{
+       return this.properties;
+    }
+
     get(propName:string):string{
         return this.properties[propName].getValue();
     }
