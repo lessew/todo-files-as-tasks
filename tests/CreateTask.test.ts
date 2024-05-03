@@ -1,4 +1,4 @@
-import { BasenamePropertySettings } from "src/core/Properties/Basename/BasenamePropertySettings";
+// TODO test craetion of task
 
 describe('Create file as task, write to disk', () => {
 

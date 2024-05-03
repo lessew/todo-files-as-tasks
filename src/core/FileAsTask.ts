@@ -4,6 +4,12 @@ import { Settings } from "./Settings";
 
 export class FileAsTask{
     file:FileModel;
+    static PROJECT_FIELD = "project";
+    static TITLE_FIELD = "title";
+
+    static isReservedField(f:string):boolean{
+        return (f==FileAsTask.PROJECT_FIELD || f==FileAsTask.TITLE_FIELD);
+    }
 
     // TODO make this private
     properties:Record<string,Property>;
