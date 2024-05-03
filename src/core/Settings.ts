@@ -6,6 +6,7 @@ import { WhitelistYAMLPropertySettings } from "./Properties/WhitelistYAML/Whitel
 import { Whitelist } from "./Whitelist";
 import { PropertySettings } from "./Interfaces/PropertySettings";
 import { Property } from "./Interfaces/Property";
+import { FileAsTask } from "./FileAsTask";
 
 
 export class Settings {
@@ -47,8 +48,8 @@ export class Settings {
 
 // TODO add errands to context defaults
 export const DEFAULT_SETTINGS:Settings = new Settings()
-    .add(new BasenamePropertySettings("title"))
-    .add(new ToplevelFolderPropertySettings("project"))
+    .add(new BasenamePropertySettings(FileAsTask.TITLE_FIELD))
+    .add(new ToplevelFolderPropertySettings(FileAsTask.PROJECT_FIELD))
     .add(new BooleanYAMLPropertySettings("starred","✰", new Whitelist(["✰","⭐"])))
     .add(new WhitelistYAMLPropertySettings("context","None", new Whitelist(["Desk","Deep","Phone","Read","None"])))
     .add(new WhitelistYAMLPropertySettings("status","Inbox", new Whitelist(["Inbox","Next","Deferred","Waiting","Done"])));

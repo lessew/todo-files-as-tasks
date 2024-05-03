@@ -34,7 +34,6 @@ describe('FileAsTask: setter', () => {
 
 describe('FileAsTask: is reserved field', () => {
  
-    
     test('is reserved: expect true',  () => {    
         let reserved1 = FileAsTask.PROJECT_FIELD;
         let reserved2 = FileAsTask.TITLE_FIELD;
