@@ -1,14 +1,11 @@
-import { App } from "obsidian";
-import { BasenamePropertySettings } from "src/core/Properties/Basename/BasenamePropertySettings";
-import { ToplevelFolderPropertySettings } from "src/core/Properties/ToplevelFolder/ToplevelFolderPropertySettings";
 import { Settings } from "src/core/Settings";
 import { ObsidianFile } from "./ObsidianFile";
 import { BooleanYAMLProperty } from "src/core/Properties/BooleanYAML/BooleanYAMLProperty";
 import { WhitelistYAMLProperty } from "src/core/Properties/WhitelistYAML/WhitelistYAMLProperty";
+import { FileAsTask } from "src/core/FileAsTask";
 
 export async function createFileAsTask(root:string, data:Record<string,string>,settings:Settings){
-    // TODO do not hardcode this. 
-    let path = data["project"] + "/" + data["title"] + ".md";
+    let path = data[FileAsTask.PROJECT_FIELD] + "/" + data[FileAsTask.TITLE_FIELD] + ".md";
     await ObsidianFile.createMarkdownFile(root,path);
 
     setTimeout(() =>{
