@@ -10,12 +10,13 @@ export class FileAsTaskCollection{
     private rootFolder:FolderModel;
     private filesAsTask:FileAsTask[];
     private settings:Settings;
+    private filters:Filter[];
     
     constructor(rf:FolderModel,settings:Settings){
         this.rootFolder = rf;
         this.settings = settings;
         this.loadFilesAsTask();
-
+        this.filters = [];
     }
 
     private loadFilesAsTask(){
@@ -45,6 +46,7 @@ export class FileAsTaskCollection{
             }
         })
         this.filesAsTask = filtered;
+        this.filters.push(filter);
         return this;
     }
 
@@ -57,5 +59,11 @@ export class FileAsTaskCollection{
 
     get():FileAsTask[]{
         return this.filesAsTask;
+    }
+
+    async update():Promise<void>{
+        await this.rootFolder.reload();
+        this.loadFilesAsTask();
+        this.bulkFilterBy(this.filters);
     }
 }

@@ -1,5 +1,5 @@
 ---
+starred: ⭐
 context: Read
 status: Waiting
-starred: ⭐
 ---

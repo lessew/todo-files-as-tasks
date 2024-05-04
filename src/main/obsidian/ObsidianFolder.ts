@@ -18,20 +18,35 @@ export class ObsidianFolder extends FolderModel{
         this.path = path;
         this.root = root;
         this.children = [];
+    }
+
+    static async create(root:string,path:string):Promise<ObsidianFolder>{
+        let f = new ObsidianFolder(root,path);
+        await f.load();
+        return f;
+    }
+
+    private async load():Promise<void>{
         const wrapper = ObsidianWrapper.getInstance();
-        this.folder = wrapper.getTFolder(path);
+        this.folder = await wrapper.getTFolder(this.path);
 
         this.name = this.folder.name;
 
-        this.folder.children.forEach(child => {
+        for(let i=0;i<this.folder.children.length;i++){
+            let child = this.folder.children[i];
             if(child instanceof TFolder){
-                let childFolder = new ObsidianFolder(this.root,child.path);
+                let childFolder = await ObsidianFolder.create(this.root,child.path);
                 this.children.push(childFolder);
             }
             else if(child instanceof TFile){
-                let childFile = new ObsidianFile(this.root,child.path);
+                let childFile = await ObsidianFile.create(this.root,child.path);
                 this.children.push(childFile);
             }
-        });
+        }
+    }
+
+    async reload():Promise<void>{
+        this.children = [];
+        await this.load();
     }
 }

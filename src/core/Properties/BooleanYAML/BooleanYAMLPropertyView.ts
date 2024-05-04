@@ -38,6 +38,6 @@ export class BooleanYAMLPropertyView extends PropertyView{
     }
 
     refreshUI():void{
-        ObsidianWrapper.getInstance().reloadUI();
+        ObsidianWrapper.getInstance().reload();
     }
 }

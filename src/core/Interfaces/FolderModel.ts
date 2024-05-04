@@ -58,6 +58,11 @@ export abstract class FolderModel{
         return pfr;
     }
 
+    /*
+    **  Reloads the folder and all its subfolders and files from filesystem
+    */
+    abstract reload():Promise<void>;
+
     static isFolderModel(r:FileModel | FolderModel): r is FolderModel{
         return 'children' in r;
     }

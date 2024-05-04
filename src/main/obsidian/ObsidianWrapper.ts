@@ -1,5 +1,6 @@
 import { App,TFile,normalizePath, TFolder, CachedMetadata } from "obsidian";
 import { MainCodeBlock } from "../MainCodeBlock";
+import { Observer } from "src/core/Interfaces/Observer";
 
 
 /*
@@ -11,26 +12,23 @@ export class ObsidianWrapper{ // TODO rename to facade
     private static instance:ObsidianWrapper;
     obsidianApp:App;
     rootPath:string;
-    blocks:MainCodeBlock[];
+    observers:Observer[];
    
     public static async init(app:App){
         if(typeof ObsidianWrapper.instance === "undefined"){
             ObsidianWrapper.instance = new ObsidianWrapper();
             ObsidianWrapper.instance.obsidianApp = app;
-            ObsidianWrapper.instance.blocks = [];
+            ObsidianWrapper.instance.observers = [];
         }
-    }
-
-    public addMainCodeBlock(block:MainCodeBlock):void{
-        this.blocks.push(block);
     }
 
     public static getInstance():ObsidianWrapper{
         return ObsidianWrapper.instance;
     }
 
-    getTFile(path:string):TFile{
-        let file = this.obsidianApp.vault.getAbstractFileByPath(path);
+    // TODO how to reload not using cache?
+    async getTFile(path:string):Promise<TFile>{
+        let file = await this.obsidianApp.vault.getAbstractFileByPath(path);
         if(file==null){
             throw new Error(`File not found on disk: ${path}`);
         }
@@ -39,8 +37,9 @@ export class ObsidianWrapper{ // TODO rename to facade
         }
     }
 
-    getTFolder(path:string):TFolder{
-        let folder = this.obsidianApp.vault.getAbstractFileByPath(path);
+    // TODO how to reload not using cache?
+    async getTFolder(path:string):Promise<TFolder>{
+        let folder = await this.obsidianApp.vault.getAbstractFileByPath(path);
         if(folder instanceof TFolder){
             return folder;
         }
@@ -72,7 +71,15 @@ export class ObsidianWrapper{ // TODO rename to facade
         return normalizePath(rp);
     }
 
-    reloadUI():void{
+    subscribe(observer:Observer):void{
+        this.observers.push(observer);
+    }
+
+    async reload():Promise<void>{
+        for(let i=0;i<this.observers.length;i++){
+            await this.observers[i].update();
+        }
+        /*
         setTimeout(
             () => {
                 this.blocks.forEach((main) =>{
@@ -80,5 +87,6 @@ export class ObsidianWrapper{ // TODO rename to facade
                 });
             }
         ,350)  
+        */
     }
 }

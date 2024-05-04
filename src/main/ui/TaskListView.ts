@@ -11,19 +11,30 @@ import { WhitelistYAMLProperty } from "src/core/Properties/WhitelistYAML/Whiteli
 import { BooleanYAMLProperty } from "src/core/Properties/BooleanYAML/BooleanYAMLProperty";
 import { LinkView } from "./LinkView";
 import { Settings } from "src/core/Settings";
+import { ObsidianWrapper } from "../obsidian/ObsidianWrapper";
+import { Observer } from "src/core/Interfaces/Observer";
 
-export class TaskListView {
+export class TaskListView implements Observer{
     obsidianApp:App;
     fileAsTaskCollection:FileAsTaskCollection;
     settings:Settings;
+    rootElement:HTMLElement;
     
     constructor(fatc:FileAsTaskCollection,settings:Settings,app:App){
         this.obsidianApp = app;
         this.fileAsTaskCollection = fatc;
         this.settings = settings;
+        ObsidianWrapper.getInstance().subscribe(this);
+    }
+
+    async update():Promise<void>{
+        this.rootElement.innerHTML = "";
+        await this.fileAsTaskCollection.update();
+        this.build(this.rootElement);
     }
 
     build(rootElement:HTMLElement):HTMLElement{
+        this.rootElement = rootElement;
         this.createTable(rootElement);
         return rootElement;
     }
@@ -42,7 +53,6 @@ export class TaskListView {
         head.createEl("th",{text:"Starred"});
         head.createEl("th",{text:"Context"});
         head.createEl("th",{text:"Status"});
-
     }
 
     private createRows(tableElementToAttachRowTo:HTMLTableElement){

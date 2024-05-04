@@ -32,7 +32,7 @@ export class MainCodeBlock{
         this.load();
     }
 
-    load():void{
+    async load():Promise<void>{
         const parser:YAMLParser = new YAMLParser();
         
         const yamlParseResult = parser.loadSource(this.source);
@@ -49,9 +49,7 @@ export class MainCodeBlock{
         }
         this.root = rootPath;
 
-        ObsidianWrapper.getInstance().addMainCodeBlock(this);
-
-        const rootFolder = new ObsidianFolder(rootPath,rootPath);
+        const rootFolder = await ObsidianFolder.create(rootPath,rootPath);
         this.settings.get("project").whitelist = new Whitelist(rootFolder.getFolderPaths());
         this.settings.get("project").defaultValue = rootFolder.getFolderPaths()[0];
         
@@ -62,7 +60,7 @@ export class MainCodeBlock{
         }
 
         if(action==YAMLParser.ACTION_LIST){
-           this.displayActionList(parser,rootFolder)
+           await this.displayActionList(parser,rootFolder)
         }
         else if(action==YAMLParser.ACTION_CREATE_BUTTON){
            this.displayCreateTaskButton();
@@ -77,7 +75,7 @@ export class MainCodeBlock{
         this.el.createEl("div",{text:msg});
     }
 
-    displayActionList(parser:YAMLParser,rootFolder:FolderModel):void{
+    async displayActionList(parser:YAMLParser,rootFolder:FolderModel):Promise<void>{
         const filters = parser.parseFilters(this.settings);
         if(FATError.isError(filters)){
             this.displayUserError(filters);

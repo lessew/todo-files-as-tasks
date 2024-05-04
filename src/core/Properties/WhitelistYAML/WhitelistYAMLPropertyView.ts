@@ -46,7 +46,7 @@ export class WhitelistYAMLPropertyView extends PropertyView{
     }
     
     refreshUI():void{
-        ObsidianWrapper.getInstance().reloadUI();
+        ObsidianWrapper.getInstance().reload();
     }
 }
 

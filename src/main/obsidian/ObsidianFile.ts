@@ -12,8 +12,17 @@ export class ObsidianFile implements FileModel{
     constructor(root:string,path:string){
         this.path = path;
         this.root = root;
+    }
+
+    public static async create(root:string,path:string):Promise<ObsidianFile>{
+        let f = new ObsidianFile(root,path);
+        await f.loadTFile();
+        return f;
+    }
+
+    private async loadTFile():Promise<void>{
         const wrapper = ObsidianWrapper.getInstance();
-        this.file = wrapper.getTFile(path);
+        this.file = await wrapper.getTFile(this.path);
         this.name = this.file.name;
     }
 

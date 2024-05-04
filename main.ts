@@ -12,9 +12,9 @@ export default class FileAsTaskPlugin extends Plugin {
 	async onload() {
 		await this.loadSettings();
 		ObsidianWrapper.init(this.app); 
-		this.registerMarkdownCodeBlockProcessor("fat", (source, el, ctx) => {
+		this.registerMarkdownCodeBlockProcessor("fat", async (source, el, ctx) => {
 			let block = new MainCodeBlock(source,el,this.settings,this.app);
-			block.load();
+			await block.load();
 		});
 		this.addSettingTab(new FATSettingTab(this.app, this));
 		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.

@@ -31,7 +31,7 @@ export class ToplevelFolderPropertyView extends PropertyView{
     }
 
     refreshUI():void{
-        ObsidianWrapper.getInstance().reloadUI();
+        ObsidianWrapper.getInstance().reload();
     }
 }
 

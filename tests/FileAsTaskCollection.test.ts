@@ -117,4 +117,12 @@ describe('Filter By not (single)', () => {
 });
 
 
+// TODO: implement test
+describe('Rebuild()', () => {
+    test('empty test', () => {   
+        expect(true).toBe(true);
+    });
+});
+
+
 
