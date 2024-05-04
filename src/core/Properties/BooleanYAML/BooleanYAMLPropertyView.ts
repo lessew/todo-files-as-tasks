@@ -32,12 +32,14 @@ export class BooleanYAMLPropertyView extends PropertyView{
         a.addEventListener("click",this); // executes handleEvent
     }
 
-    handleEvent(event:Event){
-        this.prop.toggle();
-        this.refreshUI();
+    async handleEvent(event:Event):Promise<void>{
+        await this.prop.toggle();
+        await this.refreshUI();
     }
 
-    refreshUI():void{
-        ObsidianWrapper.getInstance().reload();
+    async refreshUI():Promise<void>{
+        setTimeout(async () => {
+            await ObsidianWrapper.getInstance().reload();
+        },150)
     }
 }

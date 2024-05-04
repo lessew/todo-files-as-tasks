@@ -1,5 +1,5 @@
 ---
-starred: ⭐
+starred: ✰
 context: None
 status: Inbox
 ---

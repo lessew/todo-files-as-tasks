@@ -31,12 +31,13 @@ export class BooleanYAMLProperty implements Property{
 
     async setValue(val: string): Promise<void> {
         if(this.whitelist.contains(val)){
-            this.file.setYAMLProperty(this.propName,val);
+            await this.file.setYAMLProperty(this.propName,val);
         }
         else{
             //console.log(`Can't adjust to value '${val}' as it is not part of ${this.whitelist.toString()}`)
         }
     }
+    
     getValue(): string {
        if(this.val===undefined){
             const val = this.file.getYAMLProperty(this.propName);
@@ -70,9 +71,9 @@ export class BooleanYAMLProperty implements Property{
         }
     }
 
-    toggle():void{
+    async toggle():Promise<void>{
         let curval = this.getValue();
         let newval = this.getNewToggleValue(curval);
-        this.setValue(newval);
+        await this.setValue(newval);
     }
 }
