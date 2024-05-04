@@ -38,8 +38,6 @@ export class BooleanYAMLPropertyView extends PropertyView{
     }
 
     async refreshUI():Promise<void>{
-        setTimeout(async () => {
-            await ObsidianWrapper.getInstance().reload();
-        },150)
+        await ObsidianWrapper.getInstance().reload();
     }
 }

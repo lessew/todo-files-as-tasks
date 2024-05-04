@@ -1,5 +1,5 @@
 ---
 starred: ✰
 context: None
-status: Inbox
+status: Deferred
 ---

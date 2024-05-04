@@ -7,7 +7,7 @@ export abstract class FileModel{
 
     abstract move(newPath:string):Promise<void> | void;
     abstract getYAMLProperty(name:string):string | null;
-    abstract setYAMLProperty(name:string,value:string):Promise<void> | void;
+    abstract setYAMLProperty(name:string,value:string):Promise<void>;
     //abstract createMarkdownFile(root:string,path:string):Promise<FileModel>;
 
     // TODO use observer pattern to notify all properties that use one filemodel in case of update

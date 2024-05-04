@@ -53,9 +53,14 @@ export class ObsidianWrapper{ // TODO rename to facade
     }
 
     async setMeta(tf:TFile,propName:string,propValue:string):Promise<void>{
-        await this.obsidianApp.fileManager.processFrontMatter(tf,async (frontmatter) => {
+        await this.obsidianApp.fileManager.processFrontMatter(tf,(frontmatter) => {
             frontmatter[propName] = propValue;
         })
+        await this.delay(150);
+    }
+
+    delay(ms:number){
+        return new Promise( resolve => setTimeout(resolve, ms) );
     }
 
     async createEmptyFile(path:string):Promise<TFile>{

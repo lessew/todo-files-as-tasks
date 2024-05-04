@@ -1,3 +1,4 @@
 ---
-starred: ⭐
+starred: ✰
+context: Phone
 ---
