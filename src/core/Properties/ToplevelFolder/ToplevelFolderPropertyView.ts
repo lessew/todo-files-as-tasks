@@ -21,17 +21,17 @@ export class ToplevelFolderPropertyView extends PropertyView{
     }
 
     
-    handleEvent(event:Event){
-        const m:ToplevelFolderModal =  new ToplevelFolderModal(this.prop,this.prop.whitelist,(item) => {
-            this.prop.setValue(item);
-            this.refreshUI();
+    async handleEvent(event:Event){
+        const m:ToplevelFolderModal =  new ToplevelFolderModal(this.prop,this.prop.whitelist,async (item) => {
+            await this.prop.setValue(item);
+            await this.refreshUI();
         },
         this.obsidianApp);
         m.open();
     }
 
-    refreshUI():void{
-        ObsidianWrapper.getInstance().reload();
+    async refreshUI():Promise<void>{
+        await ObsidianWrapper.getInstance().reload();
     }
 }
 

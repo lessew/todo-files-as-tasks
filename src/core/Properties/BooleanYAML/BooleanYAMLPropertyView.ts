@@ -13,20 +13,6 @@ export class BooleanYAMLPropertyView extends PropertyView{
     build(rootElement:HTMLElement):void{
         let text = this.prop.getValue();
         let hover = "";
-        /*
-        this.prop.initializeValue();
-        if(!this.prop.loadedValueIsValid()){
-            text = this.statusInvalid;
-            hover = `Value in system is not a valid value`;
-        }
-        else if(this.prop.isEmptyValue()){
-            text = this.statusNotSet;
-            hover = "property has no value or is not set"
-        }
-        else{
-            text = this.prop.getValue();
-        }
-        */
 
         let a:HTMLElement = rootElement.createEl("span",{cls:"file-as-task",text:text,title:hover});
         a.addEventListener("click",this); // executes handleEvent

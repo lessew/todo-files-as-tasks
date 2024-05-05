@@ -18,7 +18,7 @@ export class WhitelistYAMLProperty implements Property{
 
     async setValue(val: string): Promise<void> {
         if(this.validate(val)){
-            this.file.setYAMLProperty(this.propName,val);
+            await this.file.setYAMLProperty(this.propName,val);
         }
         else{
             console.error(`Cannot set value to '${val}' as it is not part of the allowed value list ${this.whitelist.toString()}`)

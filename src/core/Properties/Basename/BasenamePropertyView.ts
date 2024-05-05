@@ -18,16 +18,16 @@ export class BasenamePropertyView extends PropertyView{
       edit.addEventListener("click",this); // executes this.handleEvent method
     }
 
-    handleEvent(event:Event){
-        const m:UpdateBasenameModal =  new UpdateBasenameModal(this.obsidianApp,this.prop.getValue(),(result) => {
-            this.prop.setValue(result);
-            this.refreshUI();
+    async handleEvent(event:Event){
+        const m:UpdateBasenameModal =  new UpdateBasenameModal(this.obsidianApp,this.prop.getValue(),async (result) => {
+            await this.prop.setValue(result);
+            await this.refreshUI();
         });
         m.open();
     }
 
-    refreshUI():void{
-      ObsidianWrapper.getInstance().reload();
+    async refreshUI():Promise<void>{
+      await ObsidianWrapper.getInstance().reload();
   }
 }
 
@@ -46,27 +46,25 @@ class UpdateBasenameModal extends Modal{
         let { contentEl } = this;
         contentEl.createEl("h1", { text: "Task title (and filename)" });
 
-    new Setting(contentEl)
-      .setName("Name")
-      .setClass("file-as-task")
-      .addText((text) => {
-          text.setValue(this.value);
-          text.onChange((value) => {
-            this.result = value
-          });
-        })
+        new Setting(contentEl)
+          .setName("Name")
+          .setClass("file-as-task")
+          .addText((text) => {
+              text.setValue(this.value);
+              text.onChange((value) => {
+                this.result = value
+              });
+            })
   
-      
-
-    new Setting(contentEl)
-      .addButton((btn) =>
-        btn
-          .setButtonText("Submit")
-          .setCta()
-          .onClick(() => {
-            this.close();
-            this.onSubmit(this.result);
-          }));
+        new Setting(contentEl)
+          .addButton((btn) =>
+            btn
+              .setButtonText("Submit")
+              .setCta()
+              .onClick(() => {
+                this.close();
+                this.onSubmit(this.result);
+              }));
     }
     
     onClose() {

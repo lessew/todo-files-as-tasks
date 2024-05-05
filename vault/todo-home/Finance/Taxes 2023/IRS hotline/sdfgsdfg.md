@@ -1,4 +1,0 @@
----
-starred: ✰
-context: Phone
----

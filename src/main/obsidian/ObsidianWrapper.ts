@@ -26,7 +26,6 @@ export class ObsidianWrapper{ // TODO rename to facade
         return ObsidianWrapper.instance;
     }
 
-    // TODO how to reload not using cache?
     async getTFile(path:string):Promise<TFile>{
         let file = await this.obsidianApp.vault.getAbstractFileByPath(path);
         if(file==null){
@@ -37,7 +36,6 @@ export class ObsidianWrapper{ // TODO rename to facade
         }
     }
 
-    // TODO how to reload not using cache?
     async getTFolder(path:string):Promise<TFolder>{
         let folder = await this.obsidianApp.vault.getAbstractFileByPath(path);
         if(folder instanceof TFolder){
@@ -70,6 +68,7 @@ export class ObsidianWrapper{ // TODO rename to facade
     async moveFile(tf:TFile,path:string):Promise<void>{
         //await this.obsidianApp.vault.rename(tf,path);
         await this.obsidianApp.fileManager.renameFile(tf,path);
+        await this.delay(150);
     }
 
     normalizePath(rp:string):string{
@@ -84,14 +83,5 @@ export class ObsidianWrapper{ // TODO rename to facade
         for(let i=0;i<this.observers.length;i++){
             await this.observers[i].update();
         }
-        /*
-        setTimeout(
-            () => {
-                this.blocks.forEach((main) =>{
-                    main.reload();
-                });
-            }
-        ,350)  
-        */
     }
 }
