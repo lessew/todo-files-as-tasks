@@ -31,7 +31,8 @@ export class CreateTaskButtonView{
         const m:CreateTaskModal =  new CreateTaskModal(this.obsidianApp,this.settings,async (result:Record<string,string>) => {
             //FileAsTask.create(result.project,result.title);
            await createFileAsTask(this.root,result,this.settings);
-            ObsidianWrapper.getInstance().reloadUI();
+           await ObsidianWrapper.getInstance().delay(150);
+            ObsidianWrapper.getInstance().reload();
         });
         m.open();
     }

@@ -40,7 +40,7 @@ export abstract class FolderModel{
 
     getFolderPaths():string[]{
         let result:string[] = [];
-        let folders = this.getFolders().forEach(f => {
+        this.getFolders().forEach(f => {
             result.push(f.getPathFromRoot())
         })
         return result;

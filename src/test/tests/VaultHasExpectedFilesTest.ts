@@ -26,10 +26,10 @@ export class VaultHasExpectedFilesTest{
         return this;
     }
 
-    test():VaultHasExpectedFilesTest{
+    async test():Promise<VaultHasExpectedFilesTest>{
         this.logger.heading("Testing VaultHasExpectedFiles")
         this.arrange();
-        this.act();
+        await this.act();
         this.assert();
         if(this.result!=false){
             this.result = true;
@@ -48,10 +48,10 @@ export class VaultHasExpectedFilesTest{
         this.logger.success("Completed setting up")
     }
 
-    act(){
+    async act():Promise<void>{
         this.logger.headingSub("Acting")
         this.actLoadYAML();
-        this.actLoadFolders();
+        await this.actLoadFolders();
         this.actLoadFileCollection();
     }
 
@@ -79,19 +79,13 @@ export class VaultHasExpectedFilesTest{
         this.logger.success("Successfully loaded YAML")
     }
 
-    actLoadFolders(){
-        this.rootFolder = new ObsidianFolder(this.rootPath,this.rootPath);
+    async actLoadFolders():Promise<void>{
+        this.rootFolder = await ObsidianFolder.create(this.rootPath,this.rootPath);
         let folders = this.rootFolder.getFolderPaths();
         let whitelist = new Whitelist(folders);
-        (this.settings.get("project") as ToplevelFolderPropertySettings).setProjects(whitelist);
-        (this.settings.get("project") as ToplevelFolderPropertySettings).setDefaultValue(folders[0]);
-
-
-        this.rootFolder = new ObsidianFolder(this.rootPath,this.rootPath);
-        this.folders = this.rootFolder.getFolders();
-        const folderpaths = this.rootFolder.getFolderPaths();
-
-        this.settings.get("project").whitelist = new Whitelist(folderpaths);
+        let pSettings =this.settings.get(FileAsTask.PROJECT_FIELD) as ToplevelFolderPropertySettings;
+        pSettings.setProjects(whitelist);
+        pSettings.setDefaultValue(folders[0]);
         this.logger.success("Successfully loaded folders")
     }
 

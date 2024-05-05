@@ -8,29 +8,26 @@ export async function createFileAsTask(root:string, data:Record<string,string>,s
     let path = data[FileAsTask.PROJECT_FIELD] + "/" + data[FileAsTask.TITLE_FIELD] + ".md";
     await ObsidianFile.createMarkdownFile(root,path);
 
-    setTimeout(() =>{
-        let file = new ObsidianFile(root,root + "/" + path);
-        let map = settings.getAsMap();
-        map.forEach(value => {
-            if(value.getType()=="booleanYAML"){
-                let prop = new BooleanYAMLProperty(value.propName,value.defaultValue,value.whitelist!,file);
-                if(value.propName in data){
-                    prop.setValue(data[value.propName]);
-                }
-                else{
-                    prop.setValue(value.defaultValue);
-                }
+    let file = await ObsidianFile.create(root,root + "/" + path);
+    let map = settings.getAsMap();
+    map.forEach(value => {
+        if(value.getType()=="booleanYAML"){
+            let prop = new BooleanYAMLProperty(value.propName,value.defaultValue,value.whitelist!,file);
+            if(value.propName in data){
+                prop.setValue(data[value.propName]);
             }
-            else if(value.getType()=="whitelistYAML"){
-                let prop = new WhitelistYAMLProperty(value.propName,value.defaultValue,value.whitelist!,file);
-                if(value.propName in data){
-                    prop.setValue(data[value.propName]);
-                }
-                else{
-                    prop.setValue(value.defaultValue);
-                }
+            else{
+                prop.setValue(value.defaultValue);
             }
-        })
-    },150)
-
+        }
+        else if(value.getType()=="whitelistYAML"){
+            let prop = new WhitelistYAMLProperty(value.propName,value.defaultValue,value.whitelist!,file);
+            if(value.propName in data){
+                prop.setValue(data[value.propName]);
+            }
+            else{
+                prop.setValue(value.defaultValue);
+            }
+        }
+    })
 }

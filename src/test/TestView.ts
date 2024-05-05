@@ -17,13 +17,14 @@ export class TestView{
     }
 
     async main(){
-        if(this.testVaultHasExpectedFiles()){
+        if(await this.testVaultHasExpectedFiles()){
             this.testTaskOperations();
         }
     }
 
-    testVaultHasExpectedFiles():boolean{
-        const test = new VaultHasExpectedFilesTest(this.logger).test();
+    async testVaultHasExpectedFiles():Promise<boolean>{
+        let tester = new VaultHasExpectedFilesTest(this.logger);
+        const test = await tester.test();
         return test.isSuccess();
     }
 

@@ -9,20 +9,20 @@ export class ObsidianFile implements FileModel{
     root:string;
     file:TFile;
 
-    constructor(root:string,path:string){
+    private constructor(root:string,path:string){
         this.path = path;
         this.root = root;
     }
 
-    public static async create(root:string,path:string):Promise<ObsidianFile>{
+    public static create(root:string,path:string):ObsidianFile{
         let f = new ObsidianFile(root,path);
-        await f.loadTFile();
+        f.loadTFile();
         return f;
     }
 
-    private async loadTFile():Promise<void>{
+    private loadTFile():void{
         const wrapper = ObsidianWrapper.getInstance();
-        this.file = await wrapper.getTFile(this.path);
+        this.file = wrapper.getTFile(this.path);
         this.name = this.file.name;
     }
 

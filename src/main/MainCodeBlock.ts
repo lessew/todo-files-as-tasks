@@ -75,7 +75,7 @@ export class MainCodeBlock{
         this.el.createEl("div",{text:msg});
     }
 
-    async displayActionList(parser:YAMLParser,rootFolder:FolderModel):Promise<void>{
+    displayActionList(parser:YAMLParser,rootFolder:FolderModel):void{
         const filters = parser.parseFilters(this.settings);
         if(FATError.isError(filters)){
             this.displayUserError(filters);
@@ -97,6 +97,5 @@ export class MainCodeBlock{
     displayTest(el:HTMLElement):void{
         const testView = new TestView(this.app,el);
         testView.main();
-        //testView.build(this.el);
     }
 }

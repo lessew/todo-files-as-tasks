@@ -1,5 +1,4 @@
 import { App,TFile,normalizePath, TFolder, CachedMetadata } from "obsidian";
-import { MainCodeBlock } from "../MainCodeBlock";
 import { Observer } from "src/core/Interfaces/Observer";
 
 
@@ -26,8 +25,8 @@ export class ObsidianWrapper{ // TODO rename to facade
         return ObsidianWrapper.instance;
     }
 
-    async getTFile(path:string):Promise<TFile>{
-        let file = await this.obsidianApp.vault.getAbstractFileByPath(path);
+    getTFile(path:string):TFile{
+        let file = this.obsidianApp.vault.getAbstractFileByPath(path);
         if(file==null){
             throw new Error(`File not found on disk: ${path}`);
         }
@@ -36,8 +35,8 @@ export class ObsidianWrapper{ // TODO rename to facade
         }
     }
 
-    async getTFolder(path:string):Promise<TFolder>{
-        let folder = await this.obsidianApp.vault.getAbstractFileByPath(path);
+    getTFolder(path:string):TFolder{
+        let folder = this.obsidianApp.vault.getAbstractFileByPath(path);
         if(folder instanceof TFolder){
             return folder;
         }
@@ -68,7 +67,7 @@ export class ObsidianWrapper{ // TODO rename to facade
     async moveFile(tf:TFile,path:string):Promise<void>{
         //await this.obsidianApp.vault.rename(tf,path);
         await this.obsidianApp.fileManager.renameFile(tf,path);
-        await this.delay(150);
+        await this.delay(15);
     }
 
     normalizePath(rp:string):string{
