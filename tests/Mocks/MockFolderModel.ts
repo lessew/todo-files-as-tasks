@@ -3,6 +3,10 @@ import { FolderModel } from "../../src/core/Interfaces/FolderModel";
 import { MockFileModel } from "./MockFileModel";
 
 export class MockFolderModel extends FolderModel{
+    
+    reload(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
     path:string;
     root:string;
     children:(FileModel | FolderModel)[];
@@ -13,4 +17,6 @@ export class MockFolderModel extends FolderModel{
         this.root = root;
         this.children = children;
     }
+
+    
 }
