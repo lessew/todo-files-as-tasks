@@ -29,16 +29,13 @@ export class CreateTaskButtonView{
 
     handleEvent(event:Event){
         const m:CreateTaskModal =  new CreateTaskModal(this.obsidianApp,this.settings,async (result:Record<string,string>) => {
-            //FileAsTask.create(result.project,result.title);
-           await createFileAsTask(this.root,result,this.settings);
-           await ObsidianWrapper.getInstance().delay(150);
+            await createFileAsTask(this.root,result,this.settings);
             ObsidianWrapper.getInstance().reload();
         });
         m.open();
     }
 }
 
-// TODO: add properties and settings to dropdown
 class CreateTaskModal extends Modal{
     result:Record<string,string>;
     settings:Settings;
