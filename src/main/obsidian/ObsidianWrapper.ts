@@ -53,7 +53,7 @@ export class ObsidianWrapper{ // TODO rename to facade
         await this.obsidianApp.fileManager.processFrontMatter(tf,(frontmatter) => {
             frontmatter[propName] = propValue;
         })
-        await this.delay(150);
+       // await this.delay(150);
     }
 
     delay(ms:number){
@@ -67,7 +67,7 @@ export class ObsidianWrapper{ // TODO rename to facade
     async moveFile(tf:TFile,path:string):Promise<void>{
         //await this.obsidianApp.vault.rename(tf,path);
         await this.obsidianApp.fileManager.renameFile(tf,path);
-        await this.delay(15);
+        //await this.delay(15);
     }
 
     normalizePath(rp:string):string{
@@ -79,6 +79,7 @@ export class ObsidianWrapper{ // TODO rename to facade
     }
 
     async reload():Promise<void>{
+        await this.delay(150);
         for(let i=0;i<this.observers.length;i++){
             await this.observers[i].update();
         }

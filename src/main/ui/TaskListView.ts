@@ -28,6 +28,7 @@ export class TaskListView implements Observer{
     }
 
     async update():Promise<void>{
+
         this.rootElement.innerHTML = "";
         await this.fileAsTaskCollection.update();
         this.build(this.rootElement);
