@@ -11,7 +11,13 @@ export default class FileAsTaskPlugin extends Plugin {
 
 	async onload() {
 		await this.loadSettings();
-		ObsidianWrapper.init(this.app); 
+		ObsidianWrapper.init(this.app);
+	
+		// TODO find a way to create a file using button, how to handle rootPath?
+		//const ribbon = this.addRibbonIcon('dice','Files as Task', evt: MouseEvent => {
+
+		//		})
+		
 		this.registerMarkdownCodeBlockProcessor("fat", async (source, el, ctx) => {
 			let block = new MainCodeBlock(source,el,this.settings,this.app);
 			await block.load();
