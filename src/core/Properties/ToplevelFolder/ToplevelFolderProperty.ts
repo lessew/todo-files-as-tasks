@@ -16,6 +16,7 @@ export class ToplevelFolderProperty implements Property{
         this.defaultValue = defaultValue;
     }
 
+    // TODO handle duplicate file / file exists
     async setValue(val: string):Promise<void> {
         if(!this.isValidFolderValue(val)){
             throw new Error(`Cannot move to folder ${val} as it is not part of the list of allowed folder ${this.whitelist.toString()}`);

@@ -5,9 +5,8 @@ import { WhitelistYAMLProperty } from "src/core/Properties/WhitelistYAML/Whiteli
 import { FileAsTask } from "src/core/FileAsTask";
 
 
-// TODO fix bug: create "tuin index" in tuin/
-// TODO fix memory leak in create
 // TODO add option to set default project, status, etc value
+
 export async function createFileAsTask(root:string, data:Record<string,string>,settings:Settings){
     let path = data[FileAsTask.PROJECT_FIELD] + "/" + data[FileAsTask.TITLE_FIELD] + ".md";
     await ObsidianFile.createMarkdownFile(root,path);

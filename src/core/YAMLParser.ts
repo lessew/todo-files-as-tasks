@@ -3,6 +3,7 @@ import { Filter, FilterOperator } from './Filter';
 import { FATError } from './Error';
 import { Settings } from './Settings';
 
+// TODO : use Obsidian YAML parser functions
 export class YAMLParser{
     source:string;
     yaml:unknown;

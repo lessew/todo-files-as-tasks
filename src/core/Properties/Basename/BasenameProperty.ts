@@ -13,7 +13,8 @@ export class BasenameProperty implements Property{
         this.defaultValue = defaultValue;
         this.file = file;
     }
-    
+   
+    // TODO handle duplicate file / file exsists
     async setValue(val: string): Promise<void> {
         const newValue = this.getNewFullPathWithBasename(this.file.path,val);
         await this.file.move(newValue);
