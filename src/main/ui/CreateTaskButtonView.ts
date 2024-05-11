@@ -36,7 +36,7 @@ export class CreateTaskButtonView{
     }
 }
 
-class CreateTaskModal extends Modal{
+export class CreateTaskModal extends Modal{
     result:Record<string,string>;
     settings:Settings;
     root:string;

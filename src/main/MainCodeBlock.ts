@@ -1,6 +1,5 @@
 import { App } from "obsidian";
 import { YAMLParser } from "src/core/YAMLParser";
-import { ObsidianWrapper } from "./obsidian/ObsidianWrapper";
 import { TaskListView } from "./ui/TaskListView";
 import { CreateTaskButtonView } from "./ui/CreateTaskButtonView";
 import { Settings } from "../core/Settings";
@@ -11,7 +10,6 @@ import { FolderModel } from "src/core/Interfaces/FolderModel";
 import { FileAsTaskCollection } from "src/core/FileAsTaskCollection";
 import { Whitelist } from "src/core/Whitelist";
 
-// TODO fix memory leak at update()
 // TODO debug special cases (/ " etc in title on update)
 export class MainCodeBlock{
     source:string;
