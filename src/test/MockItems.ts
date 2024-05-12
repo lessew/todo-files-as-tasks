@@ -1,4 +1,4 @@
-import { DEFAULT_SETTINGS, Settings } from "src/core/Settings";
+import { DEFAULT_SETTINGS, PluginSettings } from "src/core/PluginSettings";
 import { Whitelist } from "src/core/Whitelist";
 
 /**
@@ -72,7 +72,7 @@ action: list`;
 const settings = DEFAULT_SETTINGS;
     
 
-export function getSettings():Settings{
+export function getSettings():PluginSettings{
         return settings;
 }
 export function getYamlListAllFiles():string{

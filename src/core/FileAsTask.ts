@@ -1,6 +1,6 @@
 import { FileModel } from "./Interfaces/FileModel";
 import { Property } from "./Interfaces/Property";
-import { Settings } from "./Settings";
+import { PluginSettings } from "./PluginSettings";
 
 export class FileAsTask{
     file:FileModel;
@@ -14,7 +14,7 @@ export class FileAsTask{
     // TODO make this private
     properties:Record<string,Property>;
     
-    constructor(file:FileModel,settings:Settings){
+    constructor(file:FileModel,settings:PluginSettings){
         this.file = file;
         this.properties = settings.getProperties(file);
     }

@@ -9,14 +9,14 @@ import { Property } from "./Interfaces/Property";
 import { FileAsTask } from "./FileAsTask";
 
 
-export class Settings {
+export class PluginSettings {
     private propertySettings:Map<string,PropertySettings>;
     
     constructor(){
         this.propertySettings = new Map<string,PropertySettings>();
     }
 
-    add(s:PropertySettings):Settings{
+    add(s:PropertySettings):PluginSettings{
         this.propertySettings.set(s.propName,s);
         return this;
     }
@@ -43,7 +43,7 @@ export class Settings {
 }
 
 // TODO add errands to context defaults
-export const DEFAULT_SETTINGS:Settings = new Settings()
+export const DEFAULT_SETTINGS:PluginSettings = new PluginSettings()
     .add(new BasenamePropertySettings(FileAsTask.TITLE_FIELD))
     .add(new ToplevelFolderPropertySettings(FileAsTask.PROJECT_FIELD))
     .add(new BooleanYAMLPropertySettings("starred","✰", new Whitelist(["✰","⭐"])))

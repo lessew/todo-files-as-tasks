@@ -1,5 +1,5 @@
 import { Plugin } from 'obsidian';
-import { DEFAULT_SETTINGS, Settings } from 'src/core/Settings';
+import { DEFAULT_SETTINGS, PluginSettings } from 'src/core/PluginSettings';
 import { ObsidianWrapper } from 'src/main/obsidian/ObsidianWrapper';
 import {FATSettingTab} from "src/main/ui/FATSettingsTab"
 import { MainCodeBlock } from 'src/main/MainCodeBlock';
@@ -8,7 +8,7 @@ import { CreateTaskModal } from 'src/main/ui/CreateTaskButtonView';
 import { createFileAsTask } from "src/main/obsidian/CreateFileAsTask";
 
 export default class FileAsTaskPlugin extends Plugin {
-	settings: Settings;
+	settings: PluginSettings;
 
 	async onload() {
 		await this.loadSettings();
@@ -16,7 +16,7 @@ export default class FileAsTaskPlugin extends Plugin {
 	
 		// TODO find a way to create a file using button, how to handle rootPath?
 		const ribbon = this.addRibbonIcon('dice','Files as Task', (evt: MouseEvent) => {
-			let settings = new Settings();
+			let settings = new PluginSettings();
         	const m:CreateTaskModal =  new CreateTaskModal(this.app,this.settings,async (result:Record<string,string>) => {
          		await createFileAsTask("todo-home/",result,this.settings);
           		ObsidianWrapper.getInstance().reload();
@@ -25,7 +25,7 @@ export default class FileAsTaskPlugin extends Plugin {
 		});
 		
 		this.registerMarkdownCodeBlockProcessor("fat", async (source, el, ctx) => {
-			let block = new MainCodeBlock(source,el,this.settings,this.app);
+		let block = new MainCodeBlock(source,el,this.settings,this.app);
 			await block.load();
 		});
 		this.addSettingTab(new FATSettingTab(this.app, this));

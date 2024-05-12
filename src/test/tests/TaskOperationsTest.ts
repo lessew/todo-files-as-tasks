@@ -1,7 +1,7 @@
 import { Logger } from "../Logger";
 import { FileAsTask } from "src/core/FileAsTask";
 import { ExpectedFileType, getExpectedHolidayBillFile, getSettings } from "../MockItems";
-import { Settings } from "src/core/Settings";
+import { PluginSettings } from "src/core/PluginSettings";
 import { ObsidianFile } from "src/main/obsidian/ObsidianFile";
 import { ObsidianWrapper } from "src/main/obsidian/ObsidianWrapper";
 import { CachedMetadata } from "obsidian";
@@ -9,7 +9,7 @@ import { FileModel } from "src/core/Interfaces/FileModel";
 
 export class TaskOperationsTest{
     logger:Logger
-    settings:Settings;
+    settings:PluginSettings;
     actualHolidayBillFileModel:FileModel;
     actualHolidayBillTask:FileAsTask;
     expectedHolidayBillTask:ExpectedFileType;

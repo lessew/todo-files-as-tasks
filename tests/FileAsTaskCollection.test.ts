@@ -1,7 +1,7 @@
 import { MockFolderModel } from "./Mocks/MockFolderModel";
 import { MockFileModel } from "./Mocks/MockFileModel";
 import { FileAsTaskCollection } from "../src/core/FileAsTaskCollection";
-import { Settings } from "../src/core/Settings";
+import { PluginSettings } from "../src/core/PluginSettings";
 import { Whitelist } from "../src/core/Whitelist";
 import { WhitelistYAMLPropertySettings } from "../src/core/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
 import { Filter, FilterOperator } from "../src/core/Filter";
@@ -32,7 +32,7 @@ let testerFiles = [file1,file2,file3,file4];
 
 describe('FileAsTaskCollection: create object)', () => {
     let rootFolder = new MockFolderModel("path/","path/to/this",testerFiles);
-    let settings:Settings = new Settings()
+    let settings:PluginSettings = new PluginSettings()
     .add(new WhitelistYAMLPropertySettings("status","Inbox",new Whitelist(["Inbox","Done"])))
     .add(new WhitelistYAMLPropertySettings("context","Desk",new Whitelist(["Desk","Phone"])));
     
@@ -51,7 +51,7 @@ describe('FileAsTaskCollection: create object)', () => {
 
 describe('FileAsTaskCollection: Filter By (single)', () => {
     let rootFolder = new MockFolderModel("path/","path/to/this",testerFiles);
-    let settings:Settings = new Settings()
+    let settings:PluginSettings = new PluginSettings()
     .add(new WhitelistYAMLPropertySettings("status","Inbox",new Whitelist(["Inbox","Done"])))
     .add(new WhitelistYAMLPropertySettings("context","Desk",new Whitelist(["Desk","Phone"])));
     
@@ -67,7 +67,7 @@ describe('FileAsTaskCollection: Filter By (single)', () => {
 
 describe('Filter By (single) - invalid status value', () => {
     let rootFolder = new MockFolderModel("path/","path/to/this",testerFiles);
-    let settings:Settings = new Settings()
+    let settings:PluginSettings = new PluginSettings()
     .add(new WhitelistYAMLPropertySettings("status","Inbox",new Whitelist(["Inbox","Done"])))
     .add(new WhitelistYAMLPropertySettings("context","Desk",new Whitelist(["Desk","Phone"])));
     
@@ -84,7 +84,7 @@ describe('Filter By (single) - invalid status value', () => {
 
 describe('BulkFilterBy', () => {
     let rootFolder = new MockFolderModel("path/","path/to/this",testerFiles);
-    let settings:Settings = new Settings()
+    let settings:PluginSettings = new PluginSettings()
     .add(new WhitelistYAMLPropertySettings("status","Inbox",new Whitelist(["Inbox","Done"])))
     .add(new WhitelistYAMLPropertySettings("context","Desk",new Whitelist(["Desk","Phone"])));
     
@@ -102,7 +102,7 @@ describe('BulkFilterBy', () => {
 
 describe('Filter By not (single)', () => {
     let rootFolder = new MockFolderModel("path/","path/to/this",testerFiles);
-    let settings:Settings = new Settings()
+    let settings:PluginSettings = new PluginSettings()
     .add(new WhitelistYAMLPropertySettings("status","Inbox",new Whitelist(["Inbox","Done"])))
     .add(new WhitelistYAMLPropertySettings("context","Desk",new Whitelist(["Desk","Phone"])));
     

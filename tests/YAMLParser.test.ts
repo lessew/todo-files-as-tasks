@@ -1,14 +1,14 @@
 import { YAMLParser } from "../src/core/YAMLParser";
 import { FilterOperator } from "../src/core/Filter";
 import { FATError } from "../src/core/Error";
-import { Settings } from "../src/core/Settings";
+import { PluginSettings } from "../src/core/PluginSettings";
 import { Whitelist } from "../src/core/Whitelist";
 import { WhitelistYAMLPropertySettings } from "../src/core/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
 
 class Helper {
-    static getSettings(statusAllowedValues:string[]):Settings{
+    static getSettings(statusAllowedValues:string[]):PluginSettings{
         let wl = new Whitelist(statusAllowedValues);
-        let settings = new Settings();
+        let settings = new PluginSettings();
         settings.add(new WhitelistYAMLPropertySettings("status",statusAllowedValues[0],new Whitelist(statusAllowedValues)));
         return settings;
     }
@@ -116,7 +116,7 @@ action: list
 status: notvalidstatus`;
 
 describe('YAMLParser parse filters', () => {  
-    let settings:Settings = Helper.getSettings(["done","inbox"]);
+    let settings:PluginSettings = Helper.getSettings(["done","inbox"]);
 
     test('load correctly formatted source - filter', () => {
         let p = new YAMLParser();
@@ -135,7 +135,7 @@ describe('YAMLParser parse filters', () => {
     test('load incorrectly formatted source - filter', () => {
         let p = new YAMLParser();
         let wl = new Whitelist(["Done","Inbox"]);
-        let settings = new Settings();
+        let settings = new PluginSettings();
         settings.add(new WhitelistYAMLPropertySettings("status","Done",wl));
 
         p.loadSource(filtersIncorrect);
@@ -151,7 +151,7 @@ status: not done`;
 
 
 describe('yaml parser: parse operator test', () => {
-    let settings:Settings = Helper.getSettings(["done","inbox"]);
+    let settings:PluginSettings = Helper.getSettings(["done","inbox"]);
     test("testing parseoperator operator function", () => {
         let p = new YAMLParser();
         let result = p.parseOperator("not done");

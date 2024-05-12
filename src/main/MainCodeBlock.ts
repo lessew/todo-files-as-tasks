@@ -2,7 +2,7 @@ import { App } from "obsidian";
 import { YAMLParser } from "src/core/YAMLParser";
 import { TaskListView } from "./ui/TaskListView";
 import { CreateTaskButtonView } from "./ui/CreateTaskButtonView";
-import { Settings } from "../core/Settings";
+import { PluginSettings } from "../core/PluginSettings";
 import { FATError } from "src/core/Error";
 import { TestView } from "src/test/TestView";
 import { ObsidianFolder } from "./obsidian/ObsidianFolder";
@@ -14,11 +14,11 @@ import { Whitelist } from "src/core/Whitelist";
 export class MainCodeBlock{
     source:string;
     el:HTMLElement;
-    settings:Settings;
+    settings:PluginSettings;
     app:App;
     root:string;
 
-    constructor(source:string,el:HTMLElement,settings:Settings,app:App){
+    constructor(source:string,el:HTMLElement,settings:PluginSettings,app:App){
         this.source = source;
         this.el = el;
         this.settings = settings;
@@ -29,7 +29,22 @@ export class MainCodeBlock{
         this.el.innerHTML = "";
         this.load();
     }
+/*
+    async load():Promise<void>{
+        let parser = new YAMLParser(this.source);
+        let settings = new Settings();
+        let configuration = new Configuration(parser, settings);
+       if(configuration.actionIsActionList()){
 
+       }
+       else if(configuration.actionIsCreateButton(){
+
+       }
+       else if(configuration.actionIsTest()){
+
+       }
+    }
+*/
     async load():Promise<void>{
         const parser:YAMLParser = new YAMLParser();
         

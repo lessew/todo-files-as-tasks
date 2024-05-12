@@ -1,10 +1,8 @@
 import { App, Modal, Setting } from "obsidian";
 import { ObsidianWrapper } from "../obsidian/ObsidianWrapper";
-import { Settings } from "../../core/Settings";
+import { PluginSettings } from "../../core/PluginSettings";
 import { BasenamePropertySettings } from "src/core/Properties/Basename/BasenamePropertySettings";
 import { PropertySettings } from "src/core/Interfaces/PropertySettings";
-import { stringify } from "querystring";
-import { ToplevelFolderProperty } from "src/core/Properties/ToplevelFolder/ToplevelFolderProperty";
 import { ToplevelFolderPropertySettings } from "src/core/Properties/ToplevelFolder/ToplevelFolderPropertySettings";
 import { BooleanYAMLPropertySettings } from "src/core/Properties/BooleanYAML/BooleanYAMLPropertySettings";
 import { WhitelistYAMLPropertySettings } from "src/core/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
@@ -13,10 +11,10 @@ import { createFileAsTask } from "../obsidian/CreateFileAsTask";
 
 export class CreateTaskButtonView{
     obsidianApp:App;
-    settings:Settings;
+    settings:PluginSettings;
     root:string
 
-    constructor(root:string,app:App,settings:Settings){
+    constructor(root:string,app:App,settings:PluginSettings){
         this.obsidianApp = app;
         this.settings = settings;
         this.root = root;
@@ -38,12 +36,12 @@ export class CreateTaskButtonView{
 
 export class CreateTaskModal extends Modal{
     result:Record<string,string>;
-    settings:Settings;
+    settings:PluginSettings;
     root:string;
 
     onSubmit: (result: Record<string,string>) => void;
 
-    constructor(app: App,settings:Settings,onSubmit: (result: Record<string,string>) => void) {
+    constructor(app: App,settings:PluginSettings,onSubmit: (result: Record<string,string>) => void) {
         super(app);
         let result:Record<string,string> = {};
         let map:Map<string,PropertySettings>=settings.getAsMap();

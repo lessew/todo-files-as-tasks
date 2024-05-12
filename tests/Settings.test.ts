@@ -1,11 +1,11 @@
 import { Whitelist } from "../src/core/Whitelist";
 import { BasenamePropertySettings } from "../src/core/Properties/Basename/BasenamePropertySettings";
-import { Settings } from "../src/core/Settings";
+import { PluginSettings } from "../src/core/PluginSettings";
 import { WhitelistYAMLPropertySettings } from "../src/core/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
 import { MockFileModel } from "./Mocks/MockFileModel";
 
 describe('Settings: create object)', () => {
-    let settings = new Settings();
+    let settings = new PluginSettings();
     test('Test addBasename', () => {   
         settings.add(new BasenamePropertySettings("title"));
         expect(settings.get("title").propName).toBe("title");
@@ -23,7 +23,7 @@ describe('Settings: create object)', () => {
 });
 
 describe('Settings: get properties', () => {
-    let settings = new Settings()
+    let settings = new PluginSettings()
     .add(new WhitelistYAMLPropertySettings("status","Inbox",new Whitelist(["Inbox","Done"])))
     .add(new WhitelistYAMLPropertySettings("context","Read",new Whitelist(["Read","Desk"])));
 

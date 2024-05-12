@@ -10,17 +10,17 @@ import { BasenameProperty } from "src/core/Properties/Basename/BasenameProperty"
 import { WhitelistYAMLProperty } from "src/core/Properties/WhitelistYAML/WhitelistYAMLProperty";
 import { BooleanYAMLProperty } from "src/core/Properties/BooleanYAML/BooleanYAMLProperty";
 import { LinkView } from "./LinkView";
-import { Settings } from "src/core/Settings";
+import { PluginSettings } from "src/core/PluginSettings";
 import { ObsidianWrapper } from "../obsidian/ObsidianWrapper";
 import { Observer } from "src/core/Interfaces/Observer";
 
 export class TaskListView implements Observer{
     obsidianApp:App;
     fileAsTaskCollection:FileAsTaskCollection;
-    settings:Settings;
+    settings:PluginSettings;
     rootElement:HTMLElement;
     
-    constructor(fatc:FileAsTaskCollection,settings:Settings,app:App){
+    constructor(fatc:FileAsTaskCollection,settings:PluginSettings,app:App){
         this.obsidianApp = app;
         this.fileAsTaskCollection = fatc;
         this.settings = settings;

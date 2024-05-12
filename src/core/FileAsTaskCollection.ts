@@ -2,17 +2,17 @@ import { FileAsTask } from "./FileAsTask";
 import { FileModel } from "./Interfaces/FileModel";
 import { Filter, FilterOperator } from "./Filter";
 import { FolderModel } from "./Interfaces/FolderModel";
-import { Settings } from "./Settings";
+import { PluginSettings } from "./PluginSettings";
 
 
 
 export class FileAsTaskCollection{
     private rootFolder:FolderModel;
     private filesAsTask:FileAsTask[];
-    private settings:Settings;
+    private settings:PluginSettings;
     private filters:Filter[];
     
-    constructor(rf:FolderModel,settings:Settings){
+    constructor(rf:FolderModel,settings:PluginSettings){
         this.rootFolder = rf;
         this.settings = settings;
         this.loadFilesAsTask();

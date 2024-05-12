@@ -1,6 +1,6 @@
 import { Logger } from "../Logger";
 import { getExpectedFiles, getExpectedFolders, getSettings, getYamlListAllFiles,ExpectedFileType } from "../MockItems";
-import { Settings } from "src/core/Settings";
+import { PluginSettings } from "src/core/PluginSettings";
 import { YAMLParser } from "src/core/YAMLParser";
 import { FATError } from "src/core/Error";
 import { ObsidianFolder } from "src/main/obsidian/ObsidianFolder";
@@ -13,7 +13,7 @@ import { ToplevelFolderPropertySettings } from "src/core/Properties/ToplevelFold
 export class VaultHasExpectedFilesTest{
     logger:Logger;
     yaml:string;
-    settings:Settings;
+    settings:PluginSettings;
     parser:YAMLParser;
     rootPath:string;
     rootFolder:FolderModel;

@@ -3,10 +3,10 @@ import { BasenamePropertySettings } from "../src/core/Properties/Basename/Basena
 import { BooleanYAMLPropertySettings } from "../src/core/Properties/BooleanYAML/BooleanYAMLPropertySettings";
 import { ToplevelFolderPropertySettings } from "../src/core/Properties/ToplevelFolder/ToplevelFolderPropertySettings";
 import { WhitelistYAMLPropertySettings } from "../src/core/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
-import { Settings } from "../src/core/Settings";
+import { PluginSettings } from "../src/core/PluginSettings";
 import { Whitelist } from "../src/core/Whitelist";
 
-const settings = new Settings()
+const settings = new PluginSettings()
 .add(new BasenamePropertySettings("title"))
 .add(new BooleanYAMLPropertySettings("starred","false",new Whitelist(["true","false"])))
 .add(new ToplevelFolderPropertySettings("project")
@@ -76,7 +76,7 @@ describe('SettingsModel: loadDeepcopy)', () => {
     let expected = settings;
 
     test('Test loading deepcopy', () => {   
-        let result:Settings = SettingsModel.loadDeepCopy(input);
+        let result:PluginSettings = SettingsModel.loadDeepCopy(input);
         let map = result.getAsMap();
         let title = map.get("title") as BasenamePropertySettings;
         expect(title.propName).toBe("title");
