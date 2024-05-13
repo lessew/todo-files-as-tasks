@@ -41,7 +41,7 @@ export default class FileAsTaskPlugin extends Plugin {
 	async loadSettings() {
 		//this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
 		let savedSettings = await this.loadData();
-		this.settings = SettingsModel.loadDeepCopy(savedSettings);
+		this.settings = SettingsModel.loadDeecipCopy(savedSettings);
 	}
 
 	async saveSettings() {

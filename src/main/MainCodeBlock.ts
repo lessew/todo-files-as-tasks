@@ -29,22 +29,7 @@ export class MainCodeBlock{
         this.el.innerHTML = "";
         this.load();
     }
-/*
-    async load():Promise<void>{
-        let parser = new YAMLParser(this.source);
-        let settings = new Settings();
-        let configuration = new Configuration(parser, settings);
-       if(configuration.actionIsActionList()){
-
-       }
-       else if(configuration.actionIsCreateButton(){
-
-       }
-       else if(configuration.actionIsTest()){
-
-       }
-    }
-*/
+    
     async load():Promise<void>{
         const parser:YAMLParser = new YAMLParser();
         
