@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "fat-list-examples/Dev.md",
+                "file": "fat-list-examples/Developer Integration Testing.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "fat-list-examples/Dev.md",
+                "file": "fat-list-examples/Developer Integration Testing.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "fat-list-examples/Dev.md",
+                "file": "fat-list-examples/Developer Integration Testing.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "fat-list-examples/Dev.md"
+                "file": "fat-list-examples/Developer Integration Testing.md"
               }
             }
           }
@@ -138,26 +138,27 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "files-as-tasks:Files as Task": false,
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
-      "command-palette:Open command palette": false
+      "command-palette:Open command palette": false,
+      "files-as-tasks:Files as Task": false
     }
   },
   "active": "f935e4337624df45",
   "lastOpenFiles": [
-    "fat-list-examples/Dev.md",
-    "quick note.md",
-    "todo-home/Finance/hhhh.md",
-    "todo-home/Finance/ddd.md",
-    "todo-home/Finance/aaa.md",
-    "todo-home/Finance/qqq.md",
-    "todo-home/Finance/test.md",
+    "todo-home/Finance/Finalize finance weekend NYC.md",
     "fat-list-examples/Developer Integration Testing.md",
+    "todo-home/Finance/aaa.md",
+    "todo-home/Finance/ddd.md",
+    "todo-home/Finance/qqq.md",
+    "todo-home/Finance/hhhh.md",
+    "fat-list-examples/Dev.md",
     "fat-list-examples/Tests.md",
+    "quick note.md",
+    "todo-home/Finance/test.md",
     "todo-home/Finance/Pay holiday bill.md",
     "todo-home/Kids/Bread.md",
     "todo-home/Groceries/Bread.md",
@@ -165,7 +166,6 @@
     "todo-home/Finance/Taxes 2023/Get mortgage details 2024.md",
     "todo-home/Finance/Taxes 2023/IRS Hotline/Ask details re taxes 2023.md",
     "todo-home/Finance/Taxes 2023/Get income statement work.md",
-    "todo-home/Finance/Finalize finance weekend NYC.md",
     "todo-home/Groceries/Finalize finance weekend NYC.md",
     "todo-home/Groceries/Ask details re taxes 2023.md",
     "todo-home/Finance/Taxes 2023/IRS Hotline/Ask details re taxes 2023111.md",

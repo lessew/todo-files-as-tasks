@@ -1,7 +1,9 @@
 import { FATError } from "./Error";
+import { FileAsTask } from "./FileAsTask";
 import { Filter } from "./Filter";
 import { PluginSettings } from "./PluginSettings";
 import { SettingsModel, SettingsSavedFormatType } from "./SettingsModel";
+import { Whitelist } from "./Whitelist";
 import { YAMLParser } from "./YAMLParser";
 
 export class Configuration{
@@ -10,6 +12,8 @@ export class Configuration{
     private state:Error | true;
     private rootPath:string;
     private filters:Filter[];
+    private folders:string[];
+    private action:string;
 
     constructor(){
         this.state = true;
@@ -27,6 +31,8 @@ export class Configuration{
         if(this.stateIsError()){
             return;
         }
+        this.folders = folders;
+        this.trySetFoldersInSettings();
     }
 
     loadSettings(settings:SettingsSavedFormatType):void{
@@ -34,6 +40,15 @@ export class Configuration{
             return;
         } 
         this.settings = SettingsModel.loadDeepCopy(settings);
+        this.trySetFoldersInSettings()
+    }
+
+    trySetFoldersInSettings():void{
+        if(this.folders!=undefined && this.settings!=undefined){
+            let projectSettings = this.settings.get(FileAsTask.PROJECT_FIELD);
+            projectSettings.whitelist = new Whitelist(this.folders);
+            projectSettings.defaultValue = this.folders[0];
+        }
     }
 
     loadRootPath():void{
@@ -61,6 +76,28 @@ export class Configuration{
             this.filters = result;
         }
     }
+
+    loadAction():void{
+        if(this.stateIsError()){
+            return;
+        }
+        let action = this.parser.parseAction();
+        if(FATError.isError(action)){
+            this.state = action;
+        }
+        else{
+            this.action = action;
+        }
+    }
+
+    getAction():string{
+        return this.action;
+    }
+
+    getSettings():PluginSettings{
+        return this.settings;
+    }
+
 
     getRootPath():string{
         return this.rootPath;

@@ -1,27 +1,29 @@
-import { App } from "obsidian";
+import { App} from "obsidian";
 import { YAMLParser } from "src/core/YAMLParser";
 import { TaskListView } from "./ui/TaskListView";
 import { CreateTaskButtonView } from "./ui/CreateTaskButtonView";
-import { PluginSettings } from "../core/PluginSettings";
 import { FATError } from "src/core/Error";
 import { TestView } from "src/test/TestView";
 import { ObsidianFolder } from "./obsidian/ObsidianFolder";
 import { FolderModel } from "src/core/Interfaces/FolderModel";
 import { FileAsTaskCollection } from "src/core/FileAsTaskCollection";
 import { Whitelist } from "src/core/Whitelist";
+import { Configuration } from "src/core/Configuration";
 
 // TODO debug special cases (/ " etc in title on update)
 export class MainCodeBlock{
     source:string;
     el:HTMLElement;
-    settings:PluginSettings;
+    jsonSettings:any;
     app:App;
     root:string;
+    rootFolder:FolderModel;
+    config: Configuration;
 
-    constructor(source:string,el:HTMLElement,settings:PluginSettings,app:App){
+    constructor(source:string,el:HTMLElement,jsonSettings:any,app:App){
         this.source = source;
         this.el = el;
-        this.settings = settings;
+        this.jsonSettings = jsonSettings;
         this.app = app;
     }
 
@@ -31,69 +33,64 @@ export class MainCodeBlock{
     }
     
     async load():Promise<void>{
-        const parser:YAMLParser = new YAMLParser();
-        
-        const yamlParseResult = parser.loadSource(this.source);
-        
-        if(FATError.isError(yamlParseResult)){
-            this.displayUserError(yamlParseResult);
+        this.config = new Configuration();
+        this.config.loadSource(this.source);
+        this.config.loadSettings(this.jsonSettings);
+        this.config.loadRootPath();
+        this.config.loadAction();
+        if(this.config.stateIsError()){
+            this.displayUserError(this.config.getErrorState());
             return;
         }
 
-        const rootPath = parser.parseRootPath();
-        if(FATError.isError(rootPath)){
-            this.displayUserError(rootPath);
-            return;
-        }
-        this.root = rootPath;
 
-        const rootFolder = await ObsidianFolder.create(rootPath,rootPath);
-        this.settings.get("project").whitelist = new Whitelist(rootFolder.getFolderPaths());
-        this.settings.get("project").defaultValue = rootFolder.getFolderPaths()[0];
         
-        const action = parser.parseAction();
-        if(FATError.isError(action)){
-            this.displayUserError(action);
-            return;
+
+        this.rootFolder = await ObsidianFolder.create(this.config.getRootPath(),this.config.getRootPath());
+        this.config.loadFolders(this.rootFolder.getFolderPaths());
+
+        if(this.config.getAction()==YAMLParser.ACTION_LIST){
+            this.displayActionList();
+        }
+        else if(this.config.getAction()==YAMLParser.ACTION_TEST){
+            this.displayTest();
+        }
+        else if(this.config.getAction()==YAMLParser.ACTION_CREATE_BUTTON){
+            this.displayCreateTaskButton();
         }
 
-        if(action==YAMLParser.ACTION_LIST){
-           await this.displayActionList(parser,rootFolder)
-        }
-        else if(action==YAMLParser.ACTION_CREATE_BUTTON){
-           this.displayCreateTaskButton();
-        }
-        else if(action==YAMLParser.ACTION_TEST){
-            this.displayTest(this.el);
-        }
     }
+
+    
 
     displayUserError(error:FATError){
         const msg = error.message;// + "\n" + this.source;
         this.el.createEl("div",{text:msg});
     }
 
-    displayActionList(parser:YAMLParser,rootFolder:FolderModel):void{
-        const filters = parser.parseFilters(this.settings);
-        if(FATError.isError(filters)){
-            this.displayUserError(filters);
+    displayActionList():void{
+        this.config.loadFilters();
+        if(this.config.stateIsError()){
+            this.displayUserError(this.config.getErrorState());
             return;
         }
-        const fileAsTaskCollection = new FileAsTaskCollection(rootFolder,this.settings);
+
+        const filters = this.config.getFilters();
+        const fileAsTaskCollection = new FileAsTaskCollection(this.rootFolder,this.config.getSettings());
         fileAsTaskCollection.bulkFilterBy(filters);
         //fileAsTaskCollection.groupBy('project');
         //fileAsTaskCollection.sortBy('context','ASC');
-        let view = new TaskListView(fileAsTaskCollection,this.settings,this.app);
+        let view = new TaskListView(fileAsTaskCollection,this.config.getSettings(),this.app);
         view.build(this.el);
     }
 
     displayCreateTaskButton():void{
-        const view = new CreateTaskButtonView(this.root,this.app,this.settings);
+        const view = new CreateTaskButtonView(this.root,this.app,this.config.getSettings());
         view.build(this.el);
     }
 
-    displayTest(el:HTMLElement):void{
-        const testView = new TestView(this.app,el);
+    displayTest():void{
+        const testView = new TestView(this.app,this.el);
         testView.main();
     }
 }

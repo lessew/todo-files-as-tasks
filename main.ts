@@ -8,7 +8,7 @@ import { CreateTaskModal } from 'src/main/ui/CreateTaskButtonView';
 import { createFileAsTask } from "src/main/obsidian/CreateFileAsTask";
 
 export default class FileAsTaskPlugin extends Plugin {
-	settings: PluginSettings;
+	jsonSettings:unknown;
 
 	async onload() {
 		await this.loadSettings();
@@ -25,7 +25,7 @@ export default class FileAsTaskPlugin extends Plugin {
 		});
 		
 		this.registerMarkdownCodeBlockProcessor("fat", async (source, el, ctx) => {
-		let block = new MainCodeBlock(source,el,this.settings,this.app);
+		let block = new MainCodeBlock(source,el,this.jsonSettings,this.app);
 			await block.load();
 		});
 		this.addSettingTab(new FATSettingTab(this.app, this));
@@ -40,8 +40,7 @@ export default class FileAsTaskPlugin extends Plugin {
 
 	async loadSettings() {
 		//this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
-		let savedSettings = await this.loadData();
-		this.settings = SettingsModel.loadDeecipCopy(savedSettings);
+		this.jsonSettings = await this.loadData();
 	}
 
 	async saveSettings() {
