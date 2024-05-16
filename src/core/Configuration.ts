@@ -15,12 +15,12 @@ export class Configuration{
         this.state = true;
     }
 
-    loadSource(yaml:string):void{
+    loadSource(source:string):void{
         if(this.stateIsError()){
             return;
         }
         this.parser = new YAMLParser();
-        this.state = this.parser.loadSource(yaml);
+        this.state = this.parser.loadSource(source);
     }
 
     loadFolders(folders:string[]):void{
@@ -66,14 +66,20 @@ export class Configuration{
         return this.rootPath;
     }
 
-    getFilters():Filter[] | FATError{
-        return this.parser.parseFilters(this.settings);
+    getFilters():Filter[]{
+        return this.filters; 
+    }
+
+    getErrorState():Error{
+        if(this.state==true){
+            return Error("Error state requested but no error was set");
+        }
+        else{
+            return this.state;
+        }
     }
 
     stateIsError():boolean{
         return this.state!=true;
     }
-
-
-
 }

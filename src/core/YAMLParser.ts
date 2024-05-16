@@ -7,10 +7,12 @@ import { PluginSettings } from './PluginSettings';
 export class YAMLParser{
     source:string;
     yaml:unknown;
+    // TODO: prepend all with TOKEN_
     static ACTION_LIST = "list";
     static ACTION_CREATE_BUTTON = "create_button";
     static ACTION_TEST = "test"
     static EXCLUDE_TOKEN = "not ";
+    static TOKEN_ROOTPATH = "rootPath" as const;
 
     loadSource(source:string):true | FATError{
         this.source = source;
@@ -25,10 +27,11 @@ export class YAMLParser{
 
     parseRootPath():string | FATError{
         try{
-            const rp:string = (this.yaml as{rootPath:string}).rootPath;
+            const rp:string = (this.yaml as{[YAMLParser.TOKEN_ROOTPATH]:string}).rootPath;
             return rp;
         }
         catch(e){
+            return new FATError(e.message);
             return new FATError("Could not parse rootpath: yaml variable not found")
         }
     }

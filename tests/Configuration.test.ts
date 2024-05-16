@@ -1,15 +1,12 @@
-import { SettingsModel, SettingsSavedFormatType } from "src/core/SettingsModel";
+import { SettingsModel, SettingsSavedFormatType } from "../src/core/SettingsModel";
 import { Configuration } from "../src/core/Configuration";
-import { PluginSettings } from "../src/core/PluginSettings";
 import { YAMLParser } from "../src/core/YAMLParser";
-import { Whitelist } from "src/core/Whitelist";
 
-let yaml=`rootPath: Todo
-
-`;
 
 describe('Configuration test', () => {
-    let yaml:string =``;
+    let yamlString:string =`
+rootPath: Todo
+    `;
 
     let testConfig:SettingsSavedFormatType = {
         properties: [{
@@ -26,18 +23,18 @@ describe('Configuration test', () => {
     };
     let folders = ['groceries','groceries/appie','work'];
 
-    test('Test', () => {   
+    test('Test happy path', () => {   
         let p = new YAMLParser();
         let s = SettingsModel.loadDeepCopy(testConfig);
         let c = new Configuration();
-        c.loadSource(yaml);
+        c.loadSource(yamlString);
+        expect(c.stateIsError()).toBe(false);
         c.loadRootPath();
+        expect(c.stateIsError()).toBe(false);
         c.loadSettings(testConfig); 
+        expect(c.stateIsError()).toBe(false);
         c.loadFolders(folders);
-        let result = c.getResult();
-        //let status:Error|true = c.validate();
+        expect(c.stateIsError()).toBe(false);
 
-
-        expect(true).toBe(true);
     });
 });
