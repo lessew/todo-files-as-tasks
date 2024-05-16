@@ -23,15 +23,18 @@ describe('Configuration test', () => {
         whitelist:["Inbox","Next"],
         type:"whitelistYAML"
     } ]
-}
+    };
+    let folders = ['groceries','groceries/appie','work'];
 
-    test('Test for errors', () => {   
+    test('Test', () => {   
         let p = new YAMLParser();
-        p.loadSource(yaml);
         let s = SettingsModel.loadDeepCopy(testConfig);
         let c = new Configuration();
-        let resultYAML = c.loadSource(yaml);
-        let resultSettings = c.loadSettings(testConfig); 
+        c.loadSource(yaml);
+        c.loadRootPath();
+        c.loadSettings(testConfig); 
+        c.loadFolders(folders);
+        let result = c.getResult();
         //let status:Error|true = c.validate();
 
 
