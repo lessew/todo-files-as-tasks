@@ -43,9 +43,6 @@ export class MainCodeBlock{
             return;
         }
 
-
-        
-
         this.rootFolder = await ObsidianFolder.create(this.config.getRootPath(),this.config.getRootPath());
         this.config.loadFolders(this.rootFolder.getFolderPaths());
 
@@ -62,7 +59,6 @@ export class MainCodeBlock{
     }
 
     
-
     displayUserError(error:FATError){
         const msg = error.message;// + "\n" + this.source;
         this.el.createEl("div",{text:msg});

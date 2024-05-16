@@ -1,31 +1,31 @@
 import { Plugin } from 'obsidian';
-import { DEFAULT_SETTINGS, PluginSettings } from 'src/core/PluginSettings';
 import { ObsidianWrapper } from 'src/main/obsidian/ObsidianWrapper';
 import {FATSettingTab} from "src/main/ui/FATSettingsTab"
 import { MainCodeBlock } from 'src/main/MainCodeBlock';
 import { SettingsModel } from 'src/core/SettingsModel';
-import { CreateTaskModal } from 'src/main/ui/CreateTaskButtonView';
-import { createFileAsTask } from "src/main/obsidian/CreateFileAsTask";
+import { PluginSettings } from 'src/core/PluginSettings';
 
 export default class FileAsTaskPlugin extends Plugin {
 	jsonSettings:unknown;
+	pluginSettings:PluginSettings;
 
 	async onload() {
-		await this.loadSettings();
+		this.jsonSettings = await this.loadData();
+		this.pluginSettings = SettingsModel.loadDeepCopy(this.jsonSettings)
 		ObsidianWrapper.init(this.app);
 	
 		// TODO find a way to create a file using button, how to handle rootPath?
-		const ribbon = this.addRibbonIcon('dice','Files as Task', (evt: MouseEvent) => {
-			let settings = new PluginSettings();
-        	const m:CreateTaskModal =  new CreateTaskModal(this.app,this.settings,async (result:Record<string,string>) => {
-         		await createFileAsTask("todo-home/",result,this.settings);
-          		ObsidianWrapper.getInstance().reload();
-        		});
-				m.open();
-		});
-		
+		//const ribbon = this.addRibbonIcon('dice','Files as Task', (evt: MouseEvent) => {
+		//	let settings = new PluginSettings();
+		//    	const m:CreateTaskModal =  new CreateTaskModal(this.app,this.settings,async (result:Record<string,string>) => {
+		//   		await createFileAsTask("todo-home/",result,this.settings);
+		//  		ObsidianWrapper.getInstance().reload();
+		//});
+		//		m.open();
+		//});
+
 		this.registerMarkdownCodeBlockProcessor("fat", async (source, el, ctx) => {
-		let block = new MainCodeBlock(source,el,this.jsonSettings,this.app);
+			let block = new MainCodeBlock(source, el, this.jsonSettings, this.app);
 			await block.load();
 		});
 		this.addSettingTab(new FATSettingTab(this.app, this));
@@ -38,13 +38,9 @@ export default class FileAsTaskPlugin extends Plugin {
 
 	}
 
-	async loadSettings() {
-		//this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
-		this.jsonSettings = await this.loadData();
-	}
 
 	async saveSettings() {
-		await this.saveData(SettingsModel.deepCopy(this.settings));
+		await this.saveData(SettingsModel.deepCopy(this.pluginSettings));
 	}
 }
 

@@ -1,11 +1,11 @@
-import FATPlugin from "main";
+import FileAsTaskPlugin from "main";
 import { App, PluginSettingTab, Setting } from "obsidian";
 
 
 export class FATSettingTab extends PluginSettingTab {
-	plugin: FATPlugin;
+	plugin: FileAsTaskPlugin;
 
-	constructor(app: App, plugin: FATPlugin) {
+	constructor(app: App, plugin: FileAsTaskPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
@@ -23,7 +23,7 @@ export class FATSettingTab extends PluginSettingTab {
 	}
 
     setContextValues(containerEl:HTMLElement):void{
-        let propSettings = this.plugin.settings.get("context");
+        let propSettings = this.plugin.pluginSettings.get("context");
         let values = propSettings.whitelist!.joinByComma();
         
         new Setting(containerEl)
@@ -40,7 +40,7 @@ export class FATSettingTab extends PluginSettingTab {
     }
 
     setStatusValues(containerEl:HTMLElement):void{
-        let propSettings = this.plugin.settings.get("status");
+        let propSettings = this.plugin.pluginSettings.get("status");
 
         new Setting(containerEl)
         .setName('Status values')
@@ -56,7 +56,7 @@ export class FATSettingTab extends PluginSettingTab {
     }
 
     setStarredValues(containerEl:HTMLElement):void{
-        let propSettings = this.plugin.settings.get("starred");
+        let propSettings = this.plugin.pluginSettings.get("starred");
 
         new Setting(containerEl)
         .setName('Starred values')
