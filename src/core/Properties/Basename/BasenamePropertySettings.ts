@@ -1,6 +1,6 @@
-import { PropertySettings, PropertyType } from "src/core/Interfaces/PropertySettings";
-import { FileModel } from "../../Interfaces/FileModel";
-import { Property } from "../../Interfaces/Property";
+import { FileModel } from "../../FileSystem/FileModel";
+import { Property } from "../Property";
+import { PropertySettings, PropertyType } from "../PropertySettings";
 import { BasenameProperty } from "./BasenameProperty";
 
 export class BasenamePropertySettings implements PropertySettings{

@@ -1,8 +1,8 @@
 import { TFile, TFolder } from "obsidian";
 import { ObsidianFile } from "./ObsidianFile";
-import { FolderModel } from "src/core/Interfaces/FolderModel";
-import { FileModel } from "src/core/Interfaces/FileModel";
 import FileAsTaskPlugin from "main";
+import { FolderModel } from "../FolderModel";
+import { FileModel } from "../FileModel";
 
 export class ObsidianFolder extends FolderModel{
     plugin:FileAsTaskPlugin;

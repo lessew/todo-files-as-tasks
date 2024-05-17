@@ -1,8 +1,8 @@
 import { FileAsTask } from "./FileAsTask";
-import { FileModel } from "./Interfaces/FileModel";
+import { FileModel } from "./FileModel";
 import { Filter, FilterOperator } from "./Filter";
-import { FolderModel } from "./Interfaces/FolderModel";
-import { PluginSettings } from "./PluginSettings";
+import { FolderModel } from "./FolderModel";
+import { PluginSettings } from "../Configuration/PluginSettings";
 
 
 

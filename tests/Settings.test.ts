@@ -1,6 +1,6 @@
-import { Whitelist } from "../src/core/Whitelist";
+import { Whitelist } from "../src/core/Properties/Whitelist";
 import { BasenamePropertySettings } from "../src/core/Properties/Basename/BasenamePropertySettings";
-import { PluginSettings } from "../src/core/PluginSettings";
+import { PluginSettings } from "../src/core/Configuration/PluginSettings";
 import { WhitelistYAMLPropertySettings } from "../src/core/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
 import { MockFileModel } from "./Mocks/MockFileModel";
 

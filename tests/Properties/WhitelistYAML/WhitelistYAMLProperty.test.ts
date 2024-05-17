@@ -1,5 +1,5 @@
 import { WhitelistYAMLProperty } from "../../../src/core/Properties/WhitelistYAML/WhitelistYAMLProperty";
-import { Whitelist } from "../../../src/core/Whitelist";
+import { Whitelist } from "../../../src/core/Properties/Whitelist";
 import { MockFileModel } from "../../Mocks/MockFileModel";
 
 

@@ -1,9 +1,9 @@
 import { ToplevelFolderProperty } from "src/core/Properties/ToplevelFolder/ToplevelFolderProperty";
 import { App, SuggestModal } from "obsidian";
-import { Property } from "src/core/Interfaces/Property";
-import { Whitelist } from "src/core/Whitelist";
-import { PropertyView } from "src/core/Interfaces/PropertyView";
 import FileAsTaskPlugin from "main";
+import { PropertyView } from "../PropertyView";
+import { Property } from "../Property";
+import { Whitelist } from "../Whitelist";
 
 export class ToplevelFolderPropertyView extends PropertyView{
     prop:ToplevelFolderProperty;

@@ -1,6 +1,6 @@
-import { SettingsModel, SettingsSavedFormatType } from "../src/core/SettingsModel";
-import { Configuration } from "../src/core/Configuration";
-import { YAMLParser } from "../src/core/YAMLParser";
+import { SettingsModel, SettingsSavedFormatType } from "../src/core/Configuration/SettingsModel";
+import { Configuration } from "../src/core/Configuration/Configuration";
+import { YAMLParser } from "../src/core/Configuration/YAMLParser";
 
 
 describe('Configuration test', () => {

@@ -1,4 +1,4 @@
-import { FolderModel } from "../src/core/Interfaces/FolderModel";
+import { FolderModel } from "../src/core/FileSystem/FolderModel";
 import { MockFileModel } from "./Mocks/MockFileModel";
 import { MockFolderModel } from "./Mocks/MockFolderModel";
 

@@ -1,8 +1,8 @@
-import { YAMLParser } from "../src/core/YAMLParser";
-import { FilterOperator } from "../src/core/Filter";
+import { YAMLParser } from "../src/core/Configuration/YAMLParser";
+import { FilterOperator } from "../src/core/FileSystem/Filter";
 import { FATError } from "../src/core/Error";
-import { PluginSettings } from "../src/core/PluginSettings";
-import { Whitelist } from "../src/core/Whitelist";
+import { PluginSettings } from "../src/core/Configuration/PluginSettings";
+import { Whitelist } from "../src/core/Properties/Whitelist";
 import { WhitelistYAMLPropertySettings } from "../src/core/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
 
 class Helper {

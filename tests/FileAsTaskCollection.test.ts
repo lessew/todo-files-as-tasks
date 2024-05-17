@@ -1,10 +1,10 @@
 import { MockFolderModel } from "./Mocks/MockFolderModel";
 import { MockFileModel } from "./Mocks/MockFileModel";
-import { FileAsTaskCollection } from "../src/core/FileAsTaskCollection";
-import { PluginSettings } from "../src/core/PluginSettings";
-import { Whitelist } from "../src/core/Whitelist";
+import { FileAsTaskCollection } from "../src/core/FileSystem/FileAsTaskCollection";
+import { PluginSettings } from "../src/core/Configuration/PluginSettings";
+import { Whitelist } from "../src/core/Properties/Whitelist";
 import { WhitelistYAMLPropertySettings } from "../src/core/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
-import { Filter, FilterOperator } from "../src/core/Filter";
+import { Filter, FilterOperator } from "../src/core/FileSystem/Filter";
 
 
 const file1 = new MockFileModel("path/","path/to/this",{

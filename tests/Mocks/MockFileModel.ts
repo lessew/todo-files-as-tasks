@@ -1,4 +1,4 @@
-import { FileModel } from "../../src/core/Interfaces/FileModel";
+import { FileModel } from "../../src/core/FileSystem/FileModel";
 
 export class MockFileModel extends FileModel{
     name: string;

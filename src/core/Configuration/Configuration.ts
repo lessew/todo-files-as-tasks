@@ -1,9 +1,9 @@
-import { FATError } from "./Error";
-import { FileAsTask } from "./FileAsTask";
-import { Filter } from "./Filter";
+import { FATError } from "../Error";
+import { FileAsTask } from "../FileSystem/FileAsTask";
+import { Filter } from "../FileSystem/Filter";
 import { PluginSettings } from "./PluginSettings";
 import { SettingsModel, SettingsSavedFormatType } from "./SettingsModel";
-import { Whitelist } from "./Whitelist";
+import { Whitelist } from "../Properties/Whitelist";
 import { YAMLParser } from "./YAMLParser";
 
 export class Configuration{

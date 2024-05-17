@@ -1,11 +1,11 @@
 import { Logger } from "../Logger";
-import { FileAsTask } from "src/core/FileAsTask";
 import { ExpectedFileType, getExpectedHolidayBillFile, getSettings } from "../MockItems";
-import { PluginSettings } from "src/core/PluginSettings";
-import { ObsidianFile } from "src/main/obsidian/ObsidianFile";
 import { CachedMetadata } from "obsidian";
-import { FileModel } from "src/core/Interfaces/FileModel";
 import FileAsTaskPlugin from "main";
+import { PluginSettings } from "src/core/Configuration/PluginSettings";
+import { FileModel } from "src/core/FileSystem/FileModel";
+import { FileAsTask } from "src/core/FileSystem/FileAsTask";
+import { ObsidianFile } from "src/core/FileSystem/obsidian/ObsidianFile";
 
 export class TaskOperationsTest{
     logger:Logger

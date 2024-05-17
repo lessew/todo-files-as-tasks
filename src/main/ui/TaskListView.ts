@@ -1,16 +1,16 @@
-import { App, Setting } from "obsidian";
 import { BasenamePropertyView } from "../../core/Properties/Basename/BasenamePropertyView";
 import { WhitelistYAMLPropertyView } from "../../core/Properties/WhitelistYAML/WhitelistYAMLPropertyView";
 import { ToplevelFolderProperty } from "src/core/Properties/ToplevelFolder/ToplevelFolderProperty";
 import { ToplevelFolderPropertyView } from "../../core/Properties/ToplevelFolder/ToplevelFolderPropertyView";
 import { BooleanYAMLPropertyView } from "../../core/Properties/BooleanYAML/BooleanYAMLPropertyView";
-import { FileAsTaskCollection } from "src/core/FileAsTaskCollection";
-import { FileAsTask } from "src/core/FileAsTask";
 import { BasenameProperty } from "src/core/Properties/Basename/BasenameProperty";
 import { WhitelistYAMLProperty } from "src/core/Properties/WhitelistYAML/WhitelistYAMLProperty";
 import { BooleanYAMLProperty } from "src/core/Properties/BooleanYAML/BooleanYAMLProperty";
-import { LinkView } from "./LinkView";
+import { LinkView } from "../../core/Properties/Link/LinkView";
 import FileAsTaskPlugin from "main";
+import { FileAsTaskCollection } from "src/core/FileSystem/FileAsTaskCollection";
+import { FileAsTask } from "src/core/FileSystem/FileAsTask";
+import { PluginSettings } from "src/core/Configuration/PluginSettings";
 
 export class TaskListView{
     fileAsTaskCollection:FileAsTaskCollection;
@@ -57,8 +57,8 @@ export class TaskListView{
             tp.build(tdTitle);
 
             let tdTitleLink = row.createEl("td", {});
-            const lv = new LinkView();
-            lv.build(tdTitleLink,"link",prop.file.path);
+            const lv = new LinkView("link",prop.file.path);
+            lv.build(tdTitleLink);
 
             // project: not configurable
             let tdProject:HTMLTableCellElement = row.createEl("td", {});
@@ -69,7 +69,8 @@ export class TaskListView{
             pp.build(tdProject);
 
             // YAML fields: configurarable
-            let propFields = this.plugin.pluginSettings.getAsMap();
+            let settings:PluginSettings = this.plugin.pluginSettings;
+            let propFields = settings.getAsMap();
             propFields.forEach(propSettings => {
                 if(propSettings.getType()=="booleanYAML"){
                     let tdCell:HTMLTableCellElement = row.createEl("td", {})

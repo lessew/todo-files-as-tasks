@@ -1,7 +1,7 @@
 import { MockFileModel } from "../tests/Mocks/MockFileModel";
-import { Whitelist } from "../src/core/Whitelist";
-import { FileAsTask } from "../src/core/FileAsTask";
-import { PluginSettings } from "../src/core/PluginSettings";
+import { Whitelist } from "../src/core/Properties/Whitelist";
+import { FileAsTask } from "../src/core/FileSystem/FileAsTask";
+import { PluginSettings } from "../src/core/Configuration/PluginSettings";
 import { WhitelistYAMLPropertySettings } from "../src/core/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
 
 

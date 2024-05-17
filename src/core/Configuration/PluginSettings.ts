@@ -1,12 +1,12 @@
-import { FileModel } from "./Interfaces/FileModel";
-import { BasenamePropertySettings } from "./Properties/Basename/BasenamePropertySettings";
-import { BooleanYAMLPropertySettings } from "./Properties/BooleanYAML/BooleanYAMLPropertySettings";
-import { ToplevelFolderPropertySettings } from "./Properties/ToplevelFolder/ToplevelFolderPropertySettings";
-import { WhitelistYAMLPropertySettings } from "./Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
-import { Whitelist } from "./Whitelist";
-import { PropertySettings } from "./Interfaces/PropertySettings";
-import { Property } from "./Interfaces/Property";
-import { FileAsTask } from "./FileAsTask";
+import { FileModel } from "../FileSystem/FileModel";
+import { BasenamePropertySettings } from "../Properties/Basename/BasenamePropertySettings";
+import { BooleanYAMLPropertySettings } from "../Properties/BooleanYAML/BooleanYAMLPropertySettings";
+import { ToplevelFolderPropertySettings } from "../Properties/ToplevelFolder/ToplevelFolderPropertySettings";
+import { WhitelistYAMLPropertySettings } from "../Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
+import { Whitelist } from "../Properties/Whitelist";
+import { PropertySettings } from "../Properties/PropertySettings";
+import { Property } from "../Properties/Property";
+import { FileAsTask } from "../FileSystem/FileAsTask";
 
 
 export class PluginSettings {

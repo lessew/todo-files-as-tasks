@@ -1,6 +1,6 @@
-import { FileModel } from "./Interfaces/FileModel";
-import { Property } from "./Interfaces/Property";
-import { PluginSettings } from "./PluginSettings";
+import { FileModel } from "./FileModel";
+import { Property } from "../Properties/Property";
+import { PluginSettings } from "../Configuration/PluginSettings";
 
 export class FileAsTask{
     file:FileModel;

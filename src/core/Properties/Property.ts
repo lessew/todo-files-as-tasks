@@ -1,4 +1,4 @@
-import { FileModel } from "./FileModel";
+import { FileModel } from "../FileSystem/FileModel";
 
 export interface Property{
     propName:string;

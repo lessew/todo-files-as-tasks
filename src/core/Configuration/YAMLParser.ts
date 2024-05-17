@@ -1,6 +1,6 @@
 import * as yaml from 'js-yaml'
-import { Filter, FilterOperator } from './Filter';
-import { FATError } from './Error';
+import { Filter, FilterOperator } from '../FileSystem/Filter';
+import { FATError } from '../Error';
 import { PluginSettings } from './PluginSettings';
 
 // TODO : use Obsidian YAML parser functions

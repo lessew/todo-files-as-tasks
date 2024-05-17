@@ -1,4 +1,4 @@
-import { Whitelist } from "../src/core/Whitelist";
+import { Whitelist } from "../src/core/Properties/Whitelist";
 
 
 describe('Whitelist test', () => {

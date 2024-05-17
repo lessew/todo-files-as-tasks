@@ -1,10 +1,10 @@
-import { PluginSettings } from "src/core/PluginSettings";
 import { ObsidianFile } from "./ObsidianFile";
 import { BooleanYAMLProperty } from "src/core/Properties/BooleanYAML/BooleanYAMLProperty";
 import { WhitelistYAMLProperty } from "src/core/Properties/WhitelistYAML/WhitelistYAMLProperty";
-import { FileAsTask } from "src/core/FileAsTask";
 import FileAsTaskPlugin from "main";
-
+import { FileAsTask } from "../FileAsTask";
+import { PropertySettings } from "src/core/Properties/PropertySettings";
+import { PluginSettings } from "src/core/Configuration/PluginSettings";
 
 // TODO add option to set default project, status, etc value
 
@@ -13,9 +13,10 @@ export async function createFileAsTask(root:string, data:Record<string,string>,p
 
     await this.plugin.obsidianFacade.createEmptyFile(root + "/" + path);        
     
-    let file = await ObsidianFile.create(root,root + "/" + path,plugin);
-    let map = plugin.pluginSettings.getAsMap();
-    map.forEach(value => {
+    let file = ObsidianFile.create(root,root + "/" + path,plugin);
+    let settings:PluginSettings = plugin.pluginSettings;
+    let map =settings.getAsMap();
+    map.forEach((value ) => {
         if(value.getType()=="booleanYAML"){
             let prop = new BooleanYAMLProperty(value.propName,value.defaultValue,value.whitelist!,file);
             if(value.propName in data){

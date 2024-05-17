@@ -1,5 +1,4 @@
-import { DEFAULT_SETTINGS, PluginSettings } from "src/core/PluginSettings";
-import { Whitelist } from "src/core/Whitelist";
+import { DEFAULT_SETTINGS, PluginSettings } from "src/core/Configuration/PluginSettings";
 
 /**
  * Make sure thise files exists in the vault

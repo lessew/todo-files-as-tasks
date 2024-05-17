@@ -1,12 +1,12 @@
 import { App, Modal, Setting } from "obsidian";
-import { PluginSettings } from "../../core/PluginSettings";
+import { PluginSettings } from "../../core/Configuration/PluginSettings";
 import { BasenamePropertySettings } from "src/core/Properties/Basename/BasenamePropertySettings";
-import { PropertySettings } from "src/core/Interfaces/PropertySettings";
 import { ToplevelFolderPropertySettings } from "src/core/Properties/ToplevelFolder/ToplevelFolderPropertySettings";
 import { BooleanYAMLPropertySettings } from "src/core/Properties/BooleanYAML/BooleanYAMLPropertySettings";
 import { WhitelistYAMLPropertySettings } from "src/core/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
-import { createFileAsTask } from "../obsidian/CreateFileAsTask";
+import { createFileAsTask } from "../../core/FileSystem/obsidian/CreateFileAsTask";
 import FileAsTaskPlugin from "main";
+import { PropertySettings } from "src/core/Properties/PropertySettings";
 
 
 export class CreateTaskButtonView{

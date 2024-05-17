@@ -1,6 +1,6 @@
-import { FileModel } from "src/core/Interfaces/FileModel";
 import { CachedMetadata, TFile } from "obsidian";
 import FileAsTaskPlugin from "main";
+import { FileModel } from "../FileModel";
 
 
 export class ObsidianFile implements FileModel{

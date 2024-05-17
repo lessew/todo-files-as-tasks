@@ -1,9 +1,9 @@
 import { App, SuggestModal } from "obsidian";
 import { WhitelistYAMLProperty } from "src/core/Properties/WhitelistYAML/WhitelistYAMLProperty";
-import { Property } from "src/core/Interfaces/Property";
-import { Whitelist } from "src/core/Whitelist";
-import { PropertyView } from "src/core/Interfaces/PropertyView";
 import FileAsTaskPlugin from "main";
+import { PropertyView } from "../PropertyView";
+import { Property } from "../Property";
+import { Whitelist } from "../Whitelist";
 
 export class WhitelistYAMLPropertyView extends PropertyView{
     prop:WhitelistYAMLProperty;

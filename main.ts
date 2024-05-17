@@ -1,9 +1,9 @@
 import { App, Plugin } from 'obsidian';
-import {FATSettingTab} from "src/main/ui/FATSettingsTab"
-import { SettingsModel } from 'src/core/SettingsModel';
-import { PluginSettings } from 'src/core/PluginSettings';
+import { PluginSettings } from 'src/core/Configuration/PluginSettings';
+import { SettingsModel } from 'src/core/Configuration/SettingsModel';
+import { FATSettingTab } from 'src/core/Configuration/ui/FATSettingsTab';
+import { ObsidianFacade } from 'src/core/FileSystem/obsidian/ObsidianFacade';
 import { CodeBlock } from 'src/main/CodeBlock';
-import { ObsidianFacade } from 'src/main/obsidian/ObsidianFacade';
 
 export default class FileAsTaskPlugin extends Plugin {
 	pluginSettings:PluginSettings;
@@ -39,7 +39,6 @@ export default class FileAsTaskPlugin extends Plugin {
 		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
 	}
 
-	// TODO analyse if we need to unload anything
 	onunload() {
 
 	}

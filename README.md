@@ -70,3 +70,10 @@ status: Done
 Obsidian developer policies(https://docs.obsidian.md/Developer+policies)  are followed as much as possible.
 Unit Tests as described here: https://publish.obsidian.md/hub/04+-+Guides%2C+Workflows%2C+%26+Courses/for+Plugin+Developers+to+Automate+Tests
 
+# Memory usage details
+
+- unload() is not used as to my knowledge no special objects are created that should be destroyed when the plugin unloads.
+- The ObsidianFolder class runs a recursive method that iterates through all subfolders. Assumed is a folder structure with reasonable number of folders and files. TODO explain better.
+
+
+

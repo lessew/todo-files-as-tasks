@@ -1,10 +1,10 @@
-import { BasenamePropertySettings } from "./Properties/Basename/BasenamePropertySettings";
-import { ToplevelFolderPropertySettings } from "./Properties/ToplevelFolder/ToplevelFolderPropertySettings";
-import { BooleanYAMLPropertySettings } from "./Properties/BooleanYAML/BooleanYAMLPropertySettings";
-import { WhitelistYAMLPropertySettings } from "./Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
-import { PropertyType } from "./Interfaces/PropertySettings";
+import { BasenamePropertySettings } from "../Properties/Basename/BasenamePropertySettings";
+import { ToplevelFolderPropertySettings } from "../Properties/ToplevelFolder/ToplevelFolderPropertySettings";
+import { BooleanYAMLPropertySettings } from "../Properties/BooleanYAML/BooleanYAMLPropertySettings";
+import { WhitelistYAMLPropertySettings } from "../Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
+import { PropertyType } from "../Properties/PropertySettings";
 import { DEFAULT_SETTINGS, PluginSettings } from "./PluginSettings";
-import { Whitelist } from "./Whitelist";
+import { Whitelist } from "../Properties/Whitelist";
 
 export type SettingsSavedFormatType = {
     properties: {

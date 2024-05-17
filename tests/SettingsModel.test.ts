@@ -1,10 +1,10 @@
-import { SettingsModel, SettingsSavedFormatType } from "../src/core/SettingsModel";
+import { SettingsModel, SettingsSavedFormatType } from "../src/core/Configuration/SettingsModel";
 import { BasenamePropertySettings } from "../src/core/Properties/Basename/BasenamePropertySettings";
 import { BooleanYAMLPropertySettings } from "../src/core/Properties/BooleanYAML/BooleanYAMLPropertySettings";
 import { ToplevelFolderPropertySettings } from "../src/core/Properties/ToplevelFolder/ToplevelFolderPropertySettings";
 import { WhitelistYAMLPropertySettings } from "../src/core/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
-import { PluginSettings } from "../src/core/PluginSettings";
-import { Whitelist } from "../src/core/Whitelist";
+import { PluginSettings } from "../src/core/Configuration/PluginSettings";
+import { Whitelist } from "../src/core/Properties/Whitelist";
 
 const settings = new PluginSettings()
 .add(new BasenamePropertySettings("title"))

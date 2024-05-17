@@ -5,4 +5,5 @@ export abstract class PropertyView{
     editIcon:string = "✎";
     newWindowIcon:string = "✇";
 
+    abstract build(rootElement:HTMLElement):void;
 }

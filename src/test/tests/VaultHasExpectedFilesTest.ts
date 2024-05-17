@@ -1,15 +1,15 @@
 import { Logger } from "../Logger";
 import { getExpectedFiles, getExpectedFolders, getSettings, getYamlListAllFiles,ExpectedFileType } from "../MockItems";
-import { PluginSettings } from "src/core/PluginSettings";
-import { YAMLParser } from "src/core/YAMLParser";
 import { FATError } from "src/core/Error";
-import { ObsidianFolder } from "src/main/obsidian/ObsidianFolder";
-import { FolderModel } from "src/core/Interfaces/FolderModel";
-import { FileAsTask } from "src/core/FileAsTask";
-import { Whitelist } from "src/core/Whitelist";
-import { FileAsTaskCollection } from "src/core/FileAsTaskCollection";
-import { ToplevelFolderPropertySettings } from "src/core/Properties/ToplevelFolder/ToplevelFolderPropertySettings";
 import FileAsTaskPlugin from "main";
+import { PluginSettings } from "src/core/Configuration/PluginSettings";
+import { YAMLParser } from "src/core/Configuration/YAMLParser";
+import { FileAsTask } from "src/core/FileSystem/FileAsTask";
+import { FileAsTaskCollection } from "src/core/FileSystem/FileAsTaskCollection";
+import { FolderModel } from "src/core/FileSystem/FolderModel";
+import { ObsidianFolder } from "src/core/FileSystem/obsidian/ObsidianFolder";
+import { ToplevelFolderPropertySettings } from "src/core/Properties/ToplevelFolder/ToplevelFolderPropertySettings";
+import { Whitelist } from "src/core/Properties/Whitelist";
 
 export class VaultHasExpectedFilesTest{
     logger:Logger;

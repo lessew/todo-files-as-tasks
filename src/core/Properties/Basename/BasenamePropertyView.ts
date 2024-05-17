@@ -1,7 +1,7 @@
 import FileAsTaskPlugin from "main";
 import { App, Modal,Setting } from "obsidian";
-import { PropertyView } from "src/core/Interfaces/PropertyView";
 import { BasenameProperty } from "src/core/Properties/Basename/BasenameProperty";
+import { PropertyView } from "../PropertyView";
 
 export class BasenamePropertyView extends PropertyView{
     prop:BasenameProperty;

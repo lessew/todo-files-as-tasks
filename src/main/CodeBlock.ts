@@ -1,13 +1,13 @@
-import { YAMLParser } from "src/core/YAMLParser";
 import { TaskListView } from "./ui/TaskListView";
 import { CreateTaskButtonView } from "./ui/CreateTaskButtonView";
 import { FATError } from "src/core/Error";
 import { TestView } from "src/test/TestView";
-import { ObsidianFolder } from "./obsidian/ObsidianFolder";
-import { FolderModel } from "src/core/Interfaces/FolderModel";
-import { FileAsTaskCollection } from "src/core/FileAsTaskCollection";
-import { Configuration } from "src/core/Configuration";
+import { ObsidianFolder } from "../core/FileSystem/obsidian/ObsidianFolder";
 import FileAsTaskPlugin from "main";
+import { FolderModel } from "src/core/FileSystem/FolderModel";
+import { Configuration } from "src/core/Configuration/Configuration";
+import { YAMLParser } from "src/core/Configuration/YAMLParser";
+import { FileAsTaskCollection } from "src/core/FileSystem/FileAsTaskCollection";
 
 // TODO debug special cases (/ " etc in title on update)
 export class CodeBlock{

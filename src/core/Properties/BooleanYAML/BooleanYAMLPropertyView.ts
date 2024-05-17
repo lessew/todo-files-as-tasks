@@ -1,6 +1,6 @@
 import FileAsTaskPlugin from "main";
-import { PropertyView } from "src/core/Interfaces/PropertyView";
 import { BooleanYAMLProperty } from "src/core/Properties/BooleanYAML/BooleanYAMLProperty";
+import { PropertyView } from "../PropertyView";
 
 export class BooleanYAMLPropertyView extends PropertyView{
     prop:BooleanYAMLProperty;

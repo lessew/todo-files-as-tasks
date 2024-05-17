@@ -1,7 +1,7 @@
-import { PropertySettings, PropertyType } from "src/core/Interfaces/PropertySettings";
-import { FileModel } from "../../Interfaces/FileModel";
-import { Property } from "../../Interfaces/Property";
-import { Whitelist } from "../../Whitelist";
+import { FileModel } from "../../FileSystem/FileModel";
+import { Property } from "../Property";
+import { PropertySettings, PropertyType } from "../PropertySettings";
+import { Whitelist } from "../Whitelist";
 import { WhitelistYAMLProperty } from "./WhitelistYAMLProperty";
 
 export class WhitelistYAMLPropertySettings implements PropertySettings{

@@ -1,5 +1,5 @@
-import { FileModel } from "../../Interfaces/FileModel";
-import { Property } from "../../Interfaces/Property";
+import { FileModel } from "../../FileSystem/FileModel";
+import { Property } from "../Property";
 
 export class BasenameProperty implements Property{
     file: FileModel;
