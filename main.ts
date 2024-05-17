@@ -1,19 +1,22 @@
-import { Plugin } from 'obsidian';
-import { ObsidianWrapper } from 'src/main/obsidian/ObsidianWrapper';
+import { App, Plugin } from 'obsidian';
 import {FATSettingTab} from "src/main/ui/FATSettingsTab"
-import { MainCodeBlock } from 'src/main/MainCodeBlock';
 import { SettingsModel } from 'src/core/SettingsModel';
 import { PluginSettings } from 'src/core/PluginSettings';
+import { CodeBlock } from 'src/main/CodeBlock';
+import { ObsidianFacade } from 'src/main/obsidian/ObsidianFacade';
 
 export default class FileAsTaskPlugin extends Plugin {
-	jsonSettings:unknown;
 	pluginSettings:PluginSettings;
+	codeBlocks:CodeBlock[] = [];
+	obsidianFacade:ObsidianFacade;
+	obsidianApp:App;
 
 	async onload() {
-		this.jsonSettings = await this.loadData();
-		this.pluginSettings = SettingsModel.loadDeepCopy(this.jsonSettings)
-		ObsidianWrapper.init(this.app);
-	
+		let jsonSettings = await this.loadData();
+		this.pluginSettings = SettingsModel.loadDeepCopy(jsonSettings)
+		this.obsidianFacade = new ObsidianFacade(this.app);
+		this.obsidianApp = this.app;
+
 		// TODO find a way to create a file using button, how to handle rootPath?
 		//const ribbon = this.addRibbonIcon('dice','Files as Task', (evt: MouseEvent) => {
 		//	let settings = new PluginSettings();
@@ -25,10 +28,13 @@ export default class FileAsTaskPlugin extends Plugin {
 		//});
 
 		this.registerMarkdownCodeBlockProcessor("fat", async (source, el, ctx) => {
-			let block = new MainCodeBlock(source, el, this.jsonSettings, this.app);
+			let block = new CodeBlock(source, el, this);
+			this.codeBlocks.push(block);
 			await block.load();
 		});
+
 		this.addSettingTab(new FATSettingTab(this.app, this));
+
 		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
 		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
 	}
@@ -38,7 +44,17 @@ export default class FileAsTaskPlugin extends Plugin {
 
 	}
 
+    async reload():Promise<void>{
+        await this.delay(150);
+        for(let i=0;i<this.codeBlocks.length;i++){
+            await this.codeBlocks[i].reload();
+        }
+    }
 
+    delay(ms:number){
+        return new Promise( resolve => setTimeout(resolve, ms) );
+    }
+	
 	async saveSettings() {
 		await this.saveData(SettingsModel.deepCopy(this.pluginSettings));
 	}
