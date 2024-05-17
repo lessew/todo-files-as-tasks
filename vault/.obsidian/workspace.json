@@ -143,20 +143,19 @@
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
-      "command-palette:Open command palette": false,
-      "files-as-tasks:Files as Task": false
+      "command-palette:Open command palette": false
     }
   },
   "active": "f935e4337624df45",
   "lastOpenFiles": [
-    "todo-home/Finance/Finalize finance weekend NYC.md",
+    "fat-list-examples/Tests.md",
     "fat-list-examples/Developer Integration Testing.md",
+    "fat-list-examples/Dev.md",
+    "todo-home/Finance/Finalize finance weekend NYC.md",
     "todo-home/Finance/aaa.md",
     "todo-home/Finance/ddd.md",
     "todo-home/Finance/qqq.md",
     "todo-home/Finance/hhhh.md",
-    "fat-list-examples/Dev.md",
-    "fat-list-examples/Tests.md",
     "quick note.md",
     "todo-home/Finance/test.md",
     "todo-home/Finance/Pay holiday bill.md",

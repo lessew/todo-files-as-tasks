@@ -1,12 +1,14 @@
+import FileAsTaskPlugin from "main";
 import { PropertyView } from "src/core/Interfaces/PropertyView";
 import { BooleanYAMLProperty } from "src/core/Properties/BooleanYAML/BooleanYAMLProperty";
-import { ObsidianWrapper } from "src/main/obsidian/ObsidianWrapper";
 
 export class BooleanYAMLPropertyView extends PropertyView{
     prop:BooleanYAMLProperty;
-    
-    constructor(prop:BooleanYAMLProperty){
+    plugin: FileAsTaskPlugin;
+
+    constructor(prop:BooleanYAMLProperty,plugin:FileAsTaskPlugin){
         super();
+        this.plugin = plugin;
         this.prop = prop;
     }
 
@@ -24,6 +26,6 @@ export class BooleanYAMLPropertyView extends PropertyView{
     }
 
     async refreshUI():Promise<void>{
-        await ObsidianWrapper.getInstance().reload();
+        await this.plugin.reload();
     }
 }

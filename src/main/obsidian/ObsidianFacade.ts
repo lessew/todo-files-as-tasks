@@ -1,28 +1,10 @@
 import { App,TFile,normalizePath, TFolder, CachedMetadata } from "obsidian";
-import { Observer } from "src/core/Interfaces/Observer";
 
-
-/*
-** Global singleton that keeps track of 
-** - the obsidian app (for file mutation) 
-** - File-As-Tasks codeblocks (for refreshing)
-*/ 
-export class ObsidianWrapper{ // TODO rename to facade
-    private static instance:ObsidianWrapper;
+export class ObsidianFacade{ 
     obsidianApp:App;
-    rootPath:string;
-    observers:Observer[];
-   
-    public static async init(app:App){
-        if(typeof ObsidianWrapper.instance === "undefined"){
-            ObsidianWrapper.instance = new ObsidianWrapper();
-            ObsidianWrapper.instance.obsidianApp = app;
-            ObsidianWrapper.instance.observers = [];
-        }
-    }
-
-    public static getInstance():ObsidianWrapper{
-        return ObsidianWrapper.instance;
+  
+    constructor(app:App){
+        this.obsidianApp = app;
     }
 
     getTFile(path:string):TFile{
@@ -53,11 +35,6 @@ export class ObsidianWrapper{ // TODO rename to facade
         await this.obsidianApp.fileManager.processFrontMatter(tf,(frontmatter) => {
             frontmatter[propName] = propValue;
         })
-       // await this.delay(150);
-    }
-
-    delay(ms:number){
-        return new Promise( resolve => setTimeout(resolve, ms) );
     }
 
     async createEmptyFile(path:string):Promise<TFile>{
@@ -67,21 +44,10 @@ export class ObsidianWrapper{ // TODO rename to facade
     async moveFile(tf:TFile,path:string):Promise<void>{
         //await this.obsidianApp.vault.rename(tf,path);
         await this.obsidianApp.fileManager.renameFile(tf,path);
-        //await this.delay(15);
     }
 
     normalizePath(rp:string):string{
         return normalizePath(rp);
     }
 
-    subscribe(observer:Observer):void{
-        this.observers.push(observer);
-    }
-
-    async reload():Promise<void>{
-        await this.delay(150);
-        for(let i=0;i<this.observers.length;i++){
-            await this.observers[i].update();
-        }
-    }
 }

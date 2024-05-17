@@ -1,6 +1,6 @@
 import { FileModel } from "src/core/Interfaces/FileModel";
-import { ObsidianWrapper } from "./ObsidianWrapper";
 import { CachedMetadata, TFile } from "obsidian";
+import FileAsTaskPlugin from "main";
 
 
 export class ObsidianFile implements FileModel{
@@ -8,31 +8,31 @@ export class ObsidianFile implements FileModel{
     path: string;
     root:string;
     file:TFile;
-
-    private constructor(root:string,path:string){
+    plugin: FileAsTaskPlugin;
+    
+    private constructor(root:string,path:string,plugin:FileAsTaskPlugin){
         this.path = path;
         this.root = root;
+        this.plugin = plugin;
     }
 
-    public static create(root:string,path:string):ObsidianFile{
-        let f = new ObsidianFile(root,path);
+    public static create(root:string,path:string,plugin:FileAsTaskPlugin):ObsidianFile{
+        let f = new ObsidianFile(root,path,plugin);
         f.loadTFile();
         return f;
     }
 
     private loadTFile():void{
-        const wrapper = ObsidianWrapper.getInstance();
-        this.file = wrapper.getTFile(this.path);
+        this.file = this.plugin.obsidianFacade.getTFile(this.path);
         this.name = this.file.name;
     }
 
     async move(newPath: string): Promise<void> {
-        const wrapper = ObsidianWrapper.getInstance();
-        await wrapper.moveFile(this.file,newPath);
+        await this.plugin.obsidianFacade.moveFile(this.file,newPath);
     }
 
     getYAMLProperty(name: string): string | null {
-        const meta:CachedMetadata = ObsidianWrapper.getInstance().getMeta(this.file);
+        const meta:CachedMetadata = this.plugin.obsidianFacade.getMeta(this.file);
         if(meta && meta.frontmatter && meta.frontmatter[name]){
             return meta.frontmatter[name];
         }
@@ -41,12 +41,6 @@ export class ObsidianFile implements FileModel{
         }    
     }
     async setYAMLProperty(name: string, value: string):Promise<void> {
-        const obsidianWrapper = ObsidianWrapper.getInstance();
-        await obsidianWrapper.setMeta(this.file,name,value);
-    }
-
-    static async createMarkdownFile(root:string, path: string): Promise<void> {
-        const wrapper = ObsidianWrapper.getInstance();
-        await wrapper.createEmptyFile(root + "/" + path);        
+        await this.plugin.obsidianFacade.setMeta(this.file,name,value);
     }
 }

@@ -9,6 +9,7 @@ import { FileAsTask } from "src/core/FileAsTask";
 import { Whitelist } from "src/core/Whitelist";
 import { FileAsTaskCollection } from "src/core/FileAsTaskCollection";
 import { ToplevelFolderPropertySettings } from "src/core/Properties/ToplevelFolder/ToplevelFolderPropertySettings";
+import FileAsTaskPlugin from "main";
 
 export class VaultHasExpectedFilesTest{
     logger:Logger;
@@ -20,9 +21,11 @@ export class VaultHasExpectedFilesTest{
     folders:FolderModel[];
     result:boolean;
     fileAsTaskCollection:FileAsTaskCollection;
+    plugin:FileAsTaskPlugin;
 
-    constructor(logger:Logger){
+    constructor(logger:Logger,plugin:FileAsTaskPlugin){
         this.logger = logger;
+        this.plugin = plugin;
         return this;
     }
 
@@ -80,7 +83,7 @@ export class VaultHasExpectedFilesTest{
     }
 
     async actLoadFolders():Promise<void>{
-        this.rootFolder = await ObsidianFolder.create(this.rootPath,this.rootPath);
+        this.rootFolder = ObsidianFolder.create(this.rootPath,this.rootPath,this.plugin);
         let folders = this.rootFolder.getFolderPaths();
         let whitelist = new Whitelist(folders);
         let pSettings =this.settings.get(FileAsTask.PROJECT_FIELD) as ToplevelFolderPropertySettings;

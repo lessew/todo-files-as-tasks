@@ -3,15 +3,16 @@ import { App, SuggestModal } from "obsidian";
 import { Property } from "src/core/Interfaces/Property";
 import { Whitelist } from "src/core/Whitelist";
 import { PropertyView } from "src/core/Interfaces/PropertyView";
-import { ObsidianWrapper } from "src/main/obsidian/ObsidianWrapper";
+import FileAsTaskPlugin from "main";
 
 export class ToplevelFolderPropertyView extends PropertyView{
     prop:ToplevelFolderProperty;
     obsidianApp:App;
+    plugin:FileAsTaskPlugin;
 
-    constructor(prop:ToplevelFolderProperty, app:App){
+    constructor(prop:ToplevelFolderProperty, plugin:FileAsTaskPlugin){
         super();
-        this.obsidianApp = app;
+        this.plugin = plugin; 
         this.prop = prop;
     }
     build(rootElement:HTMLElement):void{
@@ -31,7 +32,7 @@ export class ToplevelFolderPropertyView extends PropertyView{
     }
 
     async refreshUI():Promise<void>{
-        await ObsidianWrapper.getInstance().reload();
+        await this.plugin.reload();
     }
 }
 

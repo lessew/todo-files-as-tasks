@@ -32,9 +32,10 @@ action: list
 
     test('Test happy path', () => {   
         let c = new Configuration();
+        let s = SettingsModel.loadDeepCopy(testConfig);
         c.loadSource(yamlString);
         expect(c.stateIsError()).toBe(false);
-        c.loadSettings(testConfig); 
+        c.loadSettings(s); 
         expect(c.stateIsError()).toBe(false);
         c.loadRootPath();
         expect(c.stateIsError()).toBe(false);

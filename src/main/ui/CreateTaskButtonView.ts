@@ -1,5 +1,4 @@
 import { App, Modal, Setting } from "obsidian";
-import { ObsidianWrapper } from "../obsidian/ObsidianWrapper";
 import { PluginSettings } from "../../core/PluginSettings";
 import { BasenamePropertySettings } from "src/core/Properties/Basename/BasenamePropertySettings";
 import { PropertySettings } from "src/core/Interfaces/PropertySettings";
@@ -7,16 +6,15 @@ import { ToplevelFolderPropertySettings } from "src/core/Properties/ToplevelFold
 import { BooleanYAMLPropertySettings } from "src/core/Properties/BooleanYAML/BooleanYAMLPropertySettings";
 import { WhitelistYAMLPropertySettings } from "src/core/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
 import { createFileAsTask } from "../obsidian/CreateFileAsTask";
+import FileAsTaskPlugin from "main";
 
 
 export class CreateTaskButtonView{
-    obsidianApp:App;
-    settings:PluginSettings;
     root:string
+    plugin:FileAsTaskPlugin;
 
-    constructor(root:string,app:App,settings:PluginSettings){
-        this.obsidianApp = app;
-        this.settings = settings;
+    constructor(root:string,plugin:FileAsTaskPlugin){
+        this.plugin = plugin;
         this.root = root;
     }
 
@@ -26,9 +24,9 @@ export class CreateTaskButtonView{
     }
 
     handleEvent(event:Event){
-        const m:CreateTaskModal =  new CreateTaskModal(this.obsidianApp,this.settings,async (result:Record<string,string>) => {
-            await createFileAsTask(this.root,result,this.settings);
-            ObsidianWrapper.getInstance().reload();
+        const m:CreateTaskModal =  new CreateTaskModal(this.plugin.obsidianApp,this.plugin.pluginSettings,async (result:Record<string,string>) => {
+            await createFileAsTask(this.root,result,this.plugin);
+            this.plugin.reload();
         });
         m.open();
     }

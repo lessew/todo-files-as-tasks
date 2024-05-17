@@ -3,9 +3,9 @@ import { FileAsTask } from "src/core/FileAsTask";
 import { ExpectedFileType, getExpectedHolidayBillFile, getSettings } from "../MockItems";
 import { PluginSettings } from "src/core/PluginSettings";
 import { ObsidianFile } from "src/main/obsidian/ObsidianFile";
-import { ObsidianWrapper } from "src/main/obsidian/ObsidianWrapper";
 import { CachedMetadata } from "obsidian";
 import { FileModel } from "src/core/Interfaces/FileModel";
+import FileAsTaskPlugin from "main";
 
 export class TaskOperationsTest{
     logger:Logger
@@ -14,10 +14,11 @@ export class TaskOperationsTest{
     actualHolidayBillTask:FileAsTask;
     expectedHolidayBillTask:ExpectedFileType;
     result:boolean;
+    plugin:FileAsTaskPlugin;
 
-
-    constructor(logger:Logger){
+    constructor(logger:Logger,plugin:FileAsTaskPlugin){
         this.logger = logger;
+        this.plugin = plugin;
         return this;
     }
 
@@ -35,7 +36,7 @@ export class TaskOperationsTest{
         this.logger.headingSub("Arranging")
         this.expectedHolidayBillTask = getExpectedHolidayBillFile();
         this.settings = getSettings();
-        this.actualHolidayBillFileModel = ObsidianFile.create(this.expectedHolidayBillTask.root,this.expectedHolidayBillTask.path);
+        this.actualHolidayBillFileModel = ObsidianFile.create(this.expectedHolidayBillTask.root,this.expectedHolidayBillTask.path,this.plugin);
         this.actualHolidayBillTask = new FileAsTask(this.actualHolidayBillFileModel,this.settings);
         this.logger.success("Loaded objects")
     }
@@ -44,7 +45,7 @@ export class TaskOperationsTest{
         this.logger.headingSub("Test: changing title")
         await (this.actualHolidayBillTask).set(FileAsTask.TITLE_FIELD,"newValue");
         const fileID1 = "todo-home/Finance/newValue.md";
-        const file1 = ObsidianWrapper.getInstance().getTFile(fileID1);
+        const file1 = this.plugin.obsidianFacade.getTFile(fileID1);
 
         if(file1.path === fileID1){
             this.logger.success(`Moved file to ${fileID1}`)
@@ -64,7 +65,7 @@ export class TaskOperationsTest{
             await this.actualHolidayBillTask.set(FileAsTask.PROJECT_FIELD,"Groceries");
             const fileID = "todo-home/Groceries/Pay holiday bill.md";
             try{
-                const file = ObsidianWrapper.getInstance().getTFile(fileID);
+                const file = this.plugin.obsidianFacade.getTFile(fileID);
                 if(file.path === fileID){
                     this.logger.success(`Moved file to ${fileID}`)
                 }
@@ -89,8 +90,8 @@ export class TaskOperationsTest{
             await this.actualHolidayBillTask.set("starred","✰");
 
             setTimeout(() => {
-                const file = ObsidianWrapper.getInstance().getTFile(this.expectedHolidayBillTask.path);
-                const meta = ObsidianWrapper.getInstance().getMeta(file);
+                const file = this.plugin.obsidianFacade.getTFile(this.expectedHolidayBillTask.path);
+                const meta = this.plugin.obsidianFacade.getMeta(file);
     
                 this.assertSingleYAMLProperty(meta,"starred","✰");
                 this.assertSingleYAMLProperty(meta,"status","Inbox");

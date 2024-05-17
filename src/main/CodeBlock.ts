@@ -1,4 +1,3 @@
-import { App} from "obsidian";
 import { YAMLParser } from "src/core/YAMLParser";
 import { TaskListView } from "./ui/TaskListView";
 import { CreateTaskButtonView } from "./ui/CreateTaskButtonView";
@@ -7,35 +6,33 @@ import { TestView } from "src/test/TestView";
 import { ObsidianFolder } from "./obsidian/ObsidianFolder";
 import { FolderModel } from "src/core/Interfaces/FolderModel";
 import { FileAsTaskCollection } from "src/core/FileAsTaskCollection";
-import { Whitelist } from "src/core/Whitelist";
 import { Configuration } from "src/core/Configuration";
+import FileAsTaskPlugin from "main";
 
 // TODO debug special cases (/ " etc in title on update)
-export class MainCodeBlock{
+export class CodeBlock{
     source:string;
     el:HTMLElement;
-    jsonSettings:any;
-    app:App;
+    plugin:FileAsTaskPlugin;
     root:string;
     rootFolder:FolderModel;
     config: Configuration;
 
-    constructor(source:string,el:HTMLElement,jsonSettings:any,app:App){
+    constructor(source:string,el:HTMLElement,plugin:FileAsTaskPlugin){
         this.source = source;
         this.el = el;
-        this.jsonSettings = jsonSettings;
-        this.app = app;
+        this.plugin = plugin;
     }
 
-    reload():void{
+    async reload():Promise<void>{
         this.el.innerHTML = "";
-        this.load();
+        await this.load();
     }
     
     async load():Promise<void>{
         this.config = new Configuration();
         this.config.loadSource(this.source);
-        this.config.loadSettings(this.jsonSettings);
+        this.config.loadSettings(this.plugin.pluginSettings);
         this.config.loadRootPath();
         this.config.loadAction();
         if(this.config.stateIsError()){
@@ -43,7 +40,7 @@ export class MainCodeBlock{
             return;
         }
 
-        this.rootFolder = await ObsidianFolder.create(this.config.getRootPath(),this.config.getRootPath());
+        this.rootFolder = await ObsidianFolder.create(this.config.getRootPath(),this.config.getRootPath(),this.plugin);
         this.config.loadFolders(this.rootFolder.getFolderPaths());
 
         if(this.config.getAction()==YAMLParser.ACTION_LIST){
@@ -76,17 +73,17 @@ export class MainCodeBlock{
         fileAsTaskCollection.bulkFilterBy(filters);
         //fileAsTaskCollection.groupBy('project');
         //fileAsTaskCollection.sortBy('context','ASC');
-        let view = new TaskListView(fileAsTaskCollection,this.config.getSettings(),this.app);
+        let view = new TaskListView(fileAsTaskCollection,this.plugin);
         view.build(this.el);
     }
 
     displayCreateTaskButton():void{
-        const view = new CreateTaskButtonView(this.root,this.app,this.config.getSettings());
+        const view = new CreateTaskButtonView(this.root,this.plugin);
         view.build(this.el);
     }
 
     displayTest():void{
-        const testView = new TestView(this.app,this.el);
+        const testView = new TestView(this.plugin,this.el);
         testView.main();
     }
 }

@@ -60,10 +60,11 @@ export class FileAsTaskCollection{
     get():FileAsTask[]{
         return this.filesAsTask;
     }
-
+/*
     async update():Promise<void>{
         await this.rootFolder.reload();
         this.loadFilesAsTask();
         this.bulkFilterBy(this.filters);
     }
+*/
 }

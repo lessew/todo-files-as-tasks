@@ -10,28 +10,16 @@ import { BasenameProperty } from "src/core/Properties/Basename/BasenameProperty"
 import { WhitelistYAMLProperty } from "src/core/Properties/WhitelistYAML/WhitelistYAMLProperty";
 import { BooleanYAMLProperty } from "src/core/Properties/BooleanYAML/BooleanYAMLProperty";
 import { LinkView } from "./LinkView";
-import { PluginSettings } from "src/core/PluginSettings";
-import { ObsidianWrapper } from "../obsidian/ObsidianWrapper";
-import { Observer } from "src/core/Interfaces/Observer";
+import FileAsTaskPlugin from "main";
 
-export class TaskListView implements Observer{
-    obsidianApp:App;
+export class TaskListView{
     fileAsTaskCollection:FileAsTaskCollection;
-    settings:PluginSettings;
     rootElement:HTMLElement;
+    plugin:FileAsTaskPlugin;
     
-    constructor(fatc:FileAsTaskCollection,settings:PluginSettings,app:App){
-        this.obsidianApp = app;
+    constructor(fatc:FileAsTaskCollection,plugin:FileAsTaskPlugin){
+        this.plugin = plugin;
         this.fileAsTaskCollection = fatc;
-        this.settings = settings;
-        ObsidianWrapper.getInstance().subscribe(this);
-    }
-
-    async update():Promise<void>{
-
-        this.rootElement.innerHTML = "";
-        await this.fileAsTaskCollection.update();
-        this.build(this.rootElement);
     }
 
     build(rootElement:HTMLElement):HTMLElement{
@@ -65,7 +53,7 @@ export class TaskListView implements Observer{
             // title: not configurable
             let tdTitle = row.createEl("td", {});
             let prop = thisTask.getProperty(FileAsTask.TITLE_FIELD) as BasenameProperty;
-            const tp = new BasenamePropertyView(prop,this.obsidianApp);
+            const tp = new BasenamePropertyView(prop,this.plugin);
             tp.build(tdTitle);
 
             let tdTitleLink = row.createEl("td", {});
@@ -76,23 +64,24 @@ export class TaskListView implements Observer{
             let tdProject:HTMLTableCellElement = row.createEl("td", {});
             const pp = new ToplevelFolderPropertyView(
                 thisTask.getProperty("project") as ToplevelFolderProperty,
-                this.obsidianApp
+                this.plugin
             );
             pp.build(tdProject);
 
             // YAML fields: configurarable
-            let propFields = this.settings.getAsMap();
+            let propFields = this.plugin.pluginSettings.getAsMap();
             propFields.forEach(propSettings => {
                 if(propSettings.getType()=="booleanYAML"){
                     let tdCell:HTMLTableCellElement = row.createEl("td", {})
-                    const ss = new BooleanYAMLPropertyView(thisTask.getProperty(propSettings.propName) as BooleanYAMLProperty);
+                    const ss = new BooleanYAMLPropertyView(
+                        thisTask.getProperty(propSettings.propName) as BooleanYAMLProperty,this.plugin);
                     ss.build(tdCell);
                 }
                 else if(propSettings.getType()=="whitelistYAML"){
                     let tdCell:HTMLTableCellElement = row.createEl("td", {})
                     const cc = new WhitelistYAMLPropertyView(
                         thisTask.getProperty(propSettings.propName) as WhitelistYAMLProperty,
-                        this.obsidianApp);
+                        this.plugin);
                     cc.build(tdCell);
                 }
             })

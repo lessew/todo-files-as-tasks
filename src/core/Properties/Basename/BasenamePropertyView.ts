@@ -1,15 +1,15 @@
+import FileAsTaskPlugin from "main";
 import { App, Modal,Setting } from "obsidian";
 import { PropertyView } from "src/core/Interfaces/PropertyView";
 import { BasenameProperty } from "src/core/Properties/Basename/BasenameProperty";
-import { ObsidianWrapper } from "src/main/obsidian/ObsidianWrapper";
 
 export class BasenamePropertyView extends PropertyView{
     prop:BasenameProperty;
-    obsidianApp:App;
+    plugin: FileAsTaskPlugin;
 
-    constructor(prop:BasenameProperty,app:App){
+    constructor(prop:BasenameProperty,plugin:FileAsTaskPlugin){
         super();
-        this.obsidianApp = app;
+        this.plugin = plugin;
         this.prop = prop;
     }
 
@@ -19,7 +19,7 @@ export class BasenamePropertyView extends PropertyView{
     }
 
     async handleEvent(event:Event){
-        const m:UpdateBasenameModal =  new UpdateBasenameModal(this.obsidianApp,this.prop.getValue(),async (result) => {
+        const m:UpdateBasenameModal =  new UpdateBasenameModal(this.plugin.obsidianApp,this.prop.getValue(),async (result) => {
             await this.prop.setValue(result);
             await this.refreshUI();
         });
@@ -27,7 +27,7 @@ export class BasenamePropertyView extends PropertyView{
     }
 
     async refreshUI():Promise<void>{
-      await ObsidianWrapper.getInstance().reload();
+      await this.plugin.reload();
   }
 }
 

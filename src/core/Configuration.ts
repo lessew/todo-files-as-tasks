@@ -35,12 +35,12 @@ export class Configuration{
         this.trySetFoldersInSettings();
     }
 
-    loadSettings(settings:SettingsSavedFormatType):void{
+    loadSettings(settings:PluginSettings):void{
         if(this.stateIsError()){
             return;
         } 
-        this.settings = SettingsModel.loadDeepCopy(settings);
-        this.trySetFoldersInSettings()
+        this.settings = settings;
+        this.trySetFoldersInSettings();
     }
 
     trySetFoldersInSettings():void{

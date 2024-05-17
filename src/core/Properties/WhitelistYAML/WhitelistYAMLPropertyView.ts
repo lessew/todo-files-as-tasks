@@ -2,16 +2,17 @@ import { App, SuggestModal } from "obsidian";
 import { WhitelistYAMLProperty } from "src/core/Properties/WhitelistYAML/WhitelistYAMLProperty";
 import { Property } from "src/core/Interfaces/Property";
 import { Whitelist } from "src/core/Whitelist";
-import { ObsidianWrapper } from "src/main/obsidian/ObsidianWrapper";
 import { PropertyView } from "src/core/Interfaces/PropertyView";
+import FileAsTaskPlugin from "main";
 
 export class WhitelistYAMLPropertyView extends PropertyView{
     prop:WhitelistYAMLProperty;
     obsidianApp:App;
+    plugin:FileAsTaskPlugin;
 
-    constructor(prop:WhitelistYAMLProperty, app:App){
+    constructor(prop:WhitelistYAMLProperty, plugin:FileAsTaskPlugin){
         super();
-        this.obsidianApp = app;
+        this.plugin = plugin;
         this.prop = prop;
     }
 
@@ -32,7 +33,7 @@ export class WhitelistYAMLPropertyView extends PropertyView{
     }
     
     async refreshUI():Promise<void>{
-        await ObsidianWrapper.getInstance().reload();
+        await this.plugin.reload();
     }
 }
 
