@@ -31,7 +31,6 @@ export class YAMLParser{
             return rp;
         }
         catch(e){
-            return new FATError(e.message);
             return new FATError("Could not parse rootpath: yaml variable not found")
         }
     }
