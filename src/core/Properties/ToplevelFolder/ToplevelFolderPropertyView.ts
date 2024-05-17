@@ -7,7 +7,6 @@ import FileAsTaskPlugin from "main";
 
 export class ToplevelFolderPropertyView extends PropertyView{
     prop:ToplevelFolderProperty;
-    obsidianApp:App;
     plugin:FileAsTaskPlugin;
 
     constructor(prop:ToplevelFolderProperty, plugin:FileAsTaskPlugin){
@@ -27,7 +26,7 @@ export class ToplevelFolderPropertyView extends PropertyView{
             await this.prop.setValue(item);
             await this.refreshUI();
         },
-        this.obsidianApp);
+        this.plugin.obsidianApp);
         m.open();
     }
 

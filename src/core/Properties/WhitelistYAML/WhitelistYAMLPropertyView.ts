@@ -7,7 +7,6 @@ import FileAsTaskPlugin from "main";
 
 export class WhitelistYAMLPropertyView extends PropertyView{
     prop:WhitelistYAMLProperty;
-    obsidianApp:App;
     plugin:FileAsTaskPlugin;
 
     constructor(prop:WhitelistYAMLProperty, plugin:FileAsTaskPlugin){
@@ -28,7 +27,7 @@ export class WhitelistYAMLPropertyView extends PropertyView{
             await this.prop.setValue(item);
             await this.refreshUI();
         },
-        this.obsidianApp);
+        this.plugin.obsidianApp);
         m.open();
     }
     
