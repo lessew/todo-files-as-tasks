@@ -1,6 +1,6 @@
-import { BooleanYAMLPropertySettings } from "../../../src/core/Properties/BooleanYAML/BooleanYAMLPropertySettings";
-import { BooleanYAMLProperty } from "../../../src/core/Properties/BooleanYAML/BooleanYAMLProperty";
-import { Whitelist } from "../../../src/core/Properties/Whitelist";
+import { BooleanYAMLProperty } from "../../../src/Properties/BooleanYAML/BooleanYAMLProperty";
+import { BooleanYAMLPropertySettings } from "../../../src/Properties/BooleanYAML/BooleanYAMLPropertySettings";
+import { Whitelist } from "../../../src/Properties/Whitelist";
 import { MockFileModel } from "../../Mocks/MockFileModel";
 
 

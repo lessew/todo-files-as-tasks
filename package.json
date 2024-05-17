@@ -11,7 +11,8 @@
 		"version": "node version-bump.mjs && git add manifest.json versions.json",
 		"reset-test-vault": "cp -r vault/todo-home-base/* vault/todo-home/",
 		"reset-settings": "cp src/test/deploy/data-backup.json vault/.obsidian/plugins/files-as-tasks/data.json",
-		"test": "jest"
+		"test": "jest",
+		"clear-test-cache": "jest --clearCache"
 	},
 	"keywords": [],
 	"author": "",

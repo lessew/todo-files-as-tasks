@@ -1,9 +1,9 @@
 import { App, Plugin } from 'obsidian';
-import { PluginSettings } from 'src/core/Configuration/PluginSettings';
-import { SettingsModel } from 'src/core/Configuration/SettingsModel';
-import { FATSettingTab } from 'src/core/Configuration/ui/FATSettingsTab';
-import { ObsidianFacade } from 'src/core/FileSystem/obsidian/ObsidianFacade';
-import { CodeBlock } from 'src/main/CodeBlock';
+import { CodeBlock } from 'src/CodeBlock';
+import { PluginSettings } from 'src/Configuration/PluginSettings';
+import { SettingsModel } from 'src/Configuration/SettingsModel';
+import { FATSettingTab } from 'src/Configuration/ui/FATSettingsTab';
+import { ObsidianFacade } from 'src/FileSystem/obsidian/ObsidianFacade';
 
 export default class FileAsTaskPlugin extends Plugin {
 	pluginSettings:PluginSettings;

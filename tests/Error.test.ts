@@ -1,4 +1,4 @@
-import {FATError} from "../src/core/Error";
+import { FATError } from "../src/Error";
 
 
 describe('Error test', () => {

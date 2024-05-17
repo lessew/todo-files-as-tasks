@@ -1,6 +1,6 @@
+import { Whitelist } from "../../../src/Properties/Whitelist";
+import { WhitelistYAMLPropertySettings } from "../../../src/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
 import { MockFileModel } from "../../../tests/Mocks/MockFileModel";
-import { WhitelistYAMLPropertySettings } from "../../../src/core/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
-import { Whitelist } from "../../../src/core/Properties/Whitelist";
 
 describe('whitelistyamlpropertysettings: constructor', () => {
 

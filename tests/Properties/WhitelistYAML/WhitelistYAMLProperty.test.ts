@@ -1,6 +1,6 @@
-import { WhitelistYAMLProperty } from "../../../src/core/Properties/WhitelistYAML/WhitelistYAMLProperty";
-import { Whitelist } from "../../../src/core/Properties/Whitelist";
-import { MockFileModel } from "../../Mocks/MockFileModel";
+import { Whitelist } from "../../../src/Properties/Whitelist";
+import { WhitelistYAMLProperty } from "../../../src/Properties/WhitelistYAML/WhitelistYAMLProperty";
+import { MockFileModel } from "../../../tests/Mocks/MockFileModel";
 
 
 class Helper{
