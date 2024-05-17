@@ -42,12 +42,11 @@ export class PluginSettings {
     }
 }
 
-// TODO add errands to context defaults
 export const DEFAULT_SETTINGS:PluginSettings = new PluginSettings()
     .add(new BasenamePropertySettings(FileAsTask.TITLE_FIELD))
     .add(new ToplevelFolderPropertySettings(FileAsTask.PROJECT_FIELD))
     .add(new BooleanYAMLPropertySettings("starred","✰", new Whitelist(["✰","⭐"])))
-    .add(new WhitelistYAMLPropertySettings("context","None", new Whitelist(["Desk","Deep","Phone","Read","None"])))
+    .add(new WhitelistYAMLPropertySettings("context","None", new Whitelist(["Desk","Deep","Phone","Read","Errands","None"])))
     .add(new WhitelistYAMLPropertySettings("status","Inbox", new Whitelist(["Inbox","Next","Deferred","Waiting","Done"])));
 
 
