@@ -55,6 +55,8 @@ const expectedFiles = [
     }
 ];
 
+const ROOT = "todo-home";
+
 const expectedFolders = [
     "Finance",
     "Finance/Taxes 2023",
@@ -64,12 +66,15 @@ const expectedFolders = [
 ]
 
 const yaml = `
-rootPath: todo-home
+rootPath: ${ROOT}
 action: list`;
     
 
 const settings = DEFAULT_SETTINGS;
     
+export function getRoot():string{
+    return ROOT;
+}
 
 export function getSettings():PluginSettings{
         return settings;

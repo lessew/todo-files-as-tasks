@@ -1,5 +1,6 @@
 import FileAsTaskPlugin from "main";
 import { Logger } from "src/AcceptanceTest/Logger";
+import { CreateTaskTest } from "src/AcceptanceTest/tests/CreateTaskTest";
 import { TaskOperationsTest } from "src/AcceptanceTest/tests/TaskOperationsTest";
 import { VaultHasExpectedFilesTest } from "src/AcceptanceTest/tests/VaultHasExpectedFilesTest";
 
@@ -18,8 +19,10 @@ export class TestView{
 
     async main(){
         if(await this.testVaultHasExpectedFiles()){
-            this.testTaskOperations();
-            this.testCreatetest();
+            await this.testTaskOperations();
+            // force wait due to frontmatter not being saved to disk synchronously
+            await this.plugin.delay(150);
+            await this.testCreateTask();
         }
     }
 
@@ -29,12 +32,12 @@ export class TestView{
         return test.isSuccess();
     }
 
-    testTaskOperations():void{
-        const test = new TaskOperationsTest(this.logger,this.plugin).test();
+    async testTaskOperations():Promise<void>{
+        const test = await new TaskOperationsTest(this.logger,this.plugin).test();
     }
 
-    testCreatetest():void{
-        // TODO: create create test acceptance test
+    async testCreateTask():Promise<void>{
+        const test = await new CreateTaskTest(this.logger, this.plugin).test();
     }
 
 }

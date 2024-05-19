@@ -26,87 +26,83 @@ export class TaskOperationsTest{
         this.logger.heading("Testing TaskOperations")
         this.arrange();
         await this.actAssertTitleChange();
+        await this.plugin.delay(150);
         await this.actAssertProjectChange();
-        this.actAssertYAMLPropertiesChange();
+        await this.plugin.delay(150);
+        await this.actAssertYAMLPropertiesChange();
 
         return this;
     }
 
     arrange():void{
-        this.logger.headingSub("Arranging")
         this.expectedHolidayBillTask = getExpectedHolidayBillFile();
+        this.logger.log(`Setting up test with file ${this.expectedHolidayBillTask.path}`);
         this.settings = getSettings();
+        this.logger.log("settings retrieved");
         this.actualHolidayBillFileModel = ObsidianFile.create(this.expectedHolidayBillTask.root,this.expectedHolidayBillTask.path,this.plugin);
+        this.logger.log("Set up filemodel");
         this.actualHolidayBillTask = new FileAsTask(this.actualHolidayBillFileModel,this.settings);
-        this.logger.success("Loaded objects")
+        this.logger.log("Set up the FileAsTask object");
+        this.logger.success("Loaded all objects, ready to test")
     }
 
     async actAssertTitleChange():Promise<void>{    
-        this.logger.headingSub("Test: changing title")
+        let originalPath = this.actualHolidayBillFileModel.path;
+        let newPath = "todo-home/Finance/newValue.md";
+
+        this.logger.log(`---Test: changing title of file ${originalPath} to ${newPath}---`)
         await (this.actualHolidayBillTask).set(FileAsTask.TITLE_FIELD,"newValue");
-        const fileID1 = "todo-home/Finance/newValue.md";
-        const file1 = this.plugin.obsidianFacade.getTFile(fileID1);
+        await this.assertFileExistsWithDelay(newPath)
 
-        if(file1.path === fileID1){
-            this.logger.success(`Moved file to ${fileID1}`)
-        }
-        else{
-            this.logger.error(`Could not move file to ${fileID1}.`)
-            this.setFailure();
-        }
-
-        // teardown
-        await this.actualHolidayBillTask.set(FileAsTask.TITLE_FIELD,this.expectedHolidayBillTask.title);
+        await this.plugin.delay(150); // prepare for teardown
+        this.logger.log(`Moving  file back to original location ${originalPath}`);
+        await this.actualHolidayBillTask.set(FileAsTask.TITLE_FIELD, this.expectedHolidayBillTask.title);
+        await this.assertFileExistsWithDelay(originalPath);
     }
 
     async actAssertProjectChange():Promise<void>{
-        if(this.isRunning()){
-            this.logger.headingSub("Test: changing project")
-            await this.actualHolidayBillTask.set(FileAsTask.PROJECT_FIELD,"Groceries");
-            const fileID = "todo-home/Groceries/Pay holiday bill.md";
-            try{
-                const file = this.plugin.obsidianFacade.getTFile(fileID);
-                if(file.path === fileID){
-                    this.logger.success(`Moved file to ${fileID}`)
-                }
-                else{
-                    this.logger.error(`Could not move file to ${fileID}.`)
-                    this.setFailure();
-                }
-            }
-            catch(e){
-                this.logger.error(`Could not move file to ${fileID}`)
-                this.setFailure();
-            }         
-            await this.actualHolidayBillTask.set(FileAsTask.PROJECT_FIELD,this.expectedHolidayBillTask.project);
-        }
+        if(!this.isRunning()){ return;}
+        let originalPath = "todo-home/Finance/Pay holiday bill.md";
+        let newPath = "todo-home/Groceries/Pay holiday bill.md";
+
+        this.logger.log(`---Test: changing project from Finance to Groceries---`);
+        await this.actualHolidayBillTask.set(FileAsTask.PROJECT_FIELD, "Groceries");
+        await this.assertFileExistsWithDelay(newPath);
+        await this.plugin.delay(150); // prep for teardown
+        this.logger.log("Moving back to original folder");
+        await this.actualHolidayBillTask.set(FileAsTask.PROJECT_FIELD, this.expectedHolidayBillTask.project);
+        await this.assertFileExistsWithDelay(originalPath);
     }
 
     async actAssertYAMLPropertiesChange(){
-        if(this.isRunning()){
-            this.logger.headingSub("Test: changing yaml properties")
-            await this.actualHolidayBillTask.set("context","Desk");
-            await this.actualHolidayBillTask.set("status","Inbox");
-            await this.actualHolidayBillTask.set("starred","✰");
+        if(!this.isRunning()) {return;}
 
-            setTimeout(() => {
-                const file = this.plugin.obsidianFacade.getTFile(this.expectedHolidayBillTask.path);
-                const meta = this.plugin.obsidianFacade.getMeta(file);
-    
-                this.assertSingleYAMLProperty(meta,"starred","✰");
-                this.assertSingleYAMLProperty(meta,"status","Inbox");
-                this.assertSingleYAMLProperty(meta,"context","Desk");
-    
-                // tear down
-                this.actualHolidayBillTask.set("context",this.expectedHolidayBillTask.yaml.context!);
-                this.actualHolidayBillTask.set("status",this.expectedHolidayBillTask.yaml.status!);
-                this.actualHolidayBillTask.set("starred",this.expectedHolidayBillTask.yaml.starred!);
-            },300)
-           
-        }
+        this.logger.log("---Test: changing yaml properties---")
+        await this.actualHolidayBillTask.set("context", "Desk");
+        await this.actualHolidayBillTask.set("status", "Inbox");
+        await this.actualHolidayBillTask.set("starred", "✰");
+        this.logger.log("Asserting if values have properly changed");
+        await this.assertSingleYAMLPropertyWithDelay(this.expectedHolidayBillTask.path,"starred", "✰");
+        await this.assertSingleYAMLPropertyWithDelay(this.expectedHolidayBillTask.path,"status", "Inbox");
+        await this.assertSingleYAMLPropertyWithDelay(this.expectedHolidayBillTask.path,"context", "Desk");
+
+        // tear down
+        this.logger.log("Putting back to original values");
+        await this.actualHolidayBillTask.set("context", this.expectedHolidayBillTask.yaml.context!);
+        await this.actualHolidayBillTask.set("status", this.expectedHolidayBillTask.yaml.status!);
+        await this.actualHolidayBillTask.set("starred", this.expectedHolidayBillTask.yaml.starred!);
+        this.logger.log("Asserting if reverting to original values has succeeded")
+        await this.assertSingleYAMLPropertyWithDelay(this.expectedHolidayBillTask.path,"starred",this.expectedHolidayBillTask.yaml.starred!);
+        await this.assertSingleYAMLPropertyWithDelay(this.expectedHolidayBillTask.path,"status", this.expectedHolidayBillTask.yaml.status!);
+        await this.assertSingleYAMLPropertyWithDelay(this.expectedHolidayBillTask.path,"context", this.expectedHolidayBillTask.yaml.context!);
+
     }
 
-    assertSingleYAMLProperty(meta:CachedMetadata,name:string,expectedValue:string):void{
+    async assertSingleYAMLPropertyWithDelay(path:string, name:string,expectedValue:string):Promise<void>{
+        await this.plugin.delay(150);
+        const file = this.plugin.obsidianFacade.getTFile(path);
+        const meta = this.plugin.obsidianFacade.getMeta(file);
+
         try{
             const actualvalue = meta.frontmatter![name];
             if(actualvalue==expectedValue){
@@ -119,6 +115,25 @@ export class TaskOperationsTest{
         catch(e){
             this.logger.error(`Trying to access the YAML looking for ${name} threw an exception`);
             console.error(e);
+        }
+    }
+
+    async assertFileExistsWithDelay(fileID:string):Promise<void>{
+        await this.plugin.delay(150);
+        try {
+            const file = this.plugin.obsidianFacade.getTFile(fileID);
+            if (file.path === fileID) {
+                this.logger.success(`File found at ${fileID}`)
+            }
+            else {
+                this.logger.error(`Could not find file at ${fileID}.`)
+                this.setFailure();
+            }
+        }
+        catch (e) {
+            this.logger.error(`Could not find file and threw error at ${fileID}`);
+            this.logger.error(e);
+            this.setFailure();
         }
     }
 

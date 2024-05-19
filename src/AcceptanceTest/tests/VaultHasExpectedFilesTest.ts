@@ -44,21 +44,21 @@ export class VaultHasExpectedFilesTest{
     }
 
     arrange(){ 
-        this.logger.headingSub("Arranging");
+        this.logger.log("Setting up");
         this.yaml = getYamlListAllFiles();
         this.settings = getSettings();
         this.logger.success("Completed setting up")
     }
 
     async act():Promise<void>{
-        this.logger.headingSub("Acting")
+        this.logger.log("Loading yaml and folders")
         this.actLoadYAML();
         await this.actLoadFolders();
         this.actLoadFileCollection();
     }
 
     assert(){
-        this.logger.headingSub("Asserting");
+        this.logger.log("Asserting");
         this.assertFolderList()
         this.assertFileList();
     }
@@ -139,7 +139,7 @@ export class VaultHasExpectedFilesTest{
             const foundNeedle = tasks.find((aTask) => {
                 return aTask.file.path == expectedNeedle.path;
             })
-            this.logger.headingSubSub(`Testing file ${expectedNeedle.title}`);
+            this.logger.log(`--Testing file ${expectedNeedle.title}`);
             if(foundNeedle==undefined){
                 this.logger.error(`Could not find file ${expectedFiles[i].path}`)
                 this.result = false;
