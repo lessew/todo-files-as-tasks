@@ -1,7 +1,7 @@
 import FileAsTaskPlugin from "main";
-import { Logger } from "src/IntegrationTest/Logger";
-import { TaskOperationsTest } from "src/IntegrationTest/tests/TaskOperationsTest";
-import { VaultHasExpectedFilesTest } from "src/IntegrationTest/tests/VaultHasExpectedFilesTest";
+import { Logger } from "src/AcceptanceTest/Logger";
+import { TaskOperationsTest } from "src/AcceptanceTest/tests/TaskOperationsTest";
+import { VaultHasExpectedFilesTest } from "src/AcceptanceTest/tests/VaultHasExpectedFilesTest";
 
 export class TestView{
     assertions:string[];
@@ -19,6 +19,7 @@ export class TestView{
     async main(){
         if(await this.testVaultHasExpectedFiles()){
             this.testTaskOperations();
+            this.testCreatetest();
         }
     }
 
@@ -30,6 +31,10 @@ export class TestView{
 
     testTaskOperations():void{
         const test = new TaskOperationsTest(this.logger,this.plugin).test();
+    }
+
+    testCreatetest():void{
+        // TODO: create create test acceptance test
     }
 
 }
