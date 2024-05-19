@@ -1,4 +1,3 @@
-import { FATError } from "../Error";
 import { FileAsTask } from "../FileSystem/FileAsTask";
 import { Filter } from "../FileSystem/Filter";
 import { PluginSettings } from "./PluginSettings";
@@ -55,7 +54,7 @@ export class Configuration{
             return;
         }
         let result = this.parser.parseRootPath();
-        if(FATError.isError(result)){
+        if(result instanceof Error){
             this.state = result;
         }
         else{
@@ -68,7 +67,7 @@ export class Configuration{
             return;
         }
         let result = this.parser.parseFilters(this.settings);
-        if(FATError.isError(result)){
+        if(result instanceof Error){
             this.state = result;
         }
         else{
@@ -81,7 +80,7 @@ export class Configuration{
             return;
         }
         let action = this.parser.parseAction();
-        if(FATError.isError(action)){
+        if(action instanceof Error){
             this.state = action;
         }
         else{

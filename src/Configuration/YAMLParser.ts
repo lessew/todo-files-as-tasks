@@ -1,6 +1,5 @@
 import * as yaml from 'js-yaml'
 import { Filter, FilterOperator } from '../FileSystem/Filter';
-import { FATError } from '../Error';
 import { PluginSettings } from './PluginSettings';
 
 // TODO : use Obsidian YAML parser functions
@@ -14,28 +13,28 @@ export class YAMLParser{
     static EXCLUDE_TOKEN = "not ";
     static TOKEN_ROOTPATH = "rootPath" as const;
 
-    loadSource(source:string):true | FATError{
+    loadSource(source:string):true | Error{
         this.source = source;
         try{
             this.yaml = yaml.load(source);
             return true;
         }
         catch(e){
-            return new FATError(`Error: not valid YAML: ${e.message}`);
+            return new Error(`Error: not valid YAML: ${e.message}`);
         }
     }
 
-    parseRootPath():string | FATError{
+    parseRootPath():string | Error{
         try{
             const rp:string = (this.yaml as{[YAMLParser.TOKEN_ROOTPATH]:string}).rootPath;
             return rp;
         }
         catch(e){
-            return new FATError("Could not parse rootpath: yaml variable not found")
+            return new Error("Could not parse rootpath: yaml variable not found")
         }
     }
 
-    parseAction():string | FATError{
+    parseAction():string | Error{
         if(this.source.indexOf(YAMLParser.ACTION_CREATE_BUTTON)>-1){
             return YAMLParser.ACTION_CREATE_BUTTON;
         }
@@ -46,13 +45,13 @@ export class YAMLParser{
             return YAMLParser.ACTION_TEST;
         }
         else{
-            return new FATError("Action not specified, add either 'list' or 'create_button'")
+            return new Error("Action not specified, add either 'list' or 'create_button'")
         }
     }
    
-    parseFilters(settings:PluginSettings):Filter[] | FATError{
+    parseFilters(settings:PluginSettings):Filter[] | Error{
         let result:Filter[] = [];
-        let fail:FATError;
+        let fail:Error;
 
         let map = settings.getAsMap();
         for(let key of Array.from( map.keys()) ) {
@@ -67,7 +66,7 @@ export class YAMLParser{
                     result.push(r);
                 }
                 else{
-                    return new FATError(`${valop.value} is not set as an allowed value for ${aPropSetting.propName}`)
+                    return new Error(`${valop.value} is not set as an allowed value for ${aPropSetting.propName}`)
                 }
             }
         };        

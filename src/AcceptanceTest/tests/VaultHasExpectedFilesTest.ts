@@ -1,6 +1,5 @@
 import { Logger } from "../Logger";
 import { getExpectedFiles, getExpectedFolders, getSettings, getYamlListAllFiles,ExpectedFileType } from "../MockItems";
-import { FATError } from "src/Error";
 import FileAsTaskPlugin from "main";
 import { PluginSettings } from "src/Configuration/PluginSettings";
 import { YAMLParser } from "src/Configuration/YAMLParser";
@@ -67,13 +66,13 @@ export class VaultHasExpectedFilesTest{
     actLoadYAML(){
         this.parser = new YAMLParser();
         const isLoaded = this.parser.loadSource(this.yaml);
-        if(FATError.isError(isLoaded)){
+        if(isLoaded instanceof Error){
             this.logger.error("Parsing YAML failed");
             this.setFailure();
             return;
         }
        const root = this.parser.parseRootPath();
-        if(FATError.isError(root)){
+        if(root instanceof Error){
             this.logger.error("Parsing root failed")
             this.setFailure();
             return;

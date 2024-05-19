@@ -1,7 +1,6 @@
 import FileAsTaskPlugin from "main";
 import { Configuration } from "./Configuration/Configuration";
 import { YAMLParser } from "./Configuration/YAMLParser";
-import { FATError } from "./Error";
 import { FileAsTaskCollection } from "./FileSystem/FileAsTaskCollection";
 import { FolderModel } from "./FileSystem/FolderModel";
 import { ObsidianFolder } from "./FileSystem/obsidian/ObsidianFolder";
@@ -56,7 +55,7 @@ export class CodeBlock{
     }
 
     
-    displayUserError(error:FATError){
+    displayUserError(error:Error){
         const msg = error.message;// + "\n" + this.source;
         this.el.createEl("div",{text:msg});
     }

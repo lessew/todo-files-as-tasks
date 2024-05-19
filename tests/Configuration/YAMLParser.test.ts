@@ -1,6 +1,5 @@
 import { YAMLParser } from "../../src/Configuration/YAMLParser";
-import { FilterOperator } from "../../src/FileSystem/Filter";
-import { FATError } from "../../src/Error";
+import { Filter, FilterOperator } from "../../src/FileSystem/Filter";
 import { PluginSettings } from "../../src/Configuration/PluginSettings";
 import { Whitelist } from "../../src/Properties/Whitelist";
 import { WhitelistYAMLPropertySettings } from "../../src/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
@@ -32,7 +31,7 @@ describe('YAMLParser load source', () => {
     test('load incorrectly formatted source', () => {
         let p = new YAMLParser();
         const result = p.loadSource(loadSourceIncorrect);
-        expect(FATError.isError(result)).toBe(true);
+        expect(result instanceof Error).toBe(true);
     });
 });
 
@@ -61,12 +60,12 @@ describe('YAMLParser parse correctly formatted rootpath', () => {
         let p = new YAMLParser();
         p.loadSource(rootPathIncorrect);
         const result = p.parseRootPath();
-        expect(FATError.isError(result)).toBe(true);
+        expect(result instanceof Error).toBe(true);
     });
     test('parse incorrectly formatted rootpah - trailing slash not allowed', () => {
         let p = new YAMLParser();
         const result = p.loadSource(rootPathTrailingSlash);
-        expect(FATError.isError(result)).toBe(true);
+        expect(result instanceof Error).toBe(true);
     });
 });
 
@@ -100,7 +99,7 @@ describe('YAMLParser parse action', () => {
         let p = new YAMLParser();
         p.loadSource(actionIncorrect);
         const result = p.parseAction();
-        expect(FATError.isError(result)).toBe(true);
+        expect(result instanceof Error).toBe(true);
     });
 });
 
@@ -122,15 +121,14 @@ describe('YAMLParser parse filters', () => {
         let p = new YAMLParser();
         p.loadSource(filtersCorrect);
         let result = p.parseFilters(settings);
-        if(!FATError.isError(result)){
-            expect(result.length).toBe(1);
-            expect(result[0].propertyName).toBe("status");
-            expect(result[0].propertyValue).toBe("done");
-            expect(result[0].operator).toBe(FilterOperator.include);
-        }
-        else{
+        if(result instanceof Error){
             expect(true).toBe(false);
+            return;
         }
+        expect(result.length).toBe(1);
+        expect(result[0].propertyName).toBe("status");
+        expect(result[0].propertyValue).toBe("done");
+        expect(result[0].operator).toBe(FilterOperator.include);
     });
     test('load incorrectly formatted source - filter', () => {
         let p = new YAMLParser();
@@ -140,7 +138,7 @@ describe('YAMLParser parse filters', () => {
 
         p.loadSource(filtersIncorrect);
         let result = p.parseFilters(settings);
-        expect(FATError.isError(result)).toBe(true);
+        expect(result instanceof Error).toBe(true);
     });
 });
 
@@ -162,15 +160,14 @@ describe('yaml parser: parse operator test', () => {
         let p = new YAMLParser();
         p.loadSource(notdone);
         let result = p.parseFilters(settings);
-        if(!FATError.isError(result)){
-            expect(result.length).toBe(1);
-            expect(result[0].propertyName).toBe("status");
-            expect(result[0].propertyValue).toBe("done");
-            expect(result[0].operator).toBe(FilterOperator.exclude);
+        if(result instanceof Error){
+            expect(true).toBe(false);
+            return;
         }
-        else{
-            expect(false).toBe(true);
-        }
+        expect(result.length).toBe(1);
+        expect(result[0].propertyName).toBe("status");
+        expect(result[0].propertyValue).toBe("done");
+        expect(result[0].operator).toBe(FilterOperator.exclude);
     })
     test("testing parseoperator with whitespaces (1)", () => {
         let p = new YAMLParser();
