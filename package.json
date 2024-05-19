@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-files-as-tasks-plugin",
-	"version": "0.9.0",
+	"version": "0.3.0",
 	"description": "Files as Tasks: Treat all files as single tasks",
 	"main": "main.js",
 	"scripts": {
