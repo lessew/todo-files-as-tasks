@@ -10,7 +10,7 @@ import { PluginSettings } from "src/Configuration/PluginSettings";
 export async function createFileAsTask(root:string, data:Record<string,string>,plugin:FileAsTaskPlugin){
     let path = data[FileAsTask.PROJECT_FIELD] + "/" + data[FileAsTask.TITLE_FIELD] + ".md";
 
-    await this.plugin.obsidianFacade.createEmptyFile(root + "/" + path);        
+    await plugin.obsidianFacade.createEmptyFile(root + "/" + path);        
     
     let file = ObsidianFile.create(root,root + "/" + path,plugin);
     let settings:PluginSettings = plugin.pluginSettings;
