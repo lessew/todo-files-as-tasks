@@ -1,7 +1,7 @@
 {
 	"id": "files-as-tasks.app-plugin",
 	"name": "files as tasks",
-	"version": "0.3.0",
+	"version": "0.3.1",
 	"minAppVersion": "0.15.0",
 	"description": "Todo: Files as Tasks treats files as tasks and uses yaml properties to create filtered lists.",
 	"author": "Lessew",
