@@ -6,6 +6,8 @@ A todo plugin that treats files as tasks. Create smart lists by filtering on YAM
 - Starred or unstarred
 - Label (any freetext value) 
 
+Assumed is some level of technical savyness as the lists are created using yaml codeblocks.
+
 # What problem does this plugin solve
 I find myself using Obsidian for two seperate use cases: One is for permanently archiving things that I know I need in the future, e.g. notes of books, people, organisations. The other is for my task list and journaling. Ideally I'd want these two in the same system, allowing me to easily convert a task into a larger note or journal, and promote that into my permanent archive. This also allows me to keep my scribbles and fiddles seperate from my permanent archive, keeping it clean and tidy.
 
@@ -13,7 +15,17 @@ When using the Obsidian build-in tasks I find that:
 - These are treated as special case in many plugins, making them relatively difficult to organize (e.g dataview)
 - They are one-line tasks - and I need tasks that I can optionally use as journals and reference material
 
+# Screenshots
 
+# Work in progress
+- Set rootpath in settings? This would remove the option to have seperate lists (eg for work and for home)
+- Update ui: table list. add better colouring, add for better ui on smaller mobiles
+- Update settings: make it more user friendly
+- Error handling: title change / yaml change should generate clear error messages
+
+# uncertainties
+- unonload not used - should it?
+- use of forward slashes in file system paths - is that supported on all operating systems? works on my win laptop
 
 # General usage and Limitations 
 

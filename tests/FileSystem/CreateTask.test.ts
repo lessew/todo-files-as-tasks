@@ -1,81 +1,58 @@
-export {}
-// TODO test craetion of task
+import { PluginSettings } from "src/Configuration/PluginSettings";
+import { FileAsTaskModel } from "src/FileSystem/FileAsTaskModel";
+import { FileModel } from "src/FileSystem/FileModel";
+import { BasenamePropertySettings } from "src/Properties/Basename/BasenamePropertySettings";
+import { BooleanYAMLPropertySettings } from "src/Properties/BooleanYAML/BooleanYAMLPropertySettings";
+import { BooleanYAMLPropertyView } from "src/Properties/BooleanYAML/BooleanYAMLPropertyView";
+import { ToplevelFolderPropertySettings } from "src/Properties/ToplevelFolder/ToplevelFolderPropertySettings";
+import { Whitelist } from "src/Properties/Whitelist";
+import { WhitelistYAMLPropertySettings } from "src/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
+
+class DummyFileAsTaskModel extends FileAsTaskModel{
+    async createEmptyMarkdownFile(path: string): Promise<void> {
+        //throw new Error("Method not implemented.");
+    }
+    
+}
+
+class DummyFileModel extends FileModel{
+    move(newPath: string): void | Promise<void> {
+        //throw new Error("Method not implemented.");
+    }
+    getYAMLProperty(name: string): string | null {
+        return null;
+        //throw new Error("Method not implemented.");
+    }
+    async setYAMLProperty(name: string, value: string): Promise<void> {
+        //throw new Error("Method not implemented.");
+    }
+    
+}
+
+let data:Record<string,string> = {
+
+}
+
+let settings = new PluginSettings()
+    .add(new BasenamePropertySettings("title"))
+    .add(new ToplevelFolderPropertySettings("project"))
+    .add(new BooleanYAMLPropertySettings("starred","true",new Whitelist(["true","false"])))
+    .add(new WhitelistYAMLPropertySettings("status","Inbox",new Whitelist(["Inbox","Done"])))
+
+let rootPath = "/";
+let path = "finance/newtasktocreate.md";
 
 describe('Create file as task, write to disk', () => {
+    let model = new DummyFileAsTaskModel();
+    model.setData(data);
+    model.setSettings(settings);
+    model.setRoot(rootPath);
+    model.setPath(path);
+    model.setPluginSettings(settings);
+    model.setFileModel(new DummyFileModel());
 
     test('DUMMY', async () => {
-        expect(true).toBe(true);
+        model.
+    //    expect(true).toBe(true);
     });
 });
-
-/*
-import { BasenamePropertySettings } from "src/core/Properties/Basename/BasenamePropertySettings";
-import { WhitelistYAMLPropertySettings } from "src/core/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
-import { Settings } from "src/core/Settings";
-import { Whitelist } from "src/core/Whitelist";
-import { ObsidianFile } from "src/main/obsidian/ObsidianFile";
-import { FileModel } from "src/core/Interfaces/FileModel";
-import { BooleanYAMLProperty } from "src/core/Properties/BooleanYAML/BooleanYAMLProperty";
-import { WhitelistYAMLProperty } from "src/core/Properties/WhitelistYAML/WhitelistYAMLProperty";
-
-describe('Create file as task, write to disk', () => {
-
-    test('create', async () => {
-        let settings = new Settings()
-        .add(new BasenamePropertySettings("default"))
-        .add(new WhitelistYAMLPropertySettings("status","Inbox",new Whitelist(["Inbox","Done"])));
-
-        let root = "path"
-        let filePath = "path/to/file.md";
-        let model:FileModel = await ObsidianFile.createMarkdownFile(root,filePath);
-
-        let input = {
-            project:"a project",
-            title:"a title",
-            context:"Desk",
-            status:"Next"
-        } as Record<string,string>
-
-        let props = settings.getProperties(model);
-        let propSettings = settings.getAsMap();
-
-        propSettings.forEach((aPropSetting) =>{
-            if(aPropSetting.getType()=="booleanYAML"){
-                let prop = new BooleanYAMLProperty(
-                    aPropSetting.propName,
-                    aPropSetting.defaultValue,
-                    aPropSetting.whitelist!,
-                    model);
-                    if(input[aPropSetting.propName] != undefined){
-                        prop.setValue(input[aPropSetting.propName]);
-                    }
-                    else{
-                        prop.setValue(prop.defaultValue);
-                    }
-            } 
-            if(aPropSetting.getType()=="whitelistYAML"){
-                let prop = new WhitelistYAMLProperty(
-                    aPropSetting.propName,
-                    aPropSetting.defaultValue,
-                    aPropSetting.whitelist!,
-                    model);
-                    if(input[aPropSetting.propName] != undefined){
-                        prop.setValue(input[aPropSetting.propName]);
-                    }
-                    else{
-                        prop.setValue(prop.defaultValue);
-                    }
-            }
-        })
-
-
-        for (let key in props){
-            let aProp = props[key];
-            
-            
-        }
-
-    });
-  
-});
-*/

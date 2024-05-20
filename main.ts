@@ -17,16 +17,6 @@ export default class FileAsTaskPlugin extends Plugin {
 		this.obsidianFacade = new ObsidianFacade(this.app);
 		this.obsidianApp = this.app;
 
-		// TODO find a way to create a file using button, how to handle rootPath?
-		//const ribbon = this.addRibbonIcon('dice','Files as Task', (evt: MouseEvent) => {
-		//	let settings = new PluginSettings();
-		//    	const m:CreateTaskModal =  new CreateTaskModal(this.app,this.settings,async (result:Record<string,string>) => {
-		//   		await createFileAsTask("todo-home/",result,this.settings);
-		//  		ObsidianWrapper.getInstance().reload();
-		//});
-		//		m.open();
-		//});
-
 		this.registerMarkdownCodeBlockProcessor("fat", async (source, el, ctx) => {
 			let block = new CodeBlock(source, el, this);
 			this.codeBlocks.push(block);
