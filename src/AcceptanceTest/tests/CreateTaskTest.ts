@@ -2,8 +2,7 @@ import FileAsTaskPlugin from "main";
 import { Logger } from "../Logger";
 import { createFileAsTask } from "src/FileSystem/obsidian/CreateFileAsTask";
 import { FileAsTask } from "src/FileSystem/FileAsTask";
-import { getRoot, getSettings } from "../MockItems";
-import { AssertionError } from "assert";
+import { getRoot} from "../MockItems";
 import { CachedMetadata } from "obsidian";
 
 export {}
@@ -57,7 +56,6 @@ export class CreateTaskTest{
         }
         catch(e){
             this.logger.success("searching for file threw an error, means it was propertly removed");
-            this.logger.log(e)
         }
         
     }
