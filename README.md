@@ -1,19 +1,27 @@
 
 # Todo: Files as Tasks
-
 A todo plugin that treats files as tasks. Create smart lists by filtering on YAML properties:
 - Context (e.g. Desk, Phone, Read)
 - Status (e.g. Inbox, Waiting, Deferred)
 - Starred or unstarred
-- Label (any freetext value)
+- Label (any freetext value) 
+
+# What problem does this plugin solve
+I find myself using Obsidian for two seperate use cases: One is for permanently archiving things that I know I need in the future, e.g. notes of books, people, organisations. The other is for my task list and journaling. Ideally I'd want these two in the same system, allowing me to easily convert a task into a larger note or journal, and promote that into my permanent archive. This also allows me to keep my scribbles and fiddles seperate from my permanent archive, keeping it clean and tidy.
+
+When using the Obsidian build-in tasks I find that:
+- These are treated as special case in many plugins, making them relatively difficult to organize (e.g dataview)
+- They are one-line tasks - and I need tasks that I can optionally use as journals and reference material
+
+
 
 # General usage and Limitations 
 
-- Use yaml codeblocks starting with 'fat' to configure your list
-- Each yaml codeblock starts with defining the rootpath from which the list should be created
-- From the rootpath, all .md files are read as tasks. Their parent folder is treated as project
-- Each .md file can have optional context, status, starred, label YAML fields which can be used to filter
-
+- Use yaml codeblocks starting with 'fat' to configure your list.
+- Each yaml codeblock starts with defining the rootpath from which the list should be created.
+- From the rootpath, all .md files are read as tasks. Their parent folder is treated as their project.
+- Each .md file can have optional context, status, starred, label YAML fields which can be used to filter on.
+- A simple 'not' keyword can be used to negate the filter.
 
 Usage examples:
 
@@ -25,13 +33,6 @@ Usage examples:
 rootPath: todo-home
 
 ```
-
-Note: Configuration is read as YAML: the following is not valid as the space is missing
-
-```
-```fat
-
-rootPath:todo-home 
 
 ```
 ```
