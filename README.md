@@ -64,23 +64,37 @@ context: Desk
 status: Done
 ```
 
-
 # Technical Details
 
 Obsidian developer policies(https://docs.obsidian.md/Developer+policies)  are followed as much as possible.
 Unit Tests as described here: https://publish.obsidian.md/hub/04+-+Guides%2C+Workflows%2C+%26+Courses/for+Plugin+Developers+to+Autmate+Tests
 
-# Memory usage details
+
+## Testing
+Next to unit testing I created an acceptance testing suite that is run when I want to ship. It can be accessed in Obsidian when the plugin is enabled through:
+
+```fat
+rootPath: todo-home
+type: test
+```
+And runs the following tests:
+- VaultHasExpectedFiles: Checks if a number of files are found in the vault and if they have corresponding YAML values
+- TaskOperationTest: Takes one file and updated the name, project, and yaml properties and tests if these are updated correctly
+- CreateTaskTest: Creates a task and checks if it's written to disk
+
+The acceptance tests are written in such a way that when they succeed, you should be able to run them over and over again - they end in the same state as they stared. 
+
+## Memory usage details
 
 - unload() is not used as to my knowledge no special objects are created that should be destroyed when the plugin unloads.
 - The ObsidianFolder class runs a recursive method that iterates through all subfolders. Assumed is a folder structure with reasonable number of folders and files. TODO explain better.
 
-# Reloading
+## Reloading
 I tried to use standard buil-in reload functions of Obsidian to re-paint the page whenever a file-as-task is updated. However I hit a bit of a snag there, as I couldn't get the update events to trigger. I suspect this only happens when the current file is updated, and even then if the codeblock that handles the plugin is updated. In my case, the user can update files outside of that scope. 
 
 I ended up keeping a list of codeblocks in the plugin and adding a reload() function that iterates and reloads each.
 
-# Concurrency
+## Concurrency
 I learned that for disk operations (updating yaml properties or moving a file), async await is not enough to reload files. See the code below:
 ```code
         let file = this.app.vault.getAbstractFileByPath(path);
