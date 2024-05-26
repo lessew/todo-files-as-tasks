@@ -1,5 +1,5 @@
 import { BasenamePropertySettings } from "../../../src/Properties/Basename/BasenamePropertySettings";
-import { MockFileModel } from "../../../tests/Mocks/MockFileModel";
+import { MockFileModel } from "../../Mocks/MockFile";
 
 describe('basenamepropertysettings: constructor', () => {
 

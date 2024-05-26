@@ -1,5 +1,5 @@
 import { BasenameProperty } from "../../../src/Properties/Basename/BasenameProperty";
-import { MockFileModel } from "../../Mocks/MockFileModel";
+import { MockFileModel } from "../../Mocks/MockFile";
 
 class Helper{
     static getBasenameProperty():BasenameProperty{

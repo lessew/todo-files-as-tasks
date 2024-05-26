@@ -1,6 +1,7 @@
-import { FileModel } from "../../src/FileSystem/File";
+import { File } from "../../src/FileSystem/File";
+import { MockFileSystem } from "./MockFileSystem";
 
-export class MockFileModel extends FileModel{
+export class MockFile extends File{
     name: string;
     path: string;
     root:string;
@@ -8,14 +9,14 @@ export class MockFileModel extends FileModel{
 
     
     constructor(root:string,path:string,yaml:any){
-        super();
+        super(root,path,new MockFileSystem());
         this.root = root;
         this.path = path;
         this.yaml = yaml;
     }
     
 
-    move(newPath: string): void | Promise<void> {
+    async move(newPath: string): Promise<void> {
         this.path = newPath;
     }
     getYAMLProperty(name: string): string {

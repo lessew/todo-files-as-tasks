@@ -42,7 +42,7 @@ action: list
         c.loadAction();
         expect(c.stateIsError()).toBe(false);
         expect(c.getAction()).toBe("list");
-        c.loadFolders(folders);
+        c.loadDirectories(folders);
         expect(c.stateIsError()).toBe(false);
         let settings = c.getSettings();
         expect(settings.get("title").propName).toBe("title");

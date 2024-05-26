@@ -6,7 +6,7 @@ import { Whitelist } from "../Properties/Whitelist";
 import { PropertySettings } from "../Properties/PropertySettings";
 import { Property } from "../Properties/Property";
 import { FileAsTask } from "../FileSystem/FileAsTask";
-
+import { File } from "src/FileSystem/File";
 
 export class PluginSettings {
     private propertySettings:Map<string,PropertySettings>;

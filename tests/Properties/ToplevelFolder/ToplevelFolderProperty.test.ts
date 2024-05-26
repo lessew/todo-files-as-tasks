@@ -1,6 +1,6 @@
 import { ToplevelFolderProperty } from "../../../src/Properties/ToplevelFolder/ToplevelFolderProperty";
 import { Whitelist } from "../../../src/Properties/Whitelist";
-import { MockFileModel } from "../../Mocks/MockFileModel";
+import { MockFileModel } from "../../Mocks/MockFile";
 
 class Helper{
     static getToplevelFolderProperty():ToplevelFolderProperty{

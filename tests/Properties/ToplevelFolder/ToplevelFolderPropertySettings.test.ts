@@ -1,6 +1,6 @@
 import { ToplevelFolderPropertySettings } from "../../../src/Properties/ToplevelFolder/ToplevelFolderPropertySettings";
 import { Whitelist } from "../../../src/Properties/Whitelist";
-import { MockFileModel } from "../../../tests/Mocks/MockFileModel";
+import { MockFileModel } from "../../Mocks/MockFile";
 
 describe('toplevelfolderpropertysettings: constructor', () => {
 

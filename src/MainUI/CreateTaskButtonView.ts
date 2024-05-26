@@ -6,7 +6,6 @@ import { WhitelistYAMLPropertySettings } from "src/Properties/WhitelistYAML/Whit
 import FileAsTaskPlugin from "main";
 import { PropertySettings } from "src/Properties/PropertySettings";
 import { PluginSettings } from "src/Configuration/PluginSettings";
-import { ObsidianFileAsTaskModel } from "src/FileSystem/obsidian/ObsidianFileAsTask";
 
 
 export class CreateTaskButtonView{
@@ -25,7 +24,7 @@ export class CreateTaskButtonView{
 
     handleEvent(event:Event){
         const m:CreateTaskModal =  new CreateTaskModal(this.plugin.obsidianApp,this.plugin.pluginSettings,async (result:Record<string,string>) => {
-            await ObsidianFileAsTaskModel.persist(this.root,result,this.plugin)
+            //await ObsidianFileAsTaskModel.persist(this.root,result,this.plugin)
             this.plugin.reload();
         });
         m.open();

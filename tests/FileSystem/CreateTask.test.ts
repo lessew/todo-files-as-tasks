@@ -6,7 +6,7 @@ import { BooleanYAMLPropertySettings } from "../../src/Properties/BooleanYAML/Bo
 import { ToplevelFolderPropertySettings } from "../../src/Properties/ToplevelFolder/ToplevelFolderPropertySettings";
 import { Whitelist } from "../../src/Properties/Whitelist";
 import { WhitelistYAMLPropertySettings } from "../../src/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
-import { MockFileModel } from "../../tests/Mocks/MockFileModel";
+import { MockFileModel } from "../Mocks/MockFile";
 
 class DummyFileAsTaskModel extends FileAsTaskModel{
     async createEmptyMarkdownFile(path: string): Promise<void> {

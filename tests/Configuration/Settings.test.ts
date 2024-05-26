@@ -1,8 +1,8 @@
+import { MockFile } from "../../tests/Mocks/MockFile";
 import { PluginSettings } from "../../src/Configuration/PluginSettings";
 import { BasenamePropertySettings } from "../../src/Properties/Basename/BasenamePropertySettings";
 import { Whitelist } from "../../src/Properties/Whitelist";
 import { WhitelistYAMLPropertySettings } from "../../src/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
-import { MockFileModel } from "../Mocks/MockFileModel";
 
 describe('Settings: create object)', () => {
     let settings = new PluginSettings();
@@ -27,7 +27,7 @@ describe('Settings: get properties', () => {
     .add(new WhitelistYAMLPropertySettings("status","Inbox",new Whitelist(["Inbox","Done"])))
     .add(new WhitelistYAMLPropertySettings("context","Read",new Whitelist(["Read","Desk"])));
 
-    let file = new MockFileModel("path","/path/to/file",{status:"Done",context:"Desk"});
+    let file = new MockFile("path","/path/to/file",{status:"Done",context:"Desk"});
 
     test('Test get properties', () => {   
       let properties = settings.getProperties(file);

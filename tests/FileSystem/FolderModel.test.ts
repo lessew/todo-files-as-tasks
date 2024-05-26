@@ -1,6 +1,6 @@
 import { FolderModel } from "../../src/FileSystem/Directory";
-import { MockFileModel } from "../Mocks/MockFileModel";
-import { MockFolderModel } from "../Mocks/MockFolderModel";
+import { MockFileModel } from "../Mocks/MockFile";
+import { MockFolderModel } from "../Mocks/MockDirectory";
 
 
 class Helper{

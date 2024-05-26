@@ -1,5 +1,5 @@
-import { MockFolderModel } from "../Mocks/MockFolderModel";
-import { MockFileModel } from "../Mocks/MockFileModel";
+import { MockFolderModel } from "../Mocks/MockDirectory";
+import { MockFileModel } from "../Mocks/MockFile";
 import { PluginSettings } from "../../src/Configuration/PluginSettings";
 import { FileAsTaskCollection } from "../../src/FileSystem/FileAsTaskCollection";
 import { Filter, FilterOperator } from "../../src/FileSystem/Filter";

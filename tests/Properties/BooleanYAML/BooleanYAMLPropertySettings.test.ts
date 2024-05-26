@@ -1,6 +1,6 @@
 import { BooleanYAMLPropertySettings } from "../../../src/Properties/BooleanYAML/BooleanYAMLPropertySettings";
 import { Whitelist } from "../../../src/Properties/Whitelist";
-import { MockFileModel } from "../../../tests/Mocks/MockFileModel";
+import { MockFileModel } from "../../Mocks/MockFile";
 
 describe('BooleanYAMLPropertySettings: constructor', () => {
 
