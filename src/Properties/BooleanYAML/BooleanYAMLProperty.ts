@@ -1,9 +1,9 @@
-import { FileModel } from "../../FileSystem/File";
+import { File } from "../../FileSystem/File";
 import { Property } from "../Property";
 import { Whitelist } from "../Whitelist";
 
 export class BooleanYAMLProperty implements Property{
-    file: FileModel;
+    file: File;
     propName:string;
     private val:string;
 
@@ -13,7 +13,7 @@ export class BooleanYAMLProperty implements Property{
 
     defaultValue: string;
     
-    constructor(propName:string,defaultValue:string,whitelist:Whitelist,file:FileModel){
+    constructor(propName:string,defaultValue:string,whitelist:Whitelist,file:File){
         if(whitelist.size()!=2){
             throw new Error(`Booleanproperty can only have exactly two values but ${whitelist.size()} were provided`);
         }

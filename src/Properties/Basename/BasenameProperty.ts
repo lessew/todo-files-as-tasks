@@ -1,14 +1,14 @@
-import { FileModel } from "../../FileSystem/File";
+import { File } from "../../FileSystem/File";
 import { Property } from "../Property";
 
 export class BasenameProperty implements Property{
-    file: FileModel;
+    file: File;
     propName:string;
     private val:string;
     defaultValue:string;
     regExp:RegExp = /^[a-zA-Z\/\.]+$/;
 
-    constructor(propName:string,defaultValue:string,file:FileModel){
+    constructor(propName:string,defaultValue:string,file:File){
         this.propName = propName;
         this.defaultValue = defaultValue;
         this.file = file;

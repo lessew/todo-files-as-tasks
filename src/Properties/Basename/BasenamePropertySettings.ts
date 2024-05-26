@@ -1,4 +1,4 @@
-import { FileModel } from "../../FileSystem/File";
+import { File } from "../../FileSystem/File";
 import { Property } from "../Property";
 import { PropertySettings, PropertyType } from "../PropertySettings";
 import { BasenameProperty } from "./BasenameProperty";
@@ -16,7 +16,7 @@ export class BasenamePropertySettings implements PropertySettings{
         this.defaultValue = BasenamePropertySettings.DEFAULT_VALUE;
     }
 
-    adaptToProperty(file: FileModel): Property {
+    adaptToProperty(file: File): Property {
         let prop = new BasenameProperty(this.propName,this.defaultValue,file)
         return prop;
     }

@@ -1,9 +1,9 @@
-import { FileModel } from "./File";
+import { File } from "./File";
 import { Property } from "../Properties/Property";
 import { PluginSettings } from "../Configuration/PluginSettings";
 
 export class FileAsTask{
-    file:FileModel;
+    file:File;
     static PROJECT_FIELD = "project";
     static TITLE_FIELD = "title";
 
@@ -13,7 +13,7 @@ export class FileAsTask{
 
     properties:Record<string,Property>;
     
-    constructor(file:FileModel,settings:PluginSettings){
+    constructor(file:File,settings:PluginSettings){
         this.file = file;
         this.properties = settings.getProperties(file);
     }

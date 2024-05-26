@@ -1,15 +1,15 @@
-import { FileModel } from "../../FileSystem/File";
+import { File } from "../../FileSystem/File";
 import { Property } from "../Property";
 import { Whitelist } from "../Whitelist";
 
 export class WhitelistYAMLProperty implements Property{
-    file: FileModel;
+    file: File;
     propName:string;
     private val:string;
     defaultValue: string;
     whitelist:Whitelist;
 
-    constructor(propName:string,defaultValue:string,whitelist:Whitelist,file:FileModel){
+    constructor(propName:string,defaultValue:string,whitelist:Whitelist,file:File){
         this.propName = propName;
         this.file = file;
         this.whitelist = whitelist;

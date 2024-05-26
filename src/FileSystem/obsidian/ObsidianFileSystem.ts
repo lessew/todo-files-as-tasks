@@ -27,7 +27,6 @@ export class ObsidianFileSystem implements FileSystem{
         return this.plugin.obsidianFacade.getTFile(path);
     }
     
-
     async move(currentPath:string,newPath: string): Promise<void> {
         let file = this.getTFile(currentPath);
         await this.plugin.obsidianFacade.moveFile(file,newPath);

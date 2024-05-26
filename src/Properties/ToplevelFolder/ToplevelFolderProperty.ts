@@ -1,16 +1,16 @@
-import { FileModel } from "../../FileSystem/File";
+import { File } from "../../FileSystem/File";
 import { Property } from "../Property";
 import { Whitelist } from "../Whitelist";
 
 export class ToplevelFolderProperty implements Property{
-    file: FileModel;
+    file: File;
     propName: string;
     private val:string;
     whitelist:Whitelist
     regExp:RegExp = /^[a-zA-Z\/\.]+$/;
     defaultValue:string;
 
-    constructor(defaultValue:string,whitelist:Whitelist,file:FileModel){
+    constructor(defaultValue:string,whitelist:Whitelist,file:File){
         this.file = file;
         this.whitelist = whitelist;
         this.defaultValue = defaultValue;

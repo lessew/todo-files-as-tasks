@@ -1,4 +1,3 @@
-import { FileModel } from "../FileSystem/File";
 import { BasenamePropertySettings } from "../Properties/Basename/BasenamePropertySettings";
 import { BooleanYAMLPropertySettings } from "../Properties/BooleanYAML/BooleanYAMLPropertySettings";
 import { ToplevelFolderPropertySettings } from "../Properties/ToplevelFolder/ToplevelFolderPropertySettings";
@@ -33,7 +32,7 @@ export class PluginSettings {
         return this.propertySettings;
     }
 
-    getProperties(file:FileModel):Record<string,Property>{
+    getProperties(file:File):Record<string,Property>{
         let result:Record<string,Property> = {};
         this.propertySettings.forEach((aProp)=>{
             result[aProp.propName] = aProp.adaptToProperty(file);

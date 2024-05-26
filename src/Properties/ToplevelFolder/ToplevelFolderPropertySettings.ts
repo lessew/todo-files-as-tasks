@@ -1,4 +1,4 @@
-import { FileModel } from "src/FileSystem/File";
+import { File } from "src/FileSystem/File";
 import { Property } from "../Property";
 import { PropertySettings, PropertyType } from "../PropertySettings";
 import { Whitelist } from "../Whitelist";
@@ -26,7 +26,7 @@ export class ToplevelFolderPropertySettings implements PropertySettings {
         return this;
     }
 
-    adaptToProperty(file: FileModel): Property {
+    adaptToProperty(file: File): Property {
         if(this.defaultValue==undefined){
             throw new Error(`Error: default value for toplevelfolder ${this.propName} is not set`)
         }

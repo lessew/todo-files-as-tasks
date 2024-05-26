@@ -1,4 +1,4 @@
-import { FileModel } from "../../FileSystem/File";
+import { File } from "../../FileSystem/File";
 import { Property } from "../Property";
 import { PropertySettings, PropertyType } from "../PropertySettings";
 import { Whitelist } from "../Whitelist";
@@ -18,7 +18,7 @@ export class WhitelistYAMLPropertySettings implements PropertySettings{
         this.whitelist = whitelist;
     }
 
-    adaptToProperty(file: FileModel): Property {
+    adaptToProperty(file: File): Property {
         let prop = new WhitelistYAMLProperty(this.propName,this.defaultValue,this.whitelist,file);
         return prop;
     }

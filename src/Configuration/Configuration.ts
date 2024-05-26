@@ -25,7 +25,7 @@ export class Configuration{
         this.state = this.parser.loadSource(source);
     }
 
-    loadFolders(folders:string[]):void{
+    loadDirectories(folders:string[]):void{
         if(this.stateIsError()){
             return;
         }
