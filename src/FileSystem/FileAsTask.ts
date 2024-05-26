@@ -1,4 +1,4 @@
-import { FileModel } from "./FileModel";
+import { FileModel } from "./File";
 import { Property } from "../Properties/Property";
 import { PluginSettings } from "../Configuration/PluginSettings";
 

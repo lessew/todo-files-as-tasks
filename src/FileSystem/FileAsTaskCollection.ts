@@ -1,26 +1,25 @@
 import { FileAsTask } from "./FileAsTask";
-import { FileModel } from "./FileModel";
 import { Filter, FilterOperator } from "./Filter";
-import { FolderModel } from "./FolderModel";
 import { PluginSettings } from "../Configuration/PluginSettings";
-
+import { Directory } from "./Directory";
+import { File } from "./File";
 
 
 export class FileAsTaskCollection{
-    private rootFolder:FolderModel;
+    private rootDirectory:Directory;
     private filesAsTask:FileAsTask[];
     private settings:PluginSettings;
     private filters:Filter[];
     
-    constructor(rf:FolderModel,settings:PluginSettings){
-        this.rootFolder = rf;
+    constructor(rf:Directory,settings:PluginSettings){
+        this.rootDirectory = rf;
         this.settings = settings;
         this.loadFilesAsTask();
         this.filters = [];
     }
 
     private loadFilesAsTask(){
-        const files:FileModel[] = this.rootFolder.getFiles();
+        const files:File[] = this.rootDirectory.getFiles();
         let fats:FileAsTask[] = [];
 
         files.forEach(aFile => {
@@ -30,8 +29,8 @@ export class FileAsTaskCollection{
         this.filesAsTask = fats;
     }
 
-    getRootFolder():FolderModel{
-        return this.rootFolder;
+    getRootDirectory():Directory{
+        return this.rootDirectory;
     }
 
     filterBy(filter:Filter):FileAsTaskCollection{

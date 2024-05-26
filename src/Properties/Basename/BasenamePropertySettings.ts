@@ -1,4 +1,4 @@
-import { FileModel } from "../../FileSystem/FileModel";
+import { FileModel } from "../../FileSystem/File";
 import { Property } from "../Property";
 import { PropertySettings, PropertyType } from "../PropertySettings";
 import { BasenameProperty } from "./BasenameProperty";

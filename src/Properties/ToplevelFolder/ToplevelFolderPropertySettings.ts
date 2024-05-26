@@ -1,4 +1,4 @@
-import { FileModel } from "src/FileSystem/FileModel";
+import { FileModel } from "src/FileSystem/File";
 import { Property } from "../Property";
 import { PropertySettings, PropertyType } from "../PropertySettings";
 import { Whitelist } from "../Whitelist";

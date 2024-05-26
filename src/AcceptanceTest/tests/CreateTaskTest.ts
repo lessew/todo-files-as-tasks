@@ -1,9 +1,11 @@
 import FileAsTaskPlugin from "main";
 import { Logger } from "../Logger";
-import { createFileAsTask } from "src/FileSystem/obsidian/CreateFileAsTask";
 import { FileAsTask } from "src/FileSystem/FileAsTask";
 import { getRoot} from "../MockItems";
 import { CachedMetadata } from "obsidian";
+import { FileAsTaskModel } from "src/FileSystem/FileAsTaskModel";
+import { ObsidianFileAsTaskModel } from "src/FileSystem/obsidian/ObsidianFileAsTask";
+import { ObsidianFile } from "src/FileSystem/obsidian/ObsidianFile";
 
 export {}
 
@@ -26,7 +28,8 @@ export class CreateTaskTest{
         let basename = "New Finance Created Task";
         let status = "Inbox";
         let context = "Desk"
-        let fullPath = root + "/" + project + "/" + basename + ".md"
+        let path = project + "/" + basename + ".md";
+        let fullPath = root + "/" + path;
 
         let data = {
             [FileAsTask.PROJECT_FIELD] : project,
@@ -35,7 +38,7 @@ export class CreateTaskTest{
             "context":context
         }
 
-        await createFileAsTask(root,data,this.plugin);    
+        await ObsidianFileAsTaskModel.persist(root,data,this.plugin)
         await this.plugin.delay(300);
         
         const file = this.plugin.obsidianFacade.getTFile(fullPath);

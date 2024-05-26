@@ -5,8 +5,8 @@ import { BooleanYAMLPropertySettings } from "src/Properties/BooleanYAML/BooleanY
 import { WhitelistYAMLPropertySettings } from "src/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
 import FileAsTaskPlugin from "main";
 import { PropertySettings } from "src/Properties/PropertySettings";
-import { createFileAsTask } from "src/FileSystem/obsidian/CreateFileAsTask";
 import { PluginSettings } from "src/Configuration/PluginSettings";
+import { ObsidianFileAsTaskModel } from "src/FileSystem/obsidian/ObsidianFileAsTask";
 
 
 export class CreateTaskButtonView{
@@ -25,7 +25,7 @@ export class CreateTaskButtonView{
 
     handleEvent(event:Event){
         const m:CreateTaskModal =  new CreateTaskModal(this.plugin.obsidianApp,this.plugin.pluginSettings,async (result:Record<string,string>) => {
-            await createFileAsTask(this.root,result,this.plugin);
+            await ObsidianFileAsTaskModel.persist(this.root,result,this.plugin)
             this.plugin.reload();
         });
         m.open();

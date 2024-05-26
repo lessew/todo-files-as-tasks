@@ -2,7 +2,7 @@ import FileAsTaskPlugin from "main";
 import { Configuration } from "./Configuration/Configuration";
 import { YAMLParser } from "./Configuration/YAMLParser";
 import { FileAsTaskCollection } from "./FileSystem/FileAsTaskCollection";
-import { FolderModel } from "./FileSystem/FolderModel";
+import { FolderModel } from "./FileSystem/Directory";
 import { ObsidianFolder } from "./FileSystem/obsidian/ObsidianFolder";
 import { CreateTaskButtonView } from "./MainUI/CreateTaskButtonView";
 import { TaskListView } from "./MainUI/TaskListView";

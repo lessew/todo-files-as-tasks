@@ -1,4 +1,4 @@
-import { FileModel } from "../FileSystem/FileModel";
+import { FileModel } from "../FileSystem/File";
 import { BasenamePropertySettings } from "../Properties/Basename/BasenamePropertySettings";
 import { BooleanYAMLPropertySettings } from "../Properties/BooleanYAML/BooleanYAMLPropertySettings";
 import { ToplevelFolderPropertySettings } from "../Properties/ToplevelFolder/ToplevelFolderPropertySettings";

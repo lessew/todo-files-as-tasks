@@ -1,12 +1,12 @@
-import { PluginSettings } from "src/Configuration/PluginSettings";
-import { FileAsTaskModel } from "src/FileSystem/FileAsTaskModel";
-import { FileModel } from "src/FileSystem/FileModel";
-import { BasenamePropertySettings } from "src/Properties/Basename/BasenamePropertySettings";
-import { BooleanYAMLPropertySettings } from "src/Properties/BooleanYAML/BooleanYAMLPropertySettings";
-import { BooleanYAMLPropertyView } from "src/Properties/BooleanYAML/BooleanYAMLPropertyView";
-import { ToplevelFolderPropertySettings } from "src/Properties/ToplevelFolder/ToplevelFolderPropertySettings";
-import { Whitelist } from "src/Properties/Whitelist";
-import { WhitelistYAMLPropertySettings } from "src/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
+import { PluginSettings } from "../../src/Configuration/PluginSettings";
+import { FileAsTaskModel } from "../../src/FileSystem/FileAsTaskModel";
+import { FileModel } from "../../src/FileSystem/File";
+import { BasenamePropertySettings } from "../../src/Properties/Basename/BasenamePropertySettings";
+import { BooleanYAMLPropertySettings } from "../../src/Properties/BooleanYAML/BooleanYAMLPropertySettings";
+import { ToplevelFolderPropertySettings } from "../../src/Properties/ToplevelFolder/ToplevelFolderPropertySettings";
+import { Whitelist } from "../../src/Properties/Whitelist";
+import { WhitelistYAMLPropertySettings } from "../../src/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
+import { MockFileModel } from "../../tests/Mocks/MockFileModel";
 
 class DummyFileAsTaskModel extends FileAsTaskModel{
     async createEmptyMarkdownFile(path: string): Promise<void> {
@@ -15,22 +15,9 @@ class DummyFileAsTaskModel extends FileAsTaskModel{
     
 }
 
-class DummyFileModel extends FileModel{
-    move(newPath: string): void | Promise<void> {
-        //throw new Error("Method not implemented.");
-    }
-    getYAMLProperty(name: string): string | null {
-        return null;
-        //throw new Error("Method not implemented.");
-    }
-    async setYAMLProperty(name: string, value: string): Promise<void> {
-        //throw new Error("Method not implemented.");
-    }
-    
-}
-
 let data:Record<string,string> = {
-
+    starred:"true",
+    status:"Done"
 }
 
 let settings = new PluginSettings()
@@ -45,14 +32,15 @@ let path = "finance/newtasktocreate.md";
 describe('Create file as task, write to disk', () => {
     let model = new DummyFileAsTaskModel();
     model.setData(data);
-    model.setSettings(settings);
     model.setRoot(rootPath);
     model.setPath(path);
     model.setPluginSettings(settings);
-    model.setFileModel(new DummyFileModel());
+    model.setFileModel(new MockFileModel(rootPath,path,{}));
+   
 
-    test('DUMMY', async () => {
-        model.
-    //    expect(true).toBe(true);
+    test('DUMMY', () => {
+        model.persistYAMLProperties();
+        expect(model.fileModel.getYAMLProperty("starred")).toBe("true")
+        expect(model.fileModel.getYAMLProperty("status")).toBe("Done")
     });
 });

@@ -1,5 +1,5 @@
 import { Whitelist } from "./Whitelist";
-import { FileModel } from "../FileSystem/FileModel";
+import { FileModel } from "../FileSystem/File";
 import { Property } from "./Property";
 
 export type PropertyType = "basename" | "whitelistYAML" | "booleanYAML" | "toplevelfolder"

@@ -3,7 +3,7 @@ import { ExpectedFileType, getExpectedHolidayBillFile, getSettings } from "../Mo
 import { CachedMetadata } from "obsidian";
 import FileAsTaskPlugin from "main";
 import { PluginSettings } from "src/Configuration/PluginSettings";
-import { FileModel } from "src/FileSystem/FileModel";
+import { FileModel } from "src/FileSystem/File";
 import { FileAsTask } from "src/FileSystem/FileAsTask";
 import { ObsidianFile } from "src/FileSystem/obsidian/ObsidianFile";
 

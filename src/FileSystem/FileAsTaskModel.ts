@@ -1,6 +1,6 @@
 import { PluginSettings } from "src/Configuration/PluginSettings";
 import { Property } from "src/Properties/Property";
-import { FileModel } from "./FileModel";
+import { FileModel } from "./File";
 
 export abstract class FileAsTaskModel{
     fileModel:FileModel;
@@ -30,10 +30,6 @@ export abstract class FileAsTaskModel{
     setPluginSettings(settings:PluginSettings){
         this.settings = settings;
     }
-
-    setSettings(settings:PluginSettings){
-        this.settings = settings;
-    }    
 
     persistYAMLProperties():void{
         let map = this.settings.getAsMap();
