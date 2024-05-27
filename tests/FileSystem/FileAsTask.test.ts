@@ -2,10 +2,10 @@ import { PluginSettings } from "../../src/Configuration/PluginSettings";
 import { FileAsTask } from "../../src/FileSystem/FileAsTask";
 import { Whitelist } from "../../src/Properties/Whitelist";
 import { WhitelistYAMLPropertySettings } from "../../src/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
-import { MockFileModel } from "../Mocks/MockFile";
+import { MockFile } from "../Mocks/MockFile";
 
 describe('FileAsTask: constructor and getter', () => {
-    let file = new MockFileModel("/path","/path",{context:"Read"});
+    let file = new MockFile("/path","/path",{context:"Read"});
     let settings = new PluginSettings().add(new WhitelistYAMLPropertySettings("context","Desk",new Whitelist(["Read","Desk"])))
 
     test('constructor and getter', () => {    
@@ -18,7 +18,7 @@ describe('FileAsTask: constructor and getter', () => {
 
 
 describe('FileAsTask: setter', () => {
-    let file = new MockFileModel("/path","/path",{context:"Read"});
+    let file = new MockFile("/path","/path",{context:"Read"});
     let settings = new PluginSettings().add(new WhitelistYAMLPropertySettings("context","Desk",new Whitelist(["Read","Desk"])))
 
     test('constructor and getter', async () => {    

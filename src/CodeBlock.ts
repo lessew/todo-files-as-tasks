@@ -6,7 +6,7 @@ import { Directory } from "./FileSystem/Directory";
 import { CreateTaskButtonView } from "./MainUI/CreateTaskButtonView";
 import { TaskListView } from "./MainUI/TaskListView";
 import { TestView } from "./MainUI/TestView";
-import { ObsidianFileSystem } from "./FileSystem/obsidian/ObsidianFileSystem";
+import { ObsidianFileSystem } from "./FileSystem/obsidian/ObsidianFilesystem";
 import { ObsidianIOFactory } from "./FileSystem/obsidian/ObsidianIOFactory";
 
 // TODO debug special cases (/ " etc in title on update)

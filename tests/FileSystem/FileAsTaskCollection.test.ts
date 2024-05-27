@@ -1,28 +1,30 @@
-import { MockFolderModel } from "../Mocks/MockDirectory";
-import { MockFileModel } from "../Mocks/MockFile";
+import { IOFactory } from "src/FileSystem/IOFactory";
 import { PluginSettings } from "../../src/Configuration/PluginSettings";
 import { FileAsTaskCollection } from "../../src/FileSystem/FileAsTaskCollection";
 import { Filter, FilterOperator } from "../../src/FileSystem/Filter";
 import { Whitelist } from "../../src/Properties/Whitelist";
 import { WhitelistYAMLPropertySettings } from "../../src/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
+import { Directory } from "src/FileSystem/Directory";
+import { MockFile } from "tests/Mocks/MockFile";
+import { File } from "src/FileSystem/File";
 
 
-const file1 = new MockFileModel("path/","path/to/this",{
+const file1 = new MockFile("path/","path/to/this",{
     path:"path/to/this",
     status:"Inbox",
     context:"Phone"
 });
-const file2 = new MockFileModel("path/","path/to/this",{
+const file2 = new MockFile("path/","path/to/this",{
     path:"path/to/this",
     status:"InvalidValue",
     context:"Desk"
 });
-const file3 = new MockFileModel("path/","path/to/this",{
+const file3 = new MockFile("path/","path/to/this",{
     path:"path/to/this",
     status:"Done",
     context:"Desk"
 });
-const file4 = new MockFileModel("path/","path/to/this",{
+const file4 = new MockFile("path/","path/to/this",{
     status:"Inbox",
     context:"Desk"
 });
@@ -31,7 +33,7 @@ let testerFiles = [file1,file2,file3,file4];
 
 
 describe('FileAsTaskCollection: create object)', () => {
-    let rootFolder = new MockFolderModel("path/","path/to/this",testerFiles);
+    let rootFolder = new Directory("path/","path/to/this",testerFiles);
     let settings:PluginSettings = new PluginSettings()
     .add(new WhitelistYAMLPropertySettings("status","Inbox",new Whitelist(["Inbox","Done"])))
     .add(new WhitelistYAMLPropertySettings("context","Desk",new Whitelist(["Desk","Phone"])));
@@ -39,7 +41,7 @@ describe('FileAsTaskCollection: create object)', () => {
     let fatc = new FileAsTaskCollection(rootFolder,settings);
 
     test('Test rootfolder exists and has children', () => {   
-        expect(fatc.getRootFolder().children.length).toBe(4);
+        expect(fatc.getRootDirectory().children.length).toBe(4);
     });
 
     test('Test correct number of filesastasks', () => {   
@@ -50,7 +52,7 @@ describe('FileAsTaskCollection: create object)', () => {
 
 
 describe('FileAsTaskCollection: Filter By (single)', () => {
-    let rootFolder = new MockFolderModel("path/","path/to/this",testerFiles);
+    let rootFolder = new Directory("path/","path/to/this",testerFiles);
     let settings:PluginSettings = new PluginSettings()
     .add(new WhitelistYAMLPropertySettings("status","Inbox",new Whitelist(["Inbox","Done"])))
     .add(new WhitelistYAMLPropertySettings("context","Desk",new Whitelist(["Desk","Phone"])));

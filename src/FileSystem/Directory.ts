@@ -1,15 +1,15 @@
 import { File } from "./File";
 import { IOFactory } from "./IOFactory";
-import { FileSystem } from "./FileSystem";
+import { Filesystem } from "./Filesystem";
 
 export class Directory{
     path:string;
     root:string;
     children:(File | Directory)[];
-    fs:FileSystem;
+    fs:Filesystem;
     factory:IOFactory;
 
-    constructor(root:string,path:string,factory:IOFactory,fs:FileSystem){ 
+    constructor(root:string,path:string,factory:IOFactory,fs:Filesystem){ 
         this.factory = factory;
         this.fs = fs;
         this.root = root;
@@ -18,7 +18,7 @@ export class Directory{
     }
 
     loadChildren(){
-        let paths = this.fs.readDir(this.getFullPath());
+        let paths = this.fs.readDir(this.path);
         let result:(File|Directory)[] = [];
         paths.forEach(childPath => {
             if(this.fs.pathIsDirectory(childPath )){
@@ -65,11 +65,7 @@ export class Directory{
         return this.getDirectories().map(dir => dir.path);
     }
 
-    getFullPath():string{
-        return this.root + "/" + this.path;
-    }
-
-    getPathFromRoot():string{
+    getPathFromRoot(): string {
         let pfr = this.path.substring(this.root.length);
         if(pfr.charAt(0)=="/"){
             pfr = pfr.substring(1);

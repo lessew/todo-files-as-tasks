@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "fat-list-examples/Developer Integration Testing.md",
+                "file": "todo-home/Groceries/Peppers.md",
                 "mode": "preview",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "fat-list-examples/Developer Integration Testing.md",
+                "file": "todo-home/Groceries/Peppers.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "fat-list-examples/Developer Integration Testing.md",
+                "file": "todo-home/Groceries/Peppers.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "fat-list-examples/Developer Integration Testing.md"
+                "file": "todo-home/Groceries/Peppers.md"
               }
             }
           }
@@ -148,15 +148,18 @@
   },
   "active": "fd7c556d4e9cf084",
   "lastOpenFiles": [
-    "todo-home/Finance/New Finance Created Task.md",
+    "todo-home/Groceries/Bread.md",
+    "todo-home/Finance/Finalize finance weekend NYC.md",
+    "todo-home/Finance/Taxes 2023/Get mortgage details 2024.md",
+    "todo-home/Finance/Taxes 2023/Get income statement work.md",
+    "todo-home/Finance/Taxes 2023/IRS Hotline/Ask details re taxes 2023.md",
     "fat-list-examples/Developer Integration Testing.md",
+    "todo-home/Finance/New Finance Created Task.md",
     "fat-list-examples/Tests.md",
     "todo-home/FinanceNew Finance Created Task",
     "fat-list-examples/All-todos-screenshot.png",
     "fat-list-examples/Dev.md",
     "todo-home/Finance/Pay holiday bill.md",
-    "todo-home/Finance/Finalize finance weekend NYC.md",
-    "todo-home/Finance/Taxes 2023/Get income statement work.md",
     "todo-home/Finance/aaa.md",
     "todo-home/Finance/ddd.md",
     "todo-home/Finance/qqq.md",
@@ -164,10 +167,7 @@
     "quick note.md",
     "todo-home/Finance/test.md",
     "todo-home/Kids/Bread.md",
-    "todo-home/Groceries/Bread.md",
     "todo-home/Groceries/Peppers.md",
-    "todo-home/Finance/Taxes 2023/Get mortgage details 2024.md",
-    "todo-home/Finance/Taxes 2023/IRS Hotline/Ask details re taxes 2023.md",
     "todo-home/Groceries/Finalize finance weekend NYC.md",
     "todo-home/Groceries/Ask details re taxes 2023.md",
     "todo-home/Finance/Taxes 2023/IRS Hotline/Ask details re taxes 2023111.md",

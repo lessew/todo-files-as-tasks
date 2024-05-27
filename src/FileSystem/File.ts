@@ -1,12 +1,12 @@
-import { FileSystem } from "./FileSystem";
+import { Filesystem } from "./Filesystem";
 
 export class File{
     name:string;
     path:string;
     root:string;
-    fs:FileSystem;
+    fs:Filesystem;
 
-    constructor(root:string,path:string,fs:FileSystem){
+    constructor(root:string,path:string,fs:Filesystem){
         this.path = path;
         this.root = root;
         this.fs = fs;

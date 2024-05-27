@@ -1,6 +1,6 @@
 import { CachedMetadata, TFile, TFolder } from "obsidian";
 import FileAsTaskPlugin from "main";
-import { FileSystem } from "../FileSystem";
+import { FileSystem } from "../Filesystem";
 
 export class ObsidianFileSystem implements FileSystem{
     plugin: FileAsTaskPlugin;

@@ -1,9 +1,15 @@
 import { Directory } from "./Directory";
 import { File } from "./File";
 
-export interface IOFactory{
-    createFile(root:string,path:string):File;
-    createDirectory(root:string,path:string):Directory;
-    isDirectory(input:File|Directory):input is Directory;
-    isFile(input:File|Directory):input is File;
+export abstract class IOFactory{
+    abstract createFile(root:string,path:string):File;
+    abstract createDirectory(root:string,path:string):Directory;
+
+    isDirectory(input: File | Directory): input is Directory {
+        return ('children' in input);
+    }
+    
+    isFile(input: File | Directory): input is File {
+        return !('children' in input);
+    }
 }
