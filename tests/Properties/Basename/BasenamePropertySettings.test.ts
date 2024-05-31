@@ -1,32 +1,45 @@
+import { MockFilesystemType } from "../../../tests/Mocks/MockFilesystemType";
 import { BasenamePropertySettings } from "../../../src/Properties/Basename/BasenamePropertySettings";
-import { MockFileModel } from "../../Mocks/MockFile";
+import { MockFilesystem } from "../../../tests/Mocks/MockFilesystem";
+import { MockIOFactory } from "../../../tests/Mocks/MockIOFactory";
+
 
 describe('basenamepropertysettings: constructor', () => {
-
-    test('correct values', () => {
+    test("correct values", () => {
         let prop = new BasenamePropertySettings("title");
         expect(prop.propName).toBe("title")
+    })
 
-    });  
     test('propname empty', () =>{
         try{
             let prop = new BasenamePropertySettings("");
             expect(true).toBe(false)
         }
-        catch(e){
+        catch (e) {
             expect(true).toBe(true);
         }
     })
-}); 
+});
 
 
 describe('basenamepropertysettings: adapt to property', () => {
+    let tree: MockFilesystemType = {
+        directories: {},
+        files: {
+            "path/to/file.md": {
+                basename: "file",
+            }
+        }
+    }
+    let fs = new MockFilesystem(tree);
+    let factory = new MockIOFactory(fs);
+    let file = factory.createFile("path/to/file.md");
     let propSettings = new BasenamePropertySettings("title");
-    const file = new MockFileModel("/test","/test/to/homeimprovement.md",{});
+
     let prop = propSettings.adaptToProperty(file);
 
     test('test if value is loaded correctly', () => {
-       expect(prop.getValue()).toBe("homeimprovement");
+        expect(prop.getValue()).toBe("file");
     });  
   
 }); 

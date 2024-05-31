@@ -1,7 +1,6 @@
 import { BooleanYAMLProperty } from "../../../src/Properties/BooleanYAML/BooleanYAMLProperty";
 import { BooleanYAMLPropertySettings } from "../../../src/Properties/BooleanYAML/BooleanYAMLPropertySettings";
 import { Whitelist } from "../../../src/Properties/Whitelist";
-import { MockFileModel } from "../../Mocks/MockFile";
 
 
 class Helper{

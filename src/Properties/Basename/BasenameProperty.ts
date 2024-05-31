@@ -16,13 +16,13 @@ export class BasenameProperty implements Property{
    
     // TODO handle duplicate file / file exsists
     async setValue(val: string): Promise<void> {
-        const newValue = this.getNewFullPathWithBasename(this.file.path,val);
+        const newValue = this.getNewFullPathWithBasename(this.file.fullPath,val);
         await this.file.move(newValue);
     }
 
     getValue(): string {
         if(this.val===undefined){
-            this.val = this.getBasename(this.file.path);
+            this.val = this.getBasename(this.file.fullPath);
         }
         return this.val
     }

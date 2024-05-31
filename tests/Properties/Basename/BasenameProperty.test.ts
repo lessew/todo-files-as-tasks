@@ -1,10 +1,25 @@
+import { MockFilesystemType } from "../../../tests/Mocks/MockFilesystemType";
 import { BasenameProperty } from "../../../src/Properties/Basename/BasenameProperty";
-import { MockFileModel } from "../../Mocks/MockFile";
+import { MockFilesystem } from "../../../tests/Mocks/MockFilesystem";
+import { MockIOFactory } from "../../../tests/Mocks/MockIOFactory";
+
+let tree: MockFilesystemType = {
+    directories: {},
+    files: {
+        "path/to/file.md": {
+            basename: "file",
+        }
+    }
+}
 
 class Helper{
     static getBasenameProperty():BasenameProperty{
-        const mockfile = new MockFileModel("path","/path/to/workproject/this.md",{});
-        return new BasenameProperty("title","default",mockfile);
+        let fs = new MockFilesystem(tree);
+        let factory = new MockIOFactory(fs);
+        let file = factory.createFile("path/to/file.md");
+
+        let prop = new BasenameProperty("title","default",file);
+        return prop;
     }
 }
 
@@ -40,10 +55,9 @@ describe('basenameproperty:getNewFullPathWithBasename', () => {
 
 
 describe('basenameproperty:getValue', () => {
-    const mockfile = new MockFileModel("/test/","/path/to/workproject/this.md",{});
-    let prop = new BasenameProperty("title","default",mockfile);
+    let prop = Helper.getBasenameProperty();
 
     test('correct values', () => {
-       expect(prop.getValue()).toBe("this");
+       expect(prop.getValue()).toBe("file");
     });  
 }); 
