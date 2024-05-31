@@ -14,10 +14,11 @@ export class MockFilesystem implements Filesystem{
     
     }
 
-    readDir(path: string): string[] {
-        console.log(path);
-        console.log(this.tree.directories[path])
-        return this.tree.directories[path];
+    readDir(path: string): string[] | []{
+        if( path in this.tree.directories){
+            return this.tree.directories[path];
+        }
+        return [];
     }
 
     pathIsFile(path: string): boolean {
@@ -28,11 +29,13 @@ export class MockFilesystem implements Filesystem{
         return path in this.tree.directories;
     }
 
-    getYAMLProperty(path: string, propName: string): string | null {
-        if('yaml' in this.tree.files[path] && 'propName' in this.tree.files[path].yaml!){
+    getYAMLProperty(path: string, propName: string): string |  "" {
+        try{
             return this.tree.files[path].yaml![propName];
         }
-        return null;
+        catch(e){
+            return "";
+        }
     }
 
     async setYAMLProperty(path: string, propName: string, propValue: string): Promise<void> {
