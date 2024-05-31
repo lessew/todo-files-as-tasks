@@ -1,9 +1,7 @@
-import { Dir } from "fs";
 import { Directory } from "../../src/FileSystem/Directory";
 import { MockFilesystem } from "../../tests/Mocks/MockFilesystem";
 import { MockFilesystemType } from "../../tests/Mocks/MockFilesystemType";
 import { MockIOFactory } from "../../tests/Mocks/MockIOFactory";
-import * as exp from "constants";
 
 let tree:MockFilesystemType = {
     directories: {
@@ -33,23 +31,23 @@ let tree:MockFilesystemType = {
     }
 }
 
-function getDirectory(fullPath:string):Directory{
-    let fs = new MockFilesystem(tree);
-    let factory = new MockIOFactory(fs);
-    let dir = factory.createDirectory(fullPath);
-    return dir;
-}
-
-
 describe ("Directory constructor", () =>{
     let fs = new MockFilesystem(tree);
     let factory = new MockIOFactory(fs);
-    test("testing happy constructor", () => {
+    test("testing happy constructor with root", () => {
 
         let dir = factory.createDirectory("root");
         expect(dir.fullPath).toBe("root");
         expect(dir.children.length).toBe(3);
     });
+
+    test("testing happy constructor with subfolder", () => {
+        let dir = factory.createDirectory("root/sub");
+        expect(dir.fullPath).toBe("root/sub");
+        expect(dir.children.length).toBe(3);
+    });
+    
+
     test("testing constructor with invalid input", () =>{
         let tryWithInvalidInput = (path:string) => {
             try{

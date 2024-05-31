@@ -61,8 +61,4 @@ export class Directory{
         return result;
     }
 
-    getDirectoryPaths():string[]{
-        return this.getDirectories().map(dir => dir.fullPath);
-    }
-
 }
