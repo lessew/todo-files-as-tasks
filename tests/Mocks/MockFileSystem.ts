@@ -6,7 +6,6 @@ export class MockFilesystem implements Filesystem{
 
     constructor(data: MockFilesystemType) {
         this.tree = data;
-        console.log(this.tree);
     }
 
 

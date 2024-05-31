@@ -3,30 +3,31 @@ import { IOFactory } from "./IOFactory";
 import { Filesystem } from "./Filesystem";
 
 export class Directory{
-    path:string;
-    root:string;
     children:(File | Directory)[];
     fs:Filesystem;
     factory:IOFactory;
+    fullPath:string;
 
-    constructor(root:string,path:string,factory:IOFactory,fs:Filesystem){ 
+    constructor(fullPath:string,factory:IOFactory,fs:Filesystem){ 
         this.factory = factory;
         this.fs = fs;
-        this.root = root;
-        this.path = path;
+        this.fullPath = fullPath;
+        if(!this.fs.pathIsDirectory(fullPath)){
+            throw Error(`Path is not a directory: "${fullPath}"`);
+        }
         this.loadChildren();
     }
 
     loadChildren(){
-        let paths = this.fs.readDir(this.path);
+        let paths = this.fs.readDir(this.fullPath);
         let result:(File|Directory)[] = [];
-        paths.forEach(childPath => {
+        paths.forEach(childPath => { // markdown.md | home 
             if(this.fs.pathIsDirectory(childPath )){
-                let dir = this.factory.createDirectory(this.root,childPath);
+                let dir = this.factory.createDirectory(childPath);
                 result.push(dir);
             }
             else if(this.fs.pathIsFile(childPath)){
-                let file = this.factory.createFile(this.root,childPath);
+                let file = this.factory.createFile(childPath);
                 result.push(file);
             }
         })
@@ -34,14 +35,13 @@ export class Directory{
     }
 
     getDirectories():Directory[]{       
-        let result:Directory[] = [];
+        let result:Directory[] = [this];
         
         this.children.forEach((resource) => {
             if(this.factory.isFile(resource)){
                 // nothin'
             }
             else if(this.factory.isDirectory(resource)){
-                result.push(resource);
                 result = [...result,...resource.getDirectories()];
             }
         })
@@ -62,14 +62,7 @@ export class Directory{
     }
 
     getDirectoryPaths():string[]{
-        return this.getDirectories().map(dir => dir.path);
+        return this.getDirectories().map(dir => dir.fullPath);
     }
 
-    getPathFromRoot(): string {
-        let pfr = this.path.substring(this.root.length);
-        if(pfr.charAt(0)=="/"){
-            pfr = pfr.substring(1);
-        }
-        return pfr;
-    }
 }

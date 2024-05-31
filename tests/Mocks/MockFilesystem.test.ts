@@ -4,7 +4,7 @@ import { MockFilesystemType } from "./MockFilesystemType";
 describe('MockFilesystem test', () => {
     let data:MockFilesystemType = {
         directories : {
-            "root":["this","that","noyamlprop.md","hasyamlprop.md"],
+            "root":["root/this","root/that","root/noyamlprop.md","root/hasyamlprop.md"],
             "root/this":[],
             "root/that":[]
         },
@@ -54,12 +54,10 @@ describe('MockFilesystem test', () => {
     test("Readdir", () => {
         let actual = mfs.readDir("root");
         expect(actual.length).toBe(4);
-        expect(actual[0]).toBe("this");
+        expect(actual[0]).toBe("root/this");
     });
     test("Readdir non existing dir", () => {
         let nodir = mfs.readDir("");
-        console.log(mfs);
-        console.log(nodir);
         expect(nodir.length).toBe(0);
     });
 });

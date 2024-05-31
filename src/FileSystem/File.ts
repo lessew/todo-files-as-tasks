@@ -1,31 +1,24 @@
 import { Filesystem } from "./Filesystem";
 
 export class File{
-    name:string;
-    path:string;
-    root:string;
     fs:Filesystem;
+    fullPath:string;
 
-    constructor(root:string,path:string,fs:Filesystem){
-        this.path = path;
-        this.root = root;
+    constructor(fullPath:string,fs:Filesystem){
         this.fs = fs;
-    }
-
-    getFullPath():string{
-        return this.root + "/" + this.path;
+        this.fullPath = fullPath;
     }
 
     move(newPath:string):Promise<void>{
-        return this.fs.move(this.getFullPath(), newPath);
+        return this.fs.move(this.fullPath, newPath);
     }
 
     getYAMLProperty(name:string):string | null{
-      return this.fs.getYAMLProperty(this.getFullPath(),name);  
+      return this.fs.getYAMLProperty(this.fullPath,name);  
     };
     
     async setYAMLProperty(name:string,value:string):Promise<void>{
-        return this.fs.setYAMLProperty(this.getFullPath(),name,value);
+        return this.fs.setYAMLProperty(this.fullPath,name,value);
     }
 
 }

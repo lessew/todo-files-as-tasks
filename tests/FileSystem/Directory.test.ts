@@ -1,13 +1,15 @@
+import { Dir } from "fs";
 import { Directory } from "../../src/FileSystem/Directory";
 import { MockFilesystem } from "../../tests/Mocks/MockFilesystem";
 import { MockFilesystemType } from "../../tests/Mocks/MockFilesystemType";
 import { MockIOFactory } from "../../tests/Mocks/MockIOFactory";
+import * as exp from "constants";
 
 let tree:MockFilesystemType = {
     directories: {
-        "root":["file1.md","file2.md","sub"],
-        "root/sub":["file3.md","file4.md","second"],
-        "root/sub/second":["file5.md","file6.md"]
+        "root":["root/file1.md","root/file2.md","root/sub"],
+        "root/sub":["root/sub/file3.md","root/sub/file4.md","root/sub/second"],
+        "root/sub/second":["root/sub/second/file5.md","root/sub/second/file6.md"]
     },
     files: {
         "root/file1.md":{
@@ -31,43 +33,70 @@ let tree:MockFilesystemType = {
     }
 }
 
-function getDirectory(path:string):Directory{
+function getDirectory(fullPath:string):Directory{
     let fs = new MockFilesystem(tree);
     let factory = new MockIOFactory(fs);
-    let dir = factory.createDirectory("root",path);
-    console.log(dir);
+    let dir = factory.createDirectory(fullPath);
     return dir;
 }
 
 
+describe ("Directory constructor", () =>{
+    let fs = new MockFilesystem(tree);
+    let factory = new MockIOFactory(fs);
+    test("testing happy constructor", () => {
+
+        let dir = factory.createDirectory("root");
+        expect(dir.fullPath).toBe("root");
+        expect(dir.children.length).toBe(3);
+    });
+    test("testing constructor with invalid input", () =>{
+        let tryWithInvalidInput = (path:string) => {
+            try{
+                factory.createDirectory(path);
+                expect(true).toBe(false);
+            }
+            catch(e){
+                expect(true).toBe(true);
+            }
+        }
+        tryWithInvalidInput("");
+        tryWithInvalidInput(".");
+        tryWithInvalidInput("/");
+        tryWithInvalidInput("directorydoesnotexists");
+
+    });
+});
+
 describe('Directory getfiles', () => {
-    let dir = getDirectory("root");
-    let files = dir.getFiles();
-    test('Test length of files array ', () => {   
+    let fs = new MockFilesystem(tree);
+    let factory = new MockIOFactory(fs);
+
+    test('Test length of files array ', () => {
+        let dir = factory.createDirectory("root");
+        let files = dir.getFiles();
         expect(files.length).toBe(6)
     });
+    test('Test length of files array ', () => {
+        let dir = factory.createDirectory("root/sub");
+        let files = dir.getFiles();
+        expect(files.length).toBe(4)
+    });
 });
+
 
 describe('Directory getDirectories getFolders', () => {
-    let dir = getDirectory("root");
-    
+    let fs = new MockFilesystem(tree);
+    let factory = new MockIOFactory(fs);
 
     test('Test getDirectories ', () => {   
-        let folders = dir.getDirectories();
-        expect(folders.length).toBe(2);
-        expect("root/sub" in folders).toBe(true);
-        expect("root/sub/second" in folders).toBe(true);
+        let dir = factory.createDirectory("root");
+        let dirs = dir.getDirectories();
+        let dirmap = dirs.map(dir => dir.fullPath);
+        expect(dirs.length).toBe(3);
+        expect(dirmap.includes("root")).toBe(true);
+        expect(dirmap.includes("root/sub")).toBe(true);
+        expect(dirmap.includes("root/sub/second")).toBe(true);
     });
 });
-
-// test getpathfromroot
-describe('Foldermodel getpathfromroot', () => {
-    let dir = getDirectory("root/sub/second");
-
-    test('Test ', () => {   
-        let path = dir.getPathFromRoot();
-        expect(path).toBe("sub/second")
-    });
-});
-
 

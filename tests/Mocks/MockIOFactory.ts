@@ -10,11 +10,11 @@ export class MockIOFactory extends IOFactory{
         super();
         this.fs = fs;
     }
-    createFile(root: string, path: string): File {
-        return new File(root,path,this.fs);
+    createFile(fullPath: string): File {
+        return new File(fullPath,this.fs);
     }
-    createDirectory(root: string, path: string): Directory {
-        return new Directory(root,path,this,this.fs);
+    createDirectory(fullPath: string): Directory {
+        return new Directory(fullPath,this,this.fs);
     }
     
 }
