@@ -1,7 +1,7 @@
-import { MockFilesystemType } from "../../../tests/Mocks/MockFilesystemType";
+import { MockFilesystemType } from "../../../src/FileSystem/mock/MockFileTree";
 import { BasenameProperty } from "../../../src/Properties/Basename/BasenameProperty";
-import { MockFilesystem } from "../../../tests/Mocks/MockFilesystem";
-import { MockIOFactory } from "../../../tests/Mocks/MockIOFactory";
+import { MockFilesystem } from "../../../src/FileSystem/mock/MockFilesystem";
+import { MockIOFactory } from "../../../src/FileSystem/mock/MockIOFactory";
 
 let tree: MockFilesystemType = {
     directories: {},

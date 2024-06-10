@@ -1,11 +1,11 @@
 import { IOFactory } from "src/FileSystem/IOFactory";
 import { PluginSettings } from "../../src/Configuration/PluginSettings";
 import { FileAsTaskCollection } from "../../src/FileSystem/FileAsTaskCollection";
-import { Filter, FilterOperator } from "../../src/FileSystem/Filter";
+import { Filter, FilterOperator } from "../../src/FileAsTask/Filter";
 import { Whitelist } from "../../src/Properties/Whitelist";
 import { WhitelistYAMLPropertySettings } from "../../src/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
 import { Directory } from "src/FileSystem/Directory";
-import { MockFile } from "tests/Mocks/MockFile";
+import { MockFile } from "src/FileSystem/mock/MockFile";
 import { File } from "src/FileSystem/File";
 
 

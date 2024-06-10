@@ -1,16 +1,8 @@
-import { ToplevelFolderProperty } from "src/Properties/ToplevelFolder/ToplevelFolderProperty";
-import { WhitelistYAMLProperty } from "src/Properties/WhitelistYAML/WhitelistYAMLProperty";
-import { BooleanYAMLProperty } from "src/Properties/BooleanYAML/BooleanYAMLProperty";
-import { FileAsTaskCollection } from "src/FileSystem/FileAsTaskCollection";
-import { FileAsTask } from "src/FileSystem/FileAsTask";
 import { PluginSettings } from "src/Configuration/PluginSettings";
 import FileAsTaskPlugin from "main";
-import { BasenameProperty } from "src/Properties/Basename/BasenameProperty";
-import { BasenamePropertyView } from "src/Properties/Basename/BasenamePropertyView";
-import { BooleanYAMLPropertyView } from "src/Properties/BooleanYAML/BooleanYAMLPropertyView";
-import { LinkView } from "src/Properties/Link/LinkView";
-import { ToplevelFolderPropertyView } from "src/Properties/ToplevelFolder/ToplevelFolderPropertyView";
-import { WhitelistYAMLPropertyView } from "src/Properties/WhitelistYAML/WhitelistYAMLPropertyView";
+import { FileAsTaskCollection } from "src/FileAsTask/FileAsTaskCollection";
+import { TitlePropertyView } from "src/FileAsTask/PropertyViews/TitlePropertyView";
+import { LinkView } from "src/FileAsTask/PropertyViews/LinkView";
 
 export class TaskListView{
     fileAsTaskCollection:FileAsTaskCollection;
@@ -52,12 +44,11 @@ export class TaskListView{
 
             // title: not configurable
             let tdTitle = row.createEl("td", {});
-            let prop = thisTask.getProperty(FileAsTask.TITLE_FIELD) as BasenameProperty;
-            const tp = new BasenamePropertyView(prop,this.plugin);
+            let tp = new TitlePropertyView(thisTask,this.plugin);
             tp.build(tdTitle);
 
             let tdTitleLink = row.createEl("td", {});
-            const lv = new LinkView("link",prop.file.path);
+            const lv = new LinkView("link",thisTask);
             lv.build(tdTitleLink);
 
             // project: not configurable

@@ -1,8 +1,8 @@
 import { CachedMetadata, TFile, TFolder } from "obsidian";
 import FileAsTaskPlugin from "main";
-import { FileSystem } from "../Filesystem";
+import { Filesystem } from "../Filesystem";
 
-export class ObsidianFileSystem implements FileSystem{
+export class ObsidianFilesystem implements Filesystem{
     plugin: FileAsTaskPlugin;
     
     constructor(plugin: FileAsTaskPlugin) {
@@ -32,14 +32,14 @@ export class ObsidianFileSystem implements FileSystem{
         await this.plugin.obsidianFacade.moveFile(file,newPath);
     }
 
-    getYAMLProperty(path:string,name: string): string | null{
+    getYAMLProperty(path:string,name: string): string | ""{
         let file = this.getTFile(path);
         const meta:CachedMetadata = this.plugin.obsidianFacade.getMeta(file);
         if(meta && meta.frontmatter && meta.frontmatter[name]){
             return meta.frontmatter[name];
         }
         else{
-            return null;
+            return "";
         }    
     }
 

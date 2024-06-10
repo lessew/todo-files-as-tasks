@@ -1,14 +1,15 @@
-import { PropertyView } from "../PropertyView";
+import { FileAsTask } from "../FileAsTask";
+import { PropertyView } from "./PropertyView";
 
 export class LinkView extends PropertyView{
     linkText:string;
     href:string;
+    fat:FileAsTask;
 
-
-    constructor(linkText:string,href:string){
+    constructor(linkText:string,fat:FileAsTask){
         super();
         this.linkText = linkText;
-        this.href = href
+        this.href = this.fat.getLink();
     }
 
      build(rootElement:HTMLElement):void{

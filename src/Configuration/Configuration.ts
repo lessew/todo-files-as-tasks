@@ -1,8 +1,9 @@
-import { FileAsTask } from "../FileSystem/FileAsTask";
-import { Filter } from "../FileSystem/Filter";
+import { FileAsTask } from "../FileAsTask/FileAsTask";
+import { Filter } from "../FileAsTask/Filter";
 import { PluginSettings } from "./PluginSettings";
-import { Whitelist } from "../Properties/Whitelist";
+import { Whitelist } from "../FileAsTask/PropertyStrategies/Whitelist";
 import { YAMLParser } from "./YAMLParser";
+import { YAMLStrategy } from "src/FileAsTask/PropertyStrategies/YAMLStrategy";
 
 export class Configuration{
     private parser:YAMLParser;
@@ -39,6 +40,10 @@ export class Configuration{
         } 
         this.settings = settings;
         this.trySetFoldersInSettings();
+    }
+
+    getYAMLStrategies():Map<string,YAMLStrategy>{
+        return this.settings.yamlPropertyStrategies;
     }
 
     trySetFoldersInSettings():void{

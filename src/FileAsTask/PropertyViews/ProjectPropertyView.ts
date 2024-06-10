@@ -1,29 +1,28 @@
-import { ToplevelFolderProperty } from "src/Properties/ToplevelFolder/ToplevelFolderProperty";
 import { App, SuggestModal } from "obsidian";
 import FileAsTaskPlugin from "main";
-import { PropertyView } from "../PropertyView";
-import { Property } from "../Property";
-import { Whitelist } from "../Whitelist";
+import { PropertyView } from "./PropertyView";
+import { Whitelist } from "../PropertyStrategies/Whitelist";
+import { FileAsTask } from "../FileAsTask";
 
-export class ToplevelFolderPropertyView extends PropertyView{
-    prop:ToplevelFolderProperty;
+export class ProjectPropertyView extends PropertyView{
     plugin:FileAsTaskPlugin;
+    fat:FileAsTask;
 
-    constructor(prop:ToplevelFolderProperty, plugin:FileAsTaskPlugin){
+    constructor(fat:FileAsTask, plugin:FileAsTaskPlugin){
         super();
         this.plugin = plugin; 
-        this.prop = prop;
+        this.fat = fat;
     }
     build(rootElement:HTMLElement):void{
-        const text = this.prop.getValue();
+        const text = this.fat.getProject();
         let a:HTMLElement = rootElement.createEl("span",{text:text,cls:"file-as-task"});
         a.addEventListener("click",this); // executes handleEvent
     }
 
     
     async handleEvent(event:Event){
-        const m:ToplevelFolderModal =  new ToplevelFolderModal(this.prop,this.prop.whitelist,async (item) => {
-            await this.prop.setValue(item);
+        const m:ProjectModal =  new ProjectModal(this.fat.getProjectList(),this.fat.getProject(),async (item) => {
+            await this.fat.setProject(item);
             await this.refreshUI();
         },
         this.plugin.obsidianApp);
@@ -36,16 +35,17 @@ export class ToplevelFolderPropertyView extends PropertyView{
 }
 
 
-class ToplevelFolderModal extends SuggestModal<string>{
+class ProjectModal extends SuggestModal<string>{
 
-    prop:Property;
+    whitelist:Whitelist;
+    currentValue:string;
     validValues:string[];
     onSubmit: (result:string) => void;
 
-    constructor(prop:Property, whitelist:Whitelist, onSubmit: (result:string) => void, app: App) {
+    constructor(whitelist:Whitelist, currentVal:string,onSubmit: (result:string) => void, app: App) {
         super(app);
-        this.prop = prop;
         this.onSubmit = onSubmit;
+        this.currentValue = currentVal;
         this.validValues = whitelist.toArray();
     }
         

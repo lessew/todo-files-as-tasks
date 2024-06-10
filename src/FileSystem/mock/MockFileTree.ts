@@ -1,10 +1,24 @@
 
-export type MockFilesystemType = {
+export type MockFileTree = {
     directories: Record<string,string[]>,
     files:Record<string,{basename:string,yaml?:Record<string,string>}>
 }
 
-let sample:MockFilesystemType = {
+export function singleFileTree(basename: string, path: string, yaml: any): MockFileTree {
+    let tree: MockFileTree = {
+        directories: {},
+        files: {
+            [path]: {
+                basename: basename,
+                yaml: yaml
+            }
+        }
+    }
+    return tree;
+    
+}
+/*
+let sample:MockFileTree = {
     directories: {
         "root": ["Finance","Groceries","Kids"],
         "root/Finance":["Taxes 2023","Finalize finance weekend NYC.md","Pay holicday bill.md"],
@@ -64,5 +78,5 @@ let sample:MockFilesystemType = {
             basename: "Peppers"
         }
     }
-    
 }
+*/    

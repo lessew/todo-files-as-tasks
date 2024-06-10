@@ -1,8 +1,8 @@
 import { YAMLParser } from "../../src/Configuration/YAMLParser";
-import { Filter, FilterOperator } from "../../src/FileSystem/Filter";
+import { Filter, FilterOperator } from "../../src/FileAsTask/Filter";
 import { PluginSettings } from "../../src/Configuration/PluginSettings";
-import { Whitelist } from "../../src/Properties/Whitelist";
-import { WhitelistYAMLPropertySettings } from "../../src/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
+import { Whitelist } from "../../src/FileAsTask/PropertyStrategies/Whitelist";
+import { WhitelistYAMLPropertySettings } from "../../src/FileAsTask/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
 
 class Helper {
     static getSettings(statusAllowedValues:string[]):PluginSettings{

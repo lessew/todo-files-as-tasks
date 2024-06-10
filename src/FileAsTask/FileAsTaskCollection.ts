@@ -1,19 +1,20 @@
-import { FileAsTask } from "./FileAsTask";
+import { FileAsTask } from "../FileAsTask/FileAsTask";
 import { Filter, FilterOperator } from "./Filter";
 import { PluginSettings } from "../Configuration/PluginSettings";
-import { Directory } from "./Directory";
-import { File } from "./File";
-
+import { Directory } from "src/FileSystem/Directory";
+import { File } from "src/FileSystem/File";
+import { YAMLStrategy } from "./PropertyStrategies/YAMLStrategy";
 
 export class FileAsTaskCollection{
     private rootDirectory:Directory;
     private filesAsTask:FileAsTask[];
     private settings:PluginSettings;
     private filters:Filter[];
+    private yamlStrategies:Map<string,YAMLStrategy>;
     
-    constructor(rf:Directory,settings:PluginSettings){
+    constructor(rf:Directory,strats:Map<string,YAMLStrategy>){
         this.rootDirectory = rf;
-        this.settings = settings;
+        this.yamlStrategies = strats;
         this.loadFilesAsTask();
         this.filters = [];
     }
@@ -23,7 +24,7 @@ export class FileAsTaskCollection{
         let fats:FileAsTask[] = [];
 
         files.forEach(aFile => {
-            let fat:FileAsTask = new FileAsTask(aFile,this.settings);
+            let fat:FileAsTask = new FileAsTask(aFile,this.yamlStrategies);
             fats.push(fat);
         })
         this.filesAsTask = fats;

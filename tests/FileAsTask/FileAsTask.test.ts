@@ -1,8 +1,8 @@
 import { PluginSettings } from "../../src/Configuration/PluginSettings";
-import { FileAsTask } from "../../src/FileSystem/FileAsTask";
+import { FileAsTask } from "../../src/FileAsTask/FileAsTask";
 import { Whitelist } from "../../src/Properties/Whitelist";
 import { WhitelistYAMLPropertySettings } from "../../src/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
-import { MockFile } from "../Mocks/MockFile";
+import { MockFile } from "../../src/FileSystem/mock/MockFile";
 
 describe('FileAsTask: constructor and getter', () => {
     let file = new MockFile("/path","/path",{context:"Read"});

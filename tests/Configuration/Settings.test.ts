@@ -1,33 +1,24 @@
-import { MockFile } from "../../tests/Mocks/MockFile";
+import { MockIOFactory } from "../../src/FileSystem/mock/MockIOFactory";
 import { PluginSettings } from "../../src/Configuration/PluginSettings";
-import { BasenamePropertySettings } from "../../src/Properties/Basename/BasenamePropertySettings";
-import { Whitelist } from "../../src/Properties/Whitelist";
-import { WhitelistYAMLPropertySettings } from "../../src/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
+import { Whitelist } from "../../src/FileAsTask/PropertyStrategies/Whitelist";
+import { WhitelistYAMLPropertySettings } from "../../src/FileAsTask/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
+import { singleFileTree } from "../../src/FileSystem/mock/MockFileTree";
+import { MockFilesystem } from "../../src/FileSystem/mock/MockFilesystem";
+import { File } from "../../src/FileSystem/File";
+
 
 describe('Settings: create object)', () => {
-    let settings = new PluginSettings();
-    test('Test addBasename', () => {   
-        settings.add(new BasenamePropertySettings("title"));
-        expect(settings.get("title").propName).toBe("title");
-    });
-    // TODO this test is unreliable and gives false positives
-    test("Testing getting non existent", () =>{
-        try{
-            let impossible = settings.get("does-not-exist");
-            expect(true).toBe(false)
-        }
-        catch(e){
-            expect(true).toBe(true);
-        }
-    });
-});
+    let settings:PluginSettings;
+    let file:File; 
 
-describe('Settings: get properties', () => {
-    let settings = new PluginSettings()
-    .add(new WhitelistYAMLPropertySettings("status","Inbox",new Whitelist(["Inbox","Done"])))
-    .add(new WhitelistYAMLPropertySettings("context","Read",new Whitelist(["Read","Desk"])));
-
-    let file = new MockFile("path","/path/to/file",{status:"Done",context:"Desk"});
+    beforeEach(() => {
+        let tree = singleFileTree("file","path/to/file.md",{status:"Done",context:"Desk"})
+        let factory = new MockIOFactory(new MockFilesystem((tree)));
+        file = factory.createFile("path/to/file.md");
+        settings = new PluginSettings()
+            .add(new WhitelistYAMLPropertySettings("status", "Inbox", new Whitelist(["Inbox", "Done"])))
+            .add(new WhitelistYAMLPropertySettings("context", "Read", new Whitelist(["Read", "Desk"])));
+    });
 
     test('Test get properties', () => {   
       let properties = settings.getProperties(file);

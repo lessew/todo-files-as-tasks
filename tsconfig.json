@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    /*"esModuleInterop":true,*/
+    "esModuleInterop":true,
     "baseUrl": ".",
     "inlineSourceMap": true,
     "inlineSources": true,

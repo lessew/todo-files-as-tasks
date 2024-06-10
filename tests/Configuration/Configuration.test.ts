@@ -30,11 +30,22 @@ action: list
     let folders = ['groceries','groceries/appie','work'];
 
     test('Test happy path', () => {   
+/* TODO setup tests with beforeeach and aftereach
+        beforeEach(() => {
+            //          testEmail = 'test@example.com';
+        });
+
+        // delete the test email address after each test
+        afterEach(() => {
+            //            testEmail = null;
+        });
+*/
+
         let c = new Configuration();
         let s = SettingsModel.loadDeepCopy(testConfig);
         c.loadSource(yamlString);
         expect(c.stateIsError()).toBe(false);
-        c.loadSettings(s); 
+        c.loadSettings(s);
         expect(c.stateIsError()).toBe(false);
         c.loadRootPath();
         expect(c.stateIsError()).toBe(false);

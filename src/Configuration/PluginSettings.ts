@@ -1,51 +1,75 @@
-import { BasenamePropertySettings } from "../Properties/Basename/BasenamePropertySettings";
-import { BooleanYAMLPropertySettings } from "../Properties/BooleanYAML/BooleanYAMLPropertySettings";
-import { ToplevelFolderPropertySettings } from "../Properties/ToplevelFolder/ToplevelFolderPropertySettings";
-import { WhitelistYAMLPropertySettings } from "../Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
-import { Whitelist } from "../Properties/Whitelist";
-import { PropertySettings } from "../Properties/PropertySettings";
-import { Property } from "../Properties/Property";
-import { FileAsTask } from "../FileSystem/FileAsTask";
-import { File } from "src/FileSystem/File";
+import { PropertyFactory } from "src/FileAsTask/PropertyFactory";
+import { YAMLStrategy } from "src/FileAsTask/PropertyStrategies/YAMLStrategy";
 
+type SavedProp = {
+        propName:string,
+        defaultValue:string,
+        whitelist?:string[],
+        strategy:string
+}
+
+type SavedSettings = {
+    properties: SavedProp[]
+}
+
+/**
+ * Include saveto and loadfrom to load/save to persistent obsidian storage
+ * Defaultvalues are kept seperate from the strategies to keep them clean / functional / relatively stateless
+ * 
+ */
 export class PluginSettings {
-    private propertySettings:Map<string,PropertySettings>;
     
+    yamlPropertyStrategies:Map<string,string>; // corresponds to getType() method in yamlstrategies.
+    propertyDefaults:Map<string,string>;
+
     constructor(){
-        this.propertySettings = new Map<string,PropertySettings>();
+        this.yamlPropertyStrategies = new Map<string,string>();
+        this.propertyDefaults = new Map<string,string>();
     }
 
-    add(s:PropertySettings):PluginSettings{
-        this.propertySettings.set(s.propName,s);
+    addYAMLproperty(propName:string,defaultValue:string,strategy:string):PluginSettings{
+        this.yamlPropertyStrategies.set(propName,strategy);
+        this.propertyDefaults.set(propName,defaultValue);
         return this;
     }
 
-    get(name:string):PropertySettings{
-        let s = this.propertySettings.get(name);
+    getYAMLStrategy(name:string):string{
+        let s = this.yamlPropertyStrategies.get(name);
         if(s==undefined){
             throw Error(`Setting does not exist ${name}`)
         }
         return s;
     }
 
-    getAsMap():Map<string,PropertySettings>{
-        return this.propertySettings;
+    toJSON():string{
+        let result:SavedProp[] = [];
+
+        this.yamlPropertyStrategies.forEach((key,value) => {
+            let propSet:SavedProp = {
+                propName: key,
+                defaultValue: this.propertyDefaults.get(key)!,
+                strategy: value
+            }
+            result.push(propSet);
+        })
+
+        return JSON.stringify({properties:result});
     }
 
-    getProperties(file:File):Record<string,Property>{
-        let result:Record<string,Property> = {};
-        this.propertySettings.forEach((aProp)=>{
-            result[aProp.propName] = aProp.adaptToProperty(file);
-        })
-        return result;
+    fromJSON(inputStr:string):void{
+        let input = JSON.parse(inputStr);
+        let properties = input.properties as SavedProp[];
+        properties.forEach((aProp) => {
+            this.addYAMLproperty(aProp.propName,aProp.defaultValue,aProp.strategy)
+        });
+    }
+
+    getDefault(propName:string):string{
+        return this.propertyDefaults.get(propName)!;
     }
 }
 
-export const DEFAULT_SETTINGS:PluginSettings = new PluginSettings()
-    .add(new BasenamePropertySettings(FileAsTask.TITLE_FIELD))
-    .add(new ToplevelFolderPropertySettings(FileAsTask.PROJECT_FIELD))
-    .add(new BooleanYAMLPropertySettings("starred","✰", new Whitelist(["✰","⭐"])))
-    .add(new WhitelistYAMLPropertySettings("context","None", new Whitelist(["Desk","Deep","Phone","Read","Errands","None"])))
-    .add(new WhitelistYAMLPropertySettings("status","Inbox", new Whitelist(["Inbox","Next","Deferred","Waiting","Done"])));
+
+
 
 

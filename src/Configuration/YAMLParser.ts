@@ -1,5 +1,5 @@
 import * as yaml from 'js-yaml'
-import { Filter, FilterOperator } from '../FileSystem/Filter';
+import { Filter, FilterOperator } from '../FileAsTask/Filter';
 import { PluginSettings } from './PluginSettings';
 
 // TODO : use Obsidian YAML parser functions

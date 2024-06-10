@@ -1,8 +1,8 @@
-import { MockIOFactory } from "../../tests/Mocks/MockIOFactory";
-import { MockFilesystem } from "../../tests/Mocks/MockFilesystem";
-import { MockFilesystemType } from "../../tests/Mocks/MockFilesystemType";
+import { MockIOFactory } from "../../src/FileSystem/mock/MockIOFactory";
+import { MockFilesystem } from "../../src/FileSystem/mock/MockFilesystem";
+import { MockFileTree } from "../../src/FileSystem/mock/MockFileTree";
 
-let tree:MockFilesystemType = {
+let tree:MockFileTree= {
     directories: {
         "root/path":["note.md"]
     },

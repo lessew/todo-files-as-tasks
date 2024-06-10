@@ -1,26 +1,26 @@
 import FileAsTaskPlugin from "main";
 import { App, Modal,Setting } from "obsidian";
-import { PropertyView } from "../PropertyView";
-import { BasenameProperty } from "./BasenameProperty";
+import { PropertyView } from "./PropertyView";
+import { FileAsTask } from "../FileAsTask";
 
-export class BasenamePropertyView extends PropertyView{
-    prop:BasenameProperty;
+export class TitlePropertyView extends PropertyView{
     plugin: FileAsTaskPlugin;
+    fat:FileAsTask;
 
-    constructor(prop:BasenameProperty,plugin:FileAsTaskPlugin){
+    constructor(fat:FileAsTask,plugin:FileAsTaskPlugin){
         super();
         this.plugin = plugin;
-        this.prop = prop;
+        this.fat = fat;
     }
 
     build(rootElement:HTMLElement):void{
-      let edit:HTMLElement = rootElement.createEl("a",{cls:"yatodo-edit",text:this.prop.getValue(),title:"Edit"});
+      let edit:HTMLElement = rootElement.createEl("a",{cls:"yatodo-edit",text:this.fat.getTitle(),title:"Edit"});
       edit.addEventListener("click",this); // executes this.handleEvent method
     }
 
     async handleEvent(event:Event){
-        const m:UpdateBasenameModal =  new UpdateBasenameModal(this.plugin.obsidianApp,this.prop.getValue(),async (result) => {
-            await this.prop.setValue(result);
+        const m:TitleModel =  new TitleModel(this.plugin.obsidianApp,this.fat.getTitle(),async (result) => {
+            await this.fat.setTitle(result);
             await this.refreshUI();
         });
         m.open();
@@ -31,7 +31,7 @@ export class BasenamePropertyView extends PropertyView{
   }
 }
 
-class UpdateBasenameModal extends Modal{
+class TitleModel extends Modal{
     result: string;
     onSubmit: (result: string) => void;
     value:string;

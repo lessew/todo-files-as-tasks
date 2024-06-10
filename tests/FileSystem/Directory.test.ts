@@ -1,9 +1,9 @@
 import { Directory } from "../../src/FileSystem/Directory";
-import { MockFilesystem } from "../../tests/Mocks/MockFilesystem";
-import { MockFilesystemType } from "../../tests/Mocks/MockFilesystemType";
-import { MockIOFactory } from "../../tests/Mocks/MockIOFactory";
+import { MockFilesystem } from "../../src/FileSystem/mock/MockFilesystem";
+import { MockFileTree } from "../../src/FileSystem/mock/MockFileTree";
+import { MockIOFactory } from "../../src/FileSystem/mock/MockIOFactory";
 
-let tree:MockFilesystemType = {
+let tree: MockFileTree= {
     directories: {
         "root":["root/file1.md","root/file2.md","root/sub"],
         "root/sub":["root/sub/file3.md","root/sub/file4.md","root/sub/second"],

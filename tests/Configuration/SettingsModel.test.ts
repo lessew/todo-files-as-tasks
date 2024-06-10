@@ -1,10 +1,10 @@
 import { SettingsModel, SettingsSavedFormatType } from "../../src/Configuration/SettingsModel";
-import { BasenamePropertySettings } from "../../src/Properties/Basename/BasenamePropertySettings";
-import { BooleanYAMLPropertySettings } from "../../src/Properties/BooleanYAML/BooleanYAMLPropertySettings";
-import { ToplevelFolderPropertySettings } from "../../src/Properties/ToplevelFolder/ToplevelFolderPropertySettings";
-import { WhitelistYAMLPropertySettings } from "../../src/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
+import { BasenamePropertySettings } from "../../src/FileAsTask/Properties/Basename/BasenamePropertySettings";
+import { BooleanYAMLPropertySettings } from "../../src/FileAsTask/Properties/BooleanYAML/BooleanYAMLPropertySettings";
+import { ToplevelFolderPropertySettings } from "../../src/FileAsTask/Properties/ToplevelFolder/ToplevelFolderPropertySettings";
+import { WhitelistYAMLPropertySettings } from "../../src/FileAsTask/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
 import { PluginSettings } from "../../src/Configuration/PluginSettings";
-import { Whitelist } from "../../src/Properties/Whitelist";
+import { Whitelist } from "../../src/FileAsTask/PropertyStrategies/Whitelist";
 
 const settings = new PluginSettings()
 .add(new BasenamePropertySettings("title"))

@@ -1,15 +1,14 @@
 import FileAsTaskPlugin from "main";
 import { Configuration } from "./Configuration/Configuration";
 import { YAMLParser } from "./Configuration/YAMLParser";
-import { FileAsTaskCollection } from "./FileSystem/FileAsTaskCollection";
 import { Directory } from "./FileSystem/Directory";
 import { CreateTaskButtonView } from "./MainUI/CreateTaskButtonView";
 import { TaskListView } from "./MainUI/TaskListView";
 import { TestView } from "./MainUI/TestView";
-import { ObsidianFileSystem } from "./FileSystem/obsidian/ObsidianFilesystem";
 import { ObsidianIOFactory } from "./FileSystem/obsidian/ObsidianIOFactory";
+import { ObsidianFilesystem } from "./FileSystem/obsidian/ObsidianFilesystem";
+import { FileAsTaskCollection } from "./FileAsTask/FileAsTaskCollection";
 
-// TODO debug special cases (/ " etc in title on update)
 export class CodeBlock{
     source:string;
     el:HTMLElement;
@@ -39,11 +38,11 @@ export class CodeBlock{
             this.displayUserError(this.config.getErrorState());
             return;
         }
-        let ofs = new ObsidianFileSystem(this.plugin);
+        let ofs = new ObsidianFilesystem(this.plugin);
         let iof = new ObsidianIOFactory(this.plugin);
 
-        this.rootDirectory = iof.createDirectory(this.config.getRootPath(),this.config.getRootPath());
-        this.config.loadDirectories(this.rootDirectory.getDirectoryPaths());
+        this.rootDirectory = iof.createDirectory(this.config.getRootPath());
+        this.config.loadDirectories(this.rootDirectory.getDirectories().map(dir => dir.fullPath));
 
         if(this.config.getAction()==YAMLParser.ACTION_LIST){
             this.displayActionList();
@@ -56,7 +55,6 @@ export class CodeBlock{
         }
 
     }
-
     
     displayUserError(error:Error){
         const msg = error.message;// + "\n" + this.source;
@@ -71,7 +69,7 @@ export class CodeBlock{
         }
 
         const filters = this.config.getFilters();
-        const fileAsTaskCollection = new FileAsTaskCollection(this.rootDirectory,this.config.getSettings());
+        const fileAsTaskCollection = new FileAsTaskCollection(this.rootDirectory,this.config.getYAMLStrategies());
         fileAsTaskCollection.bulkFilterBy(filters);
         //fileAsTaskCollection.groupBy('project');
         //fileAsTaskCollection.sortBy('context','ASC');

@@ -1,10 +1,10 @@
 import { Filesystem} from "src/FileSystem/Filesystem";
-import { MockFilesystemType} from "./MockFilesystemType";
+import { MockFileTree} from "./MockFileTree";
 
 export class MockFilesystem implements Filesystem{
-    tree: MockFilesystemType;
+    tree:MockFileTree ;
 
-    constructor(data: MockFilesystemType) {
+    constructor(data: MockFileTree) {
         this.tree = data;
     }
 
