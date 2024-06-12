@@ -1,17 +1,25 @@
 import { File } from "../FileSystem/File";
-import { PropertyPathStrategy,PropertyStrategy } from "./PropertyStrategies/YAMLStrategy";
+import { YAMLStrategy } from "./PropertyStrategies/YAMLStrategy";
 import { Whitelist } from "./PropertyStrategies/Whitelist";
+import { PathStrategy } from "./PropertyStrategies/PathStrategy";
+import { stringify } from "querystring";
+import { PropertyFactory } from "./PropertyFactory";
 
 export class FileAsTask{
     file:File;
     static PROJECT_FIELD = "project";
     static TITLE_FIELD = "title";
 
-    private pathStrategy:PropertyPathStrategy;
-    private yamlStrategies:Record<string,PropertyStrategy>;
+    private pathStrategy:PathStrategy;
+    private yamlStrategies:Map<string,YAMLStrategy>;
 
-    constructor(file:File,yamlStrategies:Record<string,PropertyStrategy>){
+    constructor(file:File,yamlStrategies:Map<string,string>){
         this.file = file;
+        this.yamlStrategies = new Map();
+        yamlStrategies.forEach((value,key) => {
+            let strat = PropertyFactory.create(value);
+            this.yamlStrategies.set(key)
+        })
         this.yamlStrategies = yamlStrategies;
     }
 

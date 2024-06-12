@@ -31,7 +31,7 @@ export class Configuration{
             return;
         }
         this.folders = folders;
-        this.trySetFoldersInSettings();
+        this.trySetDirectoriesInSettings();
     }
 
     loadSettings(settings:PluginSettings):void{
@@ -39,16 +39,16 @@ export class Configuration{
             return;
         } 
         this.settings = settings;
-        this.trySetFoldersInSettings();
+        this.trySetDirectoriesInSettings();
     }
 
     getYAMLStrategies():Map<string,YAMLStrategy>{
         return this.settings.yamlPropertyStrategies;
     }
 
-    trySetFoldersInSettings():void{
+    trySetDirectoriesInSettings():void{
         if(this.folders!=undefined && this.settings!=undefined){
-            let projectSettings = this.settings.get(FileAsTask.PROJECT_FIELD);
+            let projectSettings = this.settings.getYAMLStrategy(FileAsTask.PROJECT_FIELD);
             projectSettings.whitelist = new Whitelist(this.folders);
             projectSettings.defaultValue = this.folders[0];
         }

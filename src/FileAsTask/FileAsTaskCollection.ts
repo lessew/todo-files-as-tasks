@@ -10,9 +10,9 @@ export class FileAsTaskCollection{
     private filesAsTask:FileAsTask[];
     private settings:PluginSettings;
     private filters:Filter[];
-    private yamlStrategies:Map<string,YAMLStrategy>;
+    private yamlStrategies:Map<string,string>;
     
-    constructor(rf:Directory,strats:Map<string,YAMLStrategy>){
+    constructor(rf:Directory,strats:Map<string,string>){
         this.rootDirectory = rf;
         this.yamlStrategies = strats;
         this.loadFilesAsTask();

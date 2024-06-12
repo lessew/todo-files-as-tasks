@@ -1,4 +1,5 @@
 import { PropertyFactory } from "src/FileAsTask/PropertyFactory";
+import { Whitelist } from "src/FileAsTask/PropertyStrategies/Whitelist";
 import { YAMLStrategy } from "src/FileAsTask/PropertyStrategies/YAMLStrategy";
 
 type SavedProp = {
@@ -21,6 +22,7 @@ export class PluginSettings {
     
     yamlPropertyStrategies:Map<string,string>; // corresponds to getType() method in yamlstrategies.
     propertyDefaults:Map<string,string>;
+    propertyWhitelists:Map<string,Whitelist>;
 
     constructor(){
         this.yamlPropertyStrategies = new Map<string,string>();
