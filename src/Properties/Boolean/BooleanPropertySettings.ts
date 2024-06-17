@@ -29,7 +29,7 @@ export class BooleanPropertySettings extends PropertySettings {
 		let a = this.whitelist.toArray();
 		if (currentValue == a[0]) {
 			return a[1];
-		}.
+		}
 		else if (currentValue == a[1]) {
 			return a[0];
 		}

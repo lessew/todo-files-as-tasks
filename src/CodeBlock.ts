@@ -6,8 +6,9 @@ import { TaskListView } from "./MainUI/TaskListView";
 import { TestView } from "./MainUI/TestView";
 import { FileAsTaskCollection } from "./FileAsTask/FileAsTaskCollection";
 import { Directory } from "./Filesystem/Directory";
-import { ObsidianFilesystem } from "./Filesystem/obsidian/ObsidianFileSystem";
 import { ObsidianIOFactory } from "./Filesystem/obsidian/ObsidianIOFactory";
+import { FileAsTaskFactory } from "./FileAsTask/FileAsTaskFactory";
+import { FileAsTask } from "./FileAsTask/FileAsTask";
 
 export class CodeBlock {
 	source: string;
@@ -38,7 +39,6 @@ export class CodeBlock {
 			this.displayUserError(this.config.getErrorState());
 			return;
 		}
-		let ofs = new ObsidianFilesystem(this.plugin);
 		let iof = new ObsidianIOFactory(this.plugin);
 
 		this.rootDirectory = iof.createDirectory(this.config.getRootPath());
@@ -69,12 +69,21 @@ export class CodeBlock {
 		}
 
 		const filters = this.config.getFilters();
-		// TODO:fileAsTaskCollection: uses the propertysettings from configuration module to initialize the file as tasks
-		const fileAsTaskCollection = new FileAsTaskCollection(this.rootDirectory, this.config.getPathPropertyHelper());
+		const filesAsTask: FileAsTask[] = FileAsTaskFactory.loadFilesAsTask(
+			this.rootDirectory,
+			this.config.getPathPropertyHelper()
+		);
+
+		const fileAsTaskCollection = new FileAsTaskCollection(filesAsTask);
 		fileAsTaskCollection.bulkFilterBy(filters);
 		//fileAsTaskCollection.groupBy('project');
 		//fileAsTaskCollection.sortBy('context','ASC');
-		let view = new TaskListView(fileAsTaskCollection, this.config.getSettings(), this.config.getPathPropertyHelper(), this.plugin);
+		let view = new TaskListView(
+			fileAsTaskCollection,
+			this.config.getSettings(),
+			this.config.getPathPropertyHelper(),
+			this.plugin
+		);
 		view.build(this.el);
 	}
 

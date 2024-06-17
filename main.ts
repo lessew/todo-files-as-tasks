@@ -1,19 +1,19 @@
 import { App, Plugin } from 'obsidian';
 import { CodeBlock } from 'src/CodeBlock';
 import { PluginSettings } from 'src/Configuration/PluginSettings';
-import { SettingsModel } from 'src/Configuration/SettingsModel';
 import { FATSettingTab } from 'src/Configuration/ui/FATSettingsTab';
-import { ObsidianFacade } from 'src/FileSystem/obsidian/ObsidianFacade';
+import { ObsidianFacade } from 'src/Filesystem/obsidian/ObsidianFacade';
 
 export default class FileAsTaskPlugin extends Plugin {
-	pluginSettings: PluginSettings;
 	codeBlocks: CodeBlock[] = [];
 	obsidianFacade: ObsidianFacade;
 	obsidianApp: App;
+	pluginSettings: any;
 
 	async onload() {
 		let jsonSettings = await this.loadData();
-		this.pluginSettings = SettingsModel.loadDeepCopy(jsonSettings)
+		let ps = new PluginSettings().load(jsonSettings);
+		this.pluginSettings = ps;
 		this.obsidianFacade = new ObsidianFacade(this.app);
 		this.obsidianApp = this.app;
 

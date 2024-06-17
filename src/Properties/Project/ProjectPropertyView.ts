@@ -1,9 +1,9 @@
 import { App, SuggestModal } from "obsidian";
 import FileAsTaskPlugin from "main";
-import { PropertyView } from "./PropertyView";
-import { Whitelist } from "../PropertyStrategies/Whitelist";
-import { FileAsTask } from "../FileAsTask";
 import { PathPropertyHelper } from "../PathPropertyHelper";
+import { FileAsTask } from "src/FileAsTask/FileAsTask";
+import { PropertyView } from "../PropertyView";
+import { Whitelist } from "../Whitelist";
 
 export class ProjectPropertyView extends PropertyView {
 	plugin: FileAsTaskPlugin;
@@ -30,8 +30,7 @@ export class ProjectPropertyView extends PropertyView {
 			this.fat.getProject(),
 			async (item) => {
 				if (this.pathPropertySettings.validate((item))) {
-					let newPath = this.pathPropertySettings.updateFolder(item, this.fat.fullPath)
-					await this.fat.setFullPath(newPath);
+					await this.fat.setProject(item);
 					await this.refreshUI();
 				}
 				else {
