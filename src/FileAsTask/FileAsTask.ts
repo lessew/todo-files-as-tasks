@@ -1,5 +1,3 @@
-import { PathPropertySettings } from "src/Properties/PathPropertySettings";
-import { Whitelist } from "src/Properties/Whitelist";
 import { File } from "src/Filesystem/File";
 import { PathPropertyHelper } from "src/Properties/PathPropertyHelper";
 
@@ -14,7 +12,6 @@ export class FileAsTask {
 		this.file = file;
 		this.pathHelper = pathH;
 	}
-
 
 	getProject(): string {
 		return this.pathHelper.getFolder(this.file.fullPath);

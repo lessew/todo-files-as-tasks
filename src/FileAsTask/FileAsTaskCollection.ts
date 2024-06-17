@@ -4,6 +4,7 @@ import { Filter, FilterOperator } from "./Filter";
 import { File } from "src/Filesystem/File";
 import { PathPropertyHelper } from "src/Properties/PathPropertyHelper";
 
+<<<<<<< HEAD
 export class FileAsTaskCollection {
 	private rootDirectory: Directory;
 	private filesAsTask: FileAsTask[];

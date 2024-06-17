@@ -31,7 +31,7 @@ export class Configuration {
 			return;
 		}
 		this.folders = folders;
-		this.trySetFoldersInSettings();
+		this.trySetDirectoriesInSettings();
 	}
 
 	loadSettings(settings: PluginSettings): void {
@@ -39,16 +39,18 @@ export class Configuration {
 			return;
 		}
 		this.settings = settings;
-		this.trySetFoldersInSettings();
+		this.trySetDirectoriesInSettings();
 	}
 
 	getYAMLStrategies(): Map<string, PropertySettings> {
 		return this.settings.propertySettings;
 	}
 
-	trySetFoldersInSettings(): void {
+	trySetDirectoriesInSettings(): void {
 		if (this.folders != undefined && this.settings != undefined) {
-			this.pathPropertyHelper = new PathPropertyHelper(this.folders, 0);
+			let projectSettings = this.settings.getYAMLStrategy(FileAsTask.PROJECT_FIELD);
+			projectSettings.whitelist = new Whitelist(this.folders);
+			projectSettings.defaultValue = this.folders[0];
 		}
 	}
 
