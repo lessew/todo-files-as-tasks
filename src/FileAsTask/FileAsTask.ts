@@ -1,68 +1,64 @@
-import { File } from "../FileSystem/File";
-import { PropertyPathStrategy,PropertyStrategy } from "./PropertyStrategies/YAMLStrategy";
-import { Whitelist } from "./PropertyStrategies/Whitelist";
+import { PathPropertySettings } from "src/Properties/PathPropertySettings";
+import { Whitelist } from "src/Properties/Whitelist";
+import { File } from "src/Filesystem/File";
+import { PathPropertyHelper } from "src/Properties/PathPropertyHelper";
 
-export class FileAsTask{
-    file:File;
-    static PROJECT_FIELD = "project";
-    static TITLE_FIELD = "title";
+export class FileAsTask {
+	file: File;
+	static PROJECT_FIELD = "project";
+	static TITLE_FIELD = "title";
+	private pathHelper: PathPropertyHelper;
 
-    private pathStrategy:PropertyPathStrategy;
-    private yamlStrategies:Record<string,PropertyStrategy>;
 
-    constructor(file:File,yamlStrategies:Record<string,PropertyStrategy>){
-        this.file = file;
-        this.yamlStrategies = yamlStrategies;
-    }
+	constructor(file: File, pathH: PathPropertyHelper) {
+		this.file = file;
+		this.pathHelper = pathH;
+	}
 
-    getProjectList():Whitelist{
-        return this.pathStrategy.getFolderlist();
-    }
-    getProject():string{
-        return this.pathStrategy.getFolder(this.file.fullPath);
-    }
 
-    getLink():string{
-        return this.file.fullPath;
-    }
+	getProject(): string {
+		return this.pathHelper.getFolder(this.file.fullPath);
+	}
 
-    async setProject(newProject:string):Promise<void>{
-        let newPath = this.pathStrategy.updateFolder(newProject,this.file.fullPath);
-        if(this.pathStrategy.validate(newPath)){
-            await this.file.move(newPath)
-        }{
-            throw new Error(`setProject: path is not valid: ${newPath}`)
-        }
-    }
+	getLink(): string {
+		return this.file.fullPath;
+	}
 
-    getTitle():string{
-        return this.pathStrategy.getBasename(this.file.fullPath);
-    }
+	async setProject(newProject: string): Promise<void> {
+		let newPath = this.pathHelper.getFullPathFromNewDirectory(newProject, this.file.fullPath);
+		if (this.pathHelper.validate(newPath)) {
+			await this.file.move(newPath)
+		} {
+			throw new Error(`setProject: path is not valid: ${newPath}`)
+		}
+	}
 
-    async setTitle(basename:string):Promise<void>{
-        let newPath = this.pathStrategy.updateBasename(basename,this.file.fullPath); 
-        await this.file.move(newPath);
-    }
+	getTitle(): string {
+		return this.pathHelper.getBasename(this.file.fullPath);
+	}
 
-    getYAMLProperty(propName:string):string{
-        let prop = this.file.getYAMLProperty(propName);
-        return prop==null ? "" : prop ;
-    }
+	async setTitle(basename: string): Promise<void> {
+		let newPath = this.pathHelper.getFullPathFromNewBasename(basename, this.file.fullPath);
+		await this.file.move(newPath);
+	}
 
-    async setYAMLPropety(propName:string,propValue:string):Promise<void>{
-        let strat = this.yamlStrategies[propName];
-        if(strat.validate(propValue)){
-            await this.file.setYAMLProperty(propName, propValue);
-        }
-    }
+	getYAMLProperty(propName: string): string {
+		let prop = this.file.getYAMLProperty(propName);
+		return prop == null ? "" : prop;
+	}
 
-    get(propName:string):string{
-        if(propName===FileAsTask.PROJECT_FIELD){
-            return this.getProject();
-        }
-        if(propName==FileAsTask.TITLE_FIELD){
-            return this.getTitle();
-        }
-        return this.getYAMLProperty(propName);
-    }
+	async setYAMLProperty(propName: string, propValue: string) {
+		await this.file.setYAMLProperty(propName, propValue);
+	}
+
+
+	get(propName: string): string {
+		if (propName === FileAsTask.PROJECT_FIELD) {
+			return this.getProject();
+		}
+		if (propName == FileAsTask.TITLE_FIELD) {
+			return this.getTitle();
+		}
+		return this.getYAMLProperty(propName);
+	}
 }

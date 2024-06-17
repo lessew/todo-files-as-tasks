@@ -6,10 +6,10 @@ import { FATSettingTab } from 'src/Configuration/ui/FATSettingsTab';
 import { ObsidianFacade } from 'src/FileSystem/obsidian/ObsidianFacade';
 
 export default class FileAsTaskPlugin extends Plugin {
-	pluginSettings:PluginSettings;
-	codeBlocks:CodeBlock[] = [];
-	obsidianFacade:ObsidianFacade;
-	obsidianApp:App;
+	pluginSettings: PluginSettings;
+	codeBlocks: CodeBlock[] = [];
+	obsidianFacade: ObsidianFacade;
+	obsidianApp: App;
 
 	async onload() {
 		let jsonSettings = await this.loadData();
@@ -33,17 +33,17 @@ export default class FileAsTaskPlugin extends Plugin {
 
 	}
 
-    async reload():Promise<void>{
-        await this.delay(150);
-        for(let i=0;i<this.codeBlocks.length;i++){
-            await this.codeBlocks[i].reload();
-        }
-    }
+	async reload(): Promise<void> {
+		await this.delay(150);
+		for (let i = 0; i < this.codeBlocks.length; i++) {
+			await this.codeBlocks[i].reload();
+		}
+	}
 
-    delay(ms:number){
-        return new Promise( resolve => setTimeout(resolve, ms) );
-    }
-	
+	delay(ms: number) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
 	async saveSettings() {
 		await this.saveData(SettingsModel.deepCopy(this.pluginSettings));
 	}

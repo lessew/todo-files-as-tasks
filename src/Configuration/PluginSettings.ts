@@ -1,15 +1,14 @@
-import { PropertyFactory } from "src/FileAsTask/PropertyFactory";
-import { YAMLStrategy } from "src/FileAsTask/PropertyStrategies/YAMLStrategy";
+import { PropertySettings } from "src/Properties/PropertySettings";
 
-type SavedProp = {
-        propName:string,
-        defaultValue:string,
-        whitelist?:string[],
-        strategy:string
+export type SavedProp = {
+	propName: string,
+	defaultValue: string,
+	whitelist?: string[],
+	strategy: string
 }
 
-type SavedSettings = {
-    properties: SavedProp[]
+export type SavedSettings = {
+	properties: SavedProp[]
 }
 
 /**
@@ -18,55 +17,61 @@ type SavedSettings = {
  * 
  */
 export class PluginSettings {
-    
-    yamlPropertyStrategies:Map<string,string>; // corresponds to getType() method in yamlstrategies.
-    propertyDefaults:Map<string,string>;
 
-    constructor(){
-        this.yamlPropertyStrategies = new Map<string,string>();
-        this.propertyDefaults = new Map<string,string>();
-    }
+	propertySettings: Map<string, PropertySettings>;
 
-    addYAMLproperty(propName:string,defaultValue:string,strategy:string):PluginSettings{
-        this.yamlPropertyStrategies.set(propName,strategy);
-        this.propertyDefaults.set(propName,defaultValue);
-        return this;
-    }
+	constructor() {
+		this.propertySettings = new Map<string, PropertySettings>();
+	}
 
-    getYAMLStrategy(name:string):string{
-        let s = this.yamlPropertyStrategies.get(name);
-        if(s==undefined){
-            throw Error(`Setting does not exist ${name}`)
-        }
-        return s;
-    }
+	getPropertySettings(): Map<string, PropertySettings> {
+		return this.propertySettings;
+	}
 
-    toJSON():string{
-        let result:SavedProp[] = [];
+	addYAMLproperty(propName: string, strategy: PropertySettings): PluginSettings {
+		this.propertySettings.set(propName, strategy);
+		return this;
+	}
 
-        this.yamlPropertyStrategies.forEach((key,value) => {
-            let propSet:SavedProp = {
-                propName: key,
-                defaultValue: this.propertyDefaults.get(key)!,
-                strategy: value
-            }
-            result.push(propSet);
-        })
+	getPropertySetting(propName: string): PropertySettings {
+		let s = this.propertySettings.get(propName);
+		if (s == undefined) {
+			throw Error(`Setting does not exist ${propName}`)
+		}
+		return s;
+	}
 
-        return JSON.stringify({properties:result});
-    }
+	toJSON(): string {
+		let result: SavedProp[] = [];
+		/*
+				this.propertySettings.forEach((key, value) => {
+					let propSet: SavedProp = {
+						propName: key,
+						defaultValue: this.propertyDefaults.get(key)!,
+						strategy: value
+					}
+					result.push(propSet);
+				})
+		
+				return JSON.stringify({ properties: result });
+		*/
+		return "";
+	}
 
-    fromJSON(inputStr:string):void{
-        let input = JSON.parse(inputStr);
-        let properties = input.properties as SavedProp[];
-        properties.forEach((aProp) => {
-            this.addYAMLproperty(aProp.propName,aProp.defaultValue,aProp.strategy)
-        });
-    }
-
-    getDefault(propName:string):string{
-        return this.propertyDefaults.get(propName)!;
-    }
+	fromJSON(inputStr: string): void {
+		/*
+		let input = JSON.parse(inputStr);
+		let properties = input.properties as SavedProp[];
+		properties.forEach((aProp) => {
+			this.addYAMLproperty(aProp.propName, aProp.defaultValue, aProp.strategy)
+		});
+		*/
+	}
+	/*
+		getDefault(propName: string): string {
+			return this.propertyDefaults.get(propName)!;
+		}
+		*/
 }
 
 
