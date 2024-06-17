@@ -1,6 +1,4 @@
 import { PropertySettings } from "src/Properties/PropertySettings";
-import { Whitelist } from "src/FileAsTask/PropertyStrategies/Whitelist";
-import { YAMLStrategy } from "src/FileAsTask/PropertyStrategies/YAMLStrategy";
 
 export type SavedProp = {
 	propName: string,
