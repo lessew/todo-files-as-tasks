@@ -9,7 +9,7 @@ export class PathPropertyHelper {
 		this.defaultValue = allowed[defaultValue];
 	}
 
-	getFullPathFromNewBasename(newBasename: string, fullPath: string): string {
+	getPathWithNewBasename(newBasename: string, fullPath: string): string {
 		const replaceMe = this.getBasename(fullPath);
 		const result = fullPath.replace(replaceMe, newBasename);
 		return result;
@@ -29,10 +29,10 @@ export class PathPropertyHelper {
 		return fullPath.split("/").reverse()[0];
 	}
 
-	getFullPathFromNewDirectory(newDir: string, fullPath: string): string {
-		// => "path","path/to/workproject/this.md","to/newproject"  
-		const oldpath = this.getFolder(fullPath); // => to/workproject
-		const result = fullPath.replace(oldpath, newDir); // => path/to/newproject/this.md
+	getPathWithNewDirectory(currentPath: string, newDirectory: string): string {
+		// => "path","path/to/workproject/this.md","path/to/newproject"  
+		const currentDirectory = this.getDirectory(currentPath); // => to/workproject
+		const result = currentPath.replace(currentDirectory, newDirectory); // => path/to/newproject/this.md
 		return result;
 	}
 
@@ -44,7 +44,7 @@ export class PathPropertyHelper {
 		return this.allowedFolders;
 	}
 
-	getFolder(fullPath: string): string {
+	getDirectory(fullPath: string): string {
 		let f = this.getFilename(fullPath);
 		return fullPath.replace(f, "");
 	}

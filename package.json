@@ -13,7 +13,8 @@
 		"reset-settings": "cp src/test/deploy/data-backup.json vault/.obsidian/plugins/files-as-tasks/data.json",
 		"test": "jest",
 		"clear-test-cache": "jest --clearCache",
-		"test-changed": "jest -o"
+		"test-changed": "jest -o",
+		"test-properties": "jest tests/Properties/PathPropertyHelper.test.ts"
 	},
 	"keywords": [],
 	"author": "",
