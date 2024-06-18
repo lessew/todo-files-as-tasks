@@ -1,17 +1,17 @@
 import FileAsTaskPlugin from "main";
 import { App, Modal, Setting } from "obsidian";
 import { FileAsTask } from "src/FileAsTask/FileAsTask";
-import { PathPropertySettings } from "../PathPropertySettings";
+import { PathPropertyHelper } from "../PathPropertyHelper";
 import { PropertyView } from "../PropertyView";
 
 export class TitlePropertyView extends PropertyView {
 	plugin: FileAsTaskPlugin;
 	fat: FileAsTask;
-	pathPropertySettings: PathPropertySettings;
+	pathPropertyHelper: PathPropertyHelper;
 
-	constructor(pps: PathPropertySettings, fat: FileAsTask, plugin: FileAsTaskPlugin) {
+	constructor(pps: PathPropertyHelper, fat: FileAsTask, plugin: FileAsTaskPlugin) {
 		super();
-		this.pathPropertySettings = pps;
+		this.pathPropertyHelper = pps;
 		this.plugin = plugin;
 		this.fat = fat;
 	}
@@ -23,7 +23,7 @@ export class TitlePropertyView extends PropertyView {
 
 	async handleEvent(event: Event) {
 		const m: TitleModel = new TitleModel(this.plugin.obsidianApp, this.fat.getTitle(), async (result) => {
-			if (this.pathPropertySettings.validate(result)) {
+			if (this.pathPropertyHelper.validate(result)) {
 				await this.fat.setTitle(result);
 				await this.refreshUI();
 			}

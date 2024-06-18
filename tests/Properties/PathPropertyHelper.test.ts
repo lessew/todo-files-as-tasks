@@ -16,7 +16,6 @@ describe('PathPropertyHelper', () => {
 	});
 
 	test('getPathWithNewDirectory', () => {
-
 		expect(helper.getPathWithNewDirectory("path/to/workproject/this.md", "path/to/newproject/"))
 			.toBe("path/to/newproject/this.md")
 		expect(helper.getPathWithNewDirectory("path/to/workproject/.md", "path/to/newproject/"))
@@ -25,32 +24,14 @@ describe('PathPropertyHelper', () => {
 		expect(helper.getPathWithNewDirectory("path/to/workproject/.md", "newproject/"))
 			.toBe("newproject/.md")
 	});
+
+	test("getPathWithNewBase", () => {
+		expect(helper.getBasename("/path/to/workproject/this.md")).toBe("this")
+		expect(helper.getBasename("/path/to/workproject/this")).toBe("this")
+		expect(helper.getBasename("this")).toBe("this")
+		expect(helper.getBasename("/this")).toBe("this")
+		expect(helper.getBasename("")).toBe("")
+		expect(helper.getBasename(".")).toBe("")
+		expect(helper.getBasename("/")).toBe("")
+	});
 });
-	/*
-describe('getfullpathfromnewbasename', () => {
-	
-});
-	
-	
-describe('getbasename', () => {
-	
-});
-describe('getfilename', () => {
-	
-});
-describe('getfullpathfromnewdirectory', () => {
-	
-});
-	
-describe('setfolderlist', () => {
-	
-});
-	
-describe('getfolder', () => {
-	
-});
-	
-describe('validate', () => {
-	
-});
-*/

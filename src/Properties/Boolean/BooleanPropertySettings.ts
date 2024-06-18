@@ -7,9 +7,9 @@ export class BooleanPropertySettings extends PropertySettings {
 
 	constructor(wl: Whitelist, df: string) {
 		super();
-		this.validateInit(wl);
 		this.whitelist = wl;
 		this.defaultValue = df;
+		this.validateInit(wl);
 	}
 
 	validateInit(wl: Whitelist) {
@@ -34,14 +34,12 @@ export class BooleanPropertySettings extends PropertySettings {
 			return a[0];
 		}
 		else {
-			// TODO: Handle console.erro;
-			console.log("Error, value not recognized: " + currentValue)
-			return this.defaultValue;
+			throw new Error(`Error iin toggle, value not recognized ${currentValue}`)
 		}
 	}
 
 	validate(newVal: string): boolean {
-		return newVal in this.whitelist.toArray();
+		return this.whitelist.toArray().includes(newVal);
 	}
 	getType(): string {
 		return "boolean";

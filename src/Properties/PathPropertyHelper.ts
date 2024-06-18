@@ -1,17 +1,24 @@
 import { Whitelist } from "./Whitelist";
 
 export class PathPropertyHelper {
-	allowedFolders: Whitelist;
+	allowedDirectories: Whitelist;
 	defaultValue: string;
 
 	constructor(allowed: string[], defaultValue: number) {
-		this.allowedFolders = new Whitelist(allowed);
+		this.allowedDirectories = new Whitelist(allowed);
 		this.defaultValue = allowed[defaultValue];
 	}
 
 	getPathWithNewBasename(newBasename: string, fullPath: string): string {
 		const replaceMe = this.getBasename(fullPath);
 		const result = fullPath.replace(replaceMe, newBasename);
+		return result;
+	}
+
+	getPathWithNewDirectory(currentPath: string, newDirectory: string): string {
+		// => "path","path/to/workproject/this.md","path/to/newproject"  
+		const currentDirectory = this.getDirectory(currentPath); // => to/workproject
+		const result = currentPath.replace(currentDirectory, newDirectory); // => path/to/newproject/this.md
 		return result;
 	}
 
@@ -29,19 +36,13 @@ export class PathPropertyHelper {
 		return fullPath.split("/").reverse()[0];
 	}
 
-	getPathWithNewDirectory(currentPath: string, newDirectory: string): string {
-		// => "path","path/to/workproject/this.md","path/to/newproject"  
-		const currentDirectory = this.getDirectory(currentPath); // => to/workproject
-		const result = currentPath.replace(currentDirectory, newDirectory); // => path/to/newproject/this.md
-		return result;
+
+	setDirectorylist(folders: string[]): void {
+		this.allowedDirectories = new Whitelist(folders);
 	}
 
-	setFolderlist(folders: string[]): void {
-		this.allowedFolders = new Whitelist(folders);
-	}
-
-	getFolderlist(): Whitelist {
-		return this.allowedFolders;
+	getDirectorylist(): Whitelist {
+		return this.allowedDirectories;
 	}
 
 	getDirectory(fullPath: string): string {
@@ -50,7 +51,7 @@ export class PathPropertyHelper {
 	}
 
 	validate(newValue: string): boolean {
-		return newValue in this.allowedFolders.toArray();
+		return newValue in this.allowedDirectories.toArray();
 	}
 
 }

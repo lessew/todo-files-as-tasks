@@ -12,7 +12,7 @@ export class WhitelistPropertySettings extends PropertySettings {
 	}
 
 	validate(newValue: string): boolean {
-		return newValue in this.whitelist.toArray();
+		return this.whitelist.toArray().includes(newValue);
 	}
 
 	getWhitelist(): Whitelist {
