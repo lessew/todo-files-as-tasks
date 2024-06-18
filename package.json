@@ -14,7 +14,10 @@
 		"test": "jest",
 		"clear-test-cache": "jest --clearCache",
 		"test-changed": "jest -o",
-		"test-properties": "jest tests/Properties/PathPropertyHelper.test.ts"
+		"test-properties": "jest tests/Properties/*",
+		"test-filesystem": "jest tests/FileSystem/*",
+		"test-fileastask": "jest tests/FileAsTask/*",
+		"test-configuration": "jest tests/Configuration/*"
 	},
 	"keywords": [],
 	"author": "",
