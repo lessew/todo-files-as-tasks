@@ -14,7 +14,7 @@ export class FileAsTask {
 	}
 
 	getProject(): string {
-		return this.pathHelper.getFolder(this.file.fullPath);
+		return this.pathHelper.getDirectory(this.file.fullPath);
 	}
 
 	getLink(): string {
