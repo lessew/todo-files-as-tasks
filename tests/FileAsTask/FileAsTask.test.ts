@@ -1,52 +1,32 @@
-import { PluginSettings } from "../../src/Configuration/PluginSettings";
 import { FileAsTask } from "../../src/FileAsTask/FileAsTask";
-import { Whitelist } from "../../src/Properties/Whitelist";
-import { WhitelistYAMLPropertySettings } from "../../src/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
-import { MockFile } from "../../src/FileSystem/mock/MockFile";
+import { singleFileTree } from "../../src/Filesystem/mock/MockFileTree"
+import { File } from "../../src/Filesystem/File"
+import { MockIOFactory } from "../../src/Filesystem/mock/MockIOFactory"
+import { MockFilesystem } from "../../src/Filesystem/mock/MockFilesystem"
+import { PathPropertyHelper } from "../../src/Properties/PathPropertyHelper";
 
-describe('FileAsTask: constructor and getter', () => {
-    let file = new MockFile("/path","/path",{context:"Read"});
-    let settings = new PluginSettings().add(new WhitelistYAMLPropertySettings("context","Desk",new Whitelist(["Read","Desk"])))
+describe('FileAsTask', () => {
+	let file: File;
+	let pph: PathPropertyHelper
+	beforeEach(() => {
+		let fileTree = singleFileTree("note", "path/to/project/note.md", { context: "Read" });
+		let fs = new MockFilesystem(fileTree);
+		let io = new MockIOFactory(fs);
+		file = io.createFile("path/to/project/note.md")
+		pph = new PathPropertyHelper(["path/to/project", "path/to/anotherproject"], 0);
+	})
 
-    test('constructor and getter', () => {    
-        let fat = new FileAsTask(file,settings);
-        let context = fat.get("context");
-        expect(context).toBe("Read");
-    });
-
-});
-
-
-describe('FileAsTask: setter', () => {
-    let file = new MockFile("/path","/path",{context:"Read"});
-    let settings = new PluginSettings().add(new WhitelistYAMLPropertySettings("context","Desk",new Whitelist(["Read","Desk"])))
-
-    test('constructor and getter', async () => {    
-        let fat = new FileAsTask(file,settings);
-        await fat.set("context","Desk");
-        expect(file.yaml.context).toBe("Desk");
-    });
+	test('constructor and getter', () => {
+		let fat = new FileAsTask(file, pph);
+		expect(fat.get("context")).toBe("Read");
+		expect(fat.get("title")).toBe("note");
+		expect(fat.get("project")).toBe("path/to/project/")
+	});
 
 });
 
 
-describe('FileAsTask: is reserved field', () => {
- 
-    test('is reserved: expect true',  () => {    
-        let reserved1 = FileAsTask.PROJECT_FIELD;
-        let reserved2 = FileAsTask.TITLE_FIELD;
-        expect(FileAsTask.isReservedField(reserved1)).toBe(true);
-        expect (FileAsTask.isReservedField(reserved2)).toBe(true);
-    });
-    test('is reserved: expect false',  () => { 
-        let reserved1 = FileAsTask.PROJECT_FIELD.toUpperCase();;
-        let reserved2 = "shizznet";
-        expect(FileAsTask.isReservedField(reserved1)).toBe(false);
-        expect (FileAsTask.isReservedField(reserved2)).toBe(false);
-    });
 
 
-});
 
 
- 
