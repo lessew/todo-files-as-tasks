@@ -1,89 +1,90 @@
 import * as yaml from 'js-yaml'
+import { PropertySettings } from 'src/Properties/PropertySettings';
 import { Filter, FilterOperator } from '../FileAsTask/Filter';
 import { PluginSettings } from './PluginSettings';
 
 // TODO : use Obsidian YAML parser functions
-export class YAMLParser{
-    source:string;
-    yaml:unknown;
-    // TODO: prepend all with TOKEN_
-    static ACTION_LIST = "list";
-    static ACTION_CREATE_BUTTON = "create_button";
-    static ACTION_TEST = "test"
-    static EXCLUDE_TOKEN = "not ";
-    static TOKEN_ROOTPATH = "rootPath" as const;
+export class YAMLParser {
+	source: string;
+	yaml: unknown;
+	// TODO: prepend all with TOKEN_
+	static ACTION_LIST = "list";
+	static ACTION_CREATE_BUTTON = "create_button";
+	static ACTION_TEST = "test"
+	static EXCLUDE_TOKEN = "not ";
+	static TOKEN_ROOTPATH = "rootPath" as const;
 
-    loadSource(source:string):true | Error{
-        this.source = source;
-        try{
-            this.yaml = yaml.load(source);
-            return true;
-        }
-        catch(e){
-            return new Error(`Error: not valid YAML: ${e.message}`);
-        }
-    }
+	loadSource(source: string): true | Error {
+		this.source = source;
+		try {
+			this.yaml = yaml.load(source);
+			return true;
+		}
+		catch (e) {
+			return new Error(`Error: not valid YAML: ${e.message}`);
+		}
+	}
 
-    parseRootPath():string | Error{
-        try{
-            const rp:string = (this.yaml as{[YAMLParser.TOKEN_ROOTPATH]:string}).rootPath;
-            return rp;
-        }
-        catch(e){
-            return new Error("Could not parse rootpath: yaml variable not found")
-        }
-    }
+	parseRootPath(): string | Error {
+		try {
+			const rp: string = (this.yaml as { [YAMLParser.TOKEN_ROOTPATH]: string }).rootPath;
+			return rp;
+		}
+		catch (e) {
+			return new Error("Could not parse rootpath: yaml variable not found")
+		}
+	}
 
-    parseAction():string | Error{
-        if(this.source.indexOf(YAMLParser.ACTION_CREATE_BUTTON)>-1){
-            return YAMLParser.ACTION_CREATE_BUTTON;
-        }
-        else if(this.source.indexOf(YAMLParser.ACTION_LIST) > -1){
-            return YAMLParser.ACTION_LIST;
-        }
-        else if(this.source.indexOf(YAMLParser.ACTION_TEST) > -1){
-            return YAMLParser.ACTION_TEST;
-        }
-        else{
-            return new Error("Action not specified, add either 'list' or 'create_button'")
-        }
-    }
-   
-    parseFilters(settings:PluginSettings):Filter[] | Error{
-        let result:Filter[] = [];
-        let fail:Error;
+	parseAction(): string | Error {
+		if (this.source.indexOf(YAMLParser.ACTION_CREATE_BUTTON) > -1) {
+			return YAMLParser.ACTION_CREATE_BUTTON;
+		}
+		else if (this.source.indexOf(YAMLParser.ACTION_LIST) > -1) {
+			return YAMLParser.ACTION_LIST;
+		}
+		else if (this.source.indexOf(YAMLParser.ACTION_TEST) > -1) {
+			return YAMLParser.ACTION_TEST;
+		}
+		else {
+			return new Error("Action not specified, add either 'list' or 'create_button'")
+		}
+	}
 
-        let map = settings.getAsMap();
-        for(let key of Array.from( map.keys()) ) {
-            let aPropSetting = map.get(key)!;
-            const yaml = this.yaml as any;
-            if(aPropSetting.propName in yaml){
-                const filterValue:string = yaml[aPropSetting.propName];
-                let valop = this.parseOperator(filterValue);
-                const whitelist = aPropSetting.whitelist;
-                if((whitelist === undefined || whitelist.contains(valop.value))){
-                    let r:Filter = new Filter(aPropSetting.propName,valop.value,valop.operator);
-                    result.push(r);
-                }
-                else{
-                    return new Error(`${valop.value} is not set as an allowed value for ${aPropSetting.propName}`)
-                }
-            }
-        };        
-        return result;
-    }
 
-    parseOperator(val:string):{operator:FilterOperator,value:string}{
-        let operator = FilterOperator.include;
-        let resultValue = val;
-        if(val.startsWith(YAMLParser.EXCLUDE_TOKEN)){
-            operator = FilterOperator.exclude
-            resultValue = val.substring(YAMLParser.EXCLUDE_TOKEN.length,val.length).trim();
-        }
-        return {
-            operator:operator,
-            value:resultValue.trim()
-        }
-    }
+	parseFilters(settings: PluginSettings): Filter[] | Error {
+		let result: Filter[] = [];
+		let yaml = this.yaml as any;
+
+		let statusIsError = false;
+		let err = new Error("dummy");
+
+		settings.propertySettings.forEach((propSettings: PropertySettings, key: string) => {
+			if (!(key in yaml)) {
+				return;
+			}
+			let [operator, needle] = this.parseOperator(yaml[key]);
+
+			if (propSettings.validate(needle)) {
+				let f = new Filter(key, needle, operator);
+				result.push(f);
+			}
+			else {
+				err = new Error(`Value ${needle} is not allowed for property ${key}`)
+				statusIsError = true;
+			}
+		});
+		return !statusIsError ? result : err;
+	}
+
+	// val: 'not <value>' or '<value>'
+	parseOperator(val: string): [FilterOperator, string] {
+		let operator = FilterOperator.include;
+		let resultValue = val;
+		if (val.startsWith(YAMLParser.EXCLUDE_TOKEN)) {
+			operator = FilterOperator.exclude
+			resultValue = val.substring(YAMLParser.EXCLUDE_TOKEN.length, val.length).trim();
+		}
+		return [operator, resultValue.trim()]
+	}
 }
 

@@ -33,7 +33,6 @@ class MockFileAsTask extends FileAsTask {
 
 describe('FileAsTaskCollection', () => {
 	let collection: FileAsTaskCollection;
-	let tree: MockFileTree;
 
 	beforeEach(() => {
 		let files = [
