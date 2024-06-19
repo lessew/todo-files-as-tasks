@@ -1,21 +1,19 @@
-import { PropertySettings } from "src/Properties/PropertySettings";
+import { PropertySettings } from "../../src/Properties/PropertySettings";
+import { Whitelist } from "../../src/Properties/Whitelist";
+import { WhitelistPropertySettings } from "../../src/Properties/Whitelist/WhitelistPropertySettings";
+import { BooleanPropertySettings } from "../../src/Properties/Boolean/BooleanPropertySettings";
 
-export type SavedProp = {
-	propName: string,
+export type SavedSettingsDataType = {
+	properties: PropertyDataType[];
+};
+
+export type PropertyDataType = {
+	name: string,
+	type: string,
 	defaultValue: string,
-	whitelist?: string[],
-	strategy: string
+	whitelist?: string[]
 }
 
-export type SavedSettings = {
-	properties: SavedProp[]
-}
-
-/**
- * Include saveto and loadfrom to load/save to persistent obsidian storage
- * Defaultvalues are kept seperate from the strategies to keep them clean / functional / relatively stateless
- * 
- */
 export class PluginSettings {
 	propertySettings: Map<string, PropertySettings>;
 
@@ -27,8 +25,8 @@ export class PluginSettings {
 		return this.propertySettings;
 	}
 
-	addYAMLproperty(propName: string, strategy: PropertySettings): PluginSettings {
-		this.propertySettings.set(propName, strategy);
+	addYAMLproperty(propName: string, setting: PropertySettings): PluginSettings {
+		this.propertySettings.set(propName, setting);
 		return this;
 	}
 
@@ -40,37 +38,41 @@ export class PluginSettings {
 		return s;
 	}
 
-	toJSON(): string {
-		let result: SavedProp[] = [];
-		/*
-				this.propertySettings.forEach((key, value) => {
-					let propSet: SavedProp = {
-						propName: key,
-						defaultValue: this.propertyDefaults.get(key)!,
-						strategy: value
-					}
-					result.push(propSet);
-				})
-		
-				return JSON.stringify({ properties: result });
-		*/
-		return "";
+	load(fromData: any): void {
+		let parsedFrom = fromData as SavedSettingsDataType;
+
+		parsedFrom.properties.forEach(aprop => {
+			if (aprop.type == "whitelist") {
+				this.addYAMLproperty(
+					aprop.name,
+					new WhitelistPropertySettings(
+						new Whitelist(aprop.whitelist!),
+						aprop.defaultValue
+					)
+				)
+			}
+			else if (aprop.type == "boolean") {
+				this.addYAMLproperty(
+					aprop.name,
+					new BooleanPropertySettings(
+						new Whitelist(aprop.whitelist!),
+						aprop.defaultValue
+					)
+				)
+			}
+		});
 	}
 
-	fromJSON(inputStr: string): void {
-		/*
-		let input = JSON.parse(inputStr);
-		let properties = input.properties as SavedProp[];
-		properties.forEach((aProp) => {
-			this.addYAMLproperty(aProp.propName, aProp.defaultValue, aProp.strategy)
-		});
-		*/
+	save(): SavedSettingsDataType {
+		let dataProps: PropertyDataType[] = [];
+
+		this.propertySettings.forEach((propSetting, propName) => {
+			let apropData = propSetting.toData(propName);
+			dataProps.push(apropData);
+		})
+		return { properties: dataProps } as SavedSettingsDataType;
 	}
-	/*
-		getDefault(propName: string): string {
-			return this.propertyDefaults.get(propName)!;
-		}
-		*/
+
 }
 
 

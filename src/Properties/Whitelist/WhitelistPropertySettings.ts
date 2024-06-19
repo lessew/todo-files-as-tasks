@@ -1,5 +1,6 @@
 import { Whitelist } from "../Whitelist";
 import { PropertySettings } from "../PropertySettings";
+import { PropertyDataType } from "src/Configuration/PluginSettings";
 
 export class WhitelistPropertySettings extends PropertySettings {
 	private whitelist: Whitelist;
@@ -25,5 +26,14 @@ export class WhitelistPropertySettings extends PropertySettings {
 
 	getType(): string {
 		return "whitelist";
+	}
+
+	toData(propName: string): PropertyDataType {
+		return {
+			name: propName,
+			type: "whitelist",
+			defaultValue: this.defaultValue,
+			whitelist: this.whitelist.toArray()
+		}
 	}
 }

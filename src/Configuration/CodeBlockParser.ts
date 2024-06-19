@@ -4,7 +4,7 @@ import { Filter, FilterOperator } from '../FileAsTask/Filter';
 import { PluginSettings } from './PluginSettings';
 
 // TODO : use Obsidian YAML parser functions
-export class YAMLParser {
+export class CodeBlockParser {
 	source: string;
 	yaml: unknown;
 	// TODO: prepend all with TOKEN_
@@ -27,7 +27,7 @@ export class YAMLParser {
 
 	parseRootPath(): string | Error {
 		try {
-			const rp: string = (this.yaml as { [YAMLParser.TOKEN_ROOTPATH]: string }).rootPath;
+			const rp: string = (this.yaml as { [CodeBlockParser.TOKEN_ROOTPATH]: string }).rootPath;
 			return rp;
 		}
 		catch (e) {
@@ -36,14 +36,14 @@ export class YAMLParser {
 	}
 
 	parseAction(): string | Error {
-		if (this.source.indexOf(YAMLParser.ACTION_CREATE_BUTTON) > -1) {
-			return YAMLParser.ACTION_CREATE_BUTTON;
+		if (this.source.indexOf(CodeBlockParser.ACTION_CREATE_BUTTON) > -1) {
+			return CodeBlockParser.ACTION_CREATE_BUTTON;
 		}
-		else if (this.source.indexOf(YAMLParser.ACTION_LIST) > -1) {
-			return YAMLParser.ACTION_LIST;
+		else if (this.source.indexOf(CodeBlockParser.ACTION_LIST) > -1) {
+			return CodeBlockParser.ACTION_LIST;
 		}
-		else if (this.source.indexOf(YAMLParser.ACTION_TEST) > -1) {
-			return YAMLParser.ACTION_TEST;
+		else if (this.source.indexOf(CodeBlockParser.ACTION_TEST) > -1) {
+			return CodeBlockParser.ACTION_TEST;
 		}
 		else {
 			return new Error("Action not specified, add either 'list' or 'create_button'")
@@ -80,9 +80,9 @@ export class YAMLParser {
 	parseOperator(val: string): [FilterOperator, string] {
 		let operator = FilterOperator.include;
 		let resultValue = val;
-		if (val.startsWith(YAMLParser.EXCLUDE_TOKEN)) {
+		if (val.startsWith(CodeBlockParser.EXCLUDE_TOKEN)) {
 			operator = FilterOperator.exclude
-			resultValue = val.substring(YAMLParser.EXCLUDE_TOKEN.length, val.length).trim();
+			resultValue = val.substring(CodeBlockParser.EXCLUDE_TOKEN.length, val.length).trim();
 		}
 		return [operator, resultValue.trim()]
 	}

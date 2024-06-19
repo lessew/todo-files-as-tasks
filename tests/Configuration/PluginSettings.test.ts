@@ -1,29 +1,56 @@
-import { MockIOFactory } from "../../src/FileSystem/mock/MockIOFactory";
 import { PluginSettings } from "../../src/Configuration/PluginSettings";
-import { Whitelist } from "../../src/FileAsTask/PropertyStrategies/Whitelist";
-import { WhitelistYAMLPropertySettings } from "../../src/FileAsTask/Properties/WhitelistYAML/WhitelistYAMLPropertySettings";
-import { singleFileTree } from "../../src/FileSystem/mock/MockFileTree";
-import { MockFilesystem } from "../../src/FileSystem/mock/MockFilesystem";
-import { File } from "../../src/FileSystem/File";
+import { WhitelistPropertySettings } from "../../src/Properties/Whitelist/WhitelistPropertySettings";
+import { Whitelist } from "../../src/Properties/Whitelist";
 
 
 describe('Settings: create object)', () => {
-    let settings:PluginSettings;
-    let file:File; 
+	let settings: PluginSettings;
 
-    beforeEach(() => {
-        let tree = singleFileTree("file","path/to/file.md",{status:"Done",context:"Desk"})
-        let factory = new MockIOFactory(new MockFilesystem((tree)));
-        file = factory.createFile("path/to/file.md");
-        settings = new PluginSettings()
-            .add(new WhitelistYAMLPropertySettings("status", "Inbox", new Whitelist(["Inbox", "Done"])))
-            .add(new WhitelistYAMLPropertySettings("context", "Read", new Whitelist(["Read", "Desk"])));
-    });
+	beforeEach(() => {
+		settings = new PluginSettings()
+			.addYAMLproperty("status", new WhitelistPropertySettings(new Whitelist(["Inbox", "Done"]), "Inbox"))
+			.addYAMLproperty("context", new WhitelistPropertySettings(new Whitelist(["Read", "Desk"]), "Desk"));
+	});
 
-    test('Test get properties', () => {   
-      let properties = settings.getProperties(file);
-        expect(properties["status"].getValue()).toBe("Done");
-        expect(properties["context"].getValue()).toBe("Desk");
-    });
+	test('Test load', () => {
+		settings = new PluginSettings();
+		settings.load({
+			properties: [{
+				name: "status",
+				type: "whitelist",
+				whitelist: ["Inbox", "Done"],
+				defaultValue: "Inbox"
+			},
+			{
+				name: "flagged",
+				type: "boolean",
+				whitelist: ["yes", "no"],
+				defaultValue: "no"
+			}]
+		})
+
+		expect(settings.propertySettings.get("status")!.getType()).toBe("whitelist")
+		expect(settings.propertySettings.get("status")!.validate("Done")).toBe(true);
+		expect(settings.propertySettings.get("status")!.validate("---Done")).toBe(false);
+
+	});
+
+	test('Test save', () => {
+		let savedData = settings.save();
+		try {
+			let savedParsedData = savedData as {
+				properties: {
+					name: string,
+					type: string,
+					defaultValue: string,
+					whitelist?: string[]
+				}[]
+			};
+
+		}
+		catch (e) {
+			expect(true).toBe(false);
+		}
+	});
 });
 

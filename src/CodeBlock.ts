@@ -1,6 +1,6 @@
 import FileAsTaskPlugin from "main";
 import { Configuration } from "./Configuration/Configuration";
-import { YAMLParser } from "./Configuration/YAMLParser";
+import { CodeBlockParser } from "./Configuration/CodeBlockParser";
 import { CreateTaskButtonView } from "./MainUI/CreateTaskButtonView";
 import { TaskListView } from "./MainUI/TaskListView";
 import { TestView } from "./MainUI/TestView";
@@ -44,13 +44,13 @@ export class CodeBlock {
 		this.rootDirectory = iof.createDirectory(this.config.getRootPath());
 		this.config.loadDirectories(this.rootDirectory.getDirectories().map(dir => dir.fullPath));
 
-		if (this.config.getAction() == YAMLParser.ACTION_LIST) {
+		if (this.config.getAction() == CodeBlockParser.ACTION_LIST) {
 			this.displayActionList();
 		}
-		else if (this.config.getAction() == YAMLParser.ACTION_TEST) {
+		else if (this.config.getAction() == CodeBlockParser.ACTION_TEST) {
 			this.displayTest();
 		}
-		else if (this.config.getAction() == YAMLParser.ACTION_CREATE_BUTTON) {
+		else if (this.config.getAction() == CodeBlockParser.ACTION_CREATE_BUTTON) {
 			this.displayCreateTaskButton();
 		}
 

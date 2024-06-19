@@ -1,3 +1,4 @@
+import { PropertyDataType } from "src/Configuration/PluginSettings";
 import { PropertySettings } from "../PropertySettings";
 import { Whitelist } from "../Whitelist";
 
@@ -41,8 +42,18 @@ export class BooleanPropertySettings extends PropertySettings {
 	validate(newVal: string): boolean {
 		return this.whitelist.toArray().includes(newVal);
 	}
+
 	getType(): string {
 		return "boolean";
 
+	}
+
+	toData(propName: string): PropertyDataType {
+		return {
+			name: propName,
+			type: "boolean",
+			defaultValue: this.defaultValue,
+			whitelist: this.whitelist.toArray()
+		}
 	}
 }

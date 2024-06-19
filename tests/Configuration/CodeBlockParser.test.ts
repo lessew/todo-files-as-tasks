@@ -3,7 +3,7 @@ import { Filter, FilterOperator } from "../../src/FileAsTask/Filter";
 import { BooleanPropertySettings } from "../../src/Properties/Boolean/BooleanPropertySettings";
 import { Whitelist } from "../../src/Properties/Whitelist";
 import { WhitelistPropertySettings } from "../../src/Properties/Whitelist/WhitelistPropertySettings";
-import { YAMLParser } from "../../src/Configuration/YAMLParser";
+import { CodeBlockParser } from "../../src/Configuration/CodeBlockParser";
 
 const loadSourceCorrect = `
 rootPath: .
@@ -35,10 +35,10 @@ action: list
 status: Done`;
 
 describe('CodeBlockSettings', () => {
-	let cbs: YAMLParser;
+	let cbs: CodeBlockParser;
 
 	beforeEach(() => {
-		cbs = new YAMLParser();
+		cbs = new CodeBlockParser();
 	});
 
 	test('loadSource happy path', () => {
@@ -66,7 +66,7 @@ describe('CodeBlockSettings', () => {
 	test('loadAction happy path', () => {
 		cbs.loadSource(loadAction);
 		let action = cbs.parseAction();
-		expect(action).toBe(YAMLParser.ACTION_LIST);
+		expect(action).toBe(CodeBlockParser.ACTION_LIST);
 	})
 
 	test('parserOperator', () => {
