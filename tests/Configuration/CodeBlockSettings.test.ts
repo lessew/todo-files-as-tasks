@@ -69,6 +69,17 @@ describe('CodeBlockSettings', () => {
 		expect(action).toBe(YAMLParser.ACTION_LIST);
 	})
 
+	test('parserOperator', () => {
+		let [op, needle] = cbs.parseOperator("not Done");
+		expect(op).toBe(FilterOperator.exclude);
+		expect(needle).toBe("Done")
+
+		let [op2, needle2] = cbs.parseOperator("Done");
+		expect(op2).toBe(FilterOperator.include);
+		expect(needle2).toBe("Done")
+
+	});
+
 	test('loadFiters happy path', () => {
 		cbs.loadSource(loadFilters);
 		let settings = new PluginSettings()
