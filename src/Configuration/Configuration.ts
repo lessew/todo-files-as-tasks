@@ -1,16 +1,15 @@
-import { PathPropertyHelper } from "src/Properties/PathPropertyHelper";
-import { PropertySettings } from "src/Properties/PropertySettings";
+import { PathPropertyHelper } from "../../src/Properties/PathPropertyHelper";
+import { PropertySettings } from "../../src/Properties/PropertySettings";
 import { Filter } from "../FileAsTask/Filter";
 import { PluginSettings } from "./PluginSettings";
-import { YAMLParser } from "./YAMLParser";
+import { CodeBlockParser } from "./CodeBlockParser";
 
 export class Configuration {
-	private parser: YAMLParser;
+	private parser: CodeBlockParser;
 	private settings: PluginSettings;
 	private state: Error | true;
 	private rootPath: string;
 	private filters: Filter[];
-	private folders: string[];
 	private action: string;
 	private pathPropertyHelper: PathPropertyHelper;
 
@@ -22,16 +21,15 @@ export class Configuration {
 		if (this.stateIsError()) {
 			return;
 		}
-		this.parser = new YAMLParser();
+		this.parser = new CodeBlockParser();
 		this.state = this.parser.loadSource(source);
 	}
 
-	loadDirectories(folders: string[]): void {
+	loadPathPropertyHelper(directories: string[]): void {
 		if (this.stateIsError()) {
 			return;
 		}
-		this.folders = folders;
-		this.trySetDirectoriesInSettings();
+		this.pathPropertyHelper = new PathPropertyHelper(directories, 0);
 	}
 
 	loadSettings(settings: PluginSettings): void {
@@ -39,20 +37,12 @@ export class Configuration {
 			return;
 		}
 		this.settings = settings;
-		this.trySetDirectoriesInSettings();
 	}
 
 	getYAMLStrategies(): Map<string, PropertySettings> {
 		return this.settings.propertySettings;
 	}
 
-	trySetDirectoriesInSettings(): void {
-		if (this.folders != undefined && this.settings != undefined) {
-			let projectSettings = this.settings.getYAMLStrategy(FileAsTask.PROJECT_FIELD);
-			projectSettings.whitelist = new Whitelist(this.folders);
-			projectSettings.defaultValue = this.folders[0];
-		}
-	}
 
 	loadRootPath(): void {
 		if (this.stateIsError()) {

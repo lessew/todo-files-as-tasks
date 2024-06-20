@@ -42,7 +42,7 @@ export class CodeBlock {
 		let iof = new ObsidianIOFactory(this.plugin);
 
 		this.rootDirectory = iof.createDirectory(this.config.getRootPath());
-		this.config.loadDirectories(this.rootDirectory.getDirectories().map(dir => dir.fullPath));
+		this.config.loadPathPropertyHelper(this.rootDirectory.getDirectories().map(dir => dir.fullPath));
 
 		if (this.config.getAction() == CodeBlockParser.ACTION_LIST) {
 			this.displayActionList();

@@ -38,7 +38,7 @@ export class PluginSettings {
 		return s;
 	}
 
-	load(fromData: any): void {
+	load(fromData: any): PluginSettings {
 		let parsedFrom = fromData as SavedSettingsDataType;
 
 		parsedFrom.properties.forEach(aprop => {
@@ -61,6 +61,7 @@ export class PluginSettings {
 				)
 			}
 		});
+		return this;
 	}
 
 	save(): SavedSettingsDataType {
