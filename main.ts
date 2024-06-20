@@ -13,6 +13,7 @@ export default class FileAsTaskPlugin extends Plugin {
 	async onload() {
 		let jsonSettings = await this.loadData();
 		let ps = new PluginSettings().load(jsonSettings);
+		// TODO: load default data when nothing found
 		this.pluginSettings = ps;
 		this.obsidianFacade = new ObsidianFacade(this.app);
 		this.obsidianApp = this.app;
@@ -45,7 +46,7 @@ export default class FileAsTaskPlugin extends Plugin {
 	}
 
 	async saveSettings() {
-		await this.saveData(SettingsModel.deepCopy(this.pluginSettings));
+		await this.saveData(this.pluginSettings.save());
 	}
 }
 
