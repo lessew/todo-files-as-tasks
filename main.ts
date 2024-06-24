@@ -1,6 +1,6 @@
 import { App, Plugin } from 'obsidian';
 import { CodeBlock } from 'src/CodeBlock';
-import { PluginSettings } from 'src/Configuration/PluginSettings';
+import { DEFAULT_PLUGIN_SETTINGS, PluginSettings } from 'src/Configuration/PluginSettings';
 import { FATSettingTab } from 'src/Configuration/ui/FATSettingsTab';
 import { ObsidianFacade } from 'src/Filesystem/obsidian/ObsidianFacade';
 
@@ -13,9 +13,14 @@ export default class FileAsTaskPlugin extends Plugin {
 
 	async onload() {
 		let jsonSettings = await this.loadData();
-		let ps = new PluginSettings().load(jsonSettings);
-		// TODO: load default data when nothing found
-		this.pluginSettings = ps;
+		let settings = new PluginSettings();
+		let loadResult = settings.load(jsonSettings);
+		if (loadResult instanceof Error) {
+			console.error(loadResult);
+			console.log("Default settings loaded instead");
+			settings.load(DEFAULT_PLUGIN_SETTINGS);
+		}
+		this.pluginSettings = settings;
 		this.obsidianFacade = new ObsidianFacade(this.app);
 		this.obsidianApp = this.app;
 

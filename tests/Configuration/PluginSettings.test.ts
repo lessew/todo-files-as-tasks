@@ -34,6 +34,17 @@ describe('Settings: create object)', () => {
 
 	});
 
+	test("load: incorrect values: no input", () => {
+		settings = new PluginSettings();
+		let fromData;
+		let result = settings.load(fromData);
+		expect(result instanceof Error).toBe((true));
+
+		fromData = null;
+		result = settings.load(fromData);
+		expect(result instanceof Error).toBe((true));
+
+	});
 	test("load: incorrect values: empty input", () => {
 		settings = new PluginSettings();
 		let result = settings.load({});

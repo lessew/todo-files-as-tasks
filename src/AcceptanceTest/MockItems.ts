@@ -1,5 +1,4 @@
-import { DEFAULT_SETTINGS } from "src/Configuration/DefaultPluginSettings";
-import { PluginSettings } from "src/Configuration/PluginSettings";
+import { DEFAULT_PLUGIN_SETTINGS, PluginSettings } from "src/Configuration/PluginSettings";
 
 /**
  * Make sure thise files exists in the vault
@@ -71,7 +70,7 @@ rootPath: ${ROOT}
 action: list`;
 
 
-const settings = DEFAULT_SETTINGS;
+const settings = DEFAULT_PLUGIN_SETTINGS;
 
 export function getRoot(): string {
 	return ROOT;

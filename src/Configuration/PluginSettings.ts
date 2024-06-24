@@ -64,6 +64,12 @@ export class PluginSettings {
 
 	private validateLoad(fromData: any): fromData is SavedSettingsDataType {
 		let result = true;
+		if (typeof fromData === 'undefined') {
+			return false;
+		}
+		if (fromData == null) {
+			return false;
+		}
 		if (!('properties' in fromData)) {
 			return false;
 		}
