@@ -1,22 +1,21 @@
 import { Logger } from "../Logger";
 import { getExpectedFiles, getExpectedFolders, getSettings, getYamlListAllFiles, ExpectedFileType } from "../MockItems";
 import FileAsTaskPlugin from "main";
-import { PluginSettings } from "src/Configuration/PluginSettings";
-import { CodeBlockParser } from "src/Configuration/CodeBlockParser";
+import { FileAsTaskCollection } from "src/FileAsTask/FileAsTaskCollection";
+import { CodeBlock } from "src/CodeBlock";
+import { FileAsTask } from "src/FileAsTask/FileAsTask";
+import { FileAsTaskFactory } from "src/FileAsTask/FileAsTaskFactory";
 
 export class VaultHasExpectedFilesTest {
 	logger: Logger;
-	yaml: string;
-	settings: PluginSettings;
 	rootPath: string;
-	codeBlockParser: CodeBlockParser;
-	//rootFolder:FolderModel;
-	//folders:FolderModel[];
+	codeBLock: CodeBlock;
 	result: boolean;
-	//fileAsTaskCollection:FileAsTaskCollection;
 	plugin: FileAsTaskPlugin;
+	fileAsTaskCollection: FileAsTaskCollection;
 
-	constructor(logger: Logger, plugin: FileAsTaskPlugin) {
+	constructor(logger: Logger, plugin: FileAsTaskPlugin, codeBlock: CodeBlock) {
+		this.codeBLock = codeBlock;
 		this.logger = logger;
 		this.plugin = plugin;
 		return this;
@@ -24,9 +23,13 @@ export class VaultHasExpectedFilesTest {
 
 	async test(): Promise<VaultHasExpectedFilesTest> {
 		this.logger.heading("Testing VaultHasExpectedFiles")
-		this.arrange();
-		await this.act();
-		this.assert();
+
+		let fats: FileAsTask[] = FileAsTaskFactory.loadFilesAsTask(this.codeBLock.rootDirectory, this.codeBLock.config.getPathPropertyHelper())
+		this.fileAsTaskCollection = new FileAsTaskCollection(fats);
+		this.assertDirectories();
+		this.assertFilesAsTask();
+
+
 		if (this.result != false) {
 			this.result = true;
 		}
@@ -37,144 +40,80 @@ export class VaultHasExpectedFilesTest {
 		return this;
 	}
 
-	arrange() {
-		this.logger.log("Setting up");
-		this.yaml = getYamlListAllFiles();
-		this.settings = getSettings();
-		this.logger.success("Completed setting up")
-	}
-
-	async act(): Promise<void> {
-		this.logger.log("Loading yaml and folders")
-		this.actLoadYAML();
-		await this.actLoadFolders();
-		this.actLoadFileCollection();
-	}
-
-	assert() {
-		this.logger.log("Asserting");
-		this.assertFolderList()
-		this.assertFileList();
-	}
-
-	actLoadYAML() {
-		this.codeBlockParser = new CodeBlockParser();
-		const isLoaded = this.codeBlockParser.loadSource(this.yaml);
-		if (isLoaded instanceof Error) {
-			this.logger.error("Parsing YAML failed");
-			this.setFailure();
-			return;
-		}
-		const root = this.codeBlockParser.parseRootPath();
-		if (root instanceof Error) {
-			this.logger.error("Parsing root failed")
-			this.setFailure();
-			return;
-		}
-		this.rootPath = root;
-		this.logger.success("Successfully loaded YAML")
-	}
-
-	async actLoadFolders(): Promise<void> {
-		return;
-		/*
-		this.rootFolder = ObsidianFolder.create(this.rootPath,this.rootPath,this.plugin);
-		let folders = this.rootFolder.getFolderPaths();
-		let whitelist = new Whitelist(folders);
-		let pSettings =this.settings.get(FileAsTask.PROJECT_FIELD) as ToplevelFolderPropertySettings;
-		pSettings.setProjects(whitelist);
-		pSettings.setDefaultValue(folders[0]);
-		this.logger.success("Successfully loaded folders")
-		*/
-	}
-
-	actLoadFileCollection() {
-		/*
-		let fc = new FileAsTaskCollection(this.rootFolder,this.settings);
-		this.fileAsTaskCollection = fc;
-		this.logger.success("Successfully loaded fileastaskcollection")
-		*/
-	}
-
-
-	assertFolderList() {
-		/*
+	assertDirectories() {
+		this.logger.em(("Asserting directories are found"));
 		const expectedFolders = getExpectedFolders();
-		const actualFolders = this.rootFolder.getFolderPaths();
-		if(expectedFolders.length == actualFolders.length){
+		const actualFolders = this.codeBLock.rootDirectory.getDirectories().map(dir => dir.fullPath);
+		if (expectedFolders.length == actualFolders.length) {
 			this.logger.success("Right amount of folders found")
 		}
-		else{
+		else {
 			this.logger.error(`Found ${actualFolders.length} folders but expected ${expectedFolders.length}`)
 			this.setFailure();
-			return;
 		}
 
-		for(let i=0;i<expectedFolders.length;i++){
-			if(!actualFolders.contains(expectedFolders[i])){
+
+		for (let i = 0; i < expectedFolders.length; i++) {
+			if (!actualFolders.contains(expectedFolders[i])) {
 				this.logger.error(`${expectedFolders[i]} does not seem to exists as folder`);
 				this.logger.error(`Folder found are: ${actualFolders.join(",")}`);
 				this.setFailure();
 				return;
 			}
-			else{
+			else {
 				this.logger.success(`Folder '${expectedFolders[i]}' was found`)
 			}
 		}
-		*/
 	}
 
-	assertFileList() {
-		/*
+	assertFilesAsTask(): void {
+
+		this.logger.em(("Asserting files as files as tasks are found"));
 		const expectedFiles = getExpectedFiles();
 		const tasks = this.fileAsTaskCollection.get();
-		if(tasks.length != expectedFiles.length){
+		if (tasks.length != expectedFiles.length) {
 			this.logger.error(`Expected ${expectedFiles.length} files but found ${tasks.length}`);
 			this.setFailure();
 			return;
 		}
-		else{
-			this.logger.success(`Right amount of files found: ${tasks.length}`)
+		else {
+			this.logger.success(`Found right amount of files: ${expectedFiles.length}`);
 		}
-		for(let i=0;i<expectedFiles.length;i++){
+
+		for (let i = 0; i < expectedFiles.length; i++) {
 			const expectedNeedle = expectedFiles[i];
 			const foundNeedle = tasks.find((aTask) => {
-				return aTask.file.path == expectedNeedle.path;
+				return aTask.file.fullPath == expectedNeedle.path;
 			})
-			this.logger.log(`--Testing file ${expectedNeedle.title}`);
-			if(foundNeedle==undefined){
+			//this.logger.log(`--Testing file ${expectedNeedle.title}`);
+			if (foundNeedle == undefined) {
 				this.logger.error(`Could not find file ${expectedFiles[i].path}`)
 				this.result = false;
 				return;
 			}
 			this.logger.success(`Found file ${expectedFiles[i].path}`)
-		   
-			this.assertSingleTask(expectedNeedle,foundNeedle);
 
+			this.assertSingleTask(expectedNeedle, foundNeedle);
 		}
-		*/
 	}
-
 	assertSingleTask(expectedFile: ExpectedFileType, actualTask: FileAsTask) {
-		/*
-		this.assertSinglePropertyValue("project",actualTask,expectedFile.project);
-		this.assertSinglePropertyValue("title",actualTask,expectedFile.title);
-		this.assertSinglePropertyValue("status",actualTask,expectedFile.yaml.status!);
-		this.assertSinglePropertyValue("context",actualTask,expectedFile.yaml.context!);
-		this.assertSinglePropertyValue("starred",actualTask,expectedFile.yaml.starred!);
-		*/
+		this.logger.em("Asserting file: " + expectedFile.title);
+		this.assertSinglePropertyValue("project", actualTask, expectedFile.project);
+		this.assertSinglePropertyValue("title", actualTask, expectedFile.title);
+		this.assertSinglePropertyValue("status", actualTask, expectedFile.yaml.status!);
+		this.assertSinglePropertyValue("context", actualTask, expectedFile.yaml.context!);
+		this.assertSinglePropertyValue("starred", actualTask, expectedFile.yaml.starred!);
+
 	}
 
 	assertSinglePropertyValue(propName: string, aTask: FileAsTask, expectedValue: string) {
-		/*
-		if(aTask.get(propName) != expectedValue){
+		if (aTask.get(propName) != expectedValue) {
 			this.setFailure();
-			this.logger.error(`Looked in property ${propName} for value ${expectedValue} but found ${aTask.get(propName)} in file ${aTask.file.path}`)
+			this.logger.error(`file[${propName}]!=[${expectedValue}] --- Found [${aTask.get(propName)}] `)
 		}
-		else{
-			this.logger.success(`Found value ${expectedValue} in ${propName}`);
+		else {
+			this.logger.success(`file[${propName}]==[${expectedValue}] `);
 		}
-		*/
 	}
 
 	setFailure(): void {

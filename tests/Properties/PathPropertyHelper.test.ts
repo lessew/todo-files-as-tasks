@@ -12,16 +12,16 @@ describe('PathPropertyHelper', () => {
 	});
 
 	test('getDirectory', () => {
-		expect(helper.getDirectory("path/to/something.md")).toBe("path/to/");
+		expect(helper.getDirectory("path/to/something.md")).toBe("path/to");
 	});
 
 	test('getPathWithNewDirectory', () => {
-		expect(helper.getPathWithNewDirectory("path/to/workproject/this.md", "path/to/newproject/"))
+		expect(helper.getPathWithNewDirectory("path/to/workproject/this.md", "path/to/newproject"))
 			.toBe("path/to/newproject/this.md")
-		expect(helper.getPathWithNewDirectory("path/to/workproject/.md", "path/to/newproject/"))
+		expect(helper.getPathWithNewDirectory("path/to/workproject/.md", "path/to/newproject"))
 			.toBe("path/to/newproject/.md")
-		expect(helper.getPathWithNewDirectory("root/home/task.md", "finance/")).toBe("finance/task.md")
-		expect(helper.getPathWithNewDirectory("path/to/workproject/.md", "newproject/"))
+		expect(helper.getPathWithNewDirectory("root/home/task.md", "finance")).toBe("finance/task.md")
+		expect(helper.getPathWithNewDirectory("path/to/workproject/.md", "newproject"))
 			.toBe("newproject/.md")
 	});
 

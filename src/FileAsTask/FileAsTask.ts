@@ -56,6 +56,10 @@ export class FileAsTask {
 		if (propName == FileAsTask.TITLE_FIELD) {
 			return this.getTitle();
 		}
+		let val = this.getYAMLProperty(propName);
+		if (typeof val === 'undefined') {
+			return "";
+		}
 		return this.getYAMLProperty(propName);
 	}
 }

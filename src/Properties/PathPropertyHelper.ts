@@ -46,7 +46,7 @@ export class PathPropertyHelper {
 	}
 
 	getDirectory(fullPath: string): string {
-		let f = this.getFilename(fullPath);
+		let f = "/" + this.getFilename(fullPath);
 		return fullPath.replace(f, "");
 	}
 

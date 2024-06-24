@@ -41,7 +41,15 @@ export class CodeBlock {
 		}
 		let iof = new ObsidianIOFactory(this.plugin);
 
-		this.rootDirectory = iof.createDirectory(this.config.getRootPath());
+		let cdResult = iof.createDirectory(this.config.getRootPath());
+		if (cdResult instanceof Error) {
+			this.displayUserError(cdResult);
+			return;
+		}
+		else {
+			this.rootDirectory = cdResult;
+		}
+
 		this.config.loadPathPropertyHelper(this.rootDirectory.getDirectories().map(dir => dir.fullPath));
 
 		if (this.config.getAction() == CodeBlockParser.ACTION_LIST) {
@@ -93,7 +101,7 @@ export class CodeBlock {
 	}
 
 	displayTest(): void {
-		const testView = new TestView(this.plugin, this.el);
+		const testView = new TestView(this.plugin, this, this.el);
 		testView.main();
 	}
 }
