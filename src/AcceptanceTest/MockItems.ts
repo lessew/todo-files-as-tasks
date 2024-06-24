@@ -1,4 +1,4 @@
-import { DEFAULT_PLUGIN_SETTINGS, PluginSettings } from "src/Configuration/PluginSettings";
+import { PluginSettings } from "src/Configuration/PluginSettings";
 
 /**
  * Make sure thise files exists in the vault
@@ -71,14 +71,14 @@ rootPath: ${ROOT}
 action: list`;
 
 
-const settings = DEFAULT_PLUGIN_SETTINGS;
-
 export function getRoot(): string {
 	return ROOT;
 }
 
 export function getSettings(): PluginSettings {
-	return settings;
+	let s = new PluginSettings();
+	s.loadDefaultSettings();
+	return s;
 }
 export function getYamlListAllFiles(): string {
 	return yaml;

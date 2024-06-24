@@ -36,7 +36,7 @@ export class TestView {
 	}
 
 	async testTaskOperations(): Promise<void> {
-		const test = await new TaskOperationsTest(this.logger, this.plugin).test();
+		const test = await new TaskOperationsTest(this.logger, this.plugin, this.codeBlock).test();
 	}
 
 	async testCreateTask(): Promise<void> {

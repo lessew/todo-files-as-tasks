@@ -22,7 +22,7 @@ export class FileAsTask {
 	}
 
 	async setProject(newProject: string): Promise<void> {
-		let newPath = this.pathHelper.getFullPathFromNewDirectory(newProject, this.file.fullPath);
+		let newPath = this.pathHelper.getPathWithNewDirectory(newProject, this.file.fullPath);
 		if (this.pathHelper.validate(newPath)) {
 			await this.file.move(newPath)
 		} {
@@ -35,7 +35,7 @@ export class FileAsTask {
 	}
 
 	async setTitle(basename: string): Promise<void> {
-		let newPath = this.pathHelper.getFullPathFromNewBasename(basename, this.file.fullPath);
+		let newPath = this.pathHelper.getPathWithNewBasename(basename, this.file.fullPath);
 		await this.file.move(newPath);
 	}
 

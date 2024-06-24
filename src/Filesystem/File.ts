@@ -1,4 +1,4 @@
-import { Filesystem } from "./FileSystem";
+import { Filesystem } from "./Filesystem";
 
 export class File {
 	fs: Filesystem;
@@ -12,8 +12,9 @@ export class File {
 		}
 	}
 
-	move(newPath: string): Promise<void> {
-		return this.fs.move(this.fullPath, newPath);
+	async move(newPath: string): Promise<void> {
+		await this.fs.move(this.fullPath, newPath);
+		this.fullPath = newPath;
 	}
 
 	getYAMLProperty(name: string): string | null {

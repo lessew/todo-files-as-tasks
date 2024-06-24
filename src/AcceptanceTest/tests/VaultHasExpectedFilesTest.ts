@@ -1,5 +1,5 @@
 import { Logger } from "../Logger";
-import { getExpectedFiles, getExpectedFolders, getSettings, getYamlListAllFiles, ExpectedFileType } from "../MockItems";
+import { getExpectedFiles, getExpectedFolders, ExpectedFileType } from "../MockItems";
 import FileAsTaskPlugin from "main";
 import { FileAsTaskCollection } from "src/FileAsTask/FileAsTaskCollection";
 import { CodeBlock } from "src/CodeBlock";
