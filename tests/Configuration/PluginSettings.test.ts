@@ -35,11 +35,38 @@ describe('Settings: create object)', () => {
 
 	});
 
-	test("load: incorrect values", () => {
+	test("load: incorrect values: empty input", () => {
 		settings = new PluginSettings();
 		let result = settings.load({});
 		expect(result instanceof Error).toBe((true));
 	});
+
+	test("load: incorrect values: empty properties input", () => {
+		settings = new PluginSettings();
+		let result = settings.load({
+			properties: {}
+		});
+		expect(result instanceof Error).toBe(true);
+
+	});
+	test("load: incorrect values: one incorrect properties instance input", () => {
+		settings = new PluginSettings();
+		let result = settings.load({
+			properties: [
+				{
+					type: "this"
+				}
+			]
+		})
+		expect(result instanceof Error).toBe((true));
+	});
+
+	/*	test("load: default values", () => {
+			settings = new PluginSettings();
+			let result = settings.load(DEFAULT_PLUGIN_SETTINGS);
+			expect(result instanceof Error).toBe((false));
+		});
+	  */
 
 	test('Test save', () => {
 		let savedData = settings.save();

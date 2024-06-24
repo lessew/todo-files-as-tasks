@@ -14,6 +14,30 @@ export type PropertyDataType = {
 	whitelist?: string[]
 }
 
+const DEFAULT_PLUGIN_SETTINGS: SavedSettingsDataType = {
+	properties: [
+		{
+			name: "starred",
+			type: "boolean",
+			defaultValue: "⭐",
+			whitelist: ["✰", "⭐"]
+		},
+		{
+			name: "context",
+			type: "whitelist",
+			defaultValue: "None",
+			whitelist: ["Desk", "Deep", "Phone", "Read", "Errands", "None"]
+		},
+		{
+			name: "status",
+			type: "whitelist",
+			defaultValue: "Inbox",
+			whitelist: ["Inbox", "Next", "Deferred", "Waiting", "Done"]
+		}
+	] as PropertyDataType[]
+}
+
+
 export class PluginSettings {
 	propertySettings: Map<string, PropertySettings>;
 
@@ -38,9 +62,35 @@ export class PluginSettings {
 		return s;
 	}
 
-	load(fromData: any): PluginSettings | Error {
+	private validateLoad(fromData: any): fromData is SavedSettingsDataType {
+		let result = true;
 		if (!('properties' in fromData)) {
-			return new Error(`Data is not loaded as it does not contain properties field`)
+			return false;
+		}
+		if (!Array.isArray(fromData.properties)) {
+			return false;
+		}
+		fromData.properties.forEach((aprop: any) => {
+			if (!('type' in aprop)) {
+				result = false;
+				return;
+			}
+			if (!('name' in aprop)) {
+				result = false;
+				return;
+			}
+			if (!('defaultValue' in aprop)) {
+				result = false;
+				return;
+			}
+			return result;
+		});
+		return result;
+	}
+
+	load(fromData: any): PluginSettings | Error {
+		if (!(this.validateLoad(fromData))) {
+			return new Error(`Trying to load data that is not compatible`)
 		}
 
 		let parsedFrom = fromData as SavedSettingsDataType;
