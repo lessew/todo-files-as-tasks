@@ -62,6 +62,10 @@ export class PluginSettings {
 		return s;
 	}
 
+	loadDefaultSettings(): PluginSettings | Error {
+		return this.load(DEFAULT_PLUGIN_SETTINGS);
+	}
+
 	private validateLoad(fromData: any): fromData is SavedSettingsDataType {
 		let result = true;
 		if (typeof fromData === 'undefined') {
