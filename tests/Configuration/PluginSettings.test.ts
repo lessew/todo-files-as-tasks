@@ -1,7 +1,6 @@
-import { PluginSettings } from "../../src/Configuration/PluginSettings";
+import { DEFAULT_PLUGIN_SETTINGS, PluginSettings } from "../../src/Configuration/PluginSettings";
 import { WhitelistPropertySettings } from "../../src/Properties/Whitelist/WhitelistPropertySettings";
 import { Whitelist } from "../../src/Properties/Whitelist";
-
 
 describe('Settings: create object)', () => {
 	let settings: PluginSettings;
@@ -61,12 +60,12 @@ describe('Settings: create object)', () => {
 		expect(result instanceof Error).toBe((true));
 	});
 
-	/*	test("load: default values", () => {
-			settings = new PluginSettings();
-			let result = settings.load(DEFAULT_PLUGIN_SETTINGS);
-			expect(result instanceof Error).toBe((false));
-		});
-	  */
+	test("load: default values", () => {
+		settings = new PluginSettings();
+		let result = settings.load(DEFAULT_PLUGIN_SETTINGS);
+		expect(result instanceof Error).toBe((false));
+	});
+
 
 	test('Test save', () => {
 		let savedData = settings.save();

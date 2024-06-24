@@ -14,7 +14,7 @@ export type PropertyDataType = {
 	whitelist?: string[]
 }
 
-const DEFAULT_PLUGIN_SETTINGS: SavedSettingsDataType = {
+export const DEFAULT_PLUGIN_SETTINGS: SavedSettingsDataType = {
 	properties: [
 		{
 			name: "starred",
