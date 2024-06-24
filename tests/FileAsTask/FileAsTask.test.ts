@@ -20,7 +20,7 @@ describe('FileAsTask', () => {
 		let fat = new FileAsTask(file, pph);
 		expect(fat.get("context")).toBe("Read");
 		expect(fat.get("title")).toBe("note");
-		expect(fat.get("project")).toBe("path/to/project/")
+		expect(fat.get("project")).toBe("path/to/project")
 	});
 
 });
