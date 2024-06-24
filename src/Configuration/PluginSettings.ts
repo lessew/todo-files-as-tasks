@@ -1,7 +1,7 @@
-import { PropertySettings } from "../../src/Properties/PropertySettings";
+import { BooleanPropertySettings } from "../../src/Properties/Boolean/BooleanPropertySettings";
 import { Whitelist } from "../../src/Properties/Whitelist";
 import { WhitelistPropertySettings } from "../../src/Properties/Whitelist/WhitelistPropertySettings";
-import { BooleanPropertySettings } from "../../src/Properties/Boolean/BooleanPropertySettings";
+import { PropertySettings } from "../../src/Properties/PropertySettings";
 
 export type SavedSettingsDataType = {
 	properties: PropertyDataType[];
@@ -38,7 +38,11 @@ export class PluginSettings {
 		return s;
 	}
 
-	load(fromData: any): PluginSettings {
+	load(fromData: any): PluginSettings | Error {
+		if (!('properties' in fromData)) {
+			return new Error(`Data is not loaded as it does not contain properties field`)
+		}
+
 		let parsedFrom = fromData as SavedSettingsDataType;
 
 		parsedFrom.properties.forEach(aprop => {

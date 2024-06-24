@@ -10,6 +10,7 @@ export default class FileAsTaskPlugin extends Plugin {
 	obsidianApp: App;
 	pluginSettings: any;
 
+
 	async onload() {
 		let jsonSettings = await this.loadData();
 		let ps = new PluginSettings().load(jsonSettings);

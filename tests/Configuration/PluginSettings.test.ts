@@ -35,6 +35,12 @@ describe('Settings: create object)', () => {
 
 	});
 
+	test("load: incorrect values", () => {
+		settings = new PluginSettings();
+		let result = settings.load({});
+		expect(result instanceof Error).toBe((true));
+	});
+
 	test('Test save', () => {
 		let savedData = settings.save();
 		try {

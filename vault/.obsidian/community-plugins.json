@@ -1,5 +1,5 @@
 [
   "sample-plugin",
-  "hot-reload",
-  "files-as-tasks"
+  "files-as-tasks",
+  "hot-reload"
 ]
