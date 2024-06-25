@@ -1,6 +1,6 @@
 import { CachedMetadata, TFile, TFolder } from "obsidian";
 import FileAsTaskPlugin from "main";
-import { Filesystem } from "../Filesystem";
+import { Filesystem } from "../FileSystem";
 
 export class ObsidianFilesystem implements Filesystem {
 	plugin: FileAsTaskPlugin;
@@ -23,6 +23,10 @@ export class ObsidianFilesystem implements Filesystem {
 		else {
 			throw new Error(`Path is not a folder ${path}`);
 		}
+	}
+
+	async touch(fullPath: string): Promise<void> {
+		await this.plugin.obsidianApp.vault.create(fullPath, "");
 	}
 
 	pathIsDirectory(path: string): boolean {

@@ -1,4 +1,4 @@
-import { Filesystem } from "./Filesystem";
+import { Filesystem } from "./FileSystem";
 
 export class File {
 	fs: Filesystem;
@@ -23,6 +23,15 @@ export class File {
 
 	async setYAMLProperty(name: string, value: string): Promise<void> {
 		return this.fs.setYAMLProperty(this.fullPath, name, value);
+	}
+
+	static async createEmptyFile(fullPath: string, fs: Filesystem, delay: (ms: number) => void): Promise<File> {
+		await fs.touch(fullPath);
+		delay(150);
+		//await new Promise(resolve => setTimeout(resolve, 150));
+		let f = new File(fullPath, fs);
+		return f;
+
 	}
 
 }

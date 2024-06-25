@@ -40,7 +40,7 @@ export class TestView {
 	}
 
 	async testCreateTask(): Promise<void> {
-		const test = await new CreateTaskTest(this.logger, this.plugin).test();
+		const test = await new CreateTaskTest(this.logger, this.plugin, this.codeBlock).test();
 	}
 
 }

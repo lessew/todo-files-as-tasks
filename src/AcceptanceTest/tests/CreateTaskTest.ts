@@ -1,92 +1,107 @@
 import FileAsTaskPlugin from "main";
 import { Logger } from "../Logger";
+import { PluginSettings } from "src/Configuration/PluginSettings";
 import { FileAsTask } from "src/FileAsTask/FileAsTask";
-import { getRoot} from "../MockItems";
+import { getRoot } from "../MockItems";
 import { CachedMetadata } from "obsidian";
+import { ObsidianFilesystem } from "src/Filesystem/obsidian/ObsidianFilesystem";
+import { File } from "src/Filesystem/File";
+import { CodeBlock } from "src/CodeBlock";
 
-export {}
+export class CreateTaskTest {
+	logger: Logger;
+	plugin: FileAsTaskPlugin;
+	result: boolean;
+	codeBlock: CodeBlock;
 
-export class CreateTaskTest{
-    logger: Logger;
-    plugin: FileAsTaskPlugin;
-    result: boolean; 
+	constructor(logger: Logger, plugin: FileAsTaskPlugin, codeBlock: CodeBlock) {
+		this.logger = logger;
+		this.codeBlock = codeBlock;
+		this.plugin = plugin;
+		this.result = true;
+		return this;
+	}
 
-    constructor(logger:Logger,plugin:FileAsTaskPlugin){
-        this.logger = logger;
-        this.plugin = plugin;
-        this.result = true;
-        return this;
-    }
+	async test(): Promise<void> {
+		this.logger.heading("Testing creation of a task");
+		let directory = "todo-home/Finance";
+		let basename = "New Finance Created Task";
+		let path = directory + "/" + basename + ".md";
 
-    async test():Promise<void>{
-        this.logger.heading("Testing creation of a task");
-        let root = getRoot();
-        let project = "Finance";
-        let basename = "New Finance Created Task";
-        let status = "Inbox";
-        let context = "Desk"
-        let path = project + "/" + basename + ".md";
-        let fullPath = root + "/" + path;
+		let fs = new ObsidianFilesystem(this.plugin);
+		let file = await File.createEmptyFile(path, fs, this.plugin.delay);
+		let fat = new FileAsTask(file, this.codeBlock.config.getPathPropertyHelper());
+		fat.setYAMLProperty("context", "Desk");
+		fat.setYAMLProperty("status", "Inbox");
+		fat.setYAMLProperty("starred", "⭐");
+		console.log(fat);
+		console.log(file);
+		this.assertEquals(directory, fat.getProject());
+		this.assertEquals(basename, fat.getTitle());
+		this.plugin.delay(150);
+		let tf = this.plugin.obsidianFacade.getTFile(path);
+		let meta = this.plugin.obsidianFacade.getMeta(tf);
+		this.assertEqualsMeta("Desk", meta, "context");
+		this.assertEqualsMeta("Inbox", meta, "status");
 
-        let data = {
-            [FileAsTask.PROJECT_FIELD] : project,
-            [FileAsTask.TITLE_FIELD]: basename,
-            "status":status,
-            "context":context
-        }
+		console.log(fat.getYAMLProperty("context"));
+		console.log(fat.getYAMLProperty("status"));
+		console.log(fat.getTitle());
+		console.log(fat.getProject());
+		this.deleteFile(path)
+	}
 
-        //await ObsidianFileAsTaskModel.persist(root,data,this.plugin)
-        await this.plugin.delay(300);
-        
-        const file = this.plugin.obsidianFacade.getTFile(fullPath);
-        this.logger.success(`File found on disk: ${file.path}`);
-        const meta = this.plugin.obsidianFacade.getMeta(file);
-        this.assertEqualsMeta(context,meta,"context");
-        this.assertEqualsMeta(status,meta,"status");
+	assertEquals(expected: string, actual: string) {
+		if (expected == actual) {
+			this.logger.success(`${expected} found in fileastask`)
+		}
+		else {
+			this.logger.error(`${expected} epected but found ${actual}`)
+		}
+	}
 
-        try{
-            await this.plugin.obsidianApp.vault.delete(file)
-        }
-        catch(e){}
-        
-        await this.plugin.delay(300);
-        try{
-            const file = this.plugin.obsidianFacade.getTFile(fullPath);
-            this.logger.error("Removing file failed: it was still found on disk");
-        }
-        catch(e){
-            this.logger.success("searching for file threw an error, means it was propertly removed");
-        }
-        
-    }
+	assertEqualsMeta(expected: string, meta: CachedMetadata, property: string) {
+		try {
+			const actualValue = meta.frontmatter![property];
+			if (actualValue == expected) {
+				this.logger.success(`Found ${actualValue} in YAML`)
+			}
+			else {
+				this.logger.error(`FAIL: did not find ${expected} but ${actualValue} instead in ${property}`)
+			}
+		}
+		catch (e) {
+			this.logger.error(`FAIL: threw Error. Tried to find ${expected} in ${property}`)
+			this.setFailure();
+		}
+	}
 
-    assertEqualsMeta(expected:string,meta:CachedMetadata,property:string){
-        try{
-            const actualValue = meta.frontmatter![property];
-            if (actualValue == expected) {
-                this.logger.success(`Found ${actualValue} in YAML`)
-            }
-            else {
-                this.logger.error(`FAIL: did not find ${expected} but ${actualValue} instead in ${property}`)
-            }
-        }
-        catch(e){
-            this.logger.error(`FAIL: threw Error. Tried to find ${expected} in ${property}`)
-            this.setFailure();
-        }
-    }
+	async deleteFile(fullPath: string): Promise<void> {
+		try {
+			await this.plugin.obsidianApp.vault.delete(fullPath)
+		}
+		catch (e) { }
+
+		this.plugin.delay(300);
+		try {
+			const file = this.plugin.obsidianFacade.getTFile(fullPath);
+			this.logger.error("Removing file failed: it was still found on disk");
+		}
+		catch (e) {
+			this.logger.success("searching for file threw an error, means it was propertly removed");
+		}
+	}
+
+	setFailure(): void {
+		this.result = false;
+	}
+
+	setSuccess(): void {
+		this.result = true;
+	}
 
 
-    setFailure():void{
-        this.result = false;
-    }
-
-    setSuccess():void{
-        this.result = true;
-    }
-
-
-    isSuccess():boolean{
-        return (this.result === true);
-    }
+	isSuccess(): boolean {
+		return (this.result === true);
+	}
 }
