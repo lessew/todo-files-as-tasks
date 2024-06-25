@@ -64,8 +64,6 @@ export class PathPropertyHelper {
 
 	isValidDirectory(path: string): boolean {
 		return this.allowedDirectories.toArray().includes(path);
-		//if (path in this.allowedDirectories.toArray()) { return true };
-		//console.log(path); return false;
 	}
 
 }

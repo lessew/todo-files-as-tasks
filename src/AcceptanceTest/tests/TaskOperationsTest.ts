@@ -1,7 +1,6 @@
 import { Logger } from "../Logger";
 import { ExpectedFileType, getExpectedHolidayBillFile, getSettings } from "../MockItems";
 import FileAsTaskPlugin from "main";
-import { PluginSettings } from "src/Configuration/PluginSettings";
 import { CodeBlock } from "src/CodeBlock";
 import { FileAsTask } from "src/FileAsTask/FileAsTask";
 import { File } from "src/Filesystem/File";
@@ -25,11 +24,11 @@ export class TaskOperationsTest {
 	async test(): Promise<TaskOperationsTest> {
 		this.logger.heading("Testing TaskOperations")
 		this.arrange();
-		await this.actAssertTitleChange();
+		await this.testTitleChange();
 		await this.plugin.delay(150);
-		await this.actAssertProjectChange();
-		//await this.plugin.delay(150);
-		//await this.actAssertYAMLPropertiesChange();
+		await this.testProjectChange();
+		await this.plugin.delay(150);
+		await this.testYAMLPropertiesChange();
 
 		return this;
 	}
@@ -42,7 +41,7 @@ export class TaskOperationsTest {
 		this.fatUnderTest = fat;
 	}
 
-	async actAssertTitleChange(): Promise<void> {
+	async testTitleChange(): Promise<void> {
 		//let originalPath = this.actualHolidayBillFileModel.path;
 		let newPath = "todo-home/Finance/newValue.md";
 		let originalPath = this.expectedFileUnderTest.path;
@@ -58,7 +57,7 @@ export class TaskOperationsTest {
 		await this.assertFileExistsWithDelay(originalPath);
 	}
 
-	async actAssertProjectChange(): Promise<void> {
+	async testProjectChange(): Promise<void> {
 		if (!this.isRunning()) { return; }
 		let originalPath = "todo-home/Finance/Pay holiday bill.md";
 		let newPath = "todo-home/Groceries/Pay holiday bill.md";
@@ -72,53 +71,40 @@ export class TaskOperationsTest {
 		await this.assertFileExistsWithDelay(originalPath);
 	}
 
-	async actAssertYAMLPropertiesChange() {
-		return;
-		/*
-		if(!this.isRunning()) {return;}
+	async testYAMLPropertiesChange() {
+		if (!this.isRunning()) { return; }
 
-		this.logger.log("---Test: changing yaml properties---")
-		await this.actualHolidayBillTask.set("context", "Desk");
-		await this.actualHolidayBillTask.set("status", "Inbox");
-		await this.actualHolidayBillTask.set("starred", "✰");
-		this.logger.log("Asserting if values have properly changed");
-		await this.assertSingleYAMLPropertyWithDelay(this.expectedHolidayBillTask.path,"starred", "✰");
-		await this.assertSingleYAMLPropertyWithDelay(this.expectedHolidayBillTask.path,"status", "Inbox");
-		await this.assertSingleYAMLPropertyWithDelay(this.expectedHolidayBillTask.path,"context", "Desk");
+		this.logger.em("\n context");
+		await this.fatUnderTest.setYAMLProperty("context", "Desk");
+		await this.assertSingleYAMLPropertyWithDelay(this.fatUnderTest.file.fullPath, "context", "Desk");
+		await this.fatUnderTest.setYAMLProperty("context", this.expectedFileUnderTest.yaml.context!);
+		await this.assertSingleYAMLPropertyWithDelay(this.fatUnderTest.file.fullPath, "context", this.expectedFileUnderTest.yaml.context!);
 
-		// tear down
-		this.logger.log("Putting back to original values");
-		await this.actualHolidayBillTask.set("context", this.expectedHolidayBillTask.yaml.context!);
-		await this.actualHolidayBillTask.set("status", this.expectedHolidayBillTask.yaml.status!);
-		await this.actualHolidayBillTask.set("starred", this.expectedHolidayBillTask.yaml.starred!);
-		this.logger.log("Asserting if reverting to original values has succeeded")
-		await this.assertSingleYAMLPropertyWithDelay(this.expectedHolidayBillTask.path,"starred",this.expectedHolidayBillTask.yaml.starred!);
-		await this.assertSingleYAMLPropertyWithDelay(this.expectedHolidayBillTask.path,"status", this.expectedHolidayBillTask.yaml.status!);
-		await this.assertSingleYAMLPropertyWithDelay(this.expectedHolidayBillTask.path,"context", this.expectedHolidayBillTask.yaml.context!);
-		*/
+		this.logger.em("starred");
+		await this.fatUnderTest.setYAMLProperty("starred", "✰");
+		await this.assertSingleYAMLPropertyWithDelay(this.fatUnderTest.file.fullPath, "starred", "✰");
+		await this.fatUnderTest.setYAMLProperty("starred", this.expectedFileUnderTest.yaml.starred!);
+		await this.assertSingleYAMLPropertyWithDelay(this.fatUnderTest.file.fullPath, "starred", this.expectedFileUnderTest.yaml.starred!);
 	}
 
 	async assertSingleYAMLPropertyWithDelay(path: string, name: string, expectedValue: string): Promise<void> {
-		return;
-		/*
 		await this.plugin.delay(150);
 		const file = this.plugin.obsidianFacade.getTFile(path);
 		const meta = this.plugin.obsidianFacade.getMeta(file);
 
-		try{
+		try {
 			const actualvalue = meta.frontmatter![name];
-			if(actualvalue==expectedValue){
+			if (actualvalue == expectedValue) {
 				this.logger.success(`Found ${actualvalue} in ${name}`)
 			}
-			else{
+			else {
 				this.logger.error(`Did not find '${expectedValue}' but found '${actualvalue}' instead`)
 			}
 		}
-		catch(e){
+		catch (e) {
 			this.logger.error(`Trying to access the YAML looking for ${name} threw an exception`);
 			console.error(e);
 		}
-		*/
 	}
 
 	async assertFileExistsWithDelay(fileID: string): Promise<void> {
