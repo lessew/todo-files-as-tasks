@@ -50,8 +50,22 @@ export class PathPropertyHelper {
 		return fullPath.replace(f, "");
 	}
 
-	validate(newValue: string): boolean {
-		return newValue in this.allowedDirectories.toArray();
+	isValidPath(newPath: string): boolean {
+		let dir = this.getDirectory(newPath);
+		let filename = this.getFilename(newPath);
+		return (this.isValidFilename(filename) && this.isValidDirectory(dir))
+	}
+
+	isValidFilename(filename: string): boolean {
+		let regexp = /^[\w\-. ]+$/;
+		return regexp.test(filename);
+
+	}
+
+	isValidDirectory(path: string): boolean {
+		return this.allowedDirectories.toArray().includes(path);
+		//if (path in this.allowedDirectories.toArray()) { return true };
+		//console.log(path); return false;
 	}
 
 }

@@ -27,7 +27,7 @@ export class TaskOperationsTest {
 		this.arrange();
 		await this.actAssertTitleChange();
 		await this.plugin.delay(150);
-		//await this.actAssertProjectChange();
+		await this.actAssertProjectChange();
 		//await this.plugin.delay(150);
 		//await this.actAssertYAMLPropertiesChange();
 
@@ -47,31 +47,29 @@ export class TaskOperationsTest {
 		let newPath = "todo-home/Finance/newValue.md";
 		let originalPath = this.expectedFileUnderTest.path;
 
-		this.logger.log(`Title from [${originalPath}] to [${newPath}]`)
+		this.logger.em(`Test changing title from [${originalPath}] to [${newPath}]`);
+
 		await (this.fatUnderTest).setTitle("newValue");
 		await this.assertFileExistsWithDelay(newPath);
 
 		await this.plugin.delay(150); // prepare for teardown
-		this.logger.log(`Title back to [${originalPath}]`);
+		this.logger.log(`Put title back to original`);
 		await (this.fatUnderTest).setTitle(this.expectedFileUnderTest.title);
 		await this.assertFileExistsWithDelay(originalPath);
 	}
 
 	async actAssertProjectChange(): Promise<void> {
-		return;
-		/*
-		if(!this.isRunning()){ return;}
+		if (!this.isRunning()) { return; }
 		let originalPath = "todo-home/Finance/Pay holiday bill.md";
 		let newPath = "todo-home/Groceries/Pay holiday bill.md";
 
-		this.logger.log(`---Test: changing project from Finance to Groceries---`);
-		await this.actualHolidayBillTask.set(FileAsTask.PROJECT_FIELD, "Groceries");
+		this.logger.em(`Change project from [Finance] to [Groceries]`);
+		await this.fatUnderTest.setProject("todo-home/Groceries");
 		await this.assertFileExistsWithDelay(newPath);
 		await this.plugin.delay(150); // prep for teardown
-		this.logger.log("Moving back to original folder");
-		await this.actualHolidayBillTask.set(FileAsTask.PROJECT_FIELD, this.expectedHolidayBillTask.project);
+		this.logger.log("Move back to [Groceries]");
+		await this.fatUnderTest.setProject(this.expectedFileUnderTest.project);
 		await this.assertFileExistsWithDelay(originalPath);
-		*/
 	}
 
 	async actAssertYAMLPropertiesChange() {

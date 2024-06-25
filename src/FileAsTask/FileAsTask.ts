@@ -22,7 +22,7 @@ export class FileAsTask {
 	}
 
 	async setProject(newProject: string): Promise<void> {
-		let newPath = this.pathHelper.getPathWithNewDirectory(newProject, this.file.fullPath);
+		let newPath = this.pathHelper.getPathWithNewDirectory(this.file.fullPath, newProject);
 		if (this.pathHelper.validate(newPath)) {
 			await this.file.move(newPath)
 		} {
