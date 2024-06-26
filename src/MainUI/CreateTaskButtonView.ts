@@ -52,7 +52,6 @@ export class CreateTaskModal extends Modal {
 		})
 		this.result = result;
 		this.pph = pph;
-		//this.onSubmit = onSubmit;
 		this.settings = settings;
 		this.plugin = plugin;
 	}
@@ -152,7 +151,7 @@ export class CreateTaskModal extends Modal {
 					.setCta()
 					.onClick(() => {
 						this.close();
-						this.onSubmit(this.result);
+						this.onSubmit();
 					}));
 	}
 
