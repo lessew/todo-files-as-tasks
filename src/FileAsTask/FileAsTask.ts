@@ -1,4 +1,4 @@
-import { File } from "src/Filesystem/File";
+import { File } from "src/FileSystem/File";
 import { PathPropertyHelper } from "src/Properties/PathPropertyHelper";
 
 export class FileAsTask {

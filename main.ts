@@ -2,7 +2,7 @@ import { App, Plugin } from 'obsidian';
 import { CodeBlock } from 'src/CodeBlock';
 import { PluginSettings } from 'src/Configuration/PluginSettings';
 import { FATSettingTab } from 'src/Configuration/ui/FATSettingsTab';
-import { ObsidianFacade } from 'src/Filesystem/obsidian/ObsidianFacade';
+import { ObsidianFacade } from 'src/FileSystem/Obsidian/ObsidianFacade';
 
 export default class FileAsTaskPlugin extends Plugin {
 	codeBlocks: CodeBlock[] = [];

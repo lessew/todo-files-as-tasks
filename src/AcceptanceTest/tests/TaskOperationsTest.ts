@@ -3,8 +3,8 @@ import { ExpectedFileType, getExpectedHolidayBillFile, getSettings } from "../Mo
 import FileAsTaskPlugin from "main";
 import { CodeBlock } from "src/CodeBlock";
 import { FileAsTask } from "src/FileAsTask/FileAsTask";
-import { File } from "src/Filesystem/File";
-import { ObsidianFileSystem } from "src/Filesystem/obsidian/ObsidianFileSystem";
+import { File } from "src/FileSystem/File";
+import { ObsidianFileSystem } from "src/FileSystem/Obsidian/ObsidianFileSystem";
 
 export class TaskOperationsTest {
 	logger: Logger

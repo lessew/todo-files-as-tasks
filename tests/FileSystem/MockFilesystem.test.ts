@@ -1,7 +1,7 @@
 import { MockFileTree } from "../../src/FileSystem/Mock/MockFileTree";
 import { MockFileSystem } from "../../src/FileSystem/Mock/MockFileSystem";
 
-describe('MockFilesystem test', () => {
+describe('MockFileSystem test', () => {
 	let data: MockFileTree = {
 		directories: {
 			"root": ["root/this", "root/that", "root/noyamlprop.md", "root/hasyamlprop.md"],

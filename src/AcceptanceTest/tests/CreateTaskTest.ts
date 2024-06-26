@@ -2,9 +2,9 @@ import FileAsTaskPlugin from "main";
 import { Logger } from "../Logger";
 import { FileAsTask } from "src/FileAsTask/FileAsTask";
 import { CachedMetadata } from "obsidian";
-import { File } from "src/Filesystem/File";
+import { File } from "src/FileSystem/File";
 import { CodeBlock } from "src/CodeBlock";
-import { ObsidianFileSystem } from "src/Filesystem/obsidian/ObsidianFileSystem";
+import { ObsidianFileSystem } from "src/FileSystem/Obsidian/ObsidianFileSystem";
 
 export class CreateTaskTest {
 	logger: Logger;

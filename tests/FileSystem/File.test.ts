@@ -1,4 +1,4 @@
-import { MockFileSystem } from "../../src/FileSystem/Mock/MockFilesystem";
+import { MockFileSystem } from "../../src/FileSystem/Mock/MockFileSystem";
 import { MockFileTree } from "../../src/FileSystem/Mock/MockFileTree";
 import { MockIOFactory } from "../../src/FileSystem/Mock/MockIOFactory";
 import { singleFileTree } from "../../src/FileSystem/Mock/MockFileTree";
