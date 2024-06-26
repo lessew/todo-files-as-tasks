@@ -1,5 +1,6 @@
-import { Filesystem } from "../Filesystem";
 import { MockFileTree } from "./MockFileTree";
+import { FileSystem } from "../FileSystem";
+
 
 export class MockFileSystem implements FileSystem {
 	tree: MockFileTree;

@@ -1,14 +1,14 @@
 import { File } from "./File";
-import { Filesystem } from "./Filesystem";
+import { FileSystem } from "./FileSystem";
 import { IOFactory } from "./IOFactory";
 
 export class Directory {
 	children: (File | Directory)[];
-	fs: Filesystem;
+	fs: FileSystem;
 	factory: IOFactory;
 	fullPath: string;
 
-	constructor(fullPath: string, factory: IOFactory, fs: Filesystem) {
+	constructor(fullPath: string, factory: IOFactory, fs: FileSystem) {
 		this.factory = factory;
 		this.fs = fs;
 		this.fullPath = fullPath;

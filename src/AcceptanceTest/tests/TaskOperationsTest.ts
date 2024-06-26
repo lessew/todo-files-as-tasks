@@ -4,7 +4,7 @@ import FileAsTaskPlugin from "main";
 import { CodeBlock } from "src/CodeBlock";
 import { FileAsTask } from "src/FileAsTask/FileAsTask";
 import { File } from "src/Filesystem/File";
-import { ObsidianFileSystem } from "src/Filesystem/obsidian/ObsidianFilesystem";
+import { ObsidianFileSystem } from "src/Filesystem/obsidian/ObsidianFileSystem";
 
 export class TaskOperationsTest {
 	logger: Logger

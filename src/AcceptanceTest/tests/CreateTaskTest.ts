@@ -1,12 +1,10 @@
 import FileAsTaskPlugin from "main";
 import { Logger } from "../Logger";
-import { PluginSettings } from "src/Configuration/PluginSettings";
 import { FileAsTask } from "src/FileAsTask/FileAsTask";
-import { getRoot } from "../MockItems";
 import { CachedMetadata } from "obsidian";
-import { ObsidianFileSystem } from "src/Filesystem/obsidian/ObsidianFilesystem";
 import { File } from "src/Filesystem/File";
 import { CodeBlock } from "src/CodeBlock";
+import { ObsidianFileSystem } from "src/Filesystem/obsidian/ObsidianFileSystem";
 
 export class CreateTaskTest {
 	logger: Logger;

@@ -2,7 +2,7 @@ import FileAsTaskPlugin from "main";
 import { Directory } from "../Directory";
 import { File } from "../File";
 import { IOFactory } from "../IOFactory";
-import { ObsidianFileSystem } from "./ObsidianFilesystem";
+import { ObsidianFileSystem } from "./ObsidianFileSystem";
 
 export class ObsidianIOFactory extends IOFactory {
 	plugin: FileAsTaskPlugin;

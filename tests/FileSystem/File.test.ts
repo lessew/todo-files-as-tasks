@@ -1,7 +1,7 @@
-import { MockFileSystem } from "../../src/Filesystem/mock/MockFilesystem";
-import { MockFileTree } from "../../src/Filesystem/mock/MockFileTree";
-import { MockIOFactory } from "../../src/Filesystem/mock/MockIOFactory";
-import { singleFileTree } from "../../src/Filesystem/mock/MockFileTree";
+import { MockFileSystem } from "../../src/FileSystem/Mock/MockFilesystem";
+import { MockFileTree } from "../../src/FileSystem/Mock/MockFileTree";
+import { MockIOFactory } from "../../src/FileSystem/Mock/MockIOFactory";
+import { singleFileTree } from "../../src/FileSystem/Mock/MockFileTree";
 
 
 describe("File constructor", () => {

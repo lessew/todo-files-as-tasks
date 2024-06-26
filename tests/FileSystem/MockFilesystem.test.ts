@@ -1,5 +1,5 @@
-import { MockFileTree } from "../../src/Filesystem/mock/MockFileTree";
-import { MockFileSystem } from "../../src/Filesystem/mock/MockFilesystem";
+import { MockFileTree } from "../../src/FileSystem/Mock/MockFileTree";
+import { MockFileSystem } from "../../src/FileSystem/Mock/MockFileSystem";
 
 describe('MockFilesystem test', () => {
 	let data: MockFileTree = {

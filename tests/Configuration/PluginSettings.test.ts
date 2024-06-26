@@ -1,4 +1,4 @@
-import { DEFAULT_PLUGIN_SETTINGS, PluginSettings } from "../../src/Configuration/PluginSettings";
+import { PluginSettings } from "../../src/Configuration/PluginSettings";
 import { WhitelistPropertySettings } from "../../src/Properties/Whitelist/WhitelistPropertySettings";
 import { Whitelist } from "../../src/Properties/Whitelist";
 

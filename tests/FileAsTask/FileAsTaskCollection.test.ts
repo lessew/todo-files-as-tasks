@@ -1,14 +1,8 @@
 import { FileAsTaskCollection } from "../../src/FileAsTask/FileAsTaskCollection";
-import { Directory } from "src/Filesystem/Directory";
-import { MockFileSystem } from "src/Filesystem/mock/MockFilesystem";
-import { MockFileTree } from "../../src/Filesystem/mock/MockFileTree";
-import { MockIOFactory } from "src/Filesystem/mock/MockIOFactory";
 import { PathPropertyHelper } from "../../src/Properties/PathPropertyHelper";
-import { PluginSettings } from "../../src/Configuration/PluginSettings";
 import { Filter, FilterOperator } from "../../src/FileAsTask/Filter";
-import { Whitelist } from "../../src/Properties/Whitelist";
 import { FileAsTask } from "../../src/FileAsTask/FileAsTask"
-import { DummyFile } from "../../src/Filesystem/mock/Dummy";
+import { DummyFile } from "../../src/FileSystem/Mock/Dummy";
 
 type MockFileAsTaskType = {
 	status: string,

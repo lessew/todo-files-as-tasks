@@ -1,8 +1,8 @@
 import { FileAsTask } from "../../src/FileAsTask/FileAsTask";
 import { singleFileTree } from "../../src/Filesystem/mock/MockFileTree"
-import { File } from "../../src/Filesystem/File"
-import { MockIOFactory } from "../../src/Filesystem/mock/MockIOFactory"
-import { MockFileSystem } from "../../src/Filesystem/mock/MockFilesystem"
+import { File } from "../../src/FileSystem/File"
+import { MockIOFactory } from "../../src/FileSystem/mock/MockIOFactory"
+import { MockFileSystem } from "../../src/FileSystem/mock/MockFilesystem"
 import { PathPropertyHelper } from "../../src/Properties/PathPropertyHelper";
 
 describe('FileAsTask', () => {

@@ -1,7 +1,7 @@
-import { Directory } from "src/Filesystem/Directory";
+import { Directory } from "src/FileSystem/Directory";
 import { PathPropertyHelper } from "src/Properties/PathPropertyHelper";
 import { FileAsTask } from "./FileAsTask";
-import { File } from "src/Filesystem/File";
+import { File } from "src/FileSystem/File";
 
 export class FileAsTaskFactory {
 

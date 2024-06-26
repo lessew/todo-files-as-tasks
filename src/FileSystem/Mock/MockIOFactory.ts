@@ -1,7 +1,7 @@
 import { Directory } from "../Directory";
 import { File } from "../File";
 import { IOFactory } from "../IOFactory";
-import { MockFileSystem } from "./MockFilesystem";
+import { MockFileSystem } from "./MockFileSystem";
 
 export class MockIOFactory extends IOFactory {
 	fs: MockFileSystem;
