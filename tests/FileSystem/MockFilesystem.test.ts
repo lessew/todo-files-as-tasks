@@ -1,5 +1,5 @@
 import { MockFileTree } from "../../src/Filesystem/mock/MockFileTree";
-import { MockFilesystem } from "../../src/Filesystem/mock/MockFilesystem";
+import { MockFileSystem } from "../../src/Filesystem/mock/MockFilesystem";
 
 describe('MockFilesystem test', () => {
 	let data: MockFileTree = {
@@ -20,7 +20,7 @@ describe('MockFilesystem test', () => {
 			}
 		}
 	}
-	let mfs = new MockFilesystem(data);
+	let mfs = new MockFileSystem(data);
 
 	test('pathIsDirectory ', () => {
 		expect(mfs.pathIsDirectory("root/noyamlprop.md")).toBe(false);

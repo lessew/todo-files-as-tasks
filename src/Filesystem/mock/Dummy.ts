@@ -1,7 +1,7 @@
 import { File } from "../File"
-import { Filesystem } from "../FileSystem"
+import { FileSystem } from "../FileSystem"
 
-export class DummyFilesystem implements Filesystem {
+export class DummyFilesystem implements FileSystem {
 	move(currentPath: string, newPath: string): Promise<void> {
 		return Promise.resolve();
 	}

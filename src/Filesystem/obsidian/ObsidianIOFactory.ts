@@ -2,16 +2,16 @@ import FileAsTaskPlugin from "main";
 import { Directory } from "../Directory";
 import { File } from "../File";
 import { IOFactory } from "../IOFactory";
-import { ObsidianFilesystem } from "./ObsidianFilesystem";
+import { ObsidianFileSystem } from "./ObsidianFilesystem";
 
 export class ObsidianIOFactory extends IOFactory {
 	plugin: FileAsTaskPlugin;
-	fs: ObsidianFilesystem;
+	fs: ObsidianFileSystem;
 
 	constructor(plugin: FileAsTaskPlugin) {
 		super();
 		this.plugin = plugin;
-		this.fs = new ObsidianFilesystem(plugin);
+		this.fs = new ObsidianFileSystem(plugin);
 	}
 
 	createFile(path: string): File | Error {

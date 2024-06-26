@@ -2,7 +2,7 @@ import { FileAsTask } from "../../src/FileAsTask/FileAsTask";
 import { singleFileTree } from "../../src/Filesystem/mock/MockFileTree"
 import { File } from "../../src/Filesystem/File"
 import { MockIOFactory } from "../../src/Filesystem/mock/MockIOFactory"
-import { MockFilesystem } from "../../src/Filesystem/mock/MockFilesystem"
+import { MockFileSystem } from "../../src/Filesystem/mock/MockFilesystem"
 import { PathPropertyHelper } from "../../src/Properties/PathPropertyHelper";
 
 describe('FileAsTask', () => {
@@ -10,7 +10,7 @@ describe('FileAsTask', () => {
 	let pph: PathPropertyHelper
 	beforeEach(() => {
 		let fileTree = singleFileTree("note", "path/to/project/note.md", { context: "Read" });
-		let fs = new MockFilesystem(fileTree);
+		let fs = new MockFileSystem(fileTree);
 		let io = new MockIOFactory(fs);
 		file = io.createFile("path/to/project/note.md")
 		pph = new PathPropertyHelper(["path/to/project", "path/to/anotherproject"], 0);

@@ -1,10 +1,10 @@
-import { Filesystem } from "./FileSystem";
+import { FileSystem } from "./FileSystem";
 
 export class File {
-	fs: Filesystem;
+	fs: FileSystem;
 	fullPath: string;
 
-	constructor(fullPath: string, fs: Filesystem) {
+	constructor(fullPath: string, fs: FileSystem) {
 		this.fs = fs;
 		this.fullPath = fullPath;
 		if (!fs.pathIsFile(fullPath)) {
@@ -25,7 +25,7 @@ export class File {
 		return this.fs.setYAMLProperty(this.fullPath, name, value);
 	}
 
-	static async createEmptyFile(fullPath: string, fs: Filesystem, delay: (ms: number) => void): Promise<File> {
+	static async createEmptyFile(fullPath: string, fs: FileSystem, delay: (ms: number) => void): Promise<File> {
 		await fs.touch(fullPath);
 		delay(150);
 		//await new Promise(resolve => setTimeout(resolve, 150));

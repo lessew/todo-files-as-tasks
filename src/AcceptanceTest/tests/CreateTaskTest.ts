@@ -4,7 +4,7 @@ import { PluginSettings } from "src/Configuration/PluginSettings";
 import { FileAsTask } from "src/FileAsTask/FileAsTask";
 import { getRoot } from "../MockItems";
 import { CachedMetadata } from "obsidian";
-import { ObsidianFilesystem } from "src/Filesystem/obsidian/ObsidianFilesystem";
+import { ObsidianFileSystem } from "src/Filesystem/obsidian/ObsidianFilesystem";
 import { File } from "src/Filesystem/File";
 import { CodeBlock } from "src/CodeBlock";
 
@@ -29,7 +29,7 @@ export class CreateTaskTest {
 		let basename = "New Finance Created Task";
 		let path = directory + "/" + basename + ".md";
 
-		let fs = new ObsidianFilesystem(this.plugin);
+		let fs = new ObsidianFileSystem(this.plugin);
 
 		// Create file and set properties
 		let file = await File.createEmptyFile(path, fs, this.plugin.delay);

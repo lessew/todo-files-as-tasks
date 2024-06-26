@@ -1,17 +1,17 @@
-import { MockFilesystem } from "../../src/Filesystem/mock/MockFilesystem";
+import { MockFileSystem } from "../../src/Filesystem/mock/MockFilesystem";
 import { MockFileTree } from "../../src/Filesystem/mock/MockFileTree";
 import { MockIOFactory } from "../../src/Filesystem/mock/MockIOFactory";
 import { singleFileTree } from "../../src/Filesystem/mock/MockFileTree";
 
 
 describe("File constructor", () => {
-	let fs: MockFilesystem;
+	let fs: MockFileSystem;
 	let io: MockIOFactory;
 	let tree: MockFileTree;
 
 	beforeEach(() => {
 		tree = singleFileTree("note", "root/path/note.md", { status: "Inbox" });
-		fs = new MockFilesystem(tree);
+		fs = new MockFileSystem(tree);
 		io = new MockIOFactory(fs);
 	});
 

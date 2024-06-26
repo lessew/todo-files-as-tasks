@@ -1,6 +1,6 @@
 import { FileAsTaskCollection } from "../../src/FileAsTask/FileAsTaskCollection";
 import { Directory } from "src/Filesystem/Directory";
-import { MockFilesystem } from "src/Filesystem/mock/MockFilesystem";
+import { MockFileSystem } from "src/Filesystem/mock/MockFilesystem";
 import { MockFileTree } from "../../src/Filesystem/mock/MockFileTree";
 import { MockIOFactory } from "src/Filesystem/mock/MockIOFactory";
 import { PathPropertyHelper } from "../../src/Properties/PathPropertyHelper";

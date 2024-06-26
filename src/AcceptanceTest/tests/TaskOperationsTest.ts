@@ -4,7 +4,7 @@ import FileAsTaskPlugin from "main";
 import { CodeBlock } from "src/CodeBlock";
 import { FileAsTask } from "src/FileAsTask/FileAsTask";
 import { File } from "src/Filesystem/File";
-import { ObsidianFilesystem } from "src/Filesystem/obsidian/ObsidianFilesystem";
+import { ObsidianFileSystem } from "src/Filesystem/obsidian/ObsidianFilesystem";
 
 export class TaskOperationsTest {
 	logger: Logger
@@ -35,7 +35,7 @@ export class TaskOperationsTest {
 
 	arrange(): void {
 		this.expectedFileUnderTest = getExpectedHolidayBillFile();
-		let fs = new ObsidianFilesystem(this.plugin);
+		let fs = new ObsidianFileSystem(this.plugin);
 		let file = new File(this.expectedFileUnderTest.path, fs);
 		let fat = new FileAsTask(file, this.codeBlock.config.getPathPropertyHelper());
 		this.fatUnderTest = fat;

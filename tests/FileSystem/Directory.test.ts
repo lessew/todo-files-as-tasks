@@ -1,4 +1,4 @@
-import { MockFilesystem } from "../../src/Filesystem/mock/MockFilesystem";
+import { MockFileSystem } from "../../src/Filesystem/mock/MockFilesystem";
 import { MockFileTree } from "../../src/Filesystem/mock/MockFileTree";
 import { MockIOFactory } from "../../src/Filesystem/mock/MockIOFactory";
 
@@ -31,7 +31,7 @@ let tree: MockFileTree = {
 }
 
 describe("Directory constructor", () => {
-	let fs = new MockFilesystem(tree);
+	let fs = new MockFileSystem(tree);
 	let factory = new MockIOFactory(fs);
 	test("testing happy constructor with root", () => {
 
@@ -66,7 +66,7 @@ describe("Directory constructor", () => {
 });
 
 describe('Directory getfiles', () => {
-	let fs = new MockFilesystem(tree);
+	let fs = new MockFileSystem(tree);
 	let factory = new MockIOFactory(fs);
 
 	test('Test length of files array ', () => {
@@ -83,7 +83,7 @@ describe('Directory getfiles', () => {
 
 
 describe('Directory getDirectories ', () => {
-	let fs = new MockFilesystem(tree);
+	let fs = new MockFileSystem(tree);
 	let factory = new MockIOFactory(fs);
 
 	test('Test getDirectories ', () => {
