@@ -94,7 +94,12 @@ export class CreateTaskModal extends Modal {
 			.setName("title")
 			.addText((text) =>
 				text.onChange((value) => {
-					this.result["title"] = value
+					if (this.pph.isValidFilename(value)) {
+						this.result["title"] = value
+					}
+					else {
+						console.error("invalid filename");
+					}
 				}));
 
 		// Project
