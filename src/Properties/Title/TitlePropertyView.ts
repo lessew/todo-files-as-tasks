@@ -23,7 +23,7 @@ export class TitlePropertyView extends PropertyView {
 
 	async handleEvent(event: Event) {
 		const m: TitleModel = new TitleModel(this.plugin.obsidianApp, this.fat.getTitle(), async (result) => {
-			if (this.pathPropertyHelper.validate(result)) {
+			if (this.pathPropertyHelper.isValidFilename(result)) {
 				await this.fat.setTitle(result);
 				await this.refreshUI();
 			}

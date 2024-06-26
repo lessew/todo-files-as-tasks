@@ -26,10 +26,10 @@ export class ProjectPropertyView extends PropertyView {
 
 	async handleEvent(event: Event) {
 		const m: ProjectModal = new ProjectModal(
-			this.pathPropertySettings.getFolderlist(),
+			this.pathPropertySettings.getDirectorylist(),
 			this.fat.getProject(),
 			async (item) => {
-				if (this.pathPropertySettings.validate((item))) {
+				if (this.pathPropertySettings.isValidDirectory((item))) {
 					await this.fat.setProject(item);
 					await this.refreshUI();
 				}

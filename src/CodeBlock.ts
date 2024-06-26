@@ -6,7 +6,7 @@ import { TaskListView } from "./MainUI/TaskListView";
 import { TestView } from "./MainUI/TestView";
 import { FileAsTaskCollection } from "./FileAsTask/FileAsTaskCollection";
 import { Directory } from "./FileSystem/Directory";
-import { ObsidianIOFactory } from "./FileSystem/obsidian/ObsidianIOFactory";
+import { ObsidianIOFactory } from "./FileSystem/Obsidian/ObsidianIOFactory";
 import { FileAsTaskFactory } from "./FileAsTask/FileAsTaskFactory";
 import { FileAsTask } from "./FileAsTask/FileAsTask";
 

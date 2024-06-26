@@ -9,7 +9,7 @@ export class LinkView extends PropertyView {
 	constructor(linkText: string, fat: FileAsTask) {
 		super();
 		this.linkText = linkText;
-		this.href = this.fat.getLink();
+		this.href = fat.getLink();
 	}
 
 	build(rootElement: HTMLElement): void {

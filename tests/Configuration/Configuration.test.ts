@@ -32,7 +32,7 @@ describe('Configuration test', () => {
 		let s = new PluginSettings().load(testConfig);
 		c.loadSource(yamlString);
 		expect(c.stateIsError()).toBe(false);
-		c.loadSettings(s);
+		c.loadSettings(s as PluginSettings);
 		expect(c.stateIsError()).toBe(false);
 		c.loadRootPath();
 		expect(c.stateIsError()).toBe(false);

@@ -65,7 +65,6 @@ export class TaskListView {
 		let tp = new TitlePropertyView(this.pathPropertyHelper, thisTask, this.plugin);
 		tp.build(tdTitle);
 	}
-
 	private titleLinkView(row: HTMLTableRowElement, thisTask: FileAsTask): void {
 
 		let tdTitleLink = row.createEl("td", {});
@@ -83,9 +82,8 @@ export class TaskListView {
 		);
 		pp.build(tdProject);
 	}
-
 	private yamlPropertiesView(row: HTMLTableRowElement, thisTask: FileAsTask): void {
-		let props = this.plugin.pluginSettings.getPropertySettings();
+		let props = this.pluginSettings.propertySettings;
 		props.forEach((value, key) => {
 			let prop = value as PropertySettings;
 			if (prop.getType() == "boolean") {
