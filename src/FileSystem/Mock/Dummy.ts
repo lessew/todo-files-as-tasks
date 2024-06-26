@@ -2,6 +2,9 @@ import { File } from "../File"
 import { FileSystem } from "../FileSystem"
 
 export class DummyFileSystem implements FileSystem {
+	touch(fullPath: string): Promise<void> {
+		throw new Error("Method not implemented.");
+	}
 	move(currentPath: string, newPath: string): Promise<void> {
 		return Promise.resolve();
 	}
@@ -26,7 +29,7 @@ export class DummyFileSystem implements FileSystem {
 
 export class DummyFile extends File {
 	constructor() {
-		super("", new DummyFilesystem())
+		super("", new DummyFileSystem())
 	}
 	override move(newPath: string): Promise<void> {
 		return Promise.resolve();
