@@ -24,30 +24,29 @@ export class CreateTaskTest {
 
 	async test(): Promise<void> {
 		this.logger.heading("Testing creation of a task");
+		// Setup
 		let directory = "todo-home/Finance";
 		let basename = "New Finance Created Task";
 		let path = directory + "/" + basename + ".md";
 
 		let fs = new ObsidianFilesystem(this.plugin);
+
+		// Create file and set properties
 		let file = await File.createEmptyFile(path, fs, this.plugin.delay);
 		let fat = new FileAsTask(file, this.codeBlock.config.getPathPropertyHelper());
 		fat.setYAMLProperty("context", "Desk");
 		fat.setYAMLProperty("status", "Inbox");
 		fat.setYAMLProperty("starred", "⭐");
-		console.log(fat);
-		console.log(file);
+
+		// Assert 
+		await this.plugin.delay(300);
 		this.assertEquals(directory, fat.getProject());
 		this.assertEquals(basename, fat.getTitle());
-		this.plugin.delay(150);
 		let tf = this.plugin.obsidianFacade.getTFile(path);
 		let meta = this.plugin.obsidianFacade.getMeta(tf);
 		this.assertEqualsMeta("Desk", meta, "context");
 		this.assertEqualsMeta("Inbox", meta, "status");
 
-		console.log(fat.getYAMLProperty("context"));
-		console.log(fat.getYAMLProperty("status"));
-		console.log(fat.getTitle());
-		console.log(fat.getProject());
 		this.deleteFile(path)
 	}
 
@@ -77,18 +76,16 @@ export class CreateTaskTest {
 	}
 
 	async deleteFile(fullPath: string): Promise<void> {
-		try {
-			await this.plugin.obsidianApp.vault.delete(fullPath)
-		}
-		catch (e) { }
+		let tfile = this.plugin.obsidianFacade.getTFile(fullPath);
+		await this.plugin.obsidianApp.vault.delete(tfile);
 
-		this.plugin.delay(300);
+		await this.plugin.delay(150);
 		try {
 			const file = this.plugin.obsidianFacade.getTFile(fullPath);
 			this.logger.error("Removing file failed: it was still found on disk");
 		}
 		catch (e) {
-			this.logger.success("searching for file threw an error, means it was propertly removed");
+			this.logger.success("File removed succesfully");
 		}
 	}
 
