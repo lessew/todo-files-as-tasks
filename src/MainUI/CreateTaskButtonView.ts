@@ -5,7 +5,9 @@ import { PluginSettings } from "src/Configuration/PluginSettings";
 import { PathPropertyHelper } from "src/Properties/PathPropertyHelper";
 import { WhitelistPropertySettings } from "src/Properties/Whitelist/WhitelistPropertySettings";
 import { BooleanPropertySettings } from "src/Properties/Boolean/BooleanPropertySettings";
-
+import { FileAsTask } from "src/FileAsTask/FileAsTask";
+import { ObsidianFileSystem } from "src/FileSystem/Obsidian/ObsidianFileSystem";
+import { File } from "src/FileSystem/File";
 
 export class CreateTaskButtonView {
 	root: string
@@ -24,11 +26,12 @@ export class CreateTaskButtonView {
 	}
 
 	handleEvent(event: Event) {
-		const m: CreateTaskModal = new CreateTaskModal(this.plugin.obsidianApp, this.plugin.pluginSettings, this.pathPropertyHelper, async (result: Record<string, string>) => {
-			//await ObsidianFileAsTaskModel.persist(this.root,result,this.plugin)
-			console.log(result);
-			this.plugin.reload();
-		});
+		const m: CreateTaskModal = new CreateTaskModal(
+			this.plugin.obsidianApp,
+			this.plugin,
+			this.plugin.pluginSettings,
+			this.pathPropertyHelper
+		);
 		m.open();
 	}
 }
@@ -38,19 +41,49 @@ export class CreateTaskModal extends Modal {
 	settings: PluginSettings;
 	root: string;
 	pph: PathPropertyHelper;
-	onSubmit: (result: Record<string, string>) => void;
+	plugin: FileAsTaskPlugin;
 
-	constructor(app: App, settings: PluginSettings, pph: PathPropertyHelper, onSubmit: (result: Record<string, string>) => void) {
+	constructor(app: App, plugin: FileAsTaskPlugin, settings: PluginSettings, pph: PathPropertyHelper) {
 		super(app);
 		let result: Record<string, string> = {};
-		//        let map:Map<string,PropertySettings>=settings.getAsMap();
-		//       map.forEach((value,key) =>{
-		//         result[key] = "";
-		//    })
+		result.project = pph.getDirectorylist().toArray()[0];
+		settings.getPropertySettings().forEach((ps: PropertySettings, key) => {
+			result[key] = ps.getDefaultValue();
+		})
 		this.result = result;
 		this.pph = pph;
-		this.onSubmit = onSubmit;
+		//this.onSubmit = onSubmit;
 		this.settings = settings;
+		this.plugin = plugin;
+	}
+	async onSubmit(): Promise<void> {
+		console.log("submit:");
+		console.log(this.result);
+
+		let fs = new ObsidianFileSystem(this.plugin);
+
+		if (!this.pph.isValidFilename(this.result.title)) {
+			console.error(`${this.result.title} is not a valid filename`);
+			return;
+		}
+		if (!this.pph.isValidDirectory(this.result.project)) {
+			console.error(`${this.result.project} is not a valid directory`);
+			return;
+		}
+
+		let fullPath = this.result.project + "/" + this.result.title + ".md";
+
+		console.log(fullPath)
+		// Create file and set properties
+		let file = await File.createEmptyFile(fullPath, fs, this.plugin.delay);
+		let fat = new FileAsTask(file, this.pph);
+		console.log(fat);
+		for (const key in this.result) {
+			if (!(key == "title" || key == "project")) {
+				fat.setYAMLProperty(key, this.result[key])
+			}
+		}
+		this.plugin.reload();
 	}
 
 	onOpen() {
@@ -66,15 +99,16 @@ export class CreateTaskModal extends Modal {
 				}));
 
 		// Project
+		console.log(this.pph.getDirectorylist().toArray())
 		new Setting(contentEl)
 			.setName("project")
 			.addDropdown((dropdown) =>
 				dropdown
 					.addOptions(this.pph.getDirectorylist().toRecord())
+					.setValue(this.pph.getDirectorylist().toArray()[1])
 					.onChange((value) => {
 						this.result["project"] = value;
 					})
-				//.setValue(propSetting.defaultValue)
 			);
 
 		// YAML Properties
