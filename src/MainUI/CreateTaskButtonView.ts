@@ -3,6 +3,8 @@ import FileAsTaskPlugin from "main";
 import { PropertySettings } from "src/Properties/PropertySettings";
 import { PluginSettings } from "src/Configuration/PluginSettings";
 import { PathPropertyHelper } from "src/Properties/PathPropertyHelper";
+import { WhitelistPropertySettings } from "src/Properties/Whitelist/WhitelistPropertySettings";
+import { BooleanPropertySettings } from "src/Properties/Boolean/BooleanPropertySettings";
 
 
 export class CreateTaskButtonView {
@@ -75,25 +77,39 @@ export class CreateTaskModal extends Modal {
 				//.setValue(propSetting.defaultValue)
 			);
 
-		/*
+		// YAML Properties
+
 		let map: Map<string, PropertySettings> = this.settings.propertySettings;
 
-		map.forEach((value, key) => {
-			let t = value.getType();
-			if (t == "whitlist") {
-				this.baseNameSetting(value as BasenamePropertySettings, contentEl);
+		map.forEach((propSetting, key) => {
+			let t = propSetting.getType();
+			if (t == "whitelist") {
+				let wl = propSetting as WhitelistPropertySettings;
+				new Setting(contentEl)
+					.setName(key)
+					.addDropdown((dropdown) =>
+						dropdown
+							.addOptions(wl.getWhitelist().toRecord())
+							.onChange((value) => {
+								this.result[key] = value;
+							})
+							.setValue(wl.getDefaultValue())
+					);
 			}
-			else if (t == "toplevelfolder") {
-				this.topLevelFolderSetting(value as ToplevelFolderPropertySettings, contentEl);
-			}
-			else if (t == "booleanYAML") {
-				this.booleanYAMLSetting(value as BooleanYAMLPropertySettings, contentEl);
-			}
-			else if (t == "whitelistYAML") {
-				this.whitelistYAMLSetting(value as WhitelistYAMLPropertySettings, contentEl);
+			else if (t == "boolean") {
+				let b = propSetting as BooleanPropertySettings;
+				new Setting(contentEl)
+					.setName(key)
+					.addDropdown((dropdown) =>
+						dropdown
+							.addOptions(b.getWhitelist().toRecord())
+							.onChange((value) => {
+								this.result[key] = value;
+							})
+							.setValue(b.getDefaultValue())
+					);
 			}
 		})
-		*/
 
 		new Setting(contentEl)
 			.addButton((btn) =>
@@ -114,33 +130,4 @@ export class CreateTaskModal extends Modal {
 
 
 
-	booleanYAMLSetting(propSetting: BooleanYAMLPropertySettings, contentEl: HTMLElement): void {
-		new Setting(contentEl)
-			.setName(propSetting.propName)
-			.addDropdown((dropdown) =>
-				dropdown
-					.addOptions(propSetting.whitelist.toRecord())
-					.onChange((value) => {
-						this.result[propSetting.propName] = value;
-					})
-					.setValue(propSetting.defaultValue)
-			);
-		this.result[propSetting.propName] = propSetting.defaultValue;
-
-	}
-
-	whitelistYAMLSetting(propSetting: WhitelistYAMLPropertySettings, contentEl: HTMLElement): void {
-		new Setting(contentEl)
-			.setName(propSetting.propName)
-			.addDropdown((dropdown) =>
-				dropdown
-					.addOptions(propSetting.whitelist.toRecord())
-					.onChange((value) => {
-						this.result[propSetting.propName] = value;
-					})
-					.setValue(propSetting.defaultValue)
-			);
-		this.result[propSetting.propName] = propSetting.defaultValue;
-
-	}
 }

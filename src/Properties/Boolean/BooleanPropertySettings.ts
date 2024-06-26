@@ -26,6 +26,10 @@ export class BooleanPropertySettings extends PropertySettings {
 		return this.defaultValue;
 	}
 
+	getWhitelist(): Whitelist {
+		return this.whitelist;
+	}
+
 	getNewToggleValue(currentValue: string): string {
 		let a = this.whitelist.toArray();
 		if (currentValue == a[0]) {
