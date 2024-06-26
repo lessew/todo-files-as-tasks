@@ -73,7 +73,7 @@ describe('Settings: create object)', () => {
 
 	test("load: default values", () => {
 		settings = new PluginSettings();
-		let result = settings.load(DEFAULT_PLUGIN_SETTINGS);
+		let result = settings.loadDefaultSettings();
 		expect(result instanceof Error).toBe((false));
 	});
 
