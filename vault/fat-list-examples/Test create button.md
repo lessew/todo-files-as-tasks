@@ -1,5 +1,4 @@
-
 ```fat
 rootPath: todo-home
-action: list
+action: create_button
 ```

@@ -96,7 +96,7 @@ export class CodeBlock {
 	}
 
 	displayCreateTaskButton(): void {
-		const view = new CreateTaskButtonView(this.root, this.plugin);
+		const view = new CreateTaskButtonView(this.root, this.plugin, this.config.getPathPropertyHelper());
 		view.build(this.el);
 	}
 
