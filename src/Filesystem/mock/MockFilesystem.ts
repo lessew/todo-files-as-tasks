@@ -1,7 +1,7 @@
 import { Filesystem } from "../Filesystem";
 import { MockFileTree } from "./MockFileTree";
 
-export class MockFilesystem implements Filesystem {
+export class MockFileSystem implements FileSystem {
 	tree: MockFileTree;
 
 	constructor(data: MockFileTree) {

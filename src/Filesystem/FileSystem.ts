@@ -1,4 +1,4 @@
-export interface Filesystem {
+export interface FileSystem {
 	move(currentPath: string, newPath: string): Promise<void>;
 	readDir(path: string): string[] | [];
 	touch(fullPath: string): Promise<void>;
