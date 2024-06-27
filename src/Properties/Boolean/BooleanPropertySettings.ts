@@ -6,19 +6,19 @@ export class BooleanPropertySettings extends PropertySettings {
 	private whitelist: Whitelist
 	private defaultValue: string
 
-	constructor(wl: Whitelist, df: string) {
+	constructor(wl: string[], df: string) {
 		super();
-		this.whitelist = wl;
 		this.defaultValue = df;
+		this.whitelist = new Whitelist(wl);
 		this.validateInit(wl);
 	}
 
-	validateInit(wl: Whitelist) {
-		if (wl.size() != 2) {
-			throw new Error(`Boolean field must have exactly 2 options but found "${wl.size()}"`);
+	validateInit(wl: string[]) {
+		if (wl.length != 2) {
+			throw new Error(`Boolean field must have exactly 2 options but found "${wl.length}"`);
 		}
 		return {
-			whitelist: this.whitelist.toString(),
+			whitelist: wl,
 			type: "boolean"
 		}
 	}

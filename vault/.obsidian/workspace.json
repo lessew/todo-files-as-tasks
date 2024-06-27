@@ -30,9 +30,19 @@
                 "source": true
               }
             }
+          },
+          {
+            "id": "8882f6171ce2e0e5",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.6.5"
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -159,7 +169,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "ac12d78b0de8a199",
+  "active": "8882f6171ce2e0e5",
   "lastOpenFiles": [
     "fat-list-examples/Tests.md",
     "fat-list-examples/Test create button.md",

@@ -6,7 +6,8 @@ describe('BooleanPropertySettings', () => {
 	let bps: BooleanPropertySettings;
 
 	beforeEach(() => {
-		bps = new BooleanPropertySettings(new Whitelist(["true", "false"]), "true");
+		//bps = new BooleanPropertySettings(new Whitelist(["true", "false"]), "true");
+		bps = new BooleanPropertySettings(["true", "false"], "true");
 	})
 
 	test('defaultvalue', () => {

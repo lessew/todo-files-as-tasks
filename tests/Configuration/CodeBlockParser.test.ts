@@ -83,7 +83,7 @@ describe('CodeBlockSettings', () => {
 	test('loadFiters happy path', () => {
 		cbs.loadSource(loadFilters);
 		let settings = new PluginSettings()
-			.addYAMLproperty("status", new BooleanPropertySettings(new Whitelist(["Inbox", "Done"]), "Inbox"))
+			.addYAMLproperty("status", new BooleanPropertySettings(["Inbox", "Done"], "Inbox"))
 			.addYAMLproperty("context", new WhitelistPropertySettings(new Whitelist(["Desk", "Read"]), "Read"))
 		let filters = cbs.parseFilters(settings);
 		if (filters instanceof Error) {
