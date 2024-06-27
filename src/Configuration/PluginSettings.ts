@@ -110,7 +110,7 @@ export class PluginSettings {
 				this.addYAMLproperty(
 					aprop.name,
 					new WhitelistPropertySettings(
-						new Whitelist(aprop.whitelist!),
+						aprop.whitelist!,
 						aprop.defaultValue
 					)
 				)

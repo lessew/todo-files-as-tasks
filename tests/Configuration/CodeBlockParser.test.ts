@@ -84,7 +84,7 @@ describe('CodeBlockSettings', () => {
 		cbs.loadSource(loadFilters);
 		let settings = new PluginSettings()
 			.addYAMLproperty("status", new BooleanPropertySettings(["Inbox", "Done"], "Inbox"))
-			.addYAMLproperty("context", new WhitelistPropertySettings(new Whitelist(["Desk", "Read"]), "Read"))
+			.addYAMLproperty("context", new WhitelistPropertySettings(["Desk", "Read"], "Read"))
 		let filters = cbs.parseFilters(settings);
 		if (filters instanceof Error) {
 			expect(true).toBe(false);
@@ -103,7 +103,7 @@ describe('CodeBlockSettings', () => {
 	test('loadFilters unhappy path', () => {
 		cbs.loadSource(loadFiltersUnhappy);
 		let settings = new PluginSettings()
-			.addYAMLproperty("status", new WhitelistPropertySettings(new Whitelist(["Backlog"]), "Backlog"))
+			.addYAMLproperty("status", new WhitelistPropertySettings(["Backlog"], "Backlog"))
 		let filters = cbs.parseFilters(settings);
 		if (filters instanceof Error) {
 			expect(true).toBe(true)

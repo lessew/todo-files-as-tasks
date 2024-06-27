@@ -7,8 +7,8 @@ describe('Settings: create object)', () => {
 
 	beforeEach(() => {
 		settings = new PluginSettings()
-			.addYAMLproperty("status", new WhitelistPropertySettings(new Whitelist(["Inbox", "Done"]), "Inbox"))
-			.addYAMLproperty("context", new WhitelistPropertySettings(new Whitelist(["Read", "Desk"]), "Desk"));
+			.addYAMLproperty("status", new WhitelistPropertySettings(["Inbox", "Done"], "Inbox"))
+			.addYAMLproperty("context", new WhitelistPropertySettings(["Read", "Desk"], "Desk"));
 	});
 
 	test('Test load', () => {

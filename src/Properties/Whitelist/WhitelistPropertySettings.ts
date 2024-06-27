@@ -6,9 +6,9 @@ export class WhitelistPropertySettings extends PropertySettings {
 	private whitelist: Whitelist;
 	private defaultValue: string;
 
-	constructor(wl: Whitelist, df: string) {
+	constructor(wl: string[], df: string) {
 		super();
-		this.whitelist = wl;
+		this.whitelist = new Whitelist(wl);
 		this.defaultValue = df;
 	}
 

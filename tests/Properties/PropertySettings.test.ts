@@ -6,7 +6,6 @@ describe('BooleanPropertySettings', () => {
 	let bps: BooleanPropertySettings;
 
 	beforeEach(() => {
-		//bps = new BooleanPropertySettings(new Whitelist(["true", "false"]), "true");
 		bps = new BooleanPropertySettings(["true", "false"], "true");
 	})
 
@@ -29,7 +28,7 @@ describe('WhitelistPropertySettings', () => {
 	let wps: WhitelistPropertySettings;
 
 	beforeEach(() => {
-		wps = new WhitelistPropertySettings(new Whitelist(["inbox", "done", "waiting"]), "done");
+		wps = new WhitelistPropertySettings(["inbox", "done", "waiting"], "done");
 	})
 
 	test('defaultvalue', () => {
