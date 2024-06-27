@@ -25,24 +25,14 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "fat-list-examples/Test create button.md",
+                "file": "fat-list-examples/Test action list.md",
                 "mode": "preview",
                 "source": true
               }
             }
-          },
-          {
-            "id": "8882f6171ce2e0e5",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.6.5"
-              }
-            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -108,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "fat-list-examples/Test create button.md",
+                "file": "fat-list-examples/Test action list.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -125,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "fat-list-examples/Test create button.md",
+                "file": "fat-list-examples/Test action list.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -148,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "fat-list-examples/Test create button.md"
+                "file": "fat-list-examples/Test action list.md"
               }
             }
           }
@@ -169,20 +159,20 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "8882f6171ce2e0e5",
+  "active": "ac12d78b0de8a199",
   "lastOpenFiles": [
-    "fat-list-examples/Tests.md",
     "fat-list-examples/Test create button.md",
+    "fat-list-examples/Test action list.md",
+    "todo-home/Finance/New Finance Created Task.md",
     "fat-list-examples/Developer Integration Testing.md",
+    "todo-home/Finance/Taxes 2023/Get mortgage details 2024.md",
+    "fat-list-examples/Tests.md",
     "todo-home/1234.md",
     "todo-home/aaaa.md",
     "todo-home/ddddd.md",
-    "fat-list-examples/Test action list.md",
     "todo-home/Finance/eeee.md",
-    "todo-home/Finance/Taxes 2023/Get mortgage details 2024.md",
-    "todo-home/Finance/New Finance Created Task.md",
-    "todo-home/Finance/Taxes 2023/Finalize finance weekend NYC.md",
-    "todo-home/Finance/Taxes 2023/IRS Hotline/Pay holiday bill.md",
+    "todo-home/Finance/Finalize finance weekend NYC.md",
+    "todo-home/Finance/Pay holiday bill.md",
     "todo-home/Kids",
     "todo-home/Finance/Taxes 2023/IRS Hotline/Ask details re taxes 2023.md",
     "todo-home/Finance/Taxes 2023/Get income statement work.md",

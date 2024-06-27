@@ -2,7 +2,6 @@ import FileAsTaskPlugin from "main";
 import { SuggestModal, App } from "obsidian";
 import { FileAsTask } from "src/FileAsTask/FileAsTask";
 import { PropertyView } from "../PropertyView";
-import { Whitelist } from "../Whitelist";
 import { WhitelistPropertySettings } from "./WhitelistPropertySettings";
 
 export class WhitelistPropertyView extends PropertyView {
@@ -28,15 +27,14 @@ export class WhitelistPropertyView extends PropertyView {
 
 	async handleEvent(event: Event) {
 		const m: WhitelistYAMLModal = new WhitelistYAMLModal(
-			this.propSettings.getWhitelist(),
+			this.propSettings.getWhitelist().toArray(),
 			async (item) => {
 				if (this.propSettings.validate(item)) {
 					await this.fileAsTask.setYAMLProperty(this.propName, item);
 					await this.refreshUI();
 				}
 				else {
-					// TODO: handle error
-					console.log("errro in input");
+					console.error(`error in input: ${item} is not a valid value for ${this.propName}`);
 				}
 			},
 			this.plugin.obsidianApp
@@ -55,10 +53,10 @@ export class WhitelistYAMLModal extends SuggestModal<string>{
 	validValues: string[];
 	onSubmit: (result: string) => void;
 
-	constructor(whitelist: Whitelist, onSubmit: (result: string) => void, app: App) {
+	constructor(validValues: string[], onSubmit: (result: string) => void, app: App) {
 		super(app);
 		this.onSubmit = onSubmit;
-		this.validValues = whitelist.toArray();
+		this.validValues = validValues;
 	}
 
 	getSuggestions(query: string): string[] | Promise<string[]> {
