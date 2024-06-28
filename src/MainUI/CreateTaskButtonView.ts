@@ -8,16 +8,21 @@ import { BooleanPropertySettings } from "src/Properties/Boolean/BooleanPropertyS
 import { FileAsTask } from "src/FileAsTask/FileAsTask";
 import { ObsidianFileSystem } from "src/FileSystem/Obsidian/ObsidianFileSystem";
 import { File } from "src/FileSystem/File";
+import { PropertyViewFactory } from "src/Properties/PropertyViewFactory";
+import { ProjectPropertyView } from "src/Properties/Project/ProjectPropertyView";
+import { TitlePropertyView } from "src/Properties/Title/TitlePropertyView";
 
 export class CreateTaskButtonView {
 	root: string
 	plugin: FileAsTaskPlugin;
 	pathPropertyHelper: PathPropertyHelper;
+	propertyViewFactory: PropertyViewFactory;
 
-	constructor(root: string, plugin: FileAsTaskPlugin, pathPropertyHelper: PathPropertyHelper) {
+	constructor(root: string, plugin: FileAsTaskPlugin, pathPropertyHelper: PathPropertyHelper, pvf: PropertyViewFactory) {
 		this.plugin = plugin;
 		this.pathPropertyHelper = pathPropertyHelper;
 		this.root = root;
+		this.propertyViewFactory = pvf;
 	}
 
 	build(rootElement: HTMLElement): void {
@@ -30,7 +35,8 @@ export class CreateTaskButtonView {
 			this.plugin.obsidianApp,
 			this.plugin,
 			this.plugin.pluginSettings,
-			this.pathPropertyHelper
+			this.pathPropertyHelper,
+			this.propertyViewFactory
 		);
 		m.open();
 	}
@@ -42,8 +48,9 @@ export class CreateTaskModal extends Modal {
 	root: string;
 	pph: PathPropertyHelper;
 	plugin: FileAsTaskPlugin;
+	propertyViewFactory: PropertyViewFactory;
 
-	constructor(app: App, plugin: FileAsTaskPlugin, settings: PluginSettings, pph: PathPropertyHelper) {
+	constructor(app: App, plugin: FileAsTaskPlugin, settings: PluginSettings, pph: PathPropertyHelper, pvf: PropertyViewFactory) {
 		super(app);
 		let result: Record<string, string> = {};
 		result.project = pph.getDirectorylist().toArray()[0];
@@ -54,6 +61,7 @@ export class CreateTaskModal extends Modal {
 		this.pph = pph;
 		this.settings = settings;
 		this.plugin = plugin;
+		this.propertyViewFactory = pvf;
 	}
 	async onSubmit(): Promise<void> {
 		console.log("submit:");
@@ -90,65 +98,32 @@ export class CreateTaskModal extends Modal {
 		contentEl.createEl("h1", { text: "New Task" });
 
 		// Title
-		new Setting(contentEl)
-			.setName("title")
-			.addText((text) =>
-				text.onChange((value) => {
-					if (this.pph.isValidFilename(value)) {
-						this.result["title"] = value
-					}
-					else {
-						console.error("invalid filename");
-					}
-				}));
+		let titlePropertyView = new TitlePropertyView(this.pph, this.plugin);
+		titlePropertyView.buildCreateUI(contentEl, (value => {
+			if (this.pph.isValidFilename(value)) {
+				this.result["title"] = value
+			}
+			else {
+				console.error("invalid filename: ${value}");
+			}
+		}));
 
 		// Project
-		console.log(this.pph.getDirectorylist().toArray())
-		new Setting(contentEl)
-			.setName("project")
-			.addDropdown((dropdown) =>
-				dropdown
-					.addOptions(this.pph.getDirectorylist().toRecord())
-					.setValue(this.pph.getDirectorylist().toArray()[1])
-					.onChange((value) => {
-						this.result["project"] = value;
-					})
-			);
+		let propertyProjectView = new ProjectPropertyView(this.pph, this.plugin);
+		propertyProjectView.buildCreateUI(contentEl, (value => { this.result["project"] = value; }));
 
 		// YAML Properties
-
 		let map: Map<string, PropertySettings> = this.settings.propertySettings;
 
 		map.forEach((propSetting, key) => {
-			let t = propSetting.getType();
-			if (t == "whitelist") {
-				let wl = propSetting as WhitelistPropertySettings;
-				new Setting(contentEl)
-					.setName(key)
-					.addDropdown((dropdown) =>
-						dropdown
-							.addOptions(wl.getWhitelist().toRecord())
-							.onChange((value) => {
-								this.result[key] = value;
-							})
-							.setValue(wl.getDefaultValue())
-					);
-			}
-			else if (t == "boolean") {
-				let b = propSetting as BooleanPropertySettings;
-				new Setting(contentEl)
-					.setName(key)
-					.addDropdown((dropdown) =>
-						dropdown
-							.addOptions(b.getWhitelist().toRecord())
-							.onChange((value) => {
-								this.result[key] = value;
-							})
-							.setValue(b.getDefaultValue())
-					);
-			}
+			let propView = this.propertyViewFactory.createPropertyView(key, propSetting, this.plugin);
+			propView.buildCreateUI(contentEl, (value: string) => {
+				this.result[key] = value;
+			});
+
 		})
 
+		// Submit
 		new Setting(contentEl)
 			.addButton((btn) =>
 				btn

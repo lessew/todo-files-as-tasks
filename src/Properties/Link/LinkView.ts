@@ -6,13 +6,14 @@ export class LinkView extends PropertyView {
 	href: string;
 	fat: FileAsTask;
 
-	constructor(linkText: string, fat: FileAsTask) {
+	constructor(linkText: string) {
 		super();
 		this.linkText = linkText;
-		this.href = fat.getLink();
 	}
 
-	build(rootElement: HTMLElement): void {
+	build(fat: FileAsTask, rootElement: HTMLElement): void {
+
+		this.href = fat.getLink();
 		let title: HTMLElement = rootElement.createEl("a",
 			{
 				text: this.linkText,
@@ -25,5 +26,12 @@ export class LinkView extends PropertyView {
 			}
 		);
 
+	}
+
+	buildCreateUI(el: HTMLElement, onchange: (value: string) => void): void {
+		// tbi
+	}
+	buildSettingsUI(): void {
+		// tbi
 	}
 }

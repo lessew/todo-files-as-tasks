@@ -100,7 +100,7 @@ export class CodeBlock {
 	}
 
 	displayCreateTaskButton(): void {
-		const view = new CreateTaskButtonView(this.root, this.plugin, this.config.getPathPropertyHelper());
+		const view = new CreateTaskButtonView(this.root, this.plugin, this.config.getPathPropertyHelper(), new ObsidianPropertyViewFactory());
 		view.build(this.el);
 	}
 

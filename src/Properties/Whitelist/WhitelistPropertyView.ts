@@ -1,5 +1,5 @@
 import FileAsTaskPlugin from "main";
-import { SuggestModal, App } from "obsidian";
+import { SuggestModal, App, Setting } from "obsidian";
 import { FileAsTask } from "src/FileAsTask/FileAsTask";
 import { PropertySettings } from "../PropertySettings";
 import { PropertyView } from "../PropertyView";
@@ -7,23 +7,38 @@ import { WhitelistPropertySettings } from "./WhitelistPropertySettings";
 
 export class WhitelistPropertyView extends PropertyView {
 	propSettings: WhitelistPropertySettings;
-	fileAsTask: FileAsTask;
 	propName: string;
 	plugin: FileAsTaskPlugin;
+	fileAsTask: FileAsTask;
 
-	constructor(propName: string, propSettings: PropertySettings, fat: FileAsTask, plugin: FileAsTaskPlugin) {
+	constructor(propName: string, propSettings: PropertySettings, plugin: FileAsTaskPlugin) {
 		super();
 		this.propSettings = propSettings as WhitelistPropertySettings;
 		this.propName = propName;
-		this.fileAsTask = fat;
 		this.plugin = plugin;
 	}
 
-	build(rootElement: HTMLElement): void {
-		let text: string = this.fileAsTask.getYAMLProperty(this.propName);
+	build(fat: FileAsTask, rootElement: HTMLElement): void {
+		let text: string = fat.getYAMLProperty(this.propName);
 		let hover: string = "";
 		let a: HTMLElement = rootElement.createEl("span", { cls: "file-as-task", text: text, title: hover });
+		this.fileAsTask = fat;
 		a.addEventListener("click", this); // executes handleEvent
+	}
+
+	buildCreateUI(el: HTMLElement, onchange: (value: string) => void): void {
+		new Setting(el)
+			.setName(this.propName)
+			.addDropdown((dropdown) =>
+				dropdown
+					.addOptions(this.propSettings.getWhitelist().toRecord())
+					.onChange(onchange)
+					.setValue(this.propSettings.getDefaultValue())
+			);
+	}
+
+	buildSettingsUI(): void {
+
 	}
 
 	async handleEvent(event: Event) {

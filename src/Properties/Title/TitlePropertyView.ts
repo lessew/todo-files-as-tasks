@@ -9,16 +9,27 @@ export class TitlePropertyView extends PropertyView {
 	fat: FileAsTask;
 	pathPropertyHelper: PathPropertyHelper;
 
-	constructor(pps: PathPropertyHelper, fat: FileAsTask, plugin: FileAsTaskPlugin) {
+	constructor(pps: PathPropertyHelper, plugin: FileAsTaskPlugin) {
 		super();
 		this.pathPropertyHelper = pps;
 		this.plugin = plugin;
-		this.fat = fat;
 	}
 
-	build(rootElement: HTMLElement): void {
+	build(fat: FileAsTask, rootElement: HTMLElement): void {
+		this.fat = fat;
 		let edit: HTMLElement = rootElement.createEl("a", { cls: "yatodo-edit", text: this.fat.getTitle(), title: "Edit" });
 		edit.addEventListener("click", this); // executes this.handleEvent method
+	}
+	buildSettingsUI(): void {
+		// tbi
+	}
+	buildCreateUI(el: HTMLElement, onchange: (value: string) => void): void {
+		// tbi
+		new Setting(el)
+			.setName("title")
+			.addText((text) =>
+				text.onChange(onchange)
+			);
 	}
 
 	async handleEvent(event: Event) {

@@ -67,14 +67,14 @@ export class TaskListView {
 	private titleView(row: HTMLTableRowElement, thisTask: FileAsTask): void {
 		// title: not configurable
 		let tdTitle = row.createEl("td", {});
-		let tp = new TitlePropertyView(this.pathPropertyHelper, thisTask, this.plugin);
-		tp.build(tdTitle);
+		let tp = new TitlePropertyView(this.pathPropertyHelper, this.plugin);
+		tp.build(thisTask, tdTitle);
 	}
 	private titleLinkView(row: HTMLTableRowElement, thisTask: FileAsTask): void {
 
 		let tdTitleLink = row.createEl("td", {});
-		const lv = new LinkView("link", thisTask);
-		lv.build(tdTitleLink);
+		const lv = new LinkView("link");
+		lv.build(thisTask, tdTitleLink);
 	}
 
 	private projectView(row: HTMLTableRowElement, thisTask: FileAsTask): void {
@@ -82,18 +82,17 @@ export class TaskListView {
 		let tdProject: HTMLTableCellElement = row.createEl("td", {});
 		const pp = new ProjectPropertyView(
 			this.pathPropertyHelper,
-			thisTask,
 			this.plugin
 		);
-		pp.build(tdProject);
+		pp.build(thisTask, tdProject);
 	}
 	private yamlPropertiesView(row: HTMLTableRowElement, thisTask: FileAsTask): void {
 		let props = this.pluginSettings.propertySettings;
 		props.forEach((value, key) => {
 			let prop = value as PropertySettings;
 			let tdCell: HTMLTableCellElement = row.createEl("td", {});
-			let view = this.propertyViewFactory.createPropertyView(key, prop, thisTask, this.plugin);
-			view.build(tdCell);
+			let view = this.propertyViewFactory.createPropertyView(key, prop, this.plugin);
+			view.build(thisTask, tdCell);
 		})
 	}
 }

@@ -1,4 +1,4 @@
-import { App, SuggestModal } from "obsidian";
+import { App, Setting, SuggestModal } from "obsidian";
 import FileAsTaskPlugin from "main";
 import { PathPropertyHelper } from "../PathPropertyHelper";
 import { FileAsTask } from "src/FileAsTask/FileAsTask";
@@ -10,19 +10,33 @@ export class ProjectPropertyView extends PropertyView {
 	fat: FileAsTask;
 	pathPropertySettings: PathPropertyHelper;
 
-	constructor(pps: PathPropertyHelper, fat: FileAsTask, plugin: FileAsTaskPlugin) {
+	constructor(pps: PathPropertyHelper, plugin: FileAsTaskPlugin) {
 		super();
 		this.pathPropertySettings = pps;
 		this.plugin = plugin;
-		this.fat = fat;
 	}
 
-	build(rootElement: HTMLElement): void {
-		const text = this.fat.getProject();
+	build(fileAsTask: FileAsTask, rootElement: HTMLElement): void {
+		const text = fileAsTask.getProject();
+		this.fat = fileAsTask;
 		let a: HTMLElement = rootElement.createEl("span", { text: text, cls: "file-as-task" });
 		a.addEventListener("click", this); // executes handleEvent
 	}
 
+	buildCreateUI(el: HTMLElement, onchange: (value: string) => void): void {
+		new Setting(el)
+			.setName("project")
+			.addDropdown((dropdown) =>
+				dropdown
+					.addOptions(this.pathPropertySettings.getDirectorylist().toRecord())
+					.setValue(this.pathPropertySettings.getDirectorylist().toArray()[1])
+					.onChange(onchange)
+			);
+	}
+
+	buildSettingsUI(): void {
+		// tbi
+	}
 
 	async handleEvent(event: Event) {
 		const m: ProjectModal = new ProjectModal(
