@@ -1,5 +1,6 @@
 import FileAsTaskPlugin from "main";
 import { FileAsTask } from "src/FileAsTask/FileAsTask";
+import { PropertySettings } from "../PropertySettings";
 import { BooleanPropertySettings } from "./BooleanPropertySettings";
 
 export class BooleanPropertyView {
@@ -8,8 +9,8 @@ export class BooleanPropertyView {
 	propName: string;
 	plugin: FileAsTaskPlugin;
 
-	constructor(propName: string, propSettings: BooleanPropertySettings, fat: FileAsTask, plugin: FileAsTaskPlugin) {
-		this.propSettings = propSettings;
+	constructor(propName: string, propSettings: PropertySettings, fat: FileAsTask, plugin: FileAsTaskPlugin) {
+		this.propSettings = propSettings as BooleanPropertySettings;
 		this.propName = propName;
 		this.fileAsTask = fat;
 		this.plugin = plugin;

@@ -60,4 +60,5 @@ export class BooleanPropertySettings extends PropertySettings {
 			whitelist: this.whitelist.toArray()
 		}
 	}
+
 }

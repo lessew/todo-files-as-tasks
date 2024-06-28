@@ -9,6 +9,7 @@ import { Directory } from "./FileSystem/Directory";
 import { ObsidianIOFactory } from "./FileSystem/Obsidian/ObsidianIOFactory";
 import { FileAsTaskFactory } from "./FileAsTask/FileAsTaskFactory";
 import { FileAsTask } from "./FileAsTask/FileAsTask";
+import { ObsidianPropertyViewFactory } from "./Properties/PropertyViewFactory";
 
 export class CodeBlock {
 	source: string;
@@ -81,6 +82,8 @@ export class CodeBlock {
 			this.rootDirectory,
 			this.config.getPathPropertyHelper()
 		);
+		let pvf = new ObsidianPropertyViewFactory();
+
 
 		const fileAsTaskCollection = new FileAsTaskCollection(filesAsTask);
 		fileAsTaskCollection.bulkFilterBy(filters);
@@ -90,7 +93,8 @@ export class CodeBlock {
 			fileAsTaskCollection,
 			this.config.getSettings(),
 			this.config.getPathPropertyHelper(),
-			this.plugin
+			this.plugin,
+			pvf
 		);
 		view.build(this.el);
 	}

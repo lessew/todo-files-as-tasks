@@ -4,13 +4,10 @@ import { FileAsTaskCollection } from "src/FileAsTask/FileAsTaskCollection";
 import { PropertySettings } from "src/Properties/PropertySettings";
 import { LinkView } from "src/Properties/Link/LinkView";
 import { TitlePropertyView } from "src/Properties/Title/TitlePropertyView";
-import { WhitelistPropertyView } from "src/Properties/Whitelist/WhitelistPropertyView";
 import { ProjectPropertyView } from "src/Properties/Project/ProjectPropertyView";
 import { FileAsTask } from "src/FileAsTask/FileAsTask";
-import { BooleanPropertySettings } from "src/Properties/Boolean/BooleanPropertySettings";
-import { BooleanPropertyView } from "src/Properties/Boolean/BooleanPropertyView";
-import { WhitelistPropertySettings } from "src/Properties/Whitelist/WhitelistPropertySettings";
 import { PathPropertyHelper } from "src/Properties/PathPropertyHelper";
+import { PropertyViewFactory } from "src/Properties/PropertyViewFactory";
 
 export class TaskListView {
 	fileAsTaskCollection: FileAsTaskCollection;
@@ -18,12 +15,20 @@ export class TaskListView {
 	plugin: FileAsTaskPlugin;
 	pluginSettings: PluginSettings;
 	pathPropertyHelper: PathPropertyHelper;
+	propertyViewFactory: PropertyViewFactory
 
-	constructor(fatc: FileAsTaskCollection, pluginSettings: PluginSettings, pathPropertyHelper: PathPropertyHelper, plugin: FileAsTaskPlugin) {
+	constructor(
+		fatc: FileAsTaskCollection,
+		pluginSettings: PluginSettings,
+		pathPropertyHelper: PathPropertyHelper,
+		plugin: FileAsTaskPlugin,
+		pvf: PropertyViewFactory
+	) {
 		this.plugin = plugin;
 		this.fileAsTaskCollection = fatc;
 		this.pluginSettings = pluginSettings;
 		this.pathPropertyHelper = pathPropertyHelper;
+		this.propertyViewFactory = pvf
 	}
 
 	build(rootElement: HTMLElement): HTMLElement {
@@ -86,18 +91,9 @@ export class TaskListView {
 		let props = this.pluginSettings.propertySettings;
 		props.forEach((value, key) => {
 			let prop = value as PropertySettings;
-			if (prop.getType() == "boolean") {
-				let tdCell: HTMLTableCellElement = row.createEl("td", {});
-				let bprop = prop as BooleanPropertySettings;
-				const ss = new BooleanPropertyView(key, bprop, thisTask, this.plugin)
-				ss.build(tdCell);
-			}
-			else if (prop.getType() == "whitelist") {
-				let tdCell: HTMLTableCellElement = row.createEl("td", {});
-				let bprop = prop as WhitelistPropertySettings;
-				const ss = new WhitelistPropertyView(key, bprop, thisTask, this.plugin)
-				ss.build(tdCell);
-			}
+			let tdCell: HTMLTableCellElement = row.createEl("td", {});
+			let view = this.propertyViewFactory.createPropertyView(key, prop, thisTask, this.plugin);
+			view.build(tdCell);
 		})
 	}
 }

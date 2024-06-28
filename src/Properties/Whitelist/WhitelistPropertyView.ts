@@ -1,6 +1,7 @@
 import FileAsTaskPlugin from "main";
 import { SuggestModal, App } from "obsidian";
 import { FileAsTask } from "src/FileAsTask/FileAsTask";
+import { PropertySettings } from "../PropertySettings";
 import { PropertyView } from "../PropertyView";
 import { WhitelistPropertySettings } from "./WhitelistPropertySettings";
 
@@ -10,9 +11,9 @@ export class WhitelistPropertyView extends PropertyView {
 	propName: string;
 	plugin: FileAsTaskPlugin;
 
-	constructor(propName: string, propSettings: WhitelistPropertySettings, fat: FileAsTask, plugin: FileAsTaskPlugin) {
+	constructor(propName: string, propSettings: PropertySettings, fat: FileAsTask, plugin: FileAsTaskPlugin) {
 		super();
-		this.propSettings = propSettings;
+		this.propSettings = propSettings as WhitelistPropertySettings;
 		this.propName = propName;
 		this.fileAsTask = fat;
 		this.plugin = plugin;

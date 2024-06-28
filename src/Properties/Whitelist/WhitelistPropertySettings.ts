@@ -36,4 +36,5 @@ export class WhitelistPropertySettings extends PropertySettings {
 			whitelist: this.whitelist.toArray()
 		}
 	}
+
 }
