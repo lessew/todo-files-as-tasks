@@ -15,11 +15,9 @@ export class FileAsTaskCollection {
 			const propertyValue: string = aFile.get(filter.propertyName);
 
 			if (filter.operator == FilterOperator.exclude) {
-				console.log(`comparing ${propertyValue}!= ${filter.propertyValue}`)
 				return (propertyValue != filter.propertyValue)
 			}
 			else if (filter.operator == FilterOperator.include) {
-				console.log(`comparing ${propertyValue}== ${filter.propertyValue}`)
 				return (propertyValue == filter.propertyValue)
 			}
 			else {

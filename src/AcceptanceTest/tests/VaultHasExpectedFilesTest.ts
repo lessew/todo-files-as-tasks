@@ -125,27 +125,27 @@ export class VaultHasExpectedFilesTest {
 		this.logger.em(("Asserting filters work"));
 		let f: Filter;
 		f = new Filter("project", "todo-home/Finance", FilterOperator.include);
-		this.assertFilterAmount(2, this.fileAsTaskCollection, f);
+		this.assertFilterAmount("todo/home/finance", 2, this.fileAsTaskCollection, f);
 		this.reloadFileAsTaskCollection();
 
-		f = new Filter("project", "todo-home/Finance/Taxes/IRS Hotline", FilterOperator.include);
-		this.assertFilterAmount(1, this.fileAsTaskCollection, f);
+		f = new Filter("project", "todo-home/Finance/Taxes 2023/IRS Hotline", FilterOperator.include);
+		this.assertFilterAmount("todo-home/Finance/Taxes/IRS Hotline", 1, this.fileAsTaskCollection, f);
 		this.reloadFileAsTaskCollection();
 
 		f = new Filter("status", "Inbox", FilterOperator.include);
-		this.assertFilterAmount(1, this.fileAsTaskCollection, f);
+		this.assertFilterAmount("status/Inbox", 1, this.fileAsTaskCollection, f);
 		this.reloadFileAsTaskCollection();
 	}
 
-	assertFilterAmount(expected: number, fatc: FileAsTaskCollection, f: Filter) {
+	assertFilterAmount(m: string, expected: number, fatc: FileAsTaskCollection, f: Filter) {
 
 
 		let actual = fatc.filterBy(f).get().length;
 		if (actual == expected) {
-			this.logger.success("Right amount of files found");
+			this.logger.success(`[${m}] - Found ${actual} files`);
 		}
 		else {
-			this.logger.error(`Expected ${expected} but found ${actual} files`);
+			this.logger.error(`[${m}] - Expected ${expected} but found ${actual} files`);
 			this.setFailure();
 		}
 	}
