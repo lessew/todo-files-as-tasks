@@ -1,4 +1,5 @@
 import * as yaml from 'js-yaml'
+import { FileAsTask } from 'src/FileAsTask/FileAsTask';
 import { PropertySettings } from 'src/Properties/PropertySettings';
 import { Filter, FilterOperator } from '../FileAsTask/Filter';
 import { PluginSettings } from './PluginSettings';
@@ -58,6 +59,20 @@ export class CodeBlockParser {
 		let statusIsError = false;
 		let err = new Error("dummy");
 
+
+		if (FileAsTask.PROJECT_FIELD in yaml) {
+			let [operator, needle] = this.parseOperator(yaml[FileAsTask.PROJECT_FIELD]);
+			let f = new Filter(FileAsTask.PROJECT_FIELD, needle, operator);
+			result.push(f);
+		}
+
+
+		if (FileAsTask.TITLE_FIELD in yaml) {
+			let [operator, needle] = this.parseOperator(yaml[FileAsTask.TITLE_FIELD]);
+			let f = new Filter(FileAsTask.TITLE_FIELD, needle, operator);
+			result.push(f);
+		}
+
 		settings.propertySettings.forEach((propSettings: PropertySettings, key: string) => {
 			if (!(key in yaml)) {
 				return;
@@ -75,6 +90,7 @@ export class CodeBlockParser {
 		});
 		return !statusIsError ? result : err;
 	}
+
 
 	// val: 'not <value>' or '<value>'
 	parseOperator(val: string): [FilterOperator, string] {

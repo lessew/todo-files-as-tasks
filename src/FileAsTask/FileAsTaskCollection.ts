@@ -8,9 +8,17 @@ export class FileAsTaskCollection {
 	constructor(fats: FileAsTask[]) {
 		this.fats = fats;
 		this.filters = [];
+		if (this.fats.length == 0) {
+			console.error("No FileAsTasks found before filtering!");
+		}
 	}
 
 	filterBy(filter: Filter): FileAsTaskCollection {
+		if (this.fats.length == 0) {
+			return this;
+		}
+
+
 		let filtered = this.fats.filter((aFile) => {
 			const propertyValue: string = aFile.get(filter.propertyName);
 
