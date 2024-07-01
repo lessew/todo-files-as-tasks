@@ -5,6 +5,7 @@ import { FileAsTaskCollection } from "src/FileAsTask/FileAsTaskCollection";
 import { CodeBlock } from "src/CodeBlock";
 import { FileAsTask } from "src/FileAsTask/FileAsTask";
 import { FileAsTaskFactory } from "src/FileAsTask/FileAsTaskFactory";
+import { Filter } from "src/FileAsTask/Filter";
 
 export class VaultHasExpectedFilesTest {
 	logger: Logger;
@@ -13,6 +14,7 @@ export class VaultHasExpectedFilesTest {
 	result: boolean;
 	plugin: FileAsTaskPlugin;
 	fileAsTaskCollection: FileAsTaskCollection;
+	fats: FileAsTask[];
 
 	constructor(logger: Logger, plugin: FileAsTaskPlugin, codeBlock: CodeBlock) {
 		this.codeBLock = codeBlock;
@@ -26,8 +28,10 @@ export class VaultHasExpectedFilesTest {
 
 		let fats: FileAsTask[] = FileAsTaskFactory.loadFilesAsTask(this.codeBLock.rootDirectory, this.codeBLock.config.getPathPropertyHelper())
 		this.fileAsTaskCollection = new FileAsTaskCollection(fats);
+		this.fats = fats;
 		this.assertDirectories();
 		this.assertFilesAsTask();
+		this.asssertFilter();
 
 
 		if (this.result != false) {
@@ -116,12 +120,47 @@ export class VaultHasExpectedFilesTest {
 		}
 	}
 
+	asssertFilter() {
+
+		this.logger.em(("Asserting filters work"));
+		let f: Filter;
+		f = new Filter("project", "todo-home/Finance");
+		this.assertFilterAmount(2, this.fileAsTaskCollection, f);
+		this.reloadFileAsTaskCollection();
+
+		f = new Filter("project", "todo-home/Finance/Taxes/IRS Hotline");
+		this.assertFilterAmount(1, this.fileAsTaskCollection, f);
+		this.reloadFileAsTaskCollection();
+
+		f = new Filter("status", "Inbox");
+		this.assertFilterAmount(1, this.fileAsTaskCollection, f);
+		this.reloadFileAsTaskCollection();
+	}
+
+	assertFilterAmount(expected: number, fatc: FileAsTaskCollection, f: Filter) {
+
+
+		let actual = fatc.filterBy(f).get().length;
+		if (actual == expected) {
+			this.logger.success("Right amount of files found");
+		}
+		else {
+			this.logger.error(`Expected ${expected} but found ${actual} files`);
+			this.setFailure();
+		}
+	}
 	setFailure(): void {
+
 		this.result = false;
 	}
 
 	isSuccess(): boolean {
 		return (this.result === true);
+	}
+
+	reloadFileAsTaskCollection() {
+		this.fileAsTaskCollection = new FileAsTaskCollection(this.fats);
+
 	}
 
 }

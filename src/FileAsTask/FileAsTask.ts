@@ -52,6 +52,7 @@ export class FileAsTask {
 
 	get(propName: string): string {
 		if (propName === FileAsTask.PROJECT_FIELD) {
+			console.log(`${propName} [${this.getProject()}]`)
 			return this.getProject();
 		}
 		if (propName == FileAsTask.TITLE_FIELD) {

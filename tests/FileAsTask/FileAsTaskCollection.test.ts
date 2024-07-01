@@ -60,6 +60,11 @@ describe('FileAsTaskCollection', () => {
 		expect(collection.filterBy(f).get().length).toBe(1);
 	})
 
+	test('Filter include: 0 results', () => {
+		let f = new Filter("status", "InboxXYZ", FilterOperator.include);
+		expect(collection.filterBy(f).get().length).toBe(0);
+	})
+
 	test('Bulkfilter', () => {
 		let f1 = new Filter("status", "Inbox", FilterOperator.include);
 		let f2 = new Filter("context", "Desk", FilterOperator.include);
