@@ -2,26 +2,31 @@ import { FileAsTask } from "../FileAsTask/FileAsTask";
 import { Filter, FilterOperator } from "./Filter";
 
 export class FileAsTaskCollection {
-	private filesAsTask: FileAsTask[];
+	private fats: FileAsTask[];
 	private filters: Filter[];
 
-	constructor(filesAsTask: FileAsTask[]) {
-		this.filesAsTask = filesAsTask;
+	constructor(fats: FileAsTask[]) {
+		this.fats = fats;
 		this.filters = [];
 	}
 
 	filterBy(filter: Filter): FileAsTaskCollection {
-		let filtered = this.filesAsTask.filter((aFile) => {
+		let filtered = this.fats.filter((aFile) => {
 			const propertyValue: string = aFile.get(filter.propertyName);
 
 			if (filter.operator == FilterOperator.exclude) {
+				console.log(`comparing ${propertyValue}!= ${filter.propertyValue}`)
 				return (propertyValue != filter.propertyValue)
 			}
 			else if (filter.operator == FilterOperator.include) {
+				console.log(`comparing ${propertyValue}== ${filter.propertyValue}`)
 				return (propertyValue == filter.propertyValue)
 			}
+			else {
+				console.error(`FilterOperator not recognized`);
+			}
 		})
-		this.filesAsTask = filtered;
+		this.fats = filtered;
 		this.filters.push(filter);
 		return this;
 	}
@@ -34,6 +39,6 @@ export class FileAsTaskCollection {
 	}
 
 	get(): FileAsTask[] {
-		return this.filesAsTask;
+		return this.fats;
 	}
 }

@@ -5,7 +5,7 @@ import { FileAsTaskCollection } from "src/FileAsTask/FileAsTaskCollection";
 import { CodeBlock } from "src/CodeBlock";
 import { FileAsTask } from "src/FileAsTask/FileAsTask";
 import { FileAsTaskFactory } from "src/FileAsTask/FileAsTaskFactory";
-import { Filter } from "src/FileAsTask/Filter";
+import { Filter, FilterOperator } from "src/FileAsTask/Filter";
 
 export class VaultHasExpectedFilesTest {
 	logger: Logger;
@@ -124,15 +124,15 @@ export class VaultHasExpectedFilesTest {
 
 		this.logger.em(("Asserting filters work"));
 		let f: Filter;
-		f = new Filter("project", "todo-home/Finance");
+		f = new Filter("project", "todo-home/Finance", FilterOperator.include);
 		this.assertFilterAmount(2, this.fileAsTaskCollection, f);
 		this.reloadFileAsTaskCollection();
 
-		f = new Filter("project", "todo-home/Finance/Taxes/IRS Hotline");
+		f = new Filter("project", "todo-home/Finance/Taxes/IRS Hotline", FilterOperator.include);
 		this.assertFilterAmount(1, this.fileAsTaskCollection, f);
 		this.reloadFileAsTaskCollection();
 
-		f = new Filter("status", "Inbox");
+		f = new Filter("status", "Inbox", FilterOperator.include);
 		this.assertFilterAmount(1, this.fileAsTaskCollection, f);
 		this.reloadFileAsTaskCollection();
 	}
