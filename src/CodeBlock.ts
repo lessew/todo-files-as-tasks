@@ -3,7 +3,7 @@ import { Configuration } from "./Configuration/Configuration";
 import { CodeBlockParser } from "./Configuration/CodeBlockParser";
 import { CreateTaskButtonView } from "./MainUI/CreateTaskButtonView";
 import { TaskListView } from "./MainUI/TaskListView";
-import { TestView } from "./MainUI/TestView";
+import { TestView } from "./AcceptanceTest/ui/TestView";
 import { FileAsTaskCollection } from "./FileAsTask/FileAsTaskCollection";
 import { Directory } from "./FileSystem/Directory";
 import { ObsidianIOFactory } from "./FileSystem/Obsidian/ObsidianIOFactory";

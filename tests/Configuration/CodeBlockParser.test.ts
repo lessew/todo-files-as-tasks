@@ -34,6 +34,12 @@ rootPath: path/to/rootPath/
 action: list
 status: Done`;
 
+const loadFiltersWithProject = `
+rootPath: path/to/rootPath/
+action: list
+project: path/to
+`
+
 describe('CodeBlockSettings', () => {
 	let cbs: CodeBlockParser;
 
