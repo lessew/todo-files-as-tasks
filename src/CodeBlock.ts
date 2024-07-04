@@ -1,7 +1,7 @@
 import FileAsTaskPlugin from "main";
 import { Configuration } from "./Configuration/Configuration";
 import { CodeBlockParser } from "./Configuration/CodeBlockParser";
-import { CreateTaskButtonView } from "./MainUI/CreateTaskButtonView";
+import { CreateTaskButtonView } from "./FileAsTask/ui/CreateTaskButtonView";
 import { TaskListView } from "./List/ui/TaskListView";
 import { TestView } from "./AcceptanceTest/ui/TestView";
 import { FileAsTaskCollection } from "./List/FileAsTaskCollection";
