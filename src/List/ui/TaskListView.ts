@@ -1,6 +1,6 @@
 import { PluginSettings } from "src/Configuration/PluginSettings";
 import FileAsTaskPlugin from "main";
-import { FileAsTaskCollection } from "src/FileAsTask/FileAsTaskCollection";
+import { FileAsTaskCollection } from "src/List/FileAsTaskCollection";
 import { PropertySettings } from "src/Properties/PropertySettings";
 import { LinkView } from "src/Properties/Link/LinkView";
 import { TitlePropertyView } from "src/Properties/Title/TitlePropertyView";

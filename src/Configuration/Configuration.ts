@@ -1,6 +1,6 @@
 import { PathPropertyHelper } from "../../src/Properties/PathPropertyHelper";
 import { PropertySettings } from "../../src/Properties/PropertySettings";
-import { Filter } from "../FileAsTask/Filter";
+import { Filter } from "../List/Filter";
 import { PluginSettings } from "./PluginSettings";
 import { CodeBlockParser } from "./CodeBlockParser";
 

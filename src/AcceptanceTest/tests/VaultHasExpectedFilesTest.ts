@@ -1,11 +1,11 @@
 import { Logger } from "../Logger";
 import { getExpectedFiles, getExpectedFolders, ExpectedFileType } from "../MockItems";
 import FileAsTaskPlugin from "main";
-import { FileAsTaskCollection } from "src/FileAsTask/FileAsTaskCollection";
+import { FileAsTaskCollection } from "src/List/FileAsTaskCollection";
 import { CodeBlock } from "src/CodeBlock";
 import { FileAsTask } from "src/FileAsTask/FileAsTask";
 import { FileAsTaskFactory } from "src/FileAsTask/FileAsTaskFactory";
-import { Filter, FilterOperator } from "src/FileAsTask/Filter";
+import { Filter, FilterOperator } from "src/List/Filter";
 
 export class VaultHasExpectedFilesTest {
 	logger: Logger;

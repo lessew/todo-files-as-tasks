@@ -1,7 +1,6 @@
 import { PluginSettings } from "../../src/Configuration/PluginSettings";
-import { Filter, FilterOperator } from "../../src/FileAsTask/Filter";
+import { Filter, FilterOperator } from "../../src/List/Filter";
 import { BooleanPropertySettings } from "../../src/Properties/Boolean/BooleanPropertySettings";
-import { Whitelist } from "../../src/Properties/Whitelist";
 import { WhitelistPropertySettings } from "../../src/Properties/Whitelist/WhitelistPropertySettings";
 import { CodeBlockParser } from "../../src/Configuration/CodeBlockParser";
 

@@ -1,6 +1,6 @@
-import { FileAsTaskCollection } from "../../src/FileAsTask/FileAsTaskCollection";
+import { FileAsTaskCollection } from "../../src/List/FileAsTaskCollection";
 import { PathPropertyHelper } from "../../src/Properties/PathPropertyHelper";
-import { Filter, FilterOperator } from "../../src/FileAsTask/Filter";
+import { Filter, FilterOperator } from "../../src/List/Filter";
 import { FileAsTask } from "../../src/FileAsTask/FileAsTask"
 import { DummyFile } from "../../src/FileSystem/Mock/Dummy";
 
