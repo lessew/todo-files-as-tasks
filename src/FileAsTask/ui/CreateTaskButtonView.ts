@@ -22,8 +22,8 @@ export class CreateTaskButtonView {
 	}
 
 	handleEvent(event: Event) {
-		const m = new FileAsTaskModal(
-			this.plugin.obsidianApp,
+		const m = new FileAsTaskModal(this.plugin.obsidianApp);
+		m.init(
 			this.plugin,
 			this.plugin.pluginSettings,
 			this.pathPropertyHelper,

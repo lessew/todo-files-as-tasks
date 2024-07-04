@@ -18,8 +18,12 @@ export class FileAsTaskModal extends Modal {
 	plugin: FileAsTaskPlugin;
 	propertyViewFactory: PropertyViewFactory;
 
-	constructor(app: App, plugin: FileAsTaskPlugin, settings: PluginSettings, pph: PathPropertyHelper, pvf: PropertyViewFactory) {
+	constructor(app: App) {
 		super(app);
+	}
+
+
+	init(plugin: FileAsTaskPlugin, settings: PluginSettings, pph: PathPropertyHelper, pvf: PropertyViewFactory) {
 		let result: Record<string, string> = {};
 		result.project = pph.getDirectorylist().toArray()[0];
 		settings.getPropertySettings().forEach((ps: PropertySettings, key) => {
@@ -31,6 +35,8 @@ export class FileAsTaskModal extends Modal {
 		this.plugin = plugin;
 		this.propertyViewFactory = pvf;
 	}
+
+
 	async onSubmit(): Promise<void> {
 		console.log("submit:");
 		console.log(this.result);
