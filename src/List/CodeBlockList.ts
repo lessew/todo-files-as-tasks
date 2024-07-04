@@ -2,8 +2,8 @@ import FileAsTaskPlugin from "main";
 import { PluginSettings } from "src/Configuration/PluginSettings";
 import { PathPropertyHelper } from "src/Properties/PathPropertyHelper";
 import { PropertyViewFactory } from "src/Properties/PropertyViewFactory";
-import { FileAsTaskCollection } from "../FileAsTaskCollection";
-import { TaskListView } from "./TaskListView";
+import { FileAsTaskCollection } from "./FileAsTaskCollection";
+import { TaskListView } from "./ui/TaskListView";
 
 export class CodeBlockList {
 	view: TaskListView;

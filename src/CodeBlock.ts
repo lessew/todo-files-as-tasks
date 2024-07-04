@@ -10,6 +10,7 @@ import { ObsidianIOFactory } from "./FileSystem/Obsidian/ObsidianIOFactory";
 import { FileAsTaskFactory } from "./FileAsTask/FileAsTaskFactory";
 import { FileAsTask } from "./FileAsTask/FileAsTask";
 import { ObsidianPropertyViewFactory } from "./Properties/PropertyViewFactory";
+import { CodeBlockList } from "./List/CodeBlockList";
 
 export class CodeBlock {
 	source: string;
@@ -89,14 +90,14 @@ export class CodeBlock {
 		fileAsTaskCollection.bulkFilterBy(filters);
 		//fileAsTaskCollection.groupBy('project');
 		//fileAsTaskCollection.sortBy('context','ASC');
-		let view = new TaskListView(
+		let cb = new CodeBlockList(
 			fileAsTaskCollection,
 			this.config.getSettings(),
 			this.config.getPathPropertyHelper(),
 			this.plugin,
 			pvf
-		);
-		view.build(this.el);
+		)
+		cb.build(this.el);
 	}
 
 	displayCreateTaskButton(): void {
