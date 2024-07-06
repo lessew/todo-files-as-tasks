@@ -12,15 +12,7 @@ export default class FileAsTaskPlugin extends Plugin {
 
 
 	async onload() {
-		let jsonSettings = await this.loadData();
-		let settings = new PluginSettings();
-		let loadResult = settings.load(jsonSettings);
-		if (loadResult instanceof Error) {
-			console.error(loadResult);
-			console.log("Default settings loaded instead");
-			settings.loadDefaultSettings();
-		}
-		this.pluginSettings = settings;
+		await this.loadSettings();
 		this.obsidianFacade = new ObsidianFacade(this.app);
 		this.obsidianApp = this.app;
 
@@ -33,8 +25,21 @@ export default class FileAsTaskPlugin extends Plugin {
 		this.addSettingTab(new FATSettingTab(this.app, this));
 
 		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
-		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
+		//this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
 	}
+
+	async loadSettings(): Promise<void> {
+		let jsonSettings = await this.loadData();
+		let settings = new PluginSettings();
+		let loadResult = settings.load(jsonSettings);
+		if (loadResult instanceof Error) {
+			console.error(loadResult);
+			console.log("Default settings loaded instead");
+			settings.loadDefaultSettings();
+		}
+		this.pluginSettings = settings;
+	}
+
 
 	onunload() {
 

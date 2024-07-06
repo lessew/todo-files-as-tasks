@@ -4,6 +4,7 @@ import { PropertySettings } from '../Properties/PropertySettings';
 import { Filter, FilterOperator } from '../List/Filter';
 import { PluginSettings } from './PluginSettings';
 
+// TODO rename to not confliect with other codeblocks
 // TODO : use Obsidian YAML parser functions
 export class CodeBlockParser {
 	source: string;
