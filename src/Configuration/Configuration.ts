@@ -2,10 +2,10 @@ import { PathPropertyHelper } from "../../src/Properties/PathPropertyHelper";
 import { PropertySettings } from "../../src/Properties/PropertySettings";
 import { Filter } from "../List/Filter";
 import { PluginSettings } from "./PluginSettings";
-import { CodeBlockParser } from "./CodeBlockParser";
+import { CodeBlockSettings } from "./CodeBlockSettings"
 
 export class Configuration {
-	private parser: CodeBlockParser;
+	private parser: CodeBlockSettings;
 	private settings: PluginSettings;
 	private state: Error | true;
 	private rootPath: string;
@@ -21,7 +21,7 @@ export class Configuration {
 		if (this.stateIsError()) {
 			return;
 		}
-		this.parser = new CodeBlockParser();
+		this.parser = new CodeBlockSettings();
 		this.state = this.parser.loadSource(source);
 	}
 

@@ -6,7 +6,7 @@ import { PluginSettings } from './PluginSettings';
 
 // TODO rename to not confliect with other codeblocks
 // TODO : use Obsidian YAML parser functions
-export class CodeBlockParser {
+export class CodeBlockSettings {
 	source: string;
 	yaml: unknown;
 	// TODO: prepend all with TOKEN_
@@ -29,7 +29,7 @@ export class CodeBlockParser {
 
 	parseRootPath(): string | Error {
 		try {
-			const rp: string = (this.yaml as { [CodeBlockParser.TOKEN_ROOTPATH]: string }).rootPath;
+			const rp: string = (this.yaml as { [CodeBlockSettings.TOKEN_ROOTPATH]: string }).rootPath;
 			return rp;
 		}
 		catch (e) {
@@ -38,14 +38,14 @@ export class CodeBlockParser {
 	}
 
 	parseAction(): string | Error {
-		if (this.source.indexOf(CodeBlockParser.ACTION_CREATE_BUTTON) > -1) {
-			return CodeBlockParser.ACTION_CREATE_BUTTON;
+		if (this.source.indexOf(CodeBlockSettings.ACTION_CREATE_BUTTON) > -1) {
+			return CodeBlockSettings.ACTION_CREATE_BUTTON;
 		}
-		else if (this.source.indexOf(CodeBlockParser.ACTION_LIST) > -1) {
-			return CodeBlockParser.ACTION_LIST;
+		else if (this.source.indexOf(CodeBlockSettings.ACTION_LIST) > -1) {
+			return CodeBlockSettings.ACTION_LIST;
 		}
-		else if (this.source.indexOf(CodeBlockParser.ACTION_TEST) > -1) {
-			return CodeBlockParser.ACTION_TEST;
+		else if (this.source.indexOf(CodeBlockSettings.ACTION_TEST) > -1) {
+			return CodeBlockSettings.ACTION_TEST;
 		}
 		else {
 			return new Error("Action not specified, add either 'list' or 'create_button'")
@@ -97,9 +97,9 @@ export class CodeBlockParser {
 	parseOperator(val: string): [FilterOperator, string] {
 		let operator = FilterOperator.include;
 		let resultValue = val;
-		if (val.startsWith(CodeBlockParser.EXCLUDE_TOKEN)) {
+		if (val.startsWith(CodeBlockSettings.EXCLUDE_TOKEN)) {
 			operator = FilterOperator.exclude
-			resultValue = val.substring(CodeBlockParser.EXCLUDE_TOKEN.length, val.length).trim();
+			resultValue = val.substring(CodeBlockSettings.EXCLUDE_TOKEN.length, val.length).trim();
 		}
 		return [operator, resultValue.trim()]
 	}

@@ -1,8 +1,6 @@
 import FileAsTaskPlugin from "main";
 import { Configuration } from "./Configuration/Configuration";
-import { CodeBlockParser } from "./Configuration/CodeBlockParser";
 import { CreateTaskButtonView } from "./FileAsTask/ui/CreateTaskButtonView";
-import { TaskListView } from "./List/ui/TaskListView";
 import { TestView } from "./AcceptanceTest/ui/TestView";
 import { FileAsTaskCollection } from "./List/FileAsTaskCollection";
 import { Directory } from "./FileSystem/Directory";
@@ -11,6 +9,7 @@ import { FileAsTaskFactory } from "./FileAsTask/FileAsTaskFactory";
 import { FileAsTask } from "./FileAsTask/FileAsTask";
 import { ObsidianPropertyViewFactory } from "./Properties/PropertyViewFactory";
 import { CodeBlockList } from "./List/CodeBlockList";
+import { CodeBlockSettings } from "./Configuration/CodeBlockSettings";
 
 export class CodeBlock {
 	source: string;
@@ -54,13 +53,13 @@ export class CodeBlock {
 
 		this.config.loadPathPropertyHelper(this.rootDirectory.getDirectories().map(dir => dir.fullPath));
 
-		if (this.config.getAction() == CodeBlockParser.ACTION_LIST) {
+		if (this.config.getAction() == CodeBlockSettings.ACTION_LIST) {
 			this.displayActionList();
 		}
-		else if (this.config.getAction() == CodeBlockParser.ACTION_TEST) {
+		else if (this.config.getAction() == CodeBlockSettings.ACTION_TEST) {
 			this.displayTest();
 		}
-		else if (this.config.getAction() == CodeBlockParser.ACTION_CREATE_BUTTON) {
+		else if (this.config.getAction() == CodeBlockSettings.ACTION_CREATE_BUTTON) {
 			this.displayCreateTaskButton();
 		}
 

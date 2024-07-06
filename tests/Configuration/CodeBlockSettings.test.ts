@@ -1,8 +1,8 @@
+import { CodeBlockSettings } from "src/Configuration/CodeBlockSettings";
 import { PluginSettings } from "../../src/Configuration/PluginSettings";
 import { Filter, FilterOperator } from "../../src/List/Filter";
 import { BooleanPropertySettings } from "../../src/Properties/Boolean/BooleanPropertySettings";
 import { WhitelistPropertySettings } from "../../src/Properties/Whitelist/WhitelistPropertySettings";
-import { CodeBlockParser } from "../../src/Configuration/CodeBlockParser";
 
 const loadSourceCorrect = `
 rootPath: .
@@ -40,10 +40,10 @@ project: path/to
 `
 
 describe('CodeBlockSettings', () => {
-	let cbs: CodeBlockParser;
+	let cbs: CodeBlockSettings;
 
 	beforeEach(() => {
-		cbs = new CodeBlockParser();
+		cbs = new CodeBlockSettings();
 	});
 
 	test('loadSource happy path', () => {
@@ -71,7 +71,7 @@ describe('CodeBlockSettings', () => {
 	test('loadAction happy path', () => {
 		cbs.loadSource(loadAction);
 		let action = cbs.parseAction();
-		expect(action).toBe(CodeBlockParser.ACTION_LIST);
+		expect(action).toBe(CodeBlockSettings.ACTION_LIST);
 	})
 
 	test('parserOperator', () => {
