@@ -1,4 +1,4 @@
-import { CodeBlockSettings } from "src/Configuration/CodeBlockSettings";
+import { CodeBlockSettings } from "../../src/Configuration/CodeBlockSettings";
 import { PluginSettings } from "../../src/Configuration/PluginSettings";
 import { Filter, FilterOperator } from "../../src/List/Filter";
 import { BooleanPropertySettings } from "../../src/Properties/Boolean/BooleanPropertySettings";
