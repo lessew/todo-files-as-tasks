@@ -5,7 +5,7 @@ import { PropertyViewFactory } from "src/Properties/PropertyViewFactory";
 import { FileAsTaskCollection } from "./FileAsTaskCollection";
 import { TaskListView } from "./ui/TaskListView";
 
-export class CodeBlockList {
+export class ListController {
 	view: TaskListView;
 
 	constructor(

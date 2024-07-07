@@ -8,8 +8,9 @@ import { ObsidianIOFactory } from "./FileSystem/Obsidian/ObsidianIOFactory";
 import { FileAsTaskFactory } from "./FileAsTask/FileAsTaskFactory";
 import { FileAsTask } from "./FileAsTask/FileAsTask";
 import { ObsidianPropertyViewFactory } from "./Properties/PropertyViewFactory";
-import { CodeBlockList } from "./List/CodeBlockList";
+import { ListController } from "./List/ListController";
 import { CodeBlockSettings } from "./Configuration/CodeBlockSettings";
+import { TestController } from "./AcceptanceTest/TestController";
 
 export class CodeBlock {
 	source: string;
@@ -89,7 +90,7 @@ export class CodeBlock {
 		fileAsTaskCollection.bulkFilterBy(filters);
 		//fileAsTaskCollection.groupBy('project');
 		//fileAsTaskCollection.sortBy('context','ASC');
-		let cb = new CodeBlockList(
+		let cb = new ListController(
 			fileAsTaskCollection,
 			this.config.getSettings(),
 			this.config.getPathPropertyHelper(),
@@ -105,7 +106,8 @@ export class CodeBlock {
 	}
 
 	displayTest(): void {
-		const testView = new TestView(this.plugin, this, this.el);
-		testView.main();
+		const tc = new TestController(this.plugin, this, this.el);
+		tc.build();
+
 	}
 }

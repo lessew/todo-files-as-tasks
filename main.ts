@@ -1,7 +1,7 @@
 import { App, Plugin } from 'obsidian';
 import { CodeBlock } from 'src/CodeBlock';
 import { PluginSettings } from 'src/Configuration/PluginSettings';
-import { FATSettingTab } from 'src/Configuration/ui/FATSettingsTab';
+import { FATSettingsTab } from 'src/Configuration/ui/FATSettingsTab';
 import { ObsidianFacade } from 'src/FileSystem/Obsidian/ObsidianFacade';
 
 export default class FileAsTaskPlugin extends Plugin {
@@ -22,7 +22,7 @@ export default class FileAsTaskPlugin extends Plugin {
 			await block.load();
 		});
 
-		this.addSettingTab(new FATSettingTab(this.app, this));
+		this.addSettingTab(new FATSettingsTab(this.app, this));
 
 		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
 		//this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));

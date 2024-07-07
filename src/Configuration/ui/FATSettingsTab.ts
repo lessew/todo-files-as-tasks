@@ -5,7 +5,7 @@ import { PropertySettings } from "src/Properties/PropertySettings";
 import { PluginSettings } from "../PluginSettings";
 
 
-export class FATSettingTab extends PluginSettingTab {
+export class FATSettingsTab extends PluginSettingTab {
 	plugin: FileAsTaskPlugin;
 
 	constructor(app: App, plugin: FileAsTaskPlugin) {
