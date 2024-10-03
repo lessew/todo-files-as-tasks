@@ -20,6 +20,8 @@ export class CodeBlock {
 	rootDirectory: Directory;
 	config: Configuration;
 
+	//	state: CodeBlockState;
+
 	constructor(source: string, el: HTMLElement, plugin: FileAsTaskPlugin) {
 		this.source = source;
 		this.el = el;
@@ -30,7 +32,15 @@ export class CodeBlock {
 		this.el.innerHTML = "";
 		await this.load();
 	}
-
+	/*	
+			async processState(): Promise<void> {
+				this.state.process();
+		
+			}
+			async view(): Promise<void> {
+				this.state.view();
+			}
+			*/
 	async load(): Promise<void> {
 		this.config = new Configuration();
 		this.config.loadSource(this.source);

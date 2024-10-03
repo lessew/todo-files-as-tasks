@@ -1,5 +1,4 @@
 import { BooleanPropertySettings } from "../../src/Properties/Boolean/BooleanPropertySettings";
-import { Whitelist } from "../../src/Properties/Whitelist";
 import { WhitelistPropertySettings } from "../../src/Properties/Whitelist/WhitelistPropertySettings";
 import { PropertySettings } from "../../src/Properties/PropertySettings";
 

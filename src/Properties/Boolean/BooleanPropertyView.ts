@@ -26,7 +26,7 @@ export class BooleanPropertyView {
 
 	buildCreateUI(el: HTMLElement, onchange: (value: string) => void): void {
 		new Setting(el)
-			.setName(this.propName + "shizts")
+			.setName(this.propName)
 			.addDropdown((dropdown) =>
 				dropdown
 					.addOptions(this.propSettings.getWhitelist().toRecord())
