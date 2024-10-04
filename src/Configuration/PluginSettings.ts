@@ -25,7 +25,7 @@ const DEFAULT_PLUGIN_SETTINGS: SavedSettingsDataType = {
 			name: "context",
 			type: "whitelist",
 			defaultValue: "None",
-			whitelist: ["Desk", "Deep", "Phone", "Read", "Errands", "None"]
+			whitelist: ["Desk", "Deep", "Phone", "Read", "Outside", "Errands", "None"]
 		},
 		{
 			name: "status",
